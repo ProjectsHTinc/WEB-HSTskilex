@@ -362,7 +362,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Main Category ####################//
 	public function View_maincategory($user_master_id)
 	{
-			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category";
+			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
 			$res = $this->db->query($query);
 		
 			 if($res->num_rows()>0){
@@ -395,7 +395,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Sub Category ####################//
 	public function View_subcategory($main_cat_id)
 	{
-			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id'";
+			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active'";
 			$res = $this->db->query($query);
 		
 			 if($res->num_rows()>0){
@@ -403,16 +403,15 @@ class Apicustomermodel extends CI_Model {
 				{
 					$sub_cat_pic = $rows->sub_cat_pic;
 					if ($sub_cat_pic != ''){
-						$sub_cat_pic_url = base_url().'assets/category/'.$cat_pic;
+						$sub_cat_pic_url = base_url().'assets/category/'.$sub_cat_pic;
 					}else {
 						 $sub_cat_pic_url = '';
 					}
-					
 					$subcatData[]  = array(
+							"main_cat_id" => $main_cat_id,
 							"sub_cat_id" => $rows->id,
-							"cat_id" => $main_cat_id,
-							"sub_cat_name" => $rows->main_cat_name,
-							"sub_cat_ta_name" => $rows->main_cat_ta_name,
+							"sub_cat_name" => $rows->sub_cat_name,
+							"sub_cat_ta_name" => $rows->sub_cat_ta_name,
 							"sub_cat_pic_url" => $sub_cat_pic_url
 					);
 				}
@@ -425,6 +424,40 @@ class Apicustomermodel extends CI_Model {
 			return $response;
 	}
 //#################### Sub Category End ####################//
+
+//#################### Services List ####################//
+	public function Services_list($main_cat_id,$sub_cat_id)
+	{
+			$query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
+			$res = $this->db->query($query);
+		
+			 if($res->num_rows()>0){
+			    foreach ($res->result() as $rows)
+				{
+					$service_pic = $rows->service_pic;
+					if ($service_pic != ''){
+						$service_pic_url = base_url().'assets/category/'.$service_pic;
+					}else {
+						 $service_pic_url = '';
+					}
+					$subcatData[]  = array(
+							"service_id" => $rows->id,
+							"main_cat_id" => $rows->main_cat_id,
+							"sub_cat_id" => $rows->sub_cat_id,
+							"service_name" => $rows->service_name,
+							"service_ta_name" => $rows->service_ta_name,
+							"service_pic_url" => $service_pic_url
+					);
+				}
+			     	$response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+
+			}else{
+			        $response = array("status" => "error", "msg" => "Services not found");
+			}
+
+			return $response;
+	}
+//#################### Services List End ####################//
 }
 
 ?>

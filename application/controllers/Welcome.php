@@ -20,17 +20,19 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
-		// $this->load->view('admin/admin_header.php');
+
 		$this->load->view('admin/login.php');
-		// $this->load->view('admin/admin_footer.php');
+
 	}
 
 
-	public function dashboard()
+
+
+	public function forgotpassword()
 	{
-		$this->load->view('admin/admin_header.php');
-		$this->load->view('admin/login.php');
-		$this->load->view('admin/admin_footer.php');
+
+		$this->load->view('admin/forgot_password.php');
+
 	}
 
 

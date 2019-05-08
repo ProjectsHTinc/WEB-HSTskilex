@@ -22094,10 +22094,10 @@ div.tagsinput {
 .auth {
   min-height: 100vh; }
   .auth.auth-bg-1 {
-    background: url("http://www.urbanui.com/");
+    /* background: url("http://www.urbanui.com/"); */
     background-size: cover; }
   .auth.register-bg-1 {
-    background: url("http://www.urbanui.com/") center center no-repeat;
+    /* background: url("http://www.urbanui.com/") center center no-repeat; */
     background-size: cover; }
   .auth.theme-one .auto-form-wrapper {
     background: #fff;
@@ -22294,10 +22294,10 @@ div.tagsinput {
     .auth.theme-two .banner-section .slide-content {
       width: 100%; }
       .auth.theme-two .banner-section .slide-content.bg-1 {
-        background: url("http://www.urbanui.com/") no-repeat center center;
+        /* background: url("http://www.urbanui.com/") no-repeat center center; */
         background-size: cover; }
       .auth.theme-two .banner-section .slide-content.bg-2 {
-        background: url("http://www.urbanui.com/") no-repeat center center;
+        /* background: url("http://www.urbanui.com/") no-repeat center center; */
         background-size: cover; }
 
 /* Error */
@@ -22908,3 +22908,16 @@ div.tagsinput {
 /*-------------------------------------------------------------------*/
 
 /*# sourceMappingURL=maps/style.css.map */
+
+
+
+.error{
+  color: #ff0000;
+  font-size: 14px;
+
+}
+#res{
+    color: #ff0000;
+    font-size: 14px;
+    font-weight: 600;
+}

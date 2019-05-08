@@ -24,25 +24,23 @@
           <div class="col-lg-4 mx-auto">
             <div class="auto-form-wrapper">
 
-              <form action="#" method="post" id="login_form">
+
+              <form action="#" method="post" id="forgot_password_form">
                   <center> <img src="<?php echo base_url(); ?>assets/logo.png"> </center>
-            
+
                 <div class="form-group">
-                        <label for="username">Username</label>
-                        <input id="username" class="form-control" name="username"  type="text" >
+                        <label for="email">Enter Email</label>
+                        <input id="email" class="form-control" name="email"  type="text" >
                 </div>
-                <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" class="form-control" name="password" type="password">
-                </div>
+
                 <p id="res"></p>
 
                 <div class="form-group">
-                  <button class="btn btn-primary submit-btn btn-block">Login</button>
+                  <button class="btn btn-primary submit-btn btn-block">Reset Password</button>
                 </div>
                 <div class="form-group d-flex justify-content-between">
 
-                  <a href="<?php echo base_url(); ?>forgotpassword" class="text-small forgot-password text-black">Forgot Password</a>
+                    <a href="<?php echo base_url(); ?>login" class="text-small forgot-password text-black">Back to Login</a>
                 </div>
 
 
@@ -57,7 +55,7 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
+
 
 </body>
 

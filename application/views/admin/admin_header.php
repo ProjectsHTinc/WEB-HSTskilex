@@ -4,13 +4,19 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LibertyUI Premium Bootstrap Admin Dashboard Template</title>
+  <title>Skilex-Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.addons.css">
+  <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.addons.css"> -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
+  <script   src="https://code.jquery.com/jquery-3.4.1.js"   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
+  <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -19,116 +25,45 @@
     <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">
       <div class="container d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo-inverse.svg" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="<?php echo base_url(); ?>dashboard"><img src="<?php echo base_url(); ?>assets/logo.png" alt="logo"/></a>
+          <a class="navbar-brand brand-logo-mini" href="<?php echo base_url(); ?>dashboard"><img src="<?php echo base_url(); ?>assets/logo.png" alt="logo"/></a>
         </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center">
-          <form class="search-field ml-auto" action="#">
-            <div class="form-group mb-0">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="mdi mdi-magnify"></i></span>
-                </div>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </form>
-          <ul class="navbar-nav navbar-nav-right mr-0">
-            <li class="nav-item dropdown ml-4">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="mdi mdi-bell-outline"></i>
-                <span class="count bg-warning">4</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <a class="dropdown-item py-3">
-                  <p class="mb-0 font-weight-medium float-left">You have 4 new notifications
-                  </p>
-                  <span class="badge badge-pill badge-inverse-info float-right">View all</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-inverse-success">
-                      <i class="mdi mdi-alert-circle-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Just now
-                    </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-inverse-warning">
-                      <i class="mdi mdi-comment-text-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      Private message
-                    </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-inverse-info">
-                      <i class="mdi mdi-email-outline mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
-                    <p class="font-weight-light small-text mb-0">
-                      2 days ago
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                <a class="dropdown-item p-0">
-                  <div class="d-flex border-bottom w-100">
-                    <div class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1"><i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i></div>
-                    <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right flex-grow-1"><i class="mdi mdi-account-outline mr-0 text-gray"></i></div>
-                    <div class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1"><i class="mdi mdi-alarm-check mr-0 text-gray"></i></div>
-                  </div>
-                </a>
-                <a class="dropdown-item mt-2">
-                  Manage Accounts
-                </a>
-                <a class="dropdown-item">
-                  Change Password
-                </a>
-                <a class="dropdown-item">
-                  Check Inbox
-                </a>
-                <a class="dropdown-item">
-                  Sign Out
-                </a>
-              </div>
-            </li>
-          </ul>
-          <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="mdi mdi-menu"></span>
-          </button>
-        </div>
+
       </div>
       <div class="nav-bottom">
         <div class="container">
           <ul class="nav page-navigation">
             <li class="nav-item">
-              <a href="index.html" class="nav-link"><i class="link-icon mdi mdi-television"></i><span class="menu-title">DASHBOARD</span></a>
+              <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="link-icon mdi mdi-television"></i><span class="menu-title">DASHBOARD</span></a>
             </li>
-            <li class="nav-item">
-              <a href="pages/widgets.html" class="nav-link"><i class="link-icon mdi mdi-apple-safari"></i><span class="menu-title">WIDGETS</span></a>
+            <li class="nav-item mega-menu">
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">Users</span><i class="menu-arrow"></i></a>
+              <div class="submenu">
+                <div class="col-group-wrapper row">
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Staff</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">Create Staff</a></li>
+                      <li class="nav-item"><a class="nav-link" href="">Staff list</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Service Provider</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">List of Provider </a></li>
+
+
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Service Person</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">List of Service person </a></li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </li>
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-atom"></i><span class="menu-title">UI ELEMENTS</span><i class="menu-arrow"></i></a>
@@ -296,13 +231,13 @@
               </div>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">APPS</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Setting</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/email.html">Email</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/calendar.html">Calendar</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/todo.html">Todo List</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/apps/gallery.html">Gallery</a></li>
+
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>profile">Profile</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>change_password">Password</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>logout">Logout</a></li>
                 </ul>
               </div>
             </li>

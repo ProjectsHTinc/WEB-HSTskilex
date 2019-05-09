@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 
+
+
 $('#login_form').validate({
   rules: {
       username: {
@@ -143,6 +145,83 @@ $.ajax({
 
 
 
+ // Staff creation
+
+$('#create_staff').validate({
+rules: {
+    name: {required: true },
+    email: { email: true,required: true,
+              remote: {
+                     url: "checkemail",
+                     type: "post"
+                  }
+        },
+    username: { required: true,
+              remote: {
+                     url: "checkusername",
+                     type: "post"
+                  }
+     },
+    gender: {required: true },
+    address: {required: true },
+    city: {required: true },
+    phone: {required: true,  remote: {
+             url: "checkphone",
+             type: "post"
+          }
+         }
+},
+messages: {
+    name:{
+      required :"Please enter name"
+    },
+    city:{
+      required :"Please enter city"
+    },
+    address:{
+      required :"Please enter address"
+    },
+    gender:{
+        required :"Select Gender"
+      },
+    email: {
+					 required: "Please enter Email.",
+					 remote: "Email  already in Exist!"
+							 },
+     username: {
+           required: "Please enter Username.",
+           remote: "Username  already in Exist!"
+               },
+   phone: {
+   					 required: "Please enter phone number.",
+   					 remote: "Phone number  already in Exist!"
+   							 },
+
+},
+submitHandler: function(form) {
+$.ajax({
+           url: "get_register_staff",
+           type: 'POST',
+           data: $('#create_staff').serialize(),
+           dataType: "json",
+           success: function(response) {
+              var stats=response.status;
+               if (stats=="success") {
+                 swal('User Created successfully')
+                 window.setTimeout(function () {
+                  location.href = "dashboard";
+              }, 1000);
+
+             }else{
+                 $('#res').html(response.msg)
+                 }
+           }
+       });
+     }
+
+});
+
+
 
 
 $('#password_change').validate({
@@ -207,6 +286,10 @@ $.ajax({
      }
 
 });
+
+
+
+
 
 
 

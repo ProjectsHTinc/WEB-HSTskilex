@@ -59,7 +59,7 @@ class Home extends CI_Controller {
 			$this->load->view('admin/change_password',$data);
 			$this->load->view('admin/admin_footer');
 		}else{
-
+			redirect('/');
 		}
 
 	}
@@ -78,27 +78,82 @@ class Home extends CI_Controller {
 		echo json_encode($data['res']);
 	}
 
-	public function check_school_code(){
-		$school_id=$this->db->escape_str($this->input->post('school_id'));
-		$data['res']=$this->loginmodel->check_school_code($school_id);
-		echo json_encode($data['res']);
-	}
 
-	public function get_register(){
-		$name=$this->db->escape_str($this->input->post('name'));
-		$password=md5($this->db->escape_str($this->input->post('password')));
-		$email=$this->db->escape_str($this->input->post('email'));
-		$phone=$this->db->escape_str($this->input->post('phone'));
-		$username=$this->db->escape_str($this->input->post('username'));
-		$data['res']=$this->loginmodel->get_register($name,$password,$email,$phone,$username);
-		echo json_encode($data['res']);
 
-	}
-	public function update_profile(){
+	public function create_staff(){
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
 		if($user_type== 1 || $user_type==2){
+			$this->load->view('admin/admin_header');
+			$this->load->view('admin/staff/create',$data);
+			$this->load->view('admin/admin_footer');
+		}else{
+			redirect('/');
+		}
+
+	}
+
+	public function get_all_staff(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
+			$data['res']=$this->loginmodel->get_all_staff();
+			$this->load->view('admin/admin_header');
+			$this->load->view('admin/staff/view_staff',$data);
+			$this->load->view('admin/admin_footer');
+		}else{
+			redirect('/');
+		}
+
+	}
+
+	public function get_register_staff(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1 || $user_type==2){
+		$name=$this->db->escape_str($this->input->post('name'));
+		$email=$this->db->escape_str($this->input->post('email'));
+		$phone=$this->db->escape_str($this->input->post('phone'));
+		$username=$this->db->escape_str($this->input->post('username'));
+		$city=$this->db->escape_str($this->input->post('city'));
+		$address=$this->db->escape_str($this->input->post('address'));
+		$gender=$this->db->escape_str($this->input->post('gender'));
+		$status=$this->db->escape_str($this->input->post('status'));
+		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$address,$gender,$status,$user_id);
+		echo json_encode($data['res']);
+		}else{
+			redirect('/');
+		}
+		}
+
+		public function get_staff_details(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$staff_id=$this->uri->segment(3);
+				$data['res']=$this->loginmodel->get_staff_details($staff_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/staff/edit_staff',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+
+
+
+
+
+	public function update_profile(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
 		$email=$this->db->escape_str($this->input->post('email'));
 		$phone=$this->db->escape_str($this->input->post('phone'));
 		$name=$this->db->escape_str($this->input->post('name'));
@@ -127,16 +182,26 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function checkmobile(){
+	public function checkphone(){
 		$phone=$this->input->post('phone');
-		$data=$this->loginmodel->checkmobile($phone);
+		$data=$this->loginmodel->checkphone($phone);
+	}
+
+	public function checkemail(){
+		$email=$this->input->post('email');
+		$data=$this->loginmodel->checkemail($email);
+	}
+
+	public function checkusername(){
+		$username=$this->input->post('username');
+		$data=$this->loginmodel->checkusername($username);
 	}
 
 	public function check_email_exist(){
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+		if($user_type== 1){
 			$email=$this->input->post('email');
 			$data=$this->loginmodel->check_email_exist($email,$user_id);
 		}
@@ -146,12 +211,57 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+		if($user_type== 1){
 			$phone=$this->input->post('phone');
 			$data=$this->loginmodel->check_phone_exist($phone,$user_id);
 		}
 	}
 
+
+
+	public function check_staff_email_exist(){
+
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
+			$id=$this->uri->segment(3);
+			$email=$this->input->post('email');
+			$data=$this->loginmodel->check_staff_email_exist($email,$id);
+		}
+	}
+
+	public function check_staff_phone_exist(){
+
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
+			$phone=$this->input->post('phone');
+			$id=$this->uri->segment(3);
+			$data=$this->loginmodel->check_staff_phone_exist($phone,$id);
+		}
+	}
+
+	public function update_staff_profile(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
+		$email=$this->db->escape_str($this->input->post('email'));
+		$phone=$this->db->escape_str($this->input->post('phone'));
+		$name=$this->db->escape_str($this->input->post('name'));
+		$city=$this->db->escape_str($this->input->post('city'));
+		$address=$this->db->escape_str($this->input->post('address'));
+		$gender=$this->db->escape_str($this->input->post('gender'));
+		$id=$this->db->escape_str($this->input->post('id'));
+		$status=$this->db->escape_str($this->input->post('status'));
+		$data['res']=$this->loginmodel->update_staff_profile($email,$phone,$name,$city,$address,$gender,$user_id,$id,$status);
+		echo json_encode($data['res']);
+		}else{
+
+		}
+	}
 
 	public function check_current_password(){
 		$data=$this->session->userdata();
@@ -165,10 +275,7 @@ class Home extends CI_Controller {
 	}
 	}
 
-	public function check_ins_name(){
-		$institute_name=$this->input->post('institute_name');
-		$data=$this->loginmodel->check_ins_name($institute_name);
-	}
+
 
 	public function emailverfiy(){
 		$email = $this->uri->segment(3);

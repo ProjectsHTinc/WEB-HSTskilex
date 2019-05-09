@@ -63,11 +63,19 @@ Class Loginmodel extends CI_Model
          return $resultset->result();
        }
 
-	   function getadminuser($user_id){
-         $query="SELECT ep.*,eu.* From edu_users as eu left join edu_staff_details as ep on eu.user_master_id=ep.id AND eu.user_type='1' OR eu.user_type='2' WHERE eu.user_id='$user_id'";
+       function get_staff_details($staff_id){
+        $id=base64_decode($staff_id)/98765;
+       $query="SELECT * From login_admin  WHERE id='$id'";
+        $resultset=$this->db->query($query);
+        return $resultset->result();
+       }
+
+       function get_all_staff(){
+         $query="SELECT * From login_admin  WHERE admin_type='2' ORDER BY id DESC";
          $resultset=$this->db->query($query);
          return $resultset->result();
        }
+
 
        function update_password($current_password,$new_password,$confrim_password,$user_id){
             $pwd=md5($new_password);
@@ -102,8 +110,39 @@ Class Loginmodel extends CI_Model
              echo "true";
          }
        }
-       function checkmobile($phone){
-       $select="SELECT * FROM user_master Where mobile='$phone'";
+
+
+       function check_staff_email_exist($email,$id){
+         $select="SELECT * FROM login_admin Where email='$email' AND id!='$id'";
+         $result=$this->db->query($select);
+         if($result->num_rows()>0){
+             echo "false";
+           }else{
+             echo "true";
+         }
+       }
+       function check_staff_phone_exist($phone,$id){
+         $select="SELECT * FROM login_admin Where phone='$phone' AND id!='$id'";
+         $result=$this->db->query($select);
+         if($result->num_rows()>0){
+              echo "false";
+           }else{
+             echo "true";
+         }
+       }
+
+
+       function checkphone($phone){
+       $select="SELECT * FROM login_admin Where phone='$phone'";
+         $result=$this->db->query($select);
+         if($result->num_rows()>0){
+           echo "false";
+           }else{
+             echo "true";
+         }
+       }
+       function checkusername($username){
+       $select="SELECT * FROM login_admin Where username='$username'";
          $result=$this->db->query($select);
          if($result->num_rows()>0){
            echo "false";
@@ -112,25 +151,7 @@ Class Loginmodel extends CI_Model
          }
        }
        function checkemail($email){
-         $select="SELECT * FROM user_master Where email='$email'";
-           $result=$this->db->query($select);
-           if($result->num_rows()>0){
-             echo "false";
-             }else{
-               echo "true";
-           }
-       }
-       function check_ins_code($institute_code){
-         $select="SELECT * FROM user_master Where institute_code='$institute_code'";
-           $result=$this->db->query($select);
-           if($result->num_rows()>0){
-             echo "false";
-             }else{
-               echo "true";
-           }
-       }
-       function check_ins_name($institute_name){
-         $select="SELECT * FROM user_details Where institute_name='$institute_name'";
+         $select="SELECT * FROM login_admin Where email='$email'";
            $result=$this->db->query($select);
            if($result->num_rows()>0){
              echo "false";
@@ -139,23 +160,33 @@ Class Loginmodel extends CI_Model
            }
        }
 
-       function check_otp($otp,$last_insert){
-         $select="SELECT * FROM user_master Where mobile_otp='$otp' AND id='$last_insert'";
-           $result=$this->db->query($select);
-           if($result->num_rows()==1){
-             $update="UPDATE user_master SET mobile_verify='Y' WHERE id='$last_insert'";
-              $result=$this->db->query($update);
-             $data = array("status" => "success","last_id"=>$last_insert);
-             return $data;
-             }else{
-               $data = array("status" => "failed","msg"=>"Invalid OTP");
-               return $data;
-           }
-       }
+
+      function get_register_staff($name,$email,$phone,$username,$city,$address,$gender,$status,$user_id){
+        $digits = 8;
+        $OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+        $password=md5($OTP);
+        $select="SELECT * FROM login_admin Where email='$email'";
+        $result=$this->db->query($select);
+        if($result->num_rows()==0){
+          $insert="INSERT INTO login_admin (admin_type,name,password,email,phone,username,city,address,gender,status,created_by,created_at) VALUES ('2','$name','$password','$email','$phone','$username','$city','$address','$gender','$status','$user_id',NOW())";
+            $resultset=$this->db->query($insert);
+            if($resultset){
+              $data = array("status" => "success");
+              return $data;
+            }else{
+              $data = array("status" => "failed");
+              return $data;
+            }
+        }else{
+          $data = array("status" => "already exist");
+          return $data;
+        }
+      }
+
+
 
 	   function update_profile($email,$phone,$name,$city,$address,$gender,$user_id){
 			 $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email' WHERE id='$user_id'";
-
 			$result = $this->db->query($select);
 				if($result){
 					$data = array("status" => "success");
@@ -164,6 +195,19 @@ Class Loginmodel extends CI_Model
 				}
 			return $data;
        }
+
+
+ 	   function update_staff_profile($email,$phone,$name,$city,$address,$gender,$user_id,$id,$status){
+       $staff_id=base64_decode($id)/98765;
+ 			 $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status' WHERE id='$staff_id'";
+ 			$result = $this->db->query($select);
+ 				if($result){
+ 					$data = array("status" => "success");
+ 				}else{
+ 					$data = array("status" => "failed");
+ 				}
+ 			return $data;
+        }
 
 
        function check_current_password($current_password,$user_id){

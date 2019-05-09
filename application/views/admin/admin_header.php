@@ -7,15 +7,18 @@
   <title>Skilex-Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-  <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.addons.css"> -->
+
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
+   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
   <script   src="https://code.jquery.com/jquery-3.4.1.js"   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
   <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
+  <!-- <script src="<?php echo base_url();  ?>assets/admin/js/data-table.js"></script> -->
   <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 
 </head>
 
@@ -43,8 +46,8 @@
                   <div class="col-group col-md-3">
                     <p class="category-heading">Staff</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">Create Staff</a></li>
-                      <li class="nav-item"><a class="nav-link" href="">Staff list</a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create Staff</a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff list</a></li>
                     </ul>
                   </div>
                   <div class="col-group col-md-3">

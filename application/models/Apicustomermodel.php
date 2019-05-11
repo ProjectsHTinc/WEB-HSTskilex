@@ -234,7 +234,7 @@ class Apicustomermodel extends CI_Model {
 						$gender = $rows->gender;
 						$profile_pic = $rows->profile_pic;
 						if ($profile_pic!=''){
-							$user_picurl = base_url().'assets/customers/'.$profile_pic;
+							$profile_pic_url = base_url().'assets/customers/'.$profile_pic;
 						} else {
 							$profile_pic_url = "";
 						}

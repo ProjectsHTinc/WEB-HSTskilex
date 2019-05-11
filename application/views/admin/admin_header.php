@@ -11,14 +11,14 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
-  <script   src="https://code.jquery.com/jquery-3.4.1.js"   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
+  <script   src="<?php echo base_url(); ?>assets/admin/js/jquery.js"></script>
   <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
   <!-- <script src="<?php echo base_url();  ?>assets/admin/js/data-table.js"></script> -->
   <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/swal.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/admin/css/datatable.css"/>
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
 
 </head>
 
@@ -62,6 +62,13 @@
                     <p class="category-heading">Service Person</p>
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="">List of Service person </a></li>
+
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Customers</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">List of Customers </a></li>
 
                     </ul>
                   </div>

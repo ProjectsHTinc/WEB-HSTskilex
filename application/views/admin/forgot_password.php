@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.addons.css"> -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
-  <script   src="https://code.jquery.com/jquery-3.4.1.js"   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
+  <script   src="<?php echo base_url(); ?>assets/admin/js/jquery.js"></script>
   <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/swal.js"></script>
 </head>
 
 <body>

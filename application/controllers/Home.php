@@ -146,7 +146,37 @@ class Home extends CI_Controller {
 		}
 
 
+		public function get_all_customer_details(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$data['res']=$this->loginmodel->get_all_customer_details();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/customer/view_customers',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
 
+		}
+
+
+		public function get_customer_details(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$cust_id=$this->uri->segment(3);
+				$data['res']=$this->loginmodel->get_customer_details($cust_id);
+				// print_r($data['res']);exit;
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/customer/view_details',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+		}
 
 
 	public function update_profile(){

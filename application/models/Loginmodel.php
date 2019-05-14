@@ -307,5 +307,21 @@ Class Loginmodel extends CI_Model
        }
 
 
+
+
+       function get_all_customer_details(){
+         $query="SELECT lu.*,cd.* FROM login_users AS lu LEFT JOIN  customer_details AS cd  ON lu.id=cd.user_master_id WHERE lu.user_type=5 ORDER BY lu.id DESC";
+         $resultset=$this->db->query($query);
+         return $resultset->result();
+       }
+
+       function get_customer_details($cust_id){
+          $id=base64_decode($cust_id)/98765;
+         $query="SELECT lu.*,cd.full_name,cd.gender,cd.profile_pic,cd.address FROM login_users AS lu LEFT JOIN  customer_details AS cd  ON lu.id=cd.user_master_id WHERE lu.id='$id'";
+         $resultset=$this->db->query($query);
+         return $resultset->result();
+       }
+
+
 }
 ?>

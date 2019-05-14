@@ -68,7 +68,7 @@
                   <div class="col-group col-md-3">
                     <p class="category-heading">Customers</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">List of Customers </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">List of Customers </a></li>
 
                     </ul>
                   </div>

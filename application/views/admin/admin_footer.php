@@ -2,7 +2,7 @@
 <footer class="footer">
           <div class="container clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019
-              <a href="https://happysanztech.com" target="_blank">Happysanz Tech</a>. All rights reserved.</span>
+              <a href="https://happysanztech.com" target="_blank">Happy Sanz Tech</a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted &amp; made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
 </footer>

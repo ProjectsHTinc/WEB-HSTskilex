@@ -183,7 +183,7 @@ class Apicustomermodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 		} else {
-			 $insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, status) VALUES ('". $phone_no . "','". $OTP . "','5','Active')";
+			 $insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, mobile_verify, email_verify, document_verify, status) VALUES ('". $phone_no . "','". $OTP . "','5','N','N','N','Active')";
              $insert_result = $this->db->query($insert_sql);
 			 $user_master_id = $this->db->insert_id();
 			 
@@ -207,7 +207,7 @@ class Apicustomermodel extends CI_Model {
 
 		if($sql_result->num_rows()>0)
 		{
-			$update_sql = "UPDATE login_users SET mobile_verify ='1' WHERE id='$user_master_id'";
+			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 			
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
@@ -334,7 +334,7 @@ class Apicustomermodel extends CI_Model {
 		}
 
 		if ($email != $old_email){
-			$update_sql = "UPDATE login_users SET email ='$email', email_verify = '0' WHERE id ='$user_master_id'";
+			$update_sql = "UPDATE login_users SET email ='$email', email_verify = 'N' WHERE id ='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 		}
 		

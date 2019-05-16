@@ -75,34 +75,23 @@
                 </div>
               </div>
             </li>
+
             <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-atom"></i><span class="menu-title">UI ELEMENTS</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-atom"></i><span class="menu-title">Masters</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
                   <div class="col-group col-md-4">
                     <div class="row">
                       <div class="col-12">
-                        <p class="category-heading">Basic Elements</p>
+                        <p class="category-heading">Masters</p>
                       </div>
                       <div class="col-md-6">
                         <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/accordions.html">Accordion</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/badges.html">Badges</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/breadcrumbs.html">Breadcrumbs</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdown</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/modals.html">Modals</a></li>
+                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_city">City </a></li>
+                          <li class="nav-item"><a class="nav-link" href="">Category </a></li>
                         </ul>
                       </div>
-                      <div class="col-md-6">
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/progress.html">Progress bar</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/pagination.html">Pagination</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/tabs.html">Tabs</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/tooltips.html">Tooltip</a></li>
-                        </ul>
-                      </div>
+
                     </div>
                   </div>
                   <div class="col-group col-md-4">

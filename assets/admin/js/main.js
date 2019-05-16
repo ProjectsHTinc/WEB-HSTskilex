@@ -224,6 +224,66 @@ $.ajax({
 
 
 
+$('#create_city').validate({
+rules: {
+
+    city_name: { required: true,
+              remote: {
+                     url: "checkcity",
+                     type: "post"
+                  }
+        },
+    city_ta_name: { required: true,
+              remote: {
+                     url: "checkcitytamil",
+                     type: "post"
+                  }
+     },
+    latitude: {required: true },
+    longitude: {required: true }
+},
+messages: {
+    longitude:{
+        required :"Enter the longitude"
+    },
+    latitude:{
+        required :"Enter the latitude"
+      },
+    city_name: {
+					 required: "Please Enter City Name.",
+					 remote: "City Name  already in Exist!"
+							 },
+     city_ta_name: {
+           required: "Please Enter City Tamil Name.",
+           remote: "City Tamil Name  Already in Exist!"
+               },
+
+},
+submitHandler: function(form) {
+$.ajax({
+           url: "city_creation",
+           type: 'POST',
+           data: $('#create_city').serialize(),
+           dataType: "json",
+           success: function(response) {
+              var stats=response.status;
+               if (stats=="success") {
+                 swal('City Created successfully')
+                 window.setTimeout(function () {
+                  location.href = "create_city";
+              }, 1000);
+
+             }else{
+                swal(stats);
+                 }
+           }
+       });
+     }
+
+});
+
+
+
 $('#password_change').validate({
 rules: {
         current_password:{

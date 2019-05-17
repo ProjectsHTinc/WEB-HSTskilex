@@ -40,43 +40,6 @@
               <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="link-icon mdi mdi-television"></i><span class="menu-title">DASHBOARD</span></a>
             </li>
             <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">Users</span><i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Staff</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create Staff</a></li>
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff list</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Service Provider</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">List of Provider </a></li>
-
-
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Service Person</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">List of Service person </a></li>
-
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Customers</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">List of Customers </a></li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-atom"></i><span class="menu-title">Masters</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
@@ -88,7 +51,7 @@
                       <div class="col-md-6">
                         <ul class="submenu-item">
                           <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_city">City </a></li>
-                          <li class="nav-item"><a class="nav-link" href="">Category </a></li>
+                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
                         </ul>
                       </div>
 
@@ -139,6 +102,44 @@
                 </div>
               </div>
             </li>
+            <li class="nav-item mega-menu">
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">Users</span><i class="menu-arrow"></i></a>
+              <div class="submenu">
+                <div class="col-group-wrapper row">
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Staff</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create Staff</a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff list</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Service Provider</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">List of Provider </a></li>
+
+
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Service Person</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="">List of Service person </a></li>
+
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-3">
+                    <p class="category-heading">Customers</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">List of Customers </a></li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-flag-outline"></i><span class="menu-title">PAGES</span><i class="menu-arrow"></i></a>
               <div class="submenu">

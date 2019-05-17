@@ -19278,7 +19278,7 @@ ul {
     .table th img, .jsgrid .jsgrid-table th img {
       width: 30px;
       height: 30px;
-      border-radius: 100%; }
+     }
     .table td .badge, .jsgrid .jsgrid-table td .badge,
     .table th .badge, .jsgrid .jsgrid-table th .badge {
       margin-bottom: 0; }

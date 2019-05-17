@@ -284,6 +284,43 @@ $.ajax({
 
 
 
+$('#create_category').validate({
+rules: {
+
+    main_cat_name: { required: true,
+              remote: {
+                     url: "checkcategory",
+                     type: "post"
+                  }
+        },
+    main_cat_ta_name: { required: true,
+              remote: {
+                     url: "checkcategorytamil",
+                     type: "post"
+                  }
+     },
+    cat_pic: {required: true }
+},
+messages: {
+    cat_pic:{
+        required :"Please Select Category Picture"
+    },
+    main_cat_name: {
+					 required: "Please Enter Category Name.",
+					 remote: "Category Name  already in Exist!"
+							 },
+     main_cat_ta_name: {
+           required: "Please Enter Category Tamil Name.",
+           remote: "Category Tamil Name  Already in Exist!"
+               },
+
+}
+});
+
+
+
+
+
 $('#password_change').validate({
 rules: {
         current_password:{

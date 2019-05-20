@@ -252,4 +252,137 @@ class Masters extends CI_Controller {
 
 
 
+		// Sub Category section
+
+		public function create_sub_category(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$id=$this->uri->segment(3);
+				$data['res']=$this->mastermodel->get_all_sub_category($id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/master/create_sub_category',$data);
+				$this->load->view('admin/admin_footer');
+
+			}
+		}
+
+		public function get_sub_category_edit(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $cat_id=$this->uri->segment(3);
+			$data['res']=$this->mastermodel->get_sub_category_edit($cat_id);
+			$this->load->view('admin/admin_header');
+			$this->load->view('admin/master/edit_sub_category',$data);
+			$this->load->view('admin/admin_footer');
+		 }else{
+				redirect('/login');
+		 }
+		}
+
+
+
+		public function sub_category_creation(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
+				$main_cat_id=base64_decode($this->db->escape_str($this->input->post('main_cat_id')))/98765;
+				$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
+				$status=$this->db->escape_str($this->input->post('status'));
+				$profilepic = $_FILES['sub_cat_pic']['name'];
+				if(empty($profilepic)){
+				$cat_pic=' ';
+			}else{
+				$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+				$cat_pic = round(microtime(true)) . '.' . $temp;
+				$uploaddir = 'assets/category/';
+				$profilepic = $uploaddir.$cat_pic;
+				move_uploaded_file($_FILES['sub_cat_pic']['tmp_name'], $profilepic);
+			}
+				$data['res']=$this->mastermodel->sub_category_creation($sub_cat_name,$sub_cat_ta_name,$status,$cat_pic,$user_id,$main_cat_id);
+				if($data['res']['status']=="success"){
+					redirect('masters/create_sub_category/'.$this->input->post('main_cat_id').'');
+				}else{
+					redirect('masters/create_sub_category/'.$this->input->post('main_cat_id').'');
+				}
+
+			}
+		}
+
+
+
+		public function checksubcategory(){
+			$sub_cat_name=$this->input->post('sub_cat_name');
+			$data=$this->mastermodel->checksubcategory($sub_cat_name);
+		}
+
+		public function checksubcategorytamil(){
+			$sub_cat_ta_name=$this->input->post('sub_cat_ta_name');
+			$data=$this->mastermodel->checksubcategorytamil($sub_cat_ta_name);
+		}
+
+
+		public function sub_category_update(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'){
+				$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
+				$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
+				$status=$this->db->escape_str($this->input->post('status'));
+				$cat_old_img=$this->db->escape_str($this->input->post('cat_old_img'));
+				$cat_id=$this->db->escape_str($this->input->post('cat_id'));
+				$main_cat_id=	base64_encode($this->input->post('main_cat_id')*98765);
+				$profilepic = $_FILES['sub_cat_pic']['name'];
+				if(empty($profilepic)){
+				$cat_pic=$cat_old_img;
+			}else{
+				$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+				$cat_pic = round(microtime(true)) . '.' . $temp;
+				$uploaddir = 'assets/category/';
+				$profilepic = $uploaddir.$cat_pic;
+				move_uploaded_file($_FILES['sub_cat_pic']['tmp_name'], $profilepic);
+			}
+				$data['res']=$this->mastermodel->sub_category_update($sub_cat_name,$sub_cat_ta_name,$status,$cat_pic,$user_id,$cat_id);
+				 if($data['res']['status']=="success"){
+						redirect('masters/create_sub_category/'.$main_cat_id.'');
+				 }else{
+						redirect('masters/create_sub_category/'.$main_cat_id.'');
+				 }
+
+			}else {
+				 redirect('/login');
+			}
+		}
+
+
+		public function checksubcategoryexist(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$sub_cat_name=$this->input->post('sub_cat_name');
+				$id=$this->uri->segment(3);
+				$data=$this->mastermodel->checksubcategoryexist($sub_cat_name,$id);
+			}
+		}
+
+		public function checksubcategorytamilexist(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$sub_cat_ta_name=$this->input->post('sub_cat_ta_name');
+				$id=$this->uri->segment(3);
+				$data=$this->mastermodel->checksubcategorytamilexist($sub_cat_ta_name,$id);
+			}
+		}
+
+
+
 }

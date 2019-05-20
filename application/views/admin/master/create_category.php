@@ -55,7 +55,7 @@
           <tr>
               <th>S.no</th>
               <th>Categorys name</th>
-              <th>Categorys Pciture</th>
+              <th>Category Pciture</th>
               <th>Status</th>
               <th>Actions</th>
           </tr>
@@ -68,7 +68,7 @@
                 <td><?php echo $i; ?></td>
               <td><?php echo $rows->main_cat_name; ?> <br><br><?php echo $rows->main_cat_ta_name; ?>
               </td>
-              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:200px;"> </td>
+              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
                 <td><?php if($rows->status=='Inactive'){ ?>
                 <button type="button" class="btn btn-danger btn-fw">Inactive</button>
             <?php   }else{ ?>
@@ -76,7 +76,7 @@
             <?php   }
                ?></td>
               <td><a href="<?php echo base_url(); ?>masters/get_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                <a title="Add Sub-Category" href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-plus-square"></i></a>
+                <a title="Add Sub-Category" href="<?php echo base_url(); ?>masters/create_sub_category/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->main_cat_name; ?>/<?php echo $rows->main_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
               </td>
           </tr>
         <?php  $i++;  }  ?>

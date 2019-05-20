@@ -321,6 +321,9 @@ messages: {
 
 
 
+
+
+
 $('#password_change').validate({
 rules: {
         current_password:{

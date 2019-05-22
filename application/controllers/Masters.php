@@ -385,4 +385,138 @@ class Masters extends CI_Controller {
 
 
 
+		// Create Service for sub Category
+
+
+		public function create_service(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$id=$this->uri->segment(3);
+				$data['res']=$this->mastermodel->get_all_service($id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/master/create_service',$data);
+				$this->load->view('admin/admin_footer');
+
+			}
+		}
+
+
+		public function service_creation(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$service_name=$this->db->escape_str($this->input->post('service_name'));
+				$sub_cat_id=base64_decode($this->db->escape_str($this->input->post('sub_cat_id')))/98765;
+				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
+				$status=$this->db->escape_str($this->input->post('status'));
+				$profilepic = $_FILES['service_pic']['name'];
+				if(empty($profilepic)){
+				$cat_pic=' ';
+			}else{
+				$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+				$cat_pic = round(microtime(true)) . '.' . $temp;
+				$uploaddir = 'assets/category/';
+				$profilepic = $uploaddir.$cat_pic;
+				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
+			}
+				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id);
+				if($data['res']['status']=="success"){
+					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'');
+				}else{
+					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'');
+				}
+
+			}
+		}
+
+
+		public function checkservice(){
+			$service_name=$this->input->post('service_name');
+			$data=$this->mastermodel->checkservice($service_name);
+		}
+
+		public function checkservicetamil(){
+			$service_ta_name=$this->input->post('service_ta_name');
+			$data=$this->mastermodel->checkservicetamil($service_ta_name);
+		}
+
+
+		public function get_service_edit(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $cat_id=$this->uri->segment(3);
+			$data['res']=$this->mastermodel->get_service_edit($cat_id);
+			$this->load->view('admin/admin_header');
+			$this->load->view('admin/master/edit_service',$data);
+			$this->load->view('admin/admin_footer');
+		 }else{
+				redirect('/login');
+		 }
+		}
+
+		public function service_update(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'){
+				$service_name=$this->db->escape_str($this->input->post('service_name'));
+				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
+				$status=$this->db->escape_str($this->input->post('status'));
+				$cat_old_img=$this->db->escape_str($this->input->post('cat_old_img'));
+				$service_id=$this->db->escape_str($this->input->post('service_id'));
+				$main_cat_id=	base64_encode($this->input->post('sub_cat_id')*98765);
+				$profilepic = $_FILES['service_pic']['name'];
+				if(empty($profilepic)){
+				$cat_pic=$cat_old_img;
+			}else{
+				$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+				$cat_pic = round(microtime(true)) . '.' . $temp;
+				$uploaddir = 'assets/category/';
+				$profilepic = $uploaddir.$cat_pic;
+				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
+			}
+				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id);
+				 if($data['res']['status']=="success"){
+						redirect('masters/create_service/'.$main_cat_id.'');
+				 }else{
+						redirect('masters/create_service/'.$main_cat_id.'');
+				 }
+
+			}else {
+				 redirect('/login');
+			}
+		}
+
+
+
+		public function checkserviceexist(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$service_name=$this->input->post('service_name');
+				$id=$this->uri->segment(3);
+				$data=$this->mastermodel->checkserviceexist($service_name,$id);
+			}
+		}
+
+		public function checkservicetamilexist(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$service_ta_name=$this->input->post('service_ta_name');
+				$id=$this->uri->segment(3);
+				$data=$this->mastermodel->checkservicetamilexist($service_ta_name,$id);
+			}
+		}
+
+
+
+
 }

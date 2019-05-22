@@ -304,5 +304,107 @@ Class Mastermodel extends CI_Model
 
 
 
+
+        // Service section
+
+
+        function service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id){
+
+          $check="SELECT * FROM services WHERE service_name='$service_name'";
+          $result=$this->db->query($check);
+          if($result->num_rows()==0){
+
+                  $insert="INSERT INTO services(sub_cat_id,service_name,service_ta_name,status,service_pic,created_at,created_by) VALUES('$sub_cat_id','$service_name','$service_ta_name','$status','$cat_pic',NOW(),'$user_id')";
+                  $result=$this->db->query($insert);
+                  if($result){
+                      $data = array("status" => "success");
+                        return $data;
+                  }else{
+                    $data = array("status" => "failed");
+                      return $data;
+                  }
+
+            }else{
+
+              $data = array("status" => "Already exist");
+                return $data;
+          }
+
+        }
+
+
+        function get_all_service($id){
+            $sub_cat_id=base64_decode($id)/98765;
+          $select="SELECT * FROM services WHERE sub_cat_id='$sub_cat_id' ORDER BY id DESC";
+          $result=$this->db->query($select);
+          return $result->result();
+        }
+
+
+        function get_service_edit($cat_id){
+          $id=base64_decode($cat_id)/98765;
+          $select="SELECT * FROM services WHERE id='$id'";
+          $result=$this->db->query($select);
+          return $result->result();
+        }
+
+        function checkservice($service_name){
+          $select="SELECT * FROM services Where service_name='$service_name'";
+            $result=$this->db->query($select);
+            if($result->num_rows()>0){
+              echo "false";
+              }else{
+                echo "true";
+            }
+        }
+
+        function checkservicetamil($service_ta_name){
+          $select="SELECT * FROM services Where service_ta_name='$service_ta_name'";
+            $result=$this->db->query($select);
+            if($result->num_rows()>0){
+              echo "false";
+              }else{
+                echo "true";
+            }
+        }
+
+
+        function checkserviceexist($service_name,$id){
+           $select="SELECT * FROM services Where service_name='$service_name' AND id!='$id'";
+          $result=$this->db->query($select);
+          if($result->num_rows()>0){
+               echo "false";
+            }else{
+              echo "true";
+          }
+        }
+
+        function checkservicetamilexist($service_ta_name,$id){
+           $select="SELECT * FROM services Where service_ta_name='$service_ta_name' AND id!='$id'";
+          $result=$this->db->query($select);
+          if($result->num_rows()>0){
+               echo "false";
+            }else{
+              echo "true";
+          }
+        }
+
+
+        function service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id){
+          $id=base64_decode($service_id)/98765;
+         $update="UPDATE services SET service_name='$service_name',service_ta_name='$service_ta_name',service_pic='$cat_pic',status='$status',created_by='$user_id',updated_at=NOW() WHERE id='$id'";
+        $result=$this->db->query($update);
+        if($result){
+            $data = array("status" => "success");
+              return $data;
+        }else{
+          $data = array("status" => "failed");
+            return $data;
+        }
+        }
+
+
+
+
 }
 ?>

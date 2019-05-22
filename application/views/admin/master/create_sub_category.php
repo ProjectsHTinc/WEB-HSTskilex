@@ -51,7 +51,7 @@
             <div class="col-md-8 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">List of Category </h4>
+                  <h4 class="card-title">List of Sub Category </h4>
               <table id="example" class="table table-striped table-bordered">
       <thead>
           <tr>
@@ -78,7 +78,7 @@
             <?php   }
                ?></td>
               <td><a href="<?php echo base_url(); ?>masters/get_sub_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                <a title="Add Service" href="<?php echo base_url(); ?>masters/create_sub_category/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-plus-square"></i></a>
+                <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->sub_cat_name; ?>/<?php echo $rows->sub_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
               </td>
           </tr>
         <?php  $i++;  }  ?>
@@ -112,11 +112,11 @@
                            type: "post"
                         }
            },
-          sub_cat_pic: {required: true }
+          sub_cat_pic: {required: true,extension: "jpg,jpeg,png" }
       },
       messages: {
           sub_cat_pic:{
-              required :"Please Select Sub Category Picture"
+              required :"Please Select Sub Category Picture",extension:"File must be JPG OR PNG"
           },
           sub_cat_name: {
       					 required: "Please Enter Sub Category Name.",

@@ -79,11 +79,11 @@
                          type: "post"
                       }
          },
-        cat_pic: {required: false }
+        cat_pic: {required: false,extension: "jpg,jpeg,png" }
     },
     messages: {
         cat_pic:{
-            required :"Please Select Category Picture"
+            required :"Please Select Category Picture",extension:"File must be JPG OR PNG"
         },
         main_cat_name: {
     					 required: "Please Enter Category Name.",

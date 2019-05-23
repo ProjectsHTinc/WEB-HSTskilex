@@ -209,7 +209,7 @@ $.ajax({
                if (stats=="success") {
                  swal('User Created successfully')
                  window.setTimeout(function () {
-                  location.href = "home/get_all_staff";
+                  location.href = "get_all_staff";
               }, 1000);
 
              }else{

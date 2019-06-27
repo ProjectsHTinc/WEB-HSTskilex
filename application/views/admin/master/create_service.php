@@ -21,12 +21,12 @@
 
                     <div class="form-group">
                       <label for="username">Service name (English)</label>
-                      <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Category Name">
+                      <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Service Name">
                       <input type="hidden" class="form-control" id="sub_cat_id" name="sub_cat_id" value="<?php echo $this->uri->segment(3); ?>">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">Service Name(Tamil)</label>
-                      <input type="text" class="form-control" id="service_ta_name" name="service_ta_name" placeholder="Category Tamil Name" >
+                      <input type="text" class="form-control" id="service_ta_name" name="service_ta_name" placeholder="Service Tamil Name" >
                     </div>
                     <div class="form-group">
                       <label for="latitude">Service Picture</label>

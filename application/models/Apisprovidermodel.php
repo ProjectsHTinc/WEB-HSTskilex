@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apicustomermodel extends CI_Model {
+class Apisprovidermodel extends CI_Model {
 
     function __construct()
     {

@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apicustomer extends CI_Controller {
+class Apisman extends CI_Controller {
 
 		function __construct() {
 			 parent::__construct();
-				$this->load->model('apicustomermodel');
+				$this->load->model('apismanmodel');
 				$this->load->helper("url");
 				$this->load->library('session');
 	 }
@@ -72,7 +72,7 @@ class Apicustomer extends CI_Controller {
 
 		$phone_no = $this->input->post("phone_no");
 
-		$data['result']=$this->apicustomermodel->Mobile_check($phone_no);
+		$data['result']=$this->apismanmodel->Mobile_check($phone_no);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -113,7 +113,7 @@ class Apicustomer extends CI_Controller {
 		$device_token = $this->input->post("device_token");
 		$mobiletype = $this->input->post("mobile_type");
 
-		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype);
+		$data['result']=$this->apismanmodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -147,7 +147,7 @@ class Apicustomer extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Email_verifystatus($user_master_id);
+		$data['result']=$this->apismanmodel->Email_verifystatus($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -180,7 +180,7 @@ class Apicustomer extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Email_verification($user_master_id);
+		$data['result']=$this->apismanmodel->Email_verification($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -221,7 +221,7 @@ class Apicustomer extends CI_Controller {
 		$address  = $this->input->post("address");
 		$email  = $this->input->post("email");
 
-		$data['result']=$this->apicustomermodel->Profile_update($user_master_id,$full_name,$gender,$address,$email);
+		$data['result']=$this->apismanmodel->Profile_update($user_master_id,$full_name,$gender,$address,$email);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -242,7 +242,7 @@ class Apicustomer extends CI_Controller {
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
 
-		$data['result']=$this->apicustomermodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$data['result']=$this->apismanmodel->Profile_pic_upload($user_master_id,$profileFileName);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

@@ -16,7 +16,7 @@ class Apisprovidermodel extends CI_Model {
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		// Additional headers
-		$headers .= 'From: Webmaster<hello@happysanz.com>' . "\r\n";
+		$headers .= 'From: Webmaster<admin@skilex.in>' . "\r\n";
 		mail($email,$subject,$email_message,$headers);
 	}
 
@@ -179,11 +179,11 @@ class Apisprovidermodel extends CI_Model {
 			$response = array("status" => "error", "msg" => "User already Exist.");
 
 		} else {
-			$insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, mobile_verify, email_verify, document_verify, status) VALUES ('". $mobile . "','". $OTP . "','3','N','N','N','Active')";
+			$insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, otp, welcome_status, status) VALUES ('3','". $mobile . "','N','". $email . "','N','N','". $OTP . "','N','Active')";
 			$insert_result = $this->db->query($insert_sql);
 			$user_master_id = $this->db->insert_id();
 
-			$insert_query = "INSERT INTO customer_details (user_master_id, full_name,status) VALUES ('". $user_master_id . "','". $name . "','Active')";
+			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_dispaly_status, vendor_verify_status, deposit_status, status) VALUES ('". $user_master_id . "','". $name . "','InActive','Pending','Unpaid','Active')";
 			$insert_result = $this->db->query($insert_query);
 
 			$message_details = "Dear Customer your OTP :".$OTP;
@@ -192,13 +192,12 @@ class Apisprovidermodel extends CI_Model {
 			$enc_user_master_id = base64_encode($user_master_id);
 			
 			$subject = "SKILEX - Verification Email";
-			$email_message = 'Please Click the Verification link. <a href="'. base_url().'home/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
+			$email_message = 'Please Click the Verification link. <a href="'. base_url().'skilex/apisprovider/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			$this->sendMail($email,$subject,$email_message);
 		
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$mobile, "otp"=>$OTP);
 		}
-	
-		
+
 		return $response;
 	}
 
@@ -260,15 +259,15 @@ class Apisprovidermodel extends CI_Model {
 				 $sQuery = "INSERT INTO notification_master (user_master_id,mobile_key,mobile_type) VALUES ('". $user_master_id . "','". $device_token . "','". $mobiletype . "')";
 				 $update_gcm = $this->db->query($sQuery);
 			}
-						
-			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
+
+			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
 			{			
 				foreach ($user_result->result() as $rows)
 				{
 						$user_master_id = $rows->user_master_id;
-						$full_name = $rows->full_name;
+						$full_name = $rows->owner_full_name;
 						$phone_no = $rows->phone_no;
 						$mobile_verify = $rows->mobile_verify;
 						$email = $rows->email;
@@ -281,6 +280,13 @@ class Apisprovidermodel extends CI_Model {
 							$profile_pic_url = "";
 						}
 					  	$address = $rows->address;
+						$city  = $rows->city;
+						$zip   = $rows->zip;
+						$vendor_dispaly_status  = $rows->vendor_dispaly_status;
+						$vendor_verify_status   = $rows->vendor_verify_status;					
+						$refundable_deposit   = $rows->refundable_deposit;
+						$deposit_status    = $rows->deposit_status ;
+						$status    = $rows->status ;
 					  	$user_type = $rows->user_type;
 				}
 			}
@@ -295,6 +301,12 @@ class Apisprovidermodel extends CI_Model {
 					"gender" => $gender,
 					"profile_pic" => $profile_pic_url,
 					"address" => $address,
+					"city" => $city,
+					"vendor_dispaly_status" => $vendor_dispaly_status,
+					"vendor_verify_status" => $vendor_verify_status,
+					"refundable_deposit" => $refundable_deposit,
+					"deposit_status" => $deposit_status,
+					"status" => $status,
 					"user_type" => $user_type
 				);
 
@@ -307,6 +319,26 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### Main Login End ####################//
+
+
+//#################### Email Verification ####################//
+
+	public function Email_verfication($dec_user_master_id)
+	{
+		$update_sql = "UPDATE login_users SET email_verify = 'Y', updated_at=NOW(), updated_by ='".$dec_user_master_id."' WHERE id ='".$dec_user_master_id."'";
+		$update_result = $this->db->query($update_sql);
+
+		if($update_result){
+				$response=array("status" => "success");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Email Verification End ####################//
+
 
 //#################### Email Verify status ####################//
 
@@ -329,6 +361,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Email Verify status End ####################//
 
+
 //#################### Profile Pic Update ####################//
 	public function Profile_pic_upload($user_master_id,$profileFileName)
 	{
@@ -342,7 +375,6 @@ class Apisprovidermodel extends CI_Model {
 //#################### Profile Pic Update End ####################//
 
 
-
 //#################### Category list ####################//
 
 	public function Category_list($user_master_id)
@@ -353,7 +385,7 @@ class Apisprovidermodel extends CI_Model {
 		$category_result = $cat_result->result();
 		$category_count = $cat_result->num_rows();
 
-		if($user_result->num_rows()>0)
+		if($cat_result->num_rows()>0)
 		{
 			$response = array("status" => "success", "msg" => "Category list", "category_count" => $category_count, "category_list"=>$category_result);
 		} else {
@@ -366,7 +398,6 @@ class Apisprovidermodel extends CI_Model {
 //#################### Category list End ####################//
 
 
-
 //#################### Services list ####################//
 
 	public function Services_list($category_id)
@@ -377,7 +408,7 @@ class Apisprovidermodel extends CI_Model {
 		$services_result = $ser_result->result();
 		$services_count = $ser_result->num_rows();
 
-		if($user_result->num_rows()>0)
+		if($ser_result->num_rows()>0)
 		{
 			$response = array("status" => "success", "msg" => "Services list", "service_count" => $services_count, "service_list"=>$services_result);
 		} else {
@@ -388,69 +419,6 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### Services list End ####################//
-
-
-//#################### User Services Add  ####################//
-
-	public function User_add_services($main_cat_id,$sub_cat_id,$service_id)
-	{
-		$sQuery = "INSERT INTO services_sp (user_master_id,mobile_key,mobile_type) VALUES ('". $user_master_id . "','". $device_token . "','". $mobiletype . "')";
-		$update_gcm = $this->db->query($sQuery);
-		
-		$services_result = $ser_result->result();
-		$services_count = $ser_result->num_rows();
-
-		if($user_result->num_rows()>0)
-		{
-			$response = array("status" => "success", "msg" => "Services list", "service_count" => $services_count, "service_list"=>$services_result);
-		} else {
-			$response = array("status" => "error", "msg" => "Services Not Found");
-		}
-		
-		return $response;
-	}
-
-//#################### User Services Add End ####################//
-
-
-
-
-
-
-
-
-//#################### Profile Update ####################//
-
-	public function Profile_update($user_master_id,$full_name,$gender,$address,$email)
-	{
-		$sql = "SELECT * FROM login_users WHERE id ='".$user_master_id."'";
-		$user_result = $this->db->query($sql);
-		$ress = $user_result->result();
-
-		if($user_result->num_rows()>0)
-		{
-			foreach ($user_result->result() as $rows)
-			{
-				  $email_verify = $rows->email_verify;
-				  $old_email = $rows->email;
-			}
-		}
-
-		if ($email != $old_email){
-			$update_sql = "UPDATE login_users SET email ='$email', email_verify = 'N' WHERE id ='$user_master_id'";
-			$update_result = $this->db->query($update_sql);
-		}
-		
-		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
-		$update_result = $this->db->query($update_sql);
-			
-		$response = array("status" => "success", "msg" => "Profile Updated");
-		return $response;
-	}
-
-//#################### Profile Update End ####################//
-
-
 
 
 }

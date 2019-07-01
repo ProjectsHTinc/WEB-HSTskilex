@@ -31,7 +31,6 @@ class Apisprovider extends CI_Controller {
 	}
 
 
-
 	public function checkMethod()
 	{
 		if($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -163,6 +162,27 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function email_verfication()
+	{
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		$user_master_id = $this->uri->segment(3);
+		$dec_user_master_id = base64_decode($user_master_id);
+
+		$data['result']=$this->apisprovidermodel->Email_verfication($dec_user_master_id);
+		
+		if($data['result']['status']=='success'){
+				echo "Success";
+			}else{
+				echo "Error";
+		}
+
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
 	public function email_verify_status()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -201,10 +221,9 @@ class Apisprovider extends CI_Controller {
 	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		$user_master_id = $this->uri->segment(3);
-		//$user_master_id = '3';
 		$profile = $_FILES["profile_pic"]["name"];
 		$profileFileName = time().'-'.$profile;
-		$uploadPicdir = './assets/customers/';
+		$uploadPicdir = './assets/providers/';
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
 
@@ -280,99 +299,6 @@ class Apisprovider extends CI_Controller {
 	}
 
 //-----------------------------------------------//
-
-//-----------------------------------------------//
-
-	public function user_add_services()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Services Add";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-
-		$user_master_id = '';
-		$main_cat_id  = '';
-		$sub_cat_id  = '';
-		$service_id  = '';
-		$price_per_hour = '';
-		$min_price = '';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$service_id  = $this->input->post("service_id");
-		$main_cat_id  = $this->input->post("main_cat_id");
-		$sub_cat_id  = $this->input->post("sub_cat_id");
-
-		$data['result']=$this->apisprovidermodel->User_add_services($user_master_id,$main_cat_id,$sub_cat_id,$service_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-//-----------------------------------------------//
-
-	public function profile_update()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Customer Profile Update";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-
-		$user_master_id  = '';
-		$full_name  = '';
-		$gender  = '';
-		$address  = '';
-		$email  = '';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$full_name  = $this->input->post("full_name");
-		$gender  = $this->input->post("gender");
-		$address  = $this->input->post("address");
-		$email  = $this->input->post("email");
-
-		$data['result']=$this->apisprovidermodel->Profile_update($user_master_id,$full_name,$gender,$address,$email);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-
 
 }
 ?>

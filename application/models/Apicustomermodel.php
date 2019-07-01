@@ -456,28 +456,40 @@ class Apicustomermodel extends CI_Model {
 //#################### Services Details ####################//
 
     function service_details($service_id){
-      $query = "SELECT * from services WHERE id = '$main_cat_id'  AND status = 'Active'";
+      $query = "SELECT * from services WHERE id = '$service_id'  AND status = 'Active'";
       $res = $this->db->query($query);
 
        if($res->num_rows()>0){
           foreach ($res->result() as $rows)
-        {
+        {}
           $service_pic = $rows->service_pic;
           if ($service_pic != ''){
             $service_pic_url = base_url().'assets/category/'.$service_pic;
           }else {
              $service_pic_url = '';
           }
-          $subcatData[]  = array(
+          $subcatData  = array(
               "service_id" => $rows->id,
               "main_cat_id" => $rows->main_cat_id,
               "sub_cat_id" => $rows->sub_cat_id,
               "service_name" => $rows->service_name,
               "service_ta_name" => $rows->service_ta_name,
-              "service_pic_url" => $service_pic_url
+              "service_pic_url" => $service_pic_url,
+              "rate_card"=>$rows->rate_card,
+              "rate_card_details" => $rows->rate_card_details,
+              "rate_card_details_ta" => $rows->rate_card_details_ta,
+              "inclusions" => $rows->inclusions,
+              "inclusions_ta" => $rows->inclusions_ta,
+              "exclusions"=>$rows->exclusions,
+              "exclusions_ta" => $rows->exclusions_ta,
+              "service_procedure" => $rows->service_procedure,
+              "service_procedure_ta"=>$rows->service_procedure_ta,
+              "others" => $rows->others,
+              "others_ta"=>$rows->others_ta
+
           );
-        }
-            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+
+            $response = array("status" => "success", "msg" => "Service Details","service_details"=>$subcatData);
 
       }else{
               $response = array("status" => "error", "msg" => "Services not found");

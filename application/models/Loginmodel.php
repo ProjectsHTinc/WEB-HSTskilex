@@ -161,7 +161,7 @@ Class Loginmodel extends CI_Model
        }
 
 
-      function get_register_staff($name,$email,$phone,$username,$city,$address,$gender,$status,$user_id){
+      function get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id){
         $digits = 8;
         $OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         $password=md5($OTP);
@@ -197,7 +197,7 @@ Class Loginmodel extends CI_Model
         // Additional headers
         $headers .= 'From: skilex<info@skilex.com>' . "\r\n";
         $sent= mail($to,$subject,$htmlContent,$headers);
-          $insert="INSERT INTO login_admin (admin_type,name,password,email,phone,username,city,address,gender,status,created_by,created_at) VALUES ('2','$name','$password','$email','$phone','$username','$city','$address','$gender','$status','$user_id',NOW())";
+          $insert="INSERT INTO login_admin (admin_type,name,password,email,phone,username,city,qualification,address,gender,status,created_by,created_at) VALUES ('2','$name','$password','$email','$phone','$username','$city','$qualification','$address','$gender','$status','$user_id',NOW())";
             $resultset=$this->db->query($insert);
             if($resultset){
               $data = array("status" => "success");
@@ -215,7 +215,7 @@ Class Loginmodel extends CI_Model
 
 
 	   function update_profile($email,$phone,$name,$city,$address,$gender,$user_id){
-			 $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email' WHERE id='$user_id'";
+			 $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',qualification='$qualification',address='$address',gender='$gender',email='$email' WHERE id='$user_id'";
 			$result = $this->db->query($select);
 				if($result){
 					$data = array("status" => "success");
@@ -250,60 +250,47 @@ Class Loginmodel extends CI_Model
            }
        }
 
-       function forgot_password($email){
-         $query="SELECT * FROM login_admin WHERE email='$email'";
+       function update_otp($phone,$otp){
+         $query="SELECT * FROM login_admin WHERE phone='$phone'";
          $result=$this->db->query($query);
          if($result->num_rows()==0){
-           echo "Email Not found";
+           echo "Mobile Number  Not found";
          }else{
-        foreach($result->result() as $row){}
-             $email= $row->email;
-             $name= $row->name;
-             $user_master_id= $row->id;
-             $digits = 8;
-             $OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-             $reset_pwd=md5($OTP);
-             $reset="UPDATE login_admin SET password='$reset_pwd' WHERE id='$user_master_id'";
-             $result_pwd=$this->db->query($reset);
-             $query="SELECT * FROM login_admin WHERE id='$user_master_id'";
-             $resultset=$this->db->query($query);
-             foreach($resultset->result() as $rows){}
-             $to=$email;
-             $subject = '"Password Reset"';
-             $htmlContent = '
-               <html>
-               <head>  <title></title>
-               </head>
-               <body>
-               <p>Hi  '.$name.'</p>
-               <center><p>Hi Your Account Password is Reset.Please Use Below Password to login</p></center>
-                 <table cellspacing="0">
-
-                       <tr>
-                           <th>Password:</th><td>'.$OTP.'</td>
-                       </tr>
-                       <tr>
-                           <th></th><td><a href="'.base_url() .'">Click here  to Login</a></td>
-                       </tr>
-                   </table>
-               </body>
-               </html>';
-
-           // Set content-type header for sending HTML email
-           $headers = "MIME-Version: 1.0" . "\r\n";
-           $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-           // Additional headers
-           $headers .= 'From: skilex<info@skilex.com>' . "\r\n";
-           $sent= mail($to,$subject,$htmlContent,$headers);
-           if($sent){
-             $data= array("status" => "success","msg" => "Password Sent to Registered Email");
+           $query="UPDATE login_admin SET otp='$otp' WHERE phone='$phone'";
+           $result=$this->db->query($query);
+           if($result){
+             $data= array("status" => "success","msg" => "Password Sent to Registered Mobile number");
              return $data;
            }else{
-             $data= array("status" => "failed","msg" => "Invalid Username or Password");
+             $data= array("status" => "failed","msg" => "Invalid Mobile number");
              return $data;
            }
-     }
+         }
 
+       }
+
+       function check_otp_password($cookie_phone,$phone_number_otp){
+         $query="SELECT * FROM login_admin WHERE phone='$cookie_phone' AND otp='$phone_number_otp'";
+         $result=$this->db->query($query);
+         if($result->num_rows()==1){
+           $data= array("status" => "success","msg" => "Otp Verified");
+           return $data;
+         }else{
+             $data= array("status" => "failed","msg" => "Invalid Otp");
+             return $data;
+         }
+       }
+
+       function reset_password($cookie_phone,$new_password,$confrim_password){
+         $query="UPDATE login_admin SET password='$new_password' WHERE phone='$cookie_phone'";
+         $result=$this->db->query($query);
+         if($result){
+           $data= array("status" => "success","msg" => "Password Changed Successfully");
+           return $data;
+         }else{
+           $data= array("status" => "failed","msg" => "Invalid Mobile number");
+           return $data;
+         }
        }
 
 

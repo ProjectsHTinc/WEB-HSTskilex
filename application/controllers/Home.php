@@ -5,9 +5,10 @@ class Home extends CI_Controller {
 		function __construct() {
 			 parent::__construct();
 			    $this->load->helper('url');
+					$this->load->helper('cookie');
 			    $this->load->library('session');
-				$this->load->model('loginmodel');
-				// $this->load->model('usermodel');
+					$this->load->model('loginmodel');
+					$this->load->model('smsmodel');
 	 }
 
 	public function index()	{
@@ -73,10 +74,32 @@ class Home extends CI_Controller {
 		echo json_encode($data['res']);
 	}
 	public function forgot_password(){
-		$email=$this->db->escape_str($this->input->post('email'));
-		$data['res']=$this->loginmodel->forgot_password($email);
+		$phone=$this->db->escape_str($this->input->post('phone_number'));
+		$this->input->set_cookie('cookie_phone', $phone, 3600*2);
+		$otp = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLMNBVCXZ", 5)), 0, 6);
+		$notes="$otp This is Skilex Verification Code.";
+		$data=$this->smsmodel->send_sms($phone,$notes);
+		$data['res']=$this->loginmodel->update_otp($phone,$otp);
 		echo json_encode($data['res']);
 	}
+
+
+	public function check_otp_password(){
+		$phone_number_otp=$this->db->escape_str($this->input->post('phone_number_otp'));
+		$cookie_phone=$this->input->cookie('cookie_phone');
+		$data['res']=$this->loginmodel->check_otp_password($cookie_phone,$phone_number_otp);
+		echo json_encode($data['res']);
+	}
+
+
+	public function reset_password(){
+		$new_password=md5($this->db->escape_str($this->input->post('new_password')));
+		$confrim_password=$this->db->escape_str($this->input->post('confrim_password'));
+		$cookie_phone=$this->input->cookie('cookie_phone');
+		$data['res']=$this->loginmodel->reset_password($cookie_phone,$new_password,$confrim_password);
+		echo json_encode($data['res']);
+	}
+
 
 
 
@@ -119,10 +142,11 @@ class Home extends CI_Controller {
 		$phone=$this->db->escape_str($this->input->post('phone'));
 		$username=$this->db->escape_str($this->input->post('username'));
 		$city=$this->db->escape_str($this->input->post('city'));
+		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
 		$status=$this->db->escape_str($this->input->post('status'));
-		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$address,$gender,$status,$user_id);
+		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id);
 		echo json_encode($data['res']);
 		}else{
 			redirect('/');
@@ -188,9 +212,10 @@ class Home extends CI_Controller {
 		$phone=$this->db->escape_str($this->input->post('phone'));
 		$name=$this->db->escape_str($this->input->post('name'));
 		$city=$this->db->escape_str($this->input->post('city'));
+		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
-		$data['res']=$this->loginmodel->update_profile($email,$phone,$name,$city,$address,$gender,$user_id);
+		$data['res']=$this->loginmodel->update_profile($email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
 		echo json_encode($data['res']);
 		}else{
 

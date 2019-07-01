@@ -71,7 +71,6 @@ class Apicustomer extends CI_Controller {
 		$phone_no = '';
 
 		$phone_no = $this->input->post("phone_no");
-
 		$data['result']=$this->apicustomermodel->Mobile_check($phone_no);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -214,7 +213,7 @@ class Apicustomer extends CI_Controller {
 		$gender  = '';
 		$address  = '';
 		$email  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$full_name  = $this->input->post("full_name");
 		$gender  = $this->input->post("gender");
@@ -337,10 +336,10 @@ class Apicustomer extends CI_Controller {
 
 		$main_cat_id  = '';
 		$sub_cat_id  = '';
-		
+
 		$main_cat_id  = $this->input->post("main_cat_id");
 		$sub_cat_id  = $this->input->post("sub_cat_id");
-		
+
 		$data['result']=$this->apicustomermodel->Services_list($main_cat_id,$sub_cat_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -348,6 +347,38 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function service_details()
+	{
+		 //$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$service_id  = '';
+
+		$service_id  = $this->input->post("service_id");
+
+		$data['result']=$this->apicustomermodel->service_details($service_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -380,7 +411,7 @@ class Apicustomer extends CI_Controller {
 		$service_latlon  = '';
 		$service_location  = '';
 		$service_address  = '';
-		
+
 		$customer_id  = $this->input->post("customer_id");
 		$contact_person  = $this->input->post("contact_person");
 		$main_cat_id  = $this->input->post("main_cat_id");
@@ -391,7 +422,7 @@ class Apicustomer extends CI_Controller {
 		$service_latlon  = $this->input->post("service_latlon");
 		$service_location  = $this->input->post("service_location");
 		$service_address  = $this->input->post("service_address");
-		
+
 		$data['result']=$this->apicustomermodel->Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -421,10 +452,10 @@ class Apicustomer extends CI_Controller {
 			return;
 		}
 		$user_master_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
-		
-		
+
+
 		$data['result']=$this->apicustomermodel->Service_order_list($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -457,12 +488,12 @@ class Apicustomer extends CI_Controller {
 		$service_order_id = '';
 		$ratings = '';
 		$reviews = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$ratings  = $this->input->post("ratings");
 		$reviews  = $this->input->post("reviews");
-				
+
 		$data['result']=$this->apicustomermodel->Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -493,9 +524,9 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$service_order_id = '';
-		
+
 		$service_order_id  = $this->input->post("service_order_id");
-				
+
 		$data['result']=$this->apicustomermodel->Service_reviewslist($service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);

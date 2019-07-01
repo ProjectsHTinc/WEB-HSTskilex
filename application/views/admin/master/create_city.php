@@ -19,11 +19,11 @@
 
                     <div class="form-group">
                       <label for="username">City name (English)</label>
-                      <input type="text" class="form-control" id="city_name" name="city_name" placeholder="Username">
+                      <input type="text" class="form-control" id="city_name" name="city_name" placeholder="City Name">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">City Name(Tamil)</label>
-                      <input type="text" class="form-control" id="city_ta_name" name="city_ta_name" placeholder="Name" >
+                      <input type="text" class="form-control" id="city_ta_name" name="city_ta_name" placeholder="City Tamil Name" >
                     </div>
                     <div class="form-group">
                       <label for="latitude">Latitude</label>

@@ -22914,7 +22914,12 @@ div.tagsinput {
 .error{
   color: #ff0000;
   font-size: 14px;
+  font-weight: 600;
 
+
+}
+.error:first-letter{
+  text-transform: capitalize
 }
 #res{
     color: #ff0000;

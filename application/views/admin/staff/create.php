@@ -39,6 +39,10 @@
                       <label for="exampleInputCity1">City</label>
                       <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location" name="city">
                     </div>
+                    <div class="form-group">
+                      <label for="exampleInputCity1">Qualification</label>
+                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Qualification" name="qualification">
+                    </div>
 
                     <div class="form-group">
                       <label for="exampleTextarea1">Address</label>

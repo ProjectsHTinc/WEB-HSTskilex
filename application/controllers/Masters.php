@@ -411,6 +411,19 @@ class Masters extends CI_Controller {
 				$service_name=$this->db->escape_str($this->input->post('service_name'));
 				$sub_cat_id=base64_decode($this->db->escape_str($this->input->post('sub_cat_id')))/98765;
 				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
+
+				$rate_card=$this->db->escape_str($this->input->post('rate_card'));
+				$rate_card_details=$this->db->escape_str($this->input->post('rate_card_details'));
+				$rate_card_details_ta=$this->db->escape_str($this->input->post('rate_card_details_ta'));
+				$inclusions=$this->db->escape_str($this->input->post('inclusions'));
+				$inclusions_ta=$this->db->escape_str($this->input->post('inclusions_ta'));
+				$exclusion=$this->db->escape_str($this->input->post('exclusions'));
+				$exclusions_ta=$this->db->escape_str($this->input->post('exclusions_ta'));
+				$service_procedure=$this->db->escape_str($this->input->post('service_procedure'));
+				$service_procedure_ta=$this->db->escape_str($this->input->post('service_procedure_ta'));
+				$others=$this->db->escape_str($this->input->post('others'));
+				$others_ta=$this->db->escape_str($this->input->post('others_ta'));
+
 				$status=$this->db->escape_str($this->input->post('status'));
 				$profilepic = $_FILES['service_pic']['name'];
 				if(empty($profilepic)){
@@ -422,7 +435,7 @@ class Masters extends CI_Controller {
 				$profilepic = $uploaddir.$cat_pic;
 				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
 			}
-				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id);
+				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				if($data['res']['status']=="success"){
 					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'');
 				}else{
@@ -470,6 +483,20 @@ class Masters extends CI_Controller {
 				$cat_old_img=$this->db->escape_str($this->input->post('cat_old_img'));
 				$service_id=$this->db->escape_str($this->input->post('service_id'));
 				$main_cat_id=	base64_encode($this->input->post('sub_cat_id')*98765);
+
+				$rate_card=$this->db->escape_str($this->input->post('rate_card'));
+				$rate_card_details=$this->db->escape_str($this->input->post('rate_card_details'));
+				$rate_card_details_ta=$this->db->escape_str($this->input->post('rate_card_details_ta'));
+				$inclusions=$this->db->escape_str($this->input->post('inclusions'));
+				$inclusions_ta=$this->db->escape_str($this->input->post('inclusions_ta'));
+				$exclusion=$this->db->escape_str($this->input->post('exclusions'));
+				$exclusions_ta=$this->db->escape_str($this->input->post('exclusions_ta'));
+				$service_procedure=$this->db->escape_str($this->input->post('service_procedure'));
+				$service_procedure_ta=$this->db->escape_str($this->input->post('service_procedure_ta'));
+				$others=$this->db->escape_str($this->input->post('others'));
+				$others_ta=$this->db->escape_str($this->input->post('others_ta'));
+
+
 				$profilepic = $_FILES['service_pic']['name'];
 				if(empty($profilepic)){
 				$cat_pic=$cat_old_img;
@@ -480,7 +507,7 @@ class Masters extends CI_Controller {
 				$profilepic = $uploaddir.$cat_pic;
 				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
 			}
-				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id);
+				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				 if($data['res']['status']=="success"){
 						redirect('masters/create_service/'.$main_cat_id.'');
 				 }else{

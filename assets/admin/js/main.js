@@ -47,12 +47,16 @@ submitHandler: function(form) {
 
 $('#forgot_password_form').validate({
 rules: {
-    email: {
-        required: true
+    phone_number: {
+        required: true,  minlength:10,maxlength:10
     }
 },
 messages: {
-    email: "Please Enter Email"
+    phone_number: {
+      required:"Please Enter Mobile number",
+      maxlength:"Maximum 10 digits",
+      minlength:"Minimum 10 digits"
+    }
 },
 submitHandler: function(form) {
 $.ajax({
@@ -63,10 +67,9 @@ $.ajax({
            success: function(response) {
               var stats=response.status;
                if (stats=="success") {
-                 swal('Password is Sent to  Regsitered Email')
-                 window.setTimeout(function () {
-                  location.href = "login";
-              }, 5000);
+                 swal('OTP Sent to Mobile number')
+                $('#reset_otp_form_section').show();
+              $('#forgot_password_mobile_number_section').hide();
 
              }else{
                  $('#res').html(response.msg)
@@ -74,7 +77,83 @@ $.ajax({
            }
        });
      }
+});
 
+
+
+$('#reset_otp_form').validate({
+rules: {
+    phone_number_otp: {
+        required: true
+        }
+},
+messages: {
+    phone_number_otp: {
+      required:"Please Enter Mobile number"
+    }
+},
+submitHandler: function(form) {
+$.ajax({
+           url: "home/check_otp_password",
+           type: 'POST',
+           data: $('#reset_otp_form').serialize(),
+           dataType: "json",
+           success: function(response) {
+              var stats=response.status;
+               if (stats=="success") {
+              swal('OTP Verified')
+              $('#password_form_section').show();
+              $('#forgot_password_mobile_number_section').hide();
+              $('#reset_otp_form_section').hide();
+
+             }else{
+                 $('#res_otp').html(response.msg)
+                 }
+           }
+       });
+     }
+});
+
+
+$('#reset_password_form').validate({
+rules: {
+    new_password: {
+        required: true,  minlength : 6,maxlength:12,
+      },
+      confrim_password: {
+          required: true,
+          equalTo : '[name="new_password"]',
+        }
+},
+messages: {
+    new_password: {
+      required:"Please Enter New Password"
+    },
+    confrim_password: {
+            required: "Enter Confirm Password",
+            notEqualTo: "Password Should Match"
+    }
+},
+submitHandler: function(form) {
+$.ajax({
+           url: "home/reset_password",
+           type: 'POST',
+           data: $('#reset_password_form').serialize(),
+           dataType: "json",
+           success: function(response) {
+              var stats=response.status;
+               if (stats=="success") {
+              swal('Password changed successfully')
+              window.setTimeout(function () {
+               location.href = "login";
+             }, 1000);
+
+             }else{
+                 $('#res_otp').html(response.msg)
+                 }
+           }
+       });
+     }
 });
 
 
@@ -165,6 +244,7 @@ rules: {
     gender: {required: true },
     address: {required: true },
     city: {required: true },
+    qualification: {required: true },
     phone: {required: true,  remote: {
              url: "checkphone",
              type: "post"
@@ -176,6 +256,9 @@ messages: {
       required :"Please enter name"
     },
     city:{
+      required :"Please enter city"
+    },
+    qualification:{
       required :"Please enter city"
     },
     address:{

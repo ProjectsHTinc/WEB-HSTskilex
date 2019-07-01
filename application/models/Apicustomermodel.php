@@ -105,12 +105,7 @@ class Apicustomermodel extends CI_Model {
 					null
 				);
 
-// 			//if the push don't have an image give null in place of image
-// 			 $push = new Push(
-// 			 		'HEYLA',
-// 		     		'Hi Testing from maran',
-// 			 		'http://heylaapp.com/assets/notification/images/event.png'
-// 			 	);
+
 
     		//getting the push from push object
     		$mPushNotification = $push->getPush();
@@ -172,21 +167,21 @@ class Apicustomermodel extends CI_Model {
 
 		$digits = 6;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-			
+
 		if($user_result->num_rows()>0)
 		{
 			foreach ($user_result->result() as $rows)
 			{
 				  $user_master_id = $rows->id;
 			}
-			
+
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 		} else {
 			 $insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, mobile_verify, email_verify, document_verify, status) VALUES ('". $phone_no . "','". $OTP . "','5','N','N','N','Active')";
              $insert_result = $this->db->query($insert_sql);
 			 $user_master_id = $this->db->insert_id();
-			 
+
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
@@ -209,7 +204,7 @@ class Apicustomermodel extends CI_Model {
 		{
 			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
 			$gcm_result = $this->db->query($gcmQuery);
 			$gcm_ress = $gcm_result->result();
@@ -218,11 +213,11 @@ class Apicustomermodel extends CI_Model {
 				 $sQuery = "INSERT INTO notification_master (user_master_id,mobile_key,mobile_type) VALUES ('". $user_master_id . "','". $device_token . "','". $mobiletype . "')";
 				 $update_gcm = $this->db->query($sQuery);
 			}
-						
+
 			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, customer_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
-			{			
+			{
 				foreach ($user_result->result() as $rows)
 				{
 						$user_master_id = $rows->user_master_id;
@@ -242,7 +237,7 @@ class Apicustomermodel extends CI_Model {
 					  	$user_type = $rows->user_type;
 				}
 			}
-			
+
 			$userData  = array(
 					"user_master_id" => $user_master_id,
 					"full_name" => $full_name,
@@ -308,8 +303,8 @@ class Apicustomermodel extends CI_Model {
 		$subject = "SKILEX - Verification Email";
 		$email_message = 'Please Click the Verification link. <a href="'. base_url().'home/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 		$this->sendMail($email_id,$subject,$email_message);
-		
-		
+
+
 		$response = array("status" => "success", "msg" => "Email Verification Sent");
 		return $response;
 	}
@@ -337,10 +332,10 @@ class Apicustomermodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET email ='$email', email_verify = 'N' WHERE id ='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 		}
-		
+
 		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
-			
+
 		$response = array("status" => "success", "msg" => "Profile Updated");
 		return $response;
 	}
@@ -364,7 +359,7 @@ class Apicustomermodel extends CI_Model {
 	{
 			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
 			$res = $this->db->query($query);
-		
+
 			 if($res->num_rows()>0){
 			    foreach ($res->result() as $rows)
 				{
@@ -374,7 +369,7 @@ class Apicustomermodel extends CI_Model {
 					}else {
 						 $cat_pic_url = '';
 					}
-					
+
 					$catData[]  = array(
 							"cat_id" => $rows->id,
 							"cat_name" => $rows->main_cat_name,
@@ -397,7 +392,7 @@ class Apicustomermodel extends CI_Model {
 	{
 			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active'";
 			$res = $this->db->query($query);
-		
+
 			 if($res->num_rows()>0){
 			    foreach ($res->result() as $rows)
 				{
@@ -430,7 +425,7 @@ class Apicustomermodel extends CI_Model {
 	{
 			$query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
 			$res = $this->db->query($query);
-		
+
 			 if($res->num_rows()>0){
 			    foreach ($res->result() as $rows)
 				{
@@ -462,7 +457,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Service Order ####################//
 	public function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
 	{
-		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES 
+		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES
 						('". $customer_id . "','". $contact_person . "','". $main_cat_id . "', '". $sub_cat_id . "','". $service_id . "','". $order_date . "','". $order_timeslot . "','". $service_latlon . "','". $service_location . "', '". $service_address . "','Booked', now(),'". $customer_id . "')";
 		 $insert_result = $this->db->query($insert_sql);
 		$response = array("status" => "success", "msg" => "Service Booked");
@@ -482,7 +477,7 @@ class Apicustomermodel extends CI_Model {
 		 } else {
 			 $response = array("status" => "error", "msg" => "Service order list not found");
 		 }
-			 
+
 		return $response;
 	}
 //#################### Service Order List End ####################//
@@ -491,7 +486,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Service Reviews Add ####################//
 	public function Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews)
 	{
-		$insert_sql = "INSERT INTO service_reviews (service_order_id, customer_id, rating, review, status,created_at,created_by) VALUES 
+		$insert_sql = "INSERT INTO service_reviews (service_order_id, customer_id, rating, review, status,created_at,created_by) VALUES
 					('". $service_order_id . "','". $user_master_id . "','". $ratings . "', '". $reviews . "','Pending', now(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_sql);
 		$response = array("status" => "success", "msg" => "Review Added");
@@ -512,7 +507,7 @@ class Apicustomermodel extends CI_Model {
 		 } else {
 			 $response = array("status" => "error", "msg" => "Service order Reviews not found");
 		 }
-		 
+
 		 return $response;
 	}
 //#################### Service Reviews Add End ####################//

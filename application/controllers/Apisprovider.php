@@ -46,6 +46,45 @@ class Apisprovider extends CI_Controller {
 		return TRUE;
 	}
 
+
+//-----------------------------------------------//
+
+	public function register()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Registration";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$name = '';
+		$mobile = '';
+		$email = '';
+
+		$name = $this->input->post("name");
+		$mobile = $this->input->post("mobile");
+		$email = $this->input->post("email");
+
+		$data['result']=$this->apisprovidermodel->Register($name,$mobile,$email);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+
+//-----------------------------------------------//
+
 //-----------------------------------------------//
 
 	public function mobile_check()
@@ -78,6 +117,7 @@ class Apisprovider extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
 
 //-----------------------------------------------//
 
@@ -144,7 +184,6 @@ class Apisprovider extends CI_Controller {
 		}
 
 		$user_master_id  = '';
-
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->Email_verifystatus($user_master_id);
@@ -154,9 +193,32 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+
 //-----------------------------------------------//
 
-	public function email_verification()
+    public function profile_pic_upload()
+	{
+	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		$user_master_id = $this->uri->segment(3);
+		//$user_master_id = '3';
+		$profile = $_FILES["profile_pic"]["name"];
+		$profileFileName = time().'-'.$profile;
+		$uploadPicdir = './assets/customers/';
+		$profilepic = $uploadPicdir.$profileFileName;
+		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
+
+		$data['result']=$this->apisprovidermodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function category_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -168,7 +230,7 @@ class Apisprovider extends CI_Controller {
 		if($_POST == FALSE)
 		{
 			$res = array();
-			$res["opn"] = "Email Verification";
+			$res["opn"] = "Main category list";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
 
@@ -177,15 +239,97 @@ class Apisprovider extends CI_Controller {
 		}
 
 		$user_master_id  = '';
-
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apisprovidermodel->Email_verification($user_master_id);
+		$data['result']=$this->apisprovidermodel->Category_list($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function services_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services list";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$category_id  = '';
+		$category_id  = $this->input->post("category_id");
+
+		$data['result']=$this->apisprovidermodel->Services_list($category_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function user_add_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id = '';
+		$main_cat_id  = '';
+		$sub_cat_id  = '';
+		$service_id  = '';
+		$price_per_hour = '';
+		$min_price = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_id  = $this->input->post("service_id");
+		$main_cat_id  = $this->input->post("main_cat_id");
+		$sub_cat_id  = $this->input->post("sub_cat_id");
+
+		$data['result']=$this->apisprovidermodel->User_add_services($user_master_id,$main_cat_id,$sub_cat_id,$service_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+
+
+
+
+
+
 
 //-----------------------------------------------//
 
@@ -228,26 +372,7 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-//-----------------------------------------------//
 
-    public function profile_pic_upload()
-	{
-	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		$user_master_id = $this->uri->segment(3);
-		//$user_master_id = '3';
-		$profile = $_FILES["profile_pic"]["name"];
-		$profileFileName = time().'-'.$profile;
-		$uploadPicdir = './assets/customers/';
-		$profilepic = $uploadPicdir.$profileFileName;
-		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
-
-		$data['result']=$this->apisprovidermodel->Profile_pic_upload($user_master_id,$profileFileName);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
 
 }
 ?>

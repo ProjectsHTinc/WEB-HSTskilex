@@ -10,7 +10,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Email ####################//
 
-	public function sendMail($email,$subject,$email_message)
+	 function sendMail($email,$subject,$email_message)
 	{
 		// Set content-type header for sending HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
@@ -25,7 +25,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### SMS ####################//
 
-	public function sendSMS($Phoneno,$Message)
+	 function sendSMS($Phoneno,$Message)
 	{
         //Your authentication key
         $authKey = "191431AStibz285a4f14b4";
@@ -87,7 +87,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Notification ####################//
 
-	public function sendNotification($gcm_key,$title,$message,$mobiletype)
+	 function sendNotification($gcm_key,$title,$message,$mobiletype)
 	{
 
 		if ($mobiletype =='1'){
@@ -159,7 +159,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Mobile Check ####################//
 
-	public function Mobile_check($phone_no)
+	 function Mobile_check($phone_no)
 	{
 		$sql = "SELECT * FROM login_users WHERE phone_no ='".$phone_no."' AND user_type = '5' AND status='Active'";
 		$user_result = $this->db->query($sql);
@@ -195,7 +195,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Login ####################//
 
-	public function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
+	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
 	{
 		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '5' AND status='Active'";
 		$sql_result = $this->db->query($sql);
@@ -263,7 +263,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Email Verify status ####################//
 
-	public function Email_verifystatus($user_master_id)
+	 function Email_verifystatus($user_master_id)
 	{
 		$sql = "SELECT * FROM login_users WHERE id ='".$user_master_id."' AND user_type = '5' AND status='Active'";
 		$user_result = $this->db->query($sql);
@@ -285,7 +285,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Email Verify status ####################//
 
-	public function Email_verification($user_master_id)
+	 function Email_verification($user_master_id)
 	{
 		$sql = "SELECT * FROM login_users WHERE id ='".$user_master_id."' AND user_type = '5' AND status='Active'";
 		$user_result = $this->db->query($sql);
@@ -313,7 +313,7 @@ class Apicustomermodel extends CI_Model {
 
 //#################### Profile Update ####################//
 
-	public function Profile_update($user_master_id,$full_name,$gender,$address,$email)
+	 function Profile_update($user_master_id,$full_name,$gender,$address,$email)
 	{
 		$sql = "SELECT * FROM login_users WHERE id ='".$user_master_id."'";
 		$user_result = $this->db->query($sql);
@@ -343,7 +343,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Profile Update End ####################//
 
 //#################### Profile Pic Update ####################//
-	public function Profile_pic_upload($user_master_id,$profileFileName)
+	 function Profile_pic_upload($user_master_id,$profileFileName)
 	{
             $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
@@ -355,7 +355,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Profile Pic Update End ####################//
 
 //#################### Main Category ####################//
-	public function View_maincategory($user_master_id)
+	 function View_maincategory($user_master_id)
 	{
 			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
 			$res = $this->db->query($query);
@@ -388,7 +388,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Main Category End ####################//
 
 //#################### Sub Category ####################//
-	public function View_subcategory($main_cat_id)
+	 function View_subcategory($main_cat_id)
 	{
 			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active'";
 			$res = $this->db->query($query);
@@ -421,7 +421,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Sub Category End ####################//
 
 //#################### Services List ####################//
-	public function Services_list($main_cat_id,$sub_cat_id)
+	 function Services_list($main_cat_id,$sub_cat_id)
 	{
 			$query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
 			$res = $this->db->query($query);
@@ -453,9 +453,46 @@ class Apicustomermodel extends CI_Model {
 			return $response;
 	}
 //#################### Services List End ####################//
+//#################### Services Details ####################//
+
+    function service_details($service_id){
+      $query = "SELECT * from services WHERE id = '$main_cat_id'  AND status = 'Active'";
+      $res = $this->db->query($query);
+
+       if($res->num_rows()>0){
+          foreach ($res->result() as $rows)
+        {
+          $service_pic = $rows->service_pic;
+          if ($service_pic != ''){
+            $service_pic_url = base_url().'assets/category/'.$service_pic;
+          }else {
+             $service_pic_url = '';
+          }
+          $subcatData[]  = array(
+              "service_id" => $rows->id,
+              "main_cat_id" => $rows->main_cat_id,
+              "sub_cat_id" => $rows->sub_cat_id,
+              "service_name" => $rows->service_name,
+              "service_ta_name" => $rows->service_ta_name,
+              "service_pic_url" => $service_pic_url
+          );
+        }
+            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+
+      }else{
+              $response = array("status" => "error", "msg" => "Services not found");
+      }
+
+      return $response;
+
+   }
+
+//#################### Services Details  ####################//
+
+
 
 //#################### Service Order ####################//
-	public function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
+	 function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
 	{
 		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES
 						('". $customer_id . "','". $contact_person . "','". $main_cat_id . "', '". $sub_cat_id . "','". $service_id . "','". $order_date . "','". $order_timeslot . "','". $service_latlon . "','". $service_location . "', '". $service_address . "','Booked', now(),'". $customer_id . "')";
@@ -466,7 +503,7 @@ class Apicustomermodel extends CI_Model {
 //#################### Service Order End ####################//
 
 //#################### Service Order List ####################//
-	public function Service_order_list ($user_master_id)
+	 function Service_order_list ($user_master_id)
 	{
 		$query = "SELECT * from service_orders WHERE customer_id = '$user_master_id'";
 		$res = $this->db->query($query);
@@ -484,7 +521,7 @@ class Apicustomermodel extends CI_Model {
 
 
 //#################### Service Reviews Add ####################//
-	public function Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews)
+	 function Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews)
 	{
 		$insert_sql = "INSERT INTO service_reviews (service_order_id, customer_id, rating, review, status,created_at,created_by) VALUES
 					('". $service_order_id . "','". $user_master_id . "','". $ratings . "', '". $reviews . "','Pending', now(),'". $user_master_id . "')";
@@ -496,7 +533,7 @@ class Apicustomermodel extends CI_Model {
 
 
 //#################### Service Reviews Add ####################//
-	public function Service_reviewslist($service_order_id)
+	 function Service_reviewslist($service_order_id)
 	{
 		$query = "SELECT * from service_reviews WHERE service_order_id = '$service_order_id'";
 		$res = $this->db->query($query);

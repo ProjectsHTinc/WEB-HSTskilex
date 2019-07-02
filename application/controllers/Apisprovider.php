@@ -385,7 +385,8 @@ class Apisprovider extends CI_Controller {
 		$doc_proof_number = $this->uri->segment(5);
 		
 		$document = $_FILES["document_file"]["name"];
-		$documentFileName = $user_master_id.'-'.time().'-'.$document;
+		$extension  = end((explode(".", $document)));
+		$documentFileName = $user_master_id.'-'.time().'.'.$extension ;
 		$uploaddir = './assets/providers/documents/';
 		$documentFile = $uploaddir.$documentFileName;
 		move_uploaded_file($_FILES['document_file']['tmp_name'], $documentFile);

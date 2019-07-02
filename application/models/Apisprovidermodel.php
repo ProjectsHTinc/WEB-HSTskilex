@@ -499,6 +499,25 @@ class Apisprovidermodel extends CI_Model {
 	}
 //#################### Document Upload End ####################//
 
+//#################### Document list ####################//
+
+	public function List_user_doc($user_master_id)
+	{
+		$sQuery = "SELECT A.`id`,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
+		$doc_result = $this->db->query($sQuery); 
+		$document_result = $doc_result->result();
+
+		if($doc_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Documents list", "document_result"=>$document_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Documents Not Found");
+		}
+		return $response;
+	}
+
+//#################### Document list End ####################//
+
 }
 
 ?>

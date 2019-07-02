@@ -405,7 +405,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Services_list($category_id)
 	{
-		$sQuery = "SELECT A.id AS service_id,A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C,sub_cat_ta_name,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
+		$sQuery = "SELECT A.id AS service_id,A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C.sub_cat_ta_name,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
 		$ser_result = $this->db->query($sQuery); 
 		
 		$services_result = $ser_result->result();

@@ -378,6 +378,25 @@ class Apisprovidermodel extends CI_Model {
 //#################### Profile Pic Update End ####################//
 
 
+//#################### Company Details ####################//
+
+	public function Company_detail_add($user_master_id,$company_name,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type)
+	{
+		$sQuery = "INSERT INTO service_provider_company_details (user_master_id,company_name,company_address,company_city,company_state,company_zip,company_info,company_building_type,status,created_at,created_by) VALUES ('". $user_master_id . "','". $company_name . "','". $company_address . "','". $company_city . "','". $company_state . "','". $company_zip . "','". $company_info . "','". $company_building_type . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Company Details Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Company Details End ####################//
+
+
 //#################### Category list ####################//
 
 	public function Category_list($user_master_id)
@@ -441,6 +460,7 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### User Add Services End ####################//
+
 
 //#################### Master ID Proff list ####################//
 

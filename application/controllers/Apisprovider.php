@@ -237,6 +237,54 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function company_detail_add()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Company Details Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id = '';
+		$company_name = '';
+		$company_address = '';
+		$company_city = '';
+		$company_state = '';
+		$company_zip  = '';
+		$company_info = '';
+		$company_building_type = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$company_name  = $this->input->post("company_name");
+		$company_address  = $this->input->post("company_address");
+		$company_city  = $this->input->post("company_city");
+		$company_state  = $this->input->post("company_state");
+		$company_zip  = $this->input->post("company_zip");
+		$company_info  = $this->input->post("company_info");
+		$company_building_type  = $this->input->post("company_building_type");
+
+		$data['result']=$this->apisprovidermodel->Company_detail_add($user_master_id,$company_name,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function category_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);

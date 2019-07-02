@@ -452,7 +452,7 @@ class Apisprovidermodel extends CI_Model {
 			$sQuery = "SELECT * FROM document_master WHERE doc_type = 'AddressProof' AND company_doc_type = '".$company_type."' AND status='Active'";
 		}
 		$doc_result = $this->db->query($sQuery); 
-		$document_result = $$doc_result->result();
+		$document_result = $doc_result->result();
 
 		if($doc_result->num_rows()>0)
 		{
@@ -466,14 +466,16 @@ class Apisprovidermodel extends CI_Model {
 //#################### Master ID Proff list End ####################//
 
 //#################### Document Upload ####################//
-	public function Upload_doc($user_master_id,$doc_master_id,$documentFileName)
+	public function Upload_doc($user_master_id,$doc_master_id,$doc_proof_number,$documentFileName)
 	{
-            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName',updated_at =NOW() WHERE user_master_id='$user_master_id'";
-			$update_result = $this->db->query($update_sql);
-			$document_url = base_url().'assets/providers/documents/'.$documentFileName;
+		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		$last_insert_id = $this->db->insert_id();
+		
+		$document_url = base_url().'assets/providers/documents/'.$documentFileName;
 
-			$response = array("status" => "success", "msg" => "Document Uploaded","document_url" =>$document_url);
-			return $response;
+		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"document_url" =>$document_url);
+		return $response;
 	}
 //#################### Document Upload End ####################//
 

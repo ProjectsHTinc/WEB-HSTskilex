@@ -186,7 +186,7 @@ class Apisprovidermodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 			
-			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_dispaly_status, vendor_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','InActive','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
+			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_display_status, vendor_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','Active','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
 			$message_details = "Dear Customer your OTP :".$OTP;
@@ -285,7 +285,7 @@ class Apisprovidermodel extends CI_Model {
 					  	$address = $rows->address;
 						$city  = $rows->city;
 						$zip   = $rows->zip;
-						$vendor_dispaly_status  = $rows->vendor_dispaly_status;
+						$vendor_display_status  = $rows->vendor_display_status;
 						$vendor_verify_status   = $rows->vendor_verify_status;					
 						$refundable_deposit   = $rows->refundable_deposit;
 						$deposit_status    = $rows->deposit_status ;
@@ -305,7 +305,7 @@ class Apisprovidermodel extends CI_Model {
 					"profile_pic" => $profile_pic_url,
 					"address" => $address,
 					"city" => $city,
-					"vendor_dispaly_status" => $vendor_dispaly_status,
+					"vendor_display_status" => $vendor_display_status,
 					"vendor_verify_status" => $vendor_verify_status,
 					"refundable_deposit" => $refundable_deposit,
 					"deposit_status" => $deposit_status,
@@ -468,13 +468,13 @@ class Apisprovidermodel extends CI_Model {
 //#################### Document Upload ####################//
 	public function Upload_doc($user_master_id,$doc_master_id,$doc_proof_number,$documentFileName)
 	{
-		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Active',NOW(),'". $user_master_id . "')";
+		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Pending',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		$last_insert_id = $this->db->insert_id();
 		
 		$document_url = base_url().'assets/providers/documents/'.$documentFileName;
 
-		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"document_url" =>$document_url);
+		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"doc_master_id" =>$doc_master_id,"document_url" =>$document_url);
 		return $response;
 	}
 //#################### Document Upload End ####################//

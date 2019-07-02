@@ -338,49 +338,12 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-//-----------------------------------------------//
-
-	public function user_add_services()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "User Services Add";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id = '';
-		$category_id  = '';
-		$sub_category_id  = '';
-		$service_id  = '';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$category_id  = $this->input->post("category_id");
-		$sub_category_id  = $this->input->post("sub_category_id");
-		$service_id  = $this->input->post("service_id");
-
-		$data['result']=$this->apisprovidermodel->User_add_services($user_master_id,$category_id,$sub_category_id,$service_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
 
 //-----------------------------------------------//
 
 	public function list_id_proofs()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	   //$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -405,6 +368,29 @@ class Apisprovider extends CI_Controller {
 		$company_type  = $this->input->post("company_type");
 
 		$data['result']=$this->apisprovidermodel->List_id_proofs($company_type);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+    public function upload_doc()
+	{
+	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		$user_master_id = $this->uri->segment(3);
+		$doc_master_id = $this->uri->segment(4);
+		$doc_proof_number = $this->uri->segment(5);
+		
+		$document = $_FILES["document_file"]["name"];
+		$documentFileName = $user_master_id.'-'.time().'-'.$document;
+		$uploaddir = './assets/providers/documents/';
+		$documentFile = $uploaddir.$documentFileName;
+		move_uploaded_file($_FILES['document_file']['tmp_name'], $documentFile);
+
+		$data['result']=$this->apisprovidermodel->Upload_doc($user_master_id,$doc_master_id,$documentFileName);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

@@ -442,25 +442,40 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### User Add Services End ####################//
 
-//#################### Services list ####################//
+//#################### Master ID Proff list ####################//
 
 	public function List_id_proofs($company_type)
 	{
-		$sQuery = "SELECT * FROM document_master WHERE doc_type = 'Id/Address Proof' AND company_doc_type = '".$company_type."' AND status='Active'";
+		if ($company_type == 'Individual'){
+			$sQuery = "SELECT * FROM document_master WHERE doc_type = 'IdAddressProof' AND company_doc_type = '".$company_type."' AND status='Active'";
+		} else {
+			$sQuery = "SELECT * FROM document_master WHERE doc_type = 'AddressProof' AND company_doc_type = '".$company_type."' AND status='Active'";
+		}
 		$doc_result = $this->db->query($sQuery); 
-		$document_result = $ser_result->result();
+		$document_result = $$doc_result->result();
 
 		if($doc_result->num_rows()>0)
 		{
-			$response = array("status" => "success", "msg" => "ID / Address Master list", "idproof_list"=>$document_result);
+			$response = array("status" => "success", "msg" => "ID / Address Master list", "proof_list"=>$document_result);
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
 		return $response;
 	}
 
-//#################### Services list End ####################//
+//#################### Master ID Proff list End ####################//
+
+//#################### Document Upload ####################//
+	public function Upload_doc($user_master_id,$doc_master_id,$documentFileName)
+	{
+            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName',updated_at =NOW() WHERE user_master_id='$user_master_id'";
+			$update_result = $this->db->query($update_sql);
+			$document_url = base_url().'assets/providers/documents/'.$documentFileName;
+
+			$response = array("status" => "success", "msg" => "Document Uploaded","document_url" =>$document_url);
+			return $response;
+	}
+//#################### Document Upload End ####################//
 
 }
 

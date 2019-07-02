@@ -195,7 +195,7 @@ class Apisprovidermodel extends CI_Model {
 			$enc_user_master_id = base64_encode($user_master_id);
 			
 			$subject = "SKILEX - Verification Email";
-			$email_message = 'Please Click the Verification link. <a href="'. base_url().'skilex/apisprovider/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
+			$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			$this->sendMail($email,$subject,$email_message);
 		
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$mobile, "otp"=>$OTP);
@@ -405,7 +405,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Services_list($category_id)
 	{
-		$sQuery = "SELECT A.id AS service_id,A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C.sub_cat_ta_name,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
+		$sQuery = "SELECT A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C.sub_cat_ta_name,A.id AS service_id,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
 		$ser_result = $this->db->query($sQuery); 
 		
 		$services_result = $ser_result->result();
@@ -441,6 +441,26 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### User Add Services End ####################//
+
+//#################### Services list ####################//
+
+	public function List_id_proofs($company_type)
+	{
+		$sQuery = "SELECT * FROM document_master WHERE doc_type = 'Id/Address Proof' AND company_doc_type = '".$company_type."' AND status='Active'";
+		$doc_result = $this->db->query($sQuery); 
+		$document_result = $ser_result->result();
+
+		if($doc_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "ID / Address Master list", "idproof_list"=>$document_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Services list End ####################//
 
 }
 

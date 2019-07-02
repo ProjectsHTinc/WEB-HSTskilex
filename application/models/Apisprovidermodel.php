@@ -183,7 +183,10 @@ class Apisprovidermodel extends CI_Model {
 			$insert_result = $this->db->query($insert_sql);
 			$user_master_id = $this->db->insert_id();
 
-			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_dispaly_status, vendor_verify_status, deposit_status, status) VALUES ('". $user_master_id . "','". $name . "','InActive','Pending','Unpaid','Active')";
+			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$user_master_id."'";
+			$update_result = $this->db->query($update_sql);
+			
+			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_dispaly_status, vendor_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','InActive','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
 			$message_details = "Dear Customer your OTP :".$OTP;
@@ -248,7 +251,7 @@ class Apisprovidermodel extends CI_Model {
 
 		if($sql_result->num_rows()>0)
 		{
-			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
+			$update_sql = "UPDATE login_users SET mobile_verify ='Y', updated_at=NOW() WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 			
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
@@ -365,7 +368,7 @@ class Apisprovidermodel extends CI_Model {
 //#################### Profile Pic Update ####################//
 	public function Profile_pic_upload($user_master_id,$profileFileName)
 	{
-            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
+            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName',updated_at =NOW() WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 			$picture_url = base_url().'assets/providers/'.$profileFileName;
 
@@ -402,7 +405,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Services_list($category_id)
 	{
-		$sQuery = "SELECT A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C,sub_cat_ta_name,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
+		$sQuery = "SELECT A.id AS service_id,A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C,sub_cat_ta_name,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
 		$ser_result = $this->db->query($sQuery); 
 		
 		$services_result = $ser_result->result();
@@ -420,6 +423,24 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Services list End ####################//
 
+
+//#################### User Add Services ####################//
+
+	public function User_add_services($user_master_id,$category_id,$sub_category_id,$service_id)
+	{
+		$sQuery = "INSERT INTO service_provider_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### User Add Services End ####################//
 
 }
 

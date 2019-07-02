@@ -300,5 +300,43 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function user_add_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "User Services Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$category_id  = '';
+		$sub_category_id  = '';
+		$service_id  = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$category_id  = $this->input->post("category_id");
+		$sub_category_id  = $this->input->post("sub_category_id");
+		$service_id  = $this->input->post("service_id");
+
+		$data['result']=$this->apisprovidermodel->User_add_services($user_master_id,$category_id,$sub_category_id,$service_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 }
 ?>

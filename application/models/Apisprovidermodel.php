@@ -186,7 +186,7 @@ class Apisprovidermodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 			
-			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, vendor_display_status, vendor_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','Active','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
+			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, serv_prov_display_status, serv_prov_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','Inactive','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
 			$message_details = "Dear Customer your OTP :".$OTP;
@@ -196,7 +196,7 @@ class Apisprovidermodel extends CI_Model {
 			
 			$subject = "SKILEX - Verification Email";
 			$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
-			$this->sendMail($email,$subject,$email_message);
+			//$this->sendMail($email,$subject,$email_message);
 		
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$mobile, "otp"=>$OTP);
 		}

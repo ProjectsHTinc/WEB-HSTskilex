@@ -213,6 +213,50 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+    public function profile_update()
+	{
+	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Profile Update";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id = '';
+		$full_name = '';
+		$gender = '';
+		$address = '';
+		$city = '';
+		$state = '';
+		$zip = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$full_name = $this->input->post("full_name");
+		$gender  = $this->input->post("gender");
+		$address  = $this->input->post("address");
+		$city  = $this->input->post("city");
+		$state  = $this->input->post("state");
+		$zip  = $this->input->post("zip");
+
+		$data['result']=$this->apisprovidermodel->Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -389,7 +433,7 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function list_id_proofs()
+	public function list_idaddress_proofs()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -415,7 +459,7 @@ class Apisprovider extends CI_Controller {
 		
 		$company_type  = $this->input->post("company_type");
 
-		$data['result']=$this->apisprovidermodel->List_id_proofs($company_type);
+		$data['result']=$this->apisprovidermodel->List_idaddress_proofs($company_type);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

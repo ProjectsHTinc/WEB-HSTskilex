@@ -365,10 +365,22 @@ class Apisprovidermodel extends CI_Model {
 //#################### Email Verify status End ####################//
 
 
+//#################### Profile Update ####################//
+	public function Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip)
+	{
+            $update_sql= "UPDATE service_provider_details SET owner_full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+			$update_result = $this->db->query($update_sql);
+			
+			$response = array("status" => "success", "msg" => "Profile Updated");
+			return $response;
+	}
+//#################### Profile Update End ####################//
+
+
 //#################### Profile Pic Update ####################//
 	public function Profile_pic_upload($user_master_id,$profileFileName)
 	{
-            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName',updated_at =NOW() WHERE user_master_id='$user_master_id'";
+            $update_sql= "UPDATE service_provider_details SET profile_pic='$profileFileName',updated_at =NOW() WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 			$picture_url = base_url().'assets/providers/'.$profileFileName;
 
@@ -464,7 +476,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Master ID Proff list ####################//
 
-	public function List_id_proofs($company_type)
+	public function List_idaddress_proofs($company_type)
 	{
 		if ($company_type == 'Individual'){
 			$sQuery = "SELECT * FROM document_master WHERE doc_type = 'IdAddressProof' AND company_doc_type = '".$company_type."' AND status='Active'";
@@ -485,6 +497,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Master ID Proff list End ####################//
 
+
 //#################### Document Upload ####################//
 	public function Upload_doc($user_master_id,$doc_master_id,$doc_proof_number,$documentFileName)
 	{
@@ -498,6 +511,8 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 //#################### Document Upload End ####################//
+
+
 
 //#################### Document list ####################//
 

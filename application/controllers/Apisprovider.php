@@ -281,54 +281,6 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function company_detail_add()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Company Details Add";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-
-		$user_master_id = '';
-		$company_name = '';
-		$company_address = '';
-		$company_city = '';
-		$company_state = '';
-		$company_zip  = '';
-		$company_info = '';
-		$company_building_type = '';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$company_name  = $this->input->post("company_name");
-		$company_address  = $this->input->post("company_address");
-		$company_city  = $this->input->post("company_city");
-		$company_state  = $this->input->post("company_state");
-		$company_zip  = $this->input->post("company_zip");
-		$company_info  = $this->input->post("company_info");
-		$company_building_type  = $this->input->post("company_building_type");
-
-		$data['result']=$this->apisprovidermodel->Company_detail_add($user_master_id,$company_name,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-
-//-----------------------------------------------//
-
 	public function category_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -394,7 +346,7 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function user_add_services()
+	public function provider_add_services()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -423,13 +375,133 @@ class Apisprovider extends CI_Controller {
 		$sub_category_id  = $this->input->post("sub_category_id");
 		$service_id  = $this->input->post("service_id");
 
-		$data['result']=$this->apisprovidermodel->User_add_services($user_master_id,$category_id,$sub_category_id,$service_id);
+		$data['result']=$this->apisprovidermodel->Provider_add_services($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function update_company_status()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Company Status";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$company_status = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$company_status  = $this->input->post("company_status");
+
+		$data['result']=$this->apisprovidermodel->Update_company_status($user_master_id,$company_status);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function add_individual_status()
+	{
+	   //$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Company Status";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$no_of_service_person = '';
+		$also_service_person = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$no_of_service_person  = $this->input->post("no_of_service_person");
+		$also_service_person  = $this->input->post("also_service_person");
+		
+		$data['result']=$this->apisprovidermodel->Add_individual_status($user_master_id,$no_of_service_person,$also_service_person);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function add_company_status()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Company Details Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id = '';
+		$company_name = '';
+		$no_of_service_person = '';
+		$company_address = '';
+		$company_city = '';
+		$company_state = '';
+		$company_zip  = '';
+		$company_info = '';
+		$company_building_type = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$company_name  = $this->input->post("company_name");
+		$no_of_service_person  = $this->input->post("no_of_service_person");
+		$company_address  = $this->input->post("company_address");
+		$company_city  = $this->input->post("company_city");
+		$company_state  = $this->input->post("company_state");
+		$company_zip  = $this->input->post("company_zip");
+		$company_info  = $this->input->post("company_info");
+		$company_building_type  = $this->input->post("company_building_type");
+
+		$data['result']=$this->apisprovidermodel->Add_company_status($user_master_id,$company_name,$no_of_service_person,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -453,13 +525,43 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$company_type = '';
-		$category_id  = '';
-		$sub_category_id  = '';
-		$service_id  = '';
 		
 		$company_type  = $this->input->post("company_type");
 
 		$data['result']=$this->apisprovidermodel->List_idaddress_proofs($company_type);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function list_building_proofs()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "List master Address proofs";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+				
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apisprovidermodel->List_building_proofs($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -493,7 +595,7 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function list_user_doc()
+	public function list_provider_doc()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -516,7 +618,7 @@ class Apisprovider extends CI_Controller {
 				
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apisprovidermodel->List_user_doc($user_master_id);
+		$data['result']=$this->apisprovidermodel->List_provider_doc($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

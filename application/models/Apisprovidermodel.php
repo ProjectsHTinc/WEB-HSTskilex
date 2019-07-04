@@ -284,9 +284,10 @@ class Apisprovidermodel extends CI_Model {
 						}
 					  	$address = $rows->address;
 						$city  = $rows->city;
+						$state  = $rows->state;
 						$zip   = $rows->zip;
-						$vendor_display_status  = $rows->vendor_display_status;
-						$vendor_verify_status   = $rows->vendor_verify_status;					
+						$serv_prov_display_status  = $rows->serv_prov_display_status ;
+						$serv_prov_verify_status    = $rows->serv_prov_verify_status ;					
 						$refundable_deposit   = $rows->refundable_deposit;
 						$deposit_status    = $rows->deposit_status ;
 						$status    = $rows->status ;
@@ -390,25 +391,6 @@ class Apisprovidermodel extends CI_Model {
 //#################### Profile Pic Update End ####################//
 
 
-//#################### Company Details ####################//
-
-	public function Company_detail_add($user_master_id,$company_name,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type)
-	{
-		$sQuery = "INSERT INTO service_provider_company_details (user_master_id,company_name,company_address,company_city,company_state,company_zip,company_info,company_building_type,status,created_at,created_by) VALUES ('". $user_master_id . "','". $company_name . "','". $company_address . "','". $company_city . "','". $company_state . "','". $company_zip . "','". $company_info . "','". $company_building_type . "','Active',NOW(),'". $user_master_id . "')";
-		$ins_query = $this->db->query($sQuery);
-		
-		if($ins_query){
-				$response=array("status" => "success","msg" => "Company Details Added Sucessfully!..");
-           }else{
-				$response=array("status" => "error");
-           }
-		   
-		return $response;
-	}
-
-//#################### Company Details End ####################//
-
-
 //#################### Category list ####################//
 
 	public function Category_list($user_master_id)
@@ -455,9 +437,9 @@ class Apisprovidermodel extends CI_Model {
 //#################### Services list End ####################//
 
 
-//#################### User Add Services ####################//
+//#################### Provider Add Services ####################//
 
-	public function User_add_services($user_master_id,$category_id,$sub_category_id,$service_id)
+	public function Provider_add_services($user_master_id,$category_id,$sub_category_id,$service_id)
 	{
 		$sQuery = "INSERT INTO service_provider_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
@@ -471,7 +453,94 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### User Add Services End ####################//
+//#################### Provider Add Services End ####################//
+
+
+//#################### Update company status ####################//
+
+	public function Update_company_status($user_master_id,$company_status)
+	{
+		$sQuery = "UPDATE service_provider_details SET company_status ='$company_status',updated_at=NOW() WHERE user_master_id='$user_master_id'";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Company_status updated");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Update company status End ####################//
+
+//#################### Add Individual status ####################//
+
+	public function add_individual_status($user_master_id,$no_of_service_person,$also_service_person)
+	{
+		$sQuery = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = 'Y', updated_at=NOW() WHERE user_master_id='$user_master_id'";
+		$uptdate_query = $this->db->query($sQuery);
+
+		$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
+		$user_result = $this->db->query($user_sql);
+		if($user_result->num_rows()>0)
+		{			
+			foreach ($user_result->result() as $rows)
+			{
+					$full_name = $rows->owner_full_name;
+					$mobile = $rows->phone_no;
+					$mobile_verify = $rows->mobile_verify;
+					$email = $rows->email;
+					$email_verify = $rows->email_verify;
+					$gender = $rows->gender;
+					$address = $rows->address;
+					$city  = $rows->city;
+					$state  = $rows->state;
+					$zip   = $rows->zip;
+			}
+		}
+
+		$insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status,created_at,created_by) VALUES ('4','". $mobile . "','N','". $email . "','N','N','N','Active',NOW(),'". $user_master_id . "')";
+		$insert_result = $this->db->query($insert_sql);
+		$sperson_master_id = $this->db->insert_id();
+		
+		$insert_query = "INSERT INTO service_preson_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
+		$insert_result = $this->db->query($insert_query);
+
+		if($insert_result){
+				$response=array("status" => "success","msg" => "Individual updated");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Add Individual status End ####################//
+
+
+//#################### Add Company status  ####################//
+
+	public function Add_company_status($user_master_id,$company_name,$no_of_service_person,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type)
+	{
+		
+		$sQuery = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = 'N', updated_at=NOW() WHERE user_master_id='$user_master_id'";
+		$uptdate_query = $this->db->query($sQuery);
+		
+		$sQuery = "INSERT INTO service_provider_company_details (user_master_id,company_name,company_address,company_city,company_state,company_zip,company_info,company_building_type,status,created_at,created_by) VALUES ('". $user_master_id . "','". $company_name . "','". $company_address . "','". $company_city . "','". $company_state . "','". $company_zip . "','". $company_info . "','". $company_building_type . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Company Details updated");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Add Company status End ####################//
+
 
 
 //#################### Master ID Proff list ####################//
@@ -498,15 +567,65 @@ class Apisprovidermodel extends CI_Model {
 //#################### Master ID Proff list End ####################//
 
 
+//#################### Master Building Proof list ####################//
+
+	public function List_building_proofs($user_master_id)
+	{
+		$sQuery = "SELECT * FROM document_master WHERE doc_type = 'BuildingProof' AND company_doc_type = 'Company' AND status='Active'";
+		$doc_result = $this->db->query($sQuery); 
+		$document_result = $doc_result->result();
+
+		if($doc_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Building Proof", "proof_list"=>$document_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		return $response;
+	}
+
+//#################### Master Building Proof list End ####################//
+
+
 //#################### Document Upload ####################//
 	public function Upload_doc($user_master_id,$doc_master_id,$doc_proof_number,$documentFileName)
 	{
 		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Pending',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		$last_insert_id = $this->db->insert_id();
-		
 		$document_url = base_url().'assets/providers/documents/'.$documentFileName;
+		
+		$prov_sql = "SELECT * FROM service_provider_details WHERE user_master_id = '".$user_master_id."' AND also_service_person = 'Y'";
+		$prov_result = $this->db->query($prov_sql);
+		if($prov_result->num_rows()>0)
+		{			
 
+				$pers_sql = "SELECT * FROM service_preson_details WHERE service_provider_id = '".$user_master_id."'";
+				$pers_result = $this->db->query($pers_sql);
+				if($pers_result->num_rows()>0)
+				{
+					foreach ($pers_result->result() as $rows)
+					{
+							$person_user_master_id = $rows->user_master_id;
+					}
+					
+				}
+
+				$doc_sql = "SELECT * FROM document_master WHERE id = '".$doc_master_id."'";
+				$doc_result = $this->db->query($doc_sql);
+				if($doc_result->num_rows()>0)
+				{			
+					foreach ($doc_result->result() as $rows)
+					{
+							$doc_type = trim($rows->doc_type);
+					}
+
+					if ($doc_type == 'IdAddressProof'){
+						$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $person_user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Pending',NOW(),'". $user_master_id . "')";
+						$ins_query = $this->db->query($sQuery);
+					}
+				}
+			}
 		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"doc_master_id" =>$doc_master_id,"document_url" =>$document_url);
 		return $response;
 	}
@@ -516,7 +635,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Document list ####################//
 
-	public function List_user_doc($user_master_id)
+	public function List_provider_doc($user_master_id)
 	{
 		$sQuery = "SELECT A.`id`,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
 		$doc_result = $this->db->query($sQuery); 

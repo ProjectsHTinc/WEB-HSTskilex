@@ -411,7 +411,8 @@ class Masters extends CI_Controller {
 				$service_name=$this->db->escape_str($this->input->post('service_name'));
 				$sub_cat_id=base64_decode($this->db->escape_str($this->input->post('sub_cat_id')))/98765;
 				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
-
+				$is_advance_payment=$this->db->escape_str($this->input->post('is_advance_payment'));
+				$advance_amount=$this->db->escape_str($this->input->post('advance_amount'));
 				$rate_card=$this->db->escape_str($this->input->post('rate_card'));
 				$rate_card_details=$this->db->escape_str($this->input->post('rate_card_details'));
 				$rate_card_details_ta=$this->db->escape_str($this->input->post('rate_card_details_ta'));
@@ -435,11 +436,11 @@ class Masters extends CI_Controller {
 				$profilepic = $uploaddir.$cat_pic;
 				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
 			}
-				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
+				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				if($data['res']['status']=="success"){
-					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'');
+					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'#list');
 				}else{
-					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'');
+					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'#list');
 				}
 
 			}
@@ -483,7 +484,8 @@ class Masters extends CI_Controller {
 				$cat_old_img=$this->db->escape_str($this->input->post('cat_old_img'));
 				$service_id=$this->db->escape_str($this->input->post('service_id'));
 				$main_cat_id=	base64_encode($this->input->post('sub_cat_id')*98765);
-
+				$is_advance_payment=$this->db->escape_str($this->input->post('is_advance_payment'));
+				$advance_amount=$this->db->escape_str($this->input->post('advance_amount'));
 				$rate_card=$this->db->escape_str($this->input->post('rate_card'));
 				$rate_card_details=$this->db->escape_str($this->input->post('rate_card_details'));
 				$rate_card_details_ta=$this->db->escape_str($this->input->post('rate_card_details_ta'));
@@ -507,11 +509,11 @@ class Masters extends CI_Controller {
 				$profilepic = $uploaddir.$cat_pic;
 				move_uploaded_file($_FILES['service_pic']['tmp_name'], $profilepic);
 			}
-				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
+				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				 if($data['res']['status']=="success"){
-						redirect('masters/create_service/'.$main_cat_id.'');
+						redirect('masters/create_service/'.$main_cat_id.'#list');
 				 }else{
-						redirect('masters/create_service/'.$main_cat_id.'');
+						redirect('masters/create_service/'.$main_cat_id.'#list');
 				 }
 
 			}else {

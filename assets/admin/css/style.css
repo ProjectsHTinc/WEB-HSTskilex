@@ -22926,3 +22926,7 @@ div.tagsinput {
     font-size: 14px;
     font-weight: 600;
 }
+.inp_value{
+  margin-top: 10px;
+  border-bottom:1px solid #000;
+}

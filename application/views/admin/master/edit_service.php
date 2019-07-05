@@ -61,6 +61,32 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Enable Advance Amt</label>
+                          <div class="col-sm-7">
+                            <select class="form-control form-control-sm" id="is_advance_payment" name="is_advance_payment">
+                              <option value=""> -Select--</option>
+                              <option value="Y">Yes</option>
+                              <option value="N">No</option>
+                            </select>
+                              <script>$('#is_advance_payment').val('<?php echo $rows->is_advance_payment; ?>');</script>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6" id="adv_amt">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Advance Amt</label>
+                          <div class="col-sm-7">
+                              <input type="text" class="form-control" id="advance_amount" name="advance_amount" placeholder="Advance Amount "  value="<?php echo $rows->advance_amount; ?>">
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
                           <label class="col-sm-5 col-form-label">Rate Card Details(English)</label>
                           <div class="col-sm-7">
                             <textarea rows="4" class="form-control" id="rate_card_details" name="rate_card_details" placeholder="Rate Card Details"><?php echo $rows->rate_card_details; ?></textarea>
@@ -207,8 +233,22 @@
         </div>
       </div>
     </div>
+    <?php if($rows->is_advance_payment=='Y'){ ?>
+      <style>#adv_amt{ display: block; }</style>
+    <?php }else{ ?>
+      <style>#adv_amt{ display: none;}</style>
+<?php    } ?>
     <script>
 
+    $("#is_advance_payment").bind("change  keyup", function() {
+    
+       var ad=$(this).val();
+       if(ad=='Y'){
+         $('#adv_amt').show();
+       }else{
+          $('#adv_amt').hide();
+       }
+    });
     $('#update_category').validate({
     rules: {
 
@@ -224,12 +264,38 @@
                          type: "post"
                       }
          },
+         is_advance_payment:{required:true},
+         advance_amount:{required:true,number:true},
+         rate_card:{required:true},
+         rate_card_details:{required:true },
+         rate_card_details_ta:{required:true },
+         inclusions:{required:true},
+         inclusions_ta:{required:true },
+         exclusions:{required:true },
+         exclusions_ta:{required:true },
+         service_procedure:{required:true },
+         service_procedure_ta:{required:true },
+         others:{required:true },
+         others_ta:{required:true },
         service_pic: {required: false,extension: "jpg,jpeg,png" }
     },
     messages: {
         service_pic:{
             required :"Please Select Service Picture",extension:"File must be JPG OR PNG"
         },
+        is_advance_payment:{required:"Select Advance type"},
+        advance_amount:{required:"Enter the amount",number:"Enter only numbers"},
+        rate_card:{required:"Enter rate card value"},
+        rate_card_details:{required:"Enter rate card details in english " },
+        rate_card_details_ta:{required:"Enter the rate card details in tamil" },
+        inclusions:{required:"Enter the inclusions"},
+        inclusions_ta:{required:"Enter the inclusions in tamil" },
+        exclusions:{required:"Enter the exclusion in english" },
+        exclusions_ta:{required:"enter the exclusion in tamil" },
+        service_procedure:{required:"enter the procedure in english" },
+        service_procedure_ta:{required:"enter the procedure in tamil" },
+        others:{required:"enter the other details in english" },
+        others_ta:{required:"enter the other details in tamil" },
         service_name: {
     					 required: "Please Enter Service Name.",
     					 remote: "Service Name  already in Exist!"

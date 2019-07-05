@@ -56,6 +56,28 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Enable Advance Amt</label>
+                          <div class="col-sm-7">
+                            <select class="form-control form-control-sm" id="is_advance_payment" name="is_advance_payment">
+                              <option value=""> -Select--</option>
+                              <option value="Y">Yes</option>
+                              <option value="N">No</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6" id="adv_amt">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Advance Amt</label>
+                          <div class="col-sm-7">
+                              <input type="text" class="form-control" id="advance_amount" name="advance_amount" placeholder="Advance Amount " >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
                           <label class="col-sm-5 col-form-label">Rate Card Details(English)</label>
                           <div class="col-sm-7">
                             <textarea rows="4" class="form-control" id="rate_card_details" name="rate_card_details" placeholder="Rate Card Details"></textarea>
@@ -170,7 +192,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" id="list">
 
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
@@ -182,6 +204,7 @@
               <th>S.no</th>
               <th>Service</th>
               <th>Service Pciture</th>
+              <th>Advance Amt</th>
               <th>Rate</th>
               <th>Status</th>
               <th>Actions</th>
@@ -197,6 +220,7 @@
               </td>
 
               <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->service_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
+                <td><?php echo $rows->advance_amount; ?></td>
                 <td><?php echo $rows->rate_card; ?></td>
                   <td><?php if($rows->status=='Inactive'){ ?>
                 <button type="button" class="btn btn-danger btn-fw">Inactive</button>
@@ -223,6 +247,19 @@
       </div>
     </div>
     <script>
+  $('#adv_amt').hide();
+  $("#is_advance_payment").bind("change  keyup", function() {
+     var ad=$(this).val();
+     if(ad=='Y'){
+       $('#adv_amt').show();
+     }else{
+        $('#adv_amt').hide();
+     }
+  });
+
+
+
+
       $('#example').DataTable();
       $('#create_service').validate({
       rules: {
@@ -240,6 +277,8 @@
                            type: "post"
                         }
            },
+          is_advance_payment:{required:true},
+          advance_amount:{required:true,number:true},
           rate_card:{required:true},
           rate_card_details:{required:true },
           rate_card_details_ta:{required:true },
@@ -257,6 +296,8 @@
           service_pic:{
               required :"Select Service Picture",extension:"File must be JPG OR PNG"
           },
+          is_advance_payment:{required:"Select Advance type"},
+          advance_amount:{required:"Enter the amount",number:"Enter only numbers"},
           rate_card:{required:"Enter rate card value"},
           rate_card_details:{required:"Enter rate card details in english " },
           rate_card_details_ta:{required:"Enter the rate card details in tamil" },

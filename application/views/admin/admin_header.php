@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
 
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
+    <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/icheck/skins/all.css"> -->
    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
   <script   src="<?php echo base_url(); ?>assets/admin/js/jquery.js"></script>
@@ -19,6 +20,7 @@
   <script src="<?php echo base_url(); ?>assets/admin/js/swal.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/admin/css/datatable.css"/>
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script> -->
 
 </head>
 
@@ -118,6 +120,14 @@
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create staff</a></li>
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff list</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-group col-md-2">
+                    <p class="category-heading">Verify Provider</p>
+                    <ul class="submenu-item">
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Provider list </a></li>
+
+
                     </ul>
                   </div>
                   <div class="col-group col-md-2">

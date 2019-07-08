@@ -163,6 +163,59 @@ class Apisprovidermodel extends CI_Model {
 //#################### Notification End ####################//
 
 
+//#################### Dashboard ####################//
+
+	public function Dashboard($user_master_id)
+	{
+		$sperson_count = "SELECT * FROM service_preson_details WHERE service_provider_id = '".$user_master_id."'";
+		$sperson_count_res = $this->db->query($sperson_count);
+		$sperson_count = $sperson_count_res->num_rows();
+
+		$request_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Requested'";
+		$request_count_res = $this->db->query($request_count);
+		$request_orders_count = $request_count_res->num_rows();
+		
+		$accept_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Accepted'";
+		$accept_count_res = $this->db->query($accept_count);
+		$accept_orders_count = $accept_count_res->num_rows();
+		
+		$assigned_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Assigned'";
+		$assigned_count_res = $this->db->query($assigned_count);
+		$assigned_orders_count = $assigned_count_res->num_rows();
+
+		$initiated_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Initiated'";
+		$initiated_count_res = $this->db->query($initiated_count);
+		$initiated_orders_count = $initiated_count_res->num_rows();
+		
+		$ongoing_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Ongoing'";
+		$ongoing_count_res = $this->db->query($ongoing_count);
+		$ongoing_orders_count = $ongoing_count_res->num_rows();
+		
+		$finished_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Finished'";
+		$finished_count_res = $this->db->query($finished_count);
+		$finished_orders_count = $finished_count_res->num_rows();
+		
+		$canceled_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Canceled'";
+		$canceled_count_res = $this->db->query($canceled_count);
+		$canceled_orders_count = $canceled_count_res->num_rows();
+		
+		$dashboardData  = array(
+				"serv_person_count" => $sperson_count,
+				"serv_requested_count" => $request_orders_count,
+				"serv_accepted_count" => $accept_orders_count,
+				"serv_assigned_count" => $assigned_orders_count,
+				"serv_initiated_count" => $initiated_orders_count,
+				"serv_ongoing_count" => $ongoing_orders_count,
+				"serv_finished_count" => $finished_orders_count,
+				"serv_canceled_count" => $canceled_orders_count
+			);
+		$response = array("status" => "success", "msg" => "Dashboard Datas","dashboardData"=>$dashboardData);
+		return $response;
+	}
+
+//#################### Dashboard End ####################//
+
+
 //#################### Register ####################//
 
 	public function Register($name,$mobile,$email)
@@ -439,9 +492,9 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Provider Add Services ####################//
 
-	public function Provider_add_services($user_master_id,$category_id,$sub_category_id,$service_id)
+	public function Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id)
 	{
-		$sQuery = "INSERT INTO service_provider_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
+		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		
 		if($ins_query){
@@ -637,13 +690,165 @@ class Apisprovidermodel extends CI_Model {
 
 	public function List_provider_doc($user_master_id)
 	{
-		$sQuery = "SELECT A.`id`,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
-		$doc_result = $this->db->query($sQuery); 
-		$document_result = $doc_result->result();
+		 $doc_url = base_url().'assets/providers/documents/';
+		
+		$sQuery = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
+		$doc_result = $this->db->query($sQuery);
+		
+		
+		if($doc_result->num_rows()!=0)
+		{
+				foreach ($doc_result->result() as $rows)
+				{
+					 $id = $rows->id;
+					 $doc_master_id = $rows->doc_master_id;
+					 $doc_name = $rows->doc_name;
+					 $doc_proof_number = $rows->doc_proof_number;
+					 $file_name = $rows->file_name;
+					
+					$data[]  = array(
+						"id" => $id,
+						"doc_master_id" => $doc_master_id,
+						"doc_name" => $doc_name,
+						"doc_proof_number" => $doc_proof_number,
+						"file_name" => $file_name,
+						"file_url" => $doc_url.$file_name
+					);
+				}
+			$response = array("status" => "success", "msg" => "Documents list", "document_result"=>$data);
+		} else {
+			$response = array("status" => "error", "msg" => "Documents Not Found");
+		}
+		return $response;
+		
+	}
 
+//#################### Document list End ####################//
+
+
+
+//#################### Create Service Persons ####################//
+
+	public function Create_serv_person($user_master_id,$name,$mobile,$email)
+	{
+		$sql = "SELECT * FROM login_users WHERE phone_no ='".$mobile."' AND email = '".$email."' AND user_type = '4' AND status='Active'";
+		$user_result = $this->db->query($sql);
+		$ress = $user_result->result();
+
+		//$digits = 6;
+		//$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+			
+		if($user_result->num_rows()>0)
+		{
+			$response = array("status" => "error", "msg" => "User already Exist.");
+
+		} else {
+			$insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status) VALUES ('4','". $mobile . "','N','". $email . "','N','N','N','Active')";
+			$insert_result = $this->db->query($insert_sql);
+			$serv_person_id = $this->db->insert_id();
+
+			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$serv_person_id."'";
+			$update_result = $this->db->query($update_sql);
+			
+			$insert_query = "INSERT INTO service_preson_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
+			$insert_result = $this->db->query($insert_query);
+
+			//$message_details = "Service Person Created;
+			//$this->sendSMS($mobile,$message_details);
+
+			//$enc_user_master_id = base64_encode($service_provider_id);
+			
+			//$subject = "SKILEX - Verification Email";
+			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
+			//$this->sendMail($email,$subject,$email_message);
+		
+			$response = array("status" => "success", "msg" => "Service Person Created", "user_master_id"=>$user_master_id, "serv_person_id"=>$serv_person_id);
+		}
+
+		return $response;
+	}
+
+//#################### Create Service Persons ####################//
+
+
+//#################### Document Service Persons list ####################//
+
+	public function List_serv_persons($user_master_id)
+	{
+		$sQuery = "SELECT A.*,B.phone_no,B.mobile_verify,B.email,B.email_verify,B.document_verify,B.welcome_status FROM service_preson_details A,login_users B WHERE A.user_master_id = B.id AND A.service_provider_id ='".$user_master_id."'";
+		$usr_result = $this->db->query($sQuery);
+		$user_result = $usr_result->result();
+
+		if($usr_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Persons list", "list_service_persons"=>$user_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Persons Not found");
+		}
+		return $response;
+	}
+
+//#################### Document list End ####################//
+
+
+//#################### Service Person Document Upload ####################//
+	public function Serv_person_upload_doc($user_master_id,$serv_person_id,$doc_master_id,$doc_proof_number,$documentFileName)
+	{
+		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Pending',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		$last_insert_id = $this->db->insert_id();
+		$document_url = base_url().'assets/persons/documents/'.$documentFileName;
+		
+		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"doc_master_id" =>$doc_master_id,"document_url" =>$document_url);
+		return $response;
+	}
+//#################### Service Person Document Upload End ####################//
+
+
+//#################### Document Service Persons list ####################//
+
+	public function List_persons_doc($serv_person_id)
+	{
+		
+		$sQuery = "SELECT * FROM service_preson_details WHERE user_master_id ='".$serv_person_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$also_service_provider = $rows->also_service_provider;
+				}
+				
+				if ($also_service_provider == 'Y'){
+					$doc_url = base_url().'assets/providers/documents/';
+				}else {
+					$doc_url = base_url().'assets/persons/documents/';
+				}
+		
+		}
+		
+		$sQuery = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$serv_person_id."'";
+		$doc_result = $this->db->query($sQuery);
+				
 		if($doc_result->num_rows()>0)
 		{
-			$response = array("status" => "success", "msg" => "Documents list", "document_result"=>$document_result);
+				foreach ($doc_result->result() as $rows)
+				{
+					 $id = $rows->id;
+					 $doc_master_id = $rows->doc_master_id;
+					 $doc_name = $rows->doc_name;
+					 $doc_proof_number = $rows->doc_proof_number;
+					 $file_name = $rows->file_name;
+					
+					$data[]  = array(
+						"id" => $id,
+						"doc_master_id" => $doc_master_id,
+						"doc_name" => $doc_name,
+						"doc_proof_number" => $doc_proof_number,
+						"file_name" => $file_name,
+						"file_url" => $doc_url.$file_name
+					);
+				}
+			$response = array("status" => "success", "msg" => "Documents list", "document_result"=>$data);
 		} else {
 			$response = array("status" => "error", "msg" => "Documents Not Found");
 		}
@@ -651,6 +856,45 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### Document list End ####################//
+
+
+
+//#################### Persons Add Services ####################//
+
+	public function Serv_pers_services_add($user_master_id,$serv_person_id,$category_id,$sub_category_id,$service_id)
+	{
+		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Persons Add Services End ####################//
+
+
+//#################### List requested services ####################//
+
+	public function List_requested_services($user_master_id)
+	{
+		$sQuery = "SELECT A.*,B.phone_no,B.mobile_verify,B.email,B.email_verify,B.document_verify,B.welcome_status FROM service_preson_details A,login_users B WHERE A.user_master_id = B.id AND A.service_provider_id ='".$user_master_id."'";
+		$usr_result = $this->db->query($sQuery);
+		$user_result = $usr_result->result();
+
+		if($usr_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Persons list", "list_service_persons"=>$user_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Persons Not found");
+		}
+		return $response;
+	}
+
+//#################### List requested services End ####################//
 
 }
 

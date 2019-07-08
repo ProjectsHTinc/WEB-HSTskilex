@@ -475,6 +475,8 @@ class Apicustomermodel extends CI_Model {
               "service_name" => $rows->service_name,
               "service_ta_name" => $rows->service_ta_name,
               "service_pic_url" => $service_pic_url,
+              "is_advance_payment"=>$rows->is_advance_payment,
+              "advance_amount" => $rows->advance_amount,
               "rate_card"=>$rows->rate_card,
               "rate_card_details" => $rows->rate_card_details,
               "rate_card_details_ta" => $rows->rate_card_details_ta,

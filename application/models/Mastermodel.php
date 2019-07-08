@@ -308,7 +308,7 @@ Class Mastermodel extends CI_Model
         // Service section
 
 
-        function service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
+        function service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
 
           $check="SELECT * FROM services WHERE service_name='$service_name'";
           $result=$this->db->query($check);
@@ -318,7 +318,7 @@ Class Mastermodel extends CI_Model
                   $result_main=$this->db->query($get_main_cat_id);
                   $res=$result_main->result();
                   foreach($res as $rows){} $main_cat_id=$rows->main_cat_id;
-                  $insert="INSERT INTO services(main_cat_id,sub_cat_id,service_name,service_ta_name,rate_card,rate_card_details,rate_card_details_ta,inclusions,inclusions_ta,exclusions,exclusions_ta,service_procedure,service_procedure_ta,others,others_ta,status,service_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_id','$service_name','$service_ta_name','$rate_card','$rate_card_details','$rate_card_details_ta','$inclusions','$inclusions_ta','$exclusion','$exclusions_ta','$service_procedure','$service_procedure_ta','$others','$others_ta','$status','$cat_pic',NOW(),'$user_id')";
+                  $insert="INSERT INTO services(main_cat_id,sub_cat_id,service_name,service_ta_name,is_advance_payment,advance_amount,rate_card,rate_card_details,rate_card_details_ta,inclusions,inclusions_ta,exclusions,exclusions_ta,service_procedure,service_procedure_ta,others,others_ta,status,service_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_id','$service_name','$service_ta_name','$is_advance_payment','$advance_amount','$rate_card','$rate_card_details','$rate_card_details_ta','$inclusions','$inclusions_ta','$exclusion','$exclusions_ta','$service_procedure','$service_procedure_ta','$others','$others_ta','$status','$cat_pic',NOW(),'$user_id')";
                   $result=$this->db->query($insert);
                   if($result){
                       $data = array("status" => "success");
@@ -394,9 +394,14 @@ Class Mastermodel extends CI_Model
         }
 
 
-        function service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
+        function service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
           $id=base64_decode($service_id)/98765;
-          $update="UPDATE services SET  service_name='$service_name',service_ta_name='$service_ta_name',service_pic='$cat_pic',status='$status',created_by='$user_id',updated_at=NOW(),rate_card='$rate_card',rate_card_details='$rate_card_details',rate_card_details_ta='$rate_card_details_ta',inclusions='$inclusions',inclusions_ta='$inclusions_ta',exclusions='$exclusion',exclusions_ta='$exclusions_ta',service_procedure='$service_procedure',service_procedure_ta='$service_procedure_ta',others='$others',others_ta='$others_ta' WHERE id='$id'";
+          if($is_advance_payment=='Y'){
+            $advance=$advance_amount;
+          }else{
+              $advance='0';
+          }
+          $update="UPDATE services SET  service_name='$service_name',service_ta_name='$service_ta_name',service_pic='$cat_pic',status='$status',created_by='$user_id',updated_at=NOW(),is_advance_payment='$is_advance_payment',advance_amount='$advance',rate_card='$rate_card',rate_card_details='$rate_card_details',rate_card_details_ta='$rate_card_details_ta',inclusions='$inclusions',inclusions_ta='$inclusions_ta',exclusions='$exclusion',exclusions_ta='$exclusions_ta',service_procedure='$service_procedure',service_procedure_ta='$service_procedure_ta',others='$others',others_ta='$others_ta' WHERE id='$id'";
 
 
         $result=$this->db->query($update);

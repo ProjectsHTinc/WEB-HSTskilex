@@ -3,7 +3,7 @@
         <div class="content-wrapper">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Data table</h4>
+              <h4 class="card-title">Staff list</h4>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">

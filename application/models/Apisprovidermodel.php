@@ -167,7 +167,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Dashboard($user_master_id)
 	{
-		$sperson_count = "SELECT * FROM service_preson_details WHERE service_provider_id = '".$user_master_id."'";
+		$sperson_count = "SELECT * FROM service_person_details WHERE service_provider_id = '".$user_master_id."'";
 		$sperson_count_res = $this->db->query($sperson_count);
 		$sperson_count = $sperson_count_res->num_rows();
 
@@ -557,7 +557,7 @@ class Apisprovidermodel extends CI_Model {
 		$insert_result = $this->db->query($insert_sql);
 		$sperson_master_id = $this->db->insert_id();
 		
-		$insert_query = "INSERT INTO service_preson_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
+		$insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_query);
 
 		if($insert_result){
@@ -648,12 +648,14 @@ class Apisprovidermodel extends CI_Model {
 		$last_insert_id = $this->db->insert_id();
 		$document_url = base_url().'assets/providers/documents/'.$documentFileName;
 		
+		$sQuery = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('". $user_master_id . "','". $last_insert_id . "','Uploaded','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
 		$prov_sql = "SELECT * FROM service_provider_details WHERE user_master_id = '".$user_master_id."' AND also_service_person = 'Y'";
 		$prov_result = $this->db->query($prov_sql);
 		if($prov_result->num_rows()>0)
 		{			
-
-				$pers_sql = "SELECT * FROM service_preson_details WHERE service_provider_id = '".$user_master_id."'";
+				$pers_sql = "SELECT * FROM service_person_details WHERE service_provider_id = '".$user_master_id."'";
 				$pers_result = $this->db->query($pers_sql);
 				if($pers_result->num_rows()>0)
 				{
@@ -750,7 +752,7 @@ class Apisprovidermodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$serv_person_id."'";
 			$update_result = $this->db->query($update_sql);
 			
-			$insert_query = "INSERT INTO service_preson_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
+			$insert_query = "INSERT INTO service_person_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
 			//$message_details = "Service Person Created;
@@ -775,7 +777,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function List_serv_persons($user_master_id)
 	{
-		$sQuery = "SELECT A.*,B.phone_no,B.mobile_verify,B.email,B.email_verify,B.document_verify,B.welcome_status FROM service_preson_details A,login_users B WHERE A.user_master_id = B.id AND A.service_provider_id ='".$user_master_id."'";
+		$sQuery = "SELECT A.*,B.phone_no,B.mobile_verify,B.email,B.email_verify,B.document_verify,B.welcome_status FROM service_person_details A,login_users B WHERE A.user_master_id = B.id AND A.service_provider_id ='".$user_master_id."'";
 		$usr_result = $this->db->query($sQuery);
 		$user_result = $usr_result->result();
 
@@ -798,6 +800,9 @@ class Apisprovidermodel extends CI_Model {
 		$last_insert_id = $this->db->insert_id();
 		$document_url = base_url().'assets/persons/documents/'.$documentFileName;
 		
+		$sQuery = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $last_insert_id . "','Uploaded','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
 		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"doc_master_id" =>$doc_master_id,"document_url" =>$document_url);
 		return $response;
 	}
@@ -809,7 +814,7 @@ class Apisprovidermodel extends CI_Model {
 	public function List_persons_doc($serv_person_id)
 	{
 		
-		$sQuery = "SELECT * FROM service_preson_details WHERE user_master_id ='".$serv_person_id."'";
+		$sQuery = "SELECT * FROM service_person_details WHERE user_master_id ='".$serv_person_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
 		{
@@ -882,19 +887,190 @@ class Apisprovidermodel extends CI_Model {
 
 	public function List_requested_services($user_master_id)
 	{
-		$sQuery = "SELECT A.*,B.phone_no,B.mobile_verify,B.email,B.email_verify,B.document_verify,B.welcome_status FROM service_preson_details A,login_users B WHERE A.user_master_id = B.id AND A.service_provider_id ='".$user_master_id."'";
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range
+					
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E
+				WHERE
+					 A.serv_prov_id = '".$user_master_id."' AND A.status = 'Requested' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$usr_result = $this->db->query($sQuery);
 		$user_result = $usr_result->result();
 
 		if($usr_result->num_rows()>0) {
-			$response = array("status" => "success", "msg" => "Service Persons list", "list_service_persons"=>$user_result);
+			$response = array("status" => "success", "msg" => "Service Order List", "list_service_persons"=>$user_result);
 		} else {
-			$response = array("status" => "error", "msg" => "Service Persons Not found");
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
 		}
 		return $response;
 	}
 
 //#################### List requested services End ####################//
+
+
+//#################### Accept requested services ####################//
+
+	public function Accept_requested_services($user_master_id,$service_order_id)
+	{
+		$update_sql = "UPDATE service_orders SET status  = 'Accepted', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_result = $this->db->query($update_sql);
+		
+		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Accepted',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		
+		if($update_result){
+				$response=array("status" => "success","msg" => "Service Request Accepted");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Accept requested services End ####################//
+
+
+//#################### Assigned requested services ####################//
+
+	public function Assigned_accepted_services($user_master_id,$service_order_id,$service_person_id)
+	{
+		$update_sql = "UPDATE service_orders SET status = 'Assigned', serv_pers_id = '".$service_person_id."', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_result = $this->db->query($update_sql);
+		
+		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Assigned',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($update_result){
+				$response=array("status" => "success","msg" => "Service Accept Assigned");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Assigned requested services End ####################//
+
+
+//#################### Cancel services ####################//
+
+	public function Cancel_services($user_master_id,$service_order_id)
+	{
+		$update_sql = "UPDATE service_orders SET status = 'Canceled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_result = $this->db->query($update_sql);
+		
+		
+		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($update_result){
+				$response=array("status" => "success","msg" => "Cancel Services");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Cancel services End ####################//
+
+
+
+
+//#################### List Aassigned services ####################//
+
+	public function List_assigned_services($user_master_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					F.full_name AS service_person
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.serv_prov_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+		$usr_result = $this->db->query($sQuery);
+		$user_result = $usr_result->result();
+
+		if($usr_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "list_service_persons"=>$user_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### List Aassigned services End ####################//
+
+
+//#################### Aassigned detailed services ####################//
+
+	public function Detail_assigned_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					F.full_name AS service_person
+					
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_prov_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+		$usr_result = $this->db->query($sQuery);
+		$user_result = $usr_result->result();
+
+		if($usr_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "list_service_persons"=>$user_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### Aassigned detailed services End ####################//
 
 }
 

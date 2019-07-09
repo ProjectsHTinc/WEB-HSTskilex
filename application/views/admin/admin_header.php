@@ -20,6 +20,10 @@
   <script src="<?php echo base_url(); ?>assets/admin/js/swal.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/admin/css/datatable.css"/>
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap-min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/admin/js/tether.js"></script>
+
+
   <!-- <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script> -->
 
 </head>

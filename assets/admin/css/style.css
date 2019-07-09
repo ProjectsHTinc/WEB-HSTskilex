@@ -7606,7 +7606,9 @@ a {
 
 a:not([href]):not([tabindex]) {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+cursor: pointer;
+ }
   a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
     color: inherit;
     text-decoration: none; }
@@ -7732,7 +7734,9 @@ progress {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  border-color: #d5dcec;
+ }
 
 [type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
@@ -17223,10 +17227,10 @@ pre {
 .typeahead {
   border: 1px solid #d5dcec;
   font-family: "Open Sans", sans-serif;
-  font-size: 0.75rem;
+  font-size:14px;
   padding: 0.56rem 0.75rem;
   line-height: 14px;
-  font-weight: 300; }
+  font-weight: 500; }
   .form-control.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .asColorPicker-input, .dataTables_wrapper .input-group-lg > select, .jsgrid .jsgrid-table .jsgrid-filter-row .input-group-lg > input[type=text],
   .jsgrid .jsgrid-table .jsgrid-filter-row .input-group-lg > select, .jsgrid .jsgrid-table .jsgrid-filter-row .input-group-lg > input[type=number], .select2-container--default .input-group-lg > .select2-selection--single, .select2-container--default .select2-selection--single .input-group-lg > .select2-search__field, .input-group-lg > .tt-hint, .input-group-lg >
   .tt-query, .input-group-lg >
@@ -22929,4 +22933,14 @@ div.tagsinput {
 .inp_value{
   margin-top: 10px;
   border-bottom:1px solid #000;
+}
+
+a:focus, input:focus {
+  border-color: #d5dcec;
+    outline: none;
+}
+.go_back_btn{
+  border-color: #e9ecef;
+  background-color: #f1f6ff;
+  color: #000;
 }

@@ -187,7 +187,7 @@ class Apismanmodel extends CI_Model {
              $insert_result = $this->db->query($insert_sql);
 			 $user_master_id = $this->db->insert_id();
 			 
-			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
+			 $insert_query = "INSERT INTO service_person_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
 		$message_details = "Dear Customer your OTP :".$OTP;
@@ -219,7 +219,7 @@ class Apismanmodel extends CI_Model {
 				 $update_gcm = $this->db->query($sQuery);
 			}
 						
-			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, customer_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
+			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, service_person_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
 			{			
@@ -338,7 +338,7 @@ class Apismanmodel extends CI_Model {
 			$update_result = $this->db->query($update_sql);
 		}
 		
-		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
+		$update_sql = "UPDATE service_person_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 			
 		$response = array("status" => "success", "msg" => "Profile Updated");
@@ -350,7 +350,7 @@ class Apismanmodel extends CI_Model {
 //#################### Profile Pic Update ####################//
 	public function Profile_pic_upload($user_master_id,$profileFileName)
 	{
-            $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
+            $update_sql= "UPDATE service_person_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
 			$picture_url = base_url().'assets/customer/'.$profileFileName;
 

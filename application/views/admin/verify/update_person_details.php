@@ -5,8 +5,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Provider list </a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>View  Service Provider details</span></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Provider  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span> Service Person details</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -14,14 +14,14 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">View Service Provider details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+                  <h4 class="card-title">View Service Person details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
                   <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Full Name :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" value="<?php echo $rows->owner_full_name; ?>" readonly>
+                                <input type="text" class="form-control" value="<?php echo $rows->full_name; ?>" readonly>
                               <!-- <input type="hidden" class="form-control" id="serv_prov_id" name="serv_prov_id"  value="<?php  echo base64_encode($rows->user_master_id*98765); ?>"> -->
                           </div>
                         </div>
@@ -50,7 +50,7 @@
                           <label class="col-sm-4 col-form-label">Gender :</label>
                           <div class="col-sm-8">
                               <input type="text" class="form-control" readonly value="<?php echo $rows->gender; ?>">
-                              <input type="hidden" class="form-control" id="serv_prov_id" name="serv_prov_id"  value="<?php echo base64_encode($rows->user_master_id*98765); ?>">
+                              <input type="hidden" class="form-control" id="serv_person_id" name="serv_person_id"  value="<?php echo base64_encode($rows->user_master_id*98765); ?>">
                           </div>
                         </div>
                       </div>
@@ -78,25 +78,27 @@
                             </div>
                         </div>
                       </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Language Known :</label>
+                          <div class="col-sm-8">
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->language_known; ?>">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Education :</label>
+                          <div class="col-sm-8">
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->edu_qualification; ?>">
+                            </div>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Company :</label>
-                          <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->company_status; ?>">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Person Count :</label>
-                          <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->no_of_service_person; ?>">
-                            </div>
-                        </div>
-                      </div>
+
+
                       <div class="col-md-4">
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label"></label>
@@ -104,7 +106,7 @@
                                 <!-- <input type="text" class="form-control" readonly value="<?php echo $rows->also_service_person; ?>"> -->
                                 <div class="form-check form-check-flat">
                               <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" disabled=""<?php if($rows->also_service_person === 'Y') echo 'checked="checked"';?>>
+                                <input type="checkbox" class="form-check-input" disabled=""<?php if($rows->also_service_provider === 'Y') echo 'checked="checked"';?>>
                               Aslo Service Person
                               <i class="input-helper"></i></label>
                             </div>
@@ -113,83 +115,21 @@
                       </div>
                     </div>
 
-                      <h4 class="card-title">Bank Details</h4>
-                    <div class="row">
 
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Bank Name :</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" readonly value="<?php echo $rows->bank_name; ?>">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Branch Name :</label>
-                          <div class="col-sm-8">
-                                  <input type="text" class="form-control" readonly value="<?php echo $rows->bank_branch_name; ?>">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Account No :</label>
-                          <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->bank_acc_no; ?>">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Bank IFSC code :</label>
-                          <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->bank_ifsc_code; ?>">
-                            </div>
-                        </div>
-                      </div>
 
-                    </div>
-                      <h4 class="card-title">Deposit Details</h4>
-                      <form class="forms-sample" id="deposit_status_form" method="post" action="" enctype="multipart/form-data">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Deposit Amt :</label>
-                          <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->refundable_deposit; ?>">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Deposit Status :</label>
-                          <div class="col-sm-8">
-                                <!-- <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>"> -->
-                                <select class="form-control form-control-sm border-info" id="deposit_status" name="deposit_status">
-                                  <option value="Paid">Paid</option>
-                                  <option value="Unpaid">Unpaid</option>
-                                </select>
-                                  <script>$('#deposit_status').val('<?php echo $rows->deposit_status; ?>');</script>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-
-                </form>
                     <h4 class="card-title">Verification Details</h4>
                       <form class="forms-sample" id="verify_status_form" method="post" action="" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Provider verify :</label>
+                        <label class="col-sm-4 col-form-label">Person verify :</label>
                         <div class="col-sm-8">
-                          <select class="form-control form-control-sm border-info" id="serv_prov_verify_status" name="serv_prov_verify_status">
+                          <select class="form-control form-control-sm border-info" id="serv_pers_verify_status" name="serv_pers_verify_status">
                             <option value="Pending">Pending</option>
                             <option value="Rejected">Rejected</option>
                             <option value="Approved">Approved</option>
                           </select>
-                            <script>$('#serv_prov_verify_status').val('<?php echo $rows->serv_prov_verify_status; ?>');</script>
+                            <script>$('#serv_pers_verify_status').val('<?php echo $rows->serv_pers_verify_status; ?>');</script>
 
                           </div>
                       </div>
@@ -199,11 +139,11 @@
                         <label class="col-sm-4 col-form-label">Display  Status :</label>
                         <div class="col-sm-8">
                               <!-- <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>"> -->
-                              <select class="form-control form-control-sm border-info" id="serv_prov_display_status" name="serv_prov_display_status">
+                              <select class="form-control form-control-sm border-info" id="serv_pers_display_status" name="serv_pers_display_status">
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                               </select>
-                                <script>$('#serv_prov_display_status').val('<?php echo $rows->serv_prov_display_status; ?>');</script>
+                                <script>$('#serv_pers_display_status').val('<?php echo $rows->serv_pers_display_status; ?>');</script>
                           </div>
                       </div>
                     </div>
@@ -244,13 +184,13 @@
 
 </style>
 <script>
-$('#serv_prov_display_status').change(function(){
+$('#serv_pers_display_status').change(function(){
     var status=$(this).val();
-    var id=$("#serv_prov_id").val();
+    var id=$("#serv_person_id").val();
 
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
-                 url: "<?php echo base_url(); ?>verifyprocess/update_serv_display_status",
+                 url: "<?php echo base_url(); ?>verifyprocess/update_serv_person_display_status",
                  type: 'POST',
                  data: {
                      'status': status,
@@ -271,12 +211,12 @@ $('#serv_prov_display_status').change(function(){
       }
 
 })
-$('#serv_prov_verify_status').change(function(){
+$('#serv_pers_verify_status').change(function(){
     var status=$(this).val();
-    var id=$("#serv_prov_id").val();
+    var id=$("#serv_person_id").val();
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
-                 url: "<?php echo base_url(); ?>verifyprocess/update_serv_verify_status",
+                 url: "<?php echo base_url(); ?>verifyprocess/update_serv_person_verify_status",
                  type: 'POST',
                  data: {
                      'status': status,
@@ -296,33 +236,5 @@ $('#serv_prov_verify_status').change(function(){
        swal('cancelled')
       }
 })
-$('#deposit_status').change(function(){
-    var status=$(this).val();
-    var id=$("#serv_prov_id").val();
-    if (confirm('Are you sure you want to submit this Change?')) {
-      $.ajax({
-                 url: "<?php echo base_url(); ?>verifyprocess/update_deposit_status",
-                 type: 'POST',
-                 data: {
-                     'status': status,
-                     'id': id
-                   },
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-                     if (stats=="success") {
-                       swal('Status  Updated successfully')
-                   }else{
-                      swal(stats);
-                       }
-                 }
-             });
-      } else {
-       swal('cancelled')
-      }
-
-});
-
-
 
 </script>

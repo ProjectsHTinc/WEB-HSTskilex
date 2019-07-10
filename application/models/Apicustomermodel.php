@@ -8,7 +8,7 @@ class Apicustomermodel extends CI_Model {
     }
 
 
-//#################### Email ####################//
+//-------------------- Email -------------------//
 
 	 function sendMail($email,$subject,$email_message)
 	{
@@ -20,10 +20,10 @@ class Apicustomermodel extends CI_Model {
 		mail($email,$subject,$email_message,$headers);
 	}
 
-//#################### Email End ####################//
+//-------------------- Email End -------------------//
 
 
-//#################### SMS ####################//
+//-------------------- SMS -------------------//
 
 	 function sendSMS($Phoneno,$Message)
 	{
@@ -82,10 +82,10 @@ class Apicustomermodel extends CI_Model {
         curl_close($ch);
 	}
 
-//#################### SMS End ####################//
+//-------------------- SMS End -------------------//
 
 
-//#################### Notification ####################//
+//-------------------- Notification -------------------//
 
 	 function sendNotification($gcm_key,$title,$message,$mobiletype)
 	{
@@ -155,9 +155,9 @@ class Apicustomermodel extends CI_Model {
 
 	}
 
-//#################### Notification End ####################//
+//-------------------- Notification End -------------------//
 
-//#################### Mobile Check ####################//
+//-------------------- Mobile Check -------------------//
 
 	 function Mobile_check($phone_no)
 	{
@@ -191,9 +191,9 @@ class Apicustomermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Mobile Check End ####################//
+//-------------------- Mobile Check End -------------------//
 
-//#################### Login ####################//
+//-------------------- Login -------------------//
 
 	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
 	{
@@ -259,9 +259,9 @@ class Apicustomermodel extends CI_Model {
 		}
 	}
 
-//#################### Main Login End ####################//
+//-------------------- Main Login End -------------------//
 
-//#################### Email Verify status ####################//
+//-------------------- Email Verify status -------------------//
 
 	 function Email_verifystatus($user_master_id)
 	{
@@ -280,10 +280,10 @@ class Apicustomermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Email Verify status End ####################//
+//-------------------- Email Verify status End -------------------//
 
 
-//#################### Email Verify status ####################//
+//-------------------- Email Verify status -------------------//
 
 	 function Email_verification($user_master_id)
 	{
@@ -309,9 +309,9 @@ class Apicustomermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Email Verify status End ####################//
+//-------------------- Email Verify status End -------------------//
 
-//#################### Profile Update ####################//
+//-------------------- Profile Update -------------------//
 
 	 function Profile_update($user_master_id,$full_name,$gender,$address,$email)
 	{
@@ -340,9 +340,9 @@ class Apicustomermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Profile Update End ####################//
+//-------------------- Profile Update End -------------------//
 
-//#################### Profile Pic Update ####################//
+//-------------------- Profile Pic Update -------------------//
 	 function Profile_pic_upload($user_master_id,$profileFileName)
 	{
             $update_sql= "UPDATE customer_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
@@ -352,9 +352,9 @@ class Apicustomermodel extends CI_Model {
 			$response = array("status" => "success", "msg" => "Profile Picture Updated","picture_url" =>$picture_url);
 			return $response;
 	}
-//#################### Profile Pic Update End ####################//
+//-------------------- Profile Pic Update End -------------------//
 
-//#################### Main Category ####################//
+//-------------------- Main Category -------------------//
 	 function View_maincategory($user_master_id)
 	{
 			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
@@ -385,9 +385,9 @@ class Apicustomermodel extends CI_Model {
 
 			return $response;
 	}
-//#################### Main Category End ####################//
+//-------------------- Main Category End -------------------//
 
-//#################### Sub Category ####################//
+//-------------------- Sub Category -------------------//
 	 function View_subcategory($main_cat_id)
 	{
 			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active'";
@@ -418,9 +418,9 @@ class Apicustomermodel extends CI_Model {
 
 			return $response;
 	}
-//#################### Sub Category End ####################//
+//-------------------- Sub Category End -------------------//
 
-//#################### Services List ####################//
+//-------------------- Services List -------------------//
 	 function Services_list($main_cat_id,$sub_cat_id)
 	{
 			$query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
@@ -452,8 +452,8 @@ class Apicustomermodel extends CI_Model {
 
 			return $response;
 	}
-//#################### Services List End ####################//
-//#################### Services Details ####################//
+//-------------------- Services List End -------------------//
+//-------------------- Services Details -------------------//
 
     function service_details($service_id){
       $query = "SELECT * from services WHERE id = '$service_id'  AND status = 'Active'";
@@ -501,11 +501,24 @@ class Apicustomermodel extends CI_Model {
 
    }
 
-//#################### Services Details  ####################//
+//-------------------- Services Details  -------------------//
 
 
+    function add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id){
+      $insert="INSERT INTO order_cart(user_master_id,category_id,sub_category_id,service_id,status,created_by,created_at) VALUES('$user_master_id','$category_id','$sub_category_id','$service_id','Pending','$user_master_id',NOW())";
+      $insert_result = $this->db->query($insert);
+      if($insert_result){
+        $response = array("status" => "success", "msg" => "Service added to cart");
+      }else{
+        $response = array("status" => "failed", "msg" => "Something went wrong");
+      }
+        return $response;
+    }
 
-//#################### Service Order ####################//
+//--------- Service Cart ----------------//
+
+
+//-------------------- Service Order -------------------//
 	 function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
 	{
 		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES
@@ -514,9 +527,9 @@ class Apicustomermodel extends CI_Model {
 		$response = array("status" => "success", "msg" => "Service Booked");
 		return $response;
 	}
-//#################### Service Order End ####################//
+//-------------------- Service Order End -------------------//
 
-//#################### Service Order List ####################//
+//-------------------- Service Order List -------------------//
 	 function Service_order_list ($user_master_id)
 	{
 		$query = "SELECT * from service_orders WHERE customer_id = '$user_master_id'";
@@ -531,10 +544,10 @@ class Apicustomermodel extends CI_Model {
 
 		return $response;
 	}
-//#################### Service Order List End ####################//
+//-------------------- Service Order List End -------------------//
 
 
-//#################### Service Reviews Add ####################//
+//-------------------- Service Reviews Add -------------------//
 	 function Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews)
 	{
 		$insert_sql = "INSERT INTO service_reviews (service_order_id, customer_id, rating, review, status,created_at,created_by) VALUES
@@ -543,10 +556,10 @@ class Apicustomermodel extends CI_Model {
 		$response = array("status" => "success", "msg" => "Review Added");
 		return $response;
 	}
-//#################### Service Reviews Add End ####################//
+//-------------------- Service Reviews Add End -------------------//
 
 
-//#################### Service Reviews Add ####################//
+//-------------------- Service Reviews Add -------------------//
 	 function Service_reviewslist($service_order_id)
 	{
 		$query = "SELECT * from service_reviews WHERE service_order_id = '$service_order_id'";
@@ -561,7 +574,7 @@ class Apicustomermodel extends CI_Model {
 
 		 return $response;
 	}
-//#################### Service Reviews Add End ####################//
+//-------------------- Service Reviews Add End -------------------//
 
 
 }

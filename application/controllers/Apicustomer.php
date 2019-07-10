@@ -417,6 +417,68 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function remove_service_to_cart()
+	{
+		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$cart_id  = $this->input->post("cart_id");
+
+		$data['result']=$this->apicustomermodel->remove_service_to_cart($cart_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+//-----------------------------------------------//
+
+	public function view_cart_summary()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->view_cart_summary($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function book_service()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);

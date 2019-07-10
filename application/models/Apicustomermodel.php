@@ -502,6 +502,7 @@ class Apicustomermodel extends CI_Model {
    }
 
 //-------------------- Services Details  -------------------//
+//-------------------- Add Services Cart  -------------------//
 
 
     function add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id){
@@ -514,8 +515,62 @@ class Apicustomermodel extends CI_Model {
       }
         return $response;
     }
+//-------------------- Add Services Cart  -------------------//
 
-//--------- Service Cart ----------------//
+
+//-------------------- Remove Services Cart  -------------------//
+
+
+    function remove_service_to_cart($cart_id){
+      $query="DELETE  FROM order_cart WHERE id='$cart_id'";
+      $query_result = $this->db->query($query);
+      if($query_result){
+        $response = array("status" => "success", "msg" => "Service removed from cart");
+      }else{
+        $response = array("status" => "failed", "msg" => "Something went wrong");
+      }
+        return $response;
+    }
+//-------------------- Remove Services Cart  -------------------//
+
+
+//-------------------- Cart list -------------------//
+
+
+  function view_cart_summary($user_master_id){
+    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending'";
+    $res = $this->db->query($query);
+    if($res->num_rows()==0){
+      $response = array("status" => "failed", "msg" => "Cart is Empty");
+    }else{
+      $result=$res->result();
+      foreach($result as $rows){
+        $service_pic = $rows->service_pic;
+        if ($service_pic != ''){
+          $service_pic_url = base_url().'assets/category/'.$service_pic;
+        }else {
+           $service_pic_url = '';
+        }
+        $cart_list[]=array(
+          "cart_id" => $rows->cart_id,
+          "service_name" => $rows->service_name,
+          "service_ta_name" => $rows->service_ta_name,
+          "service_picture" => $service_pic_url,
+          "rate_card" => $rows->rate_card,
+          "is_advance_payment" => $rows->is_advance_payment,
+          "advance_amount" => $rows->advance_amount,
+          "status" => $rows->status,
+        );
+      }
+        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list);
+
+    }
+      return $response;
+
+  }
+
+
+//-------------------- Cart list -------------------//
 
 
 //-------------------- Service Order -------------------//

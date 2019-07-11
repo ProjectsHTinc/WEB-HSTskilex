@@ -111,14 +111,54 @@ class Apicustomer extends CI_Controller {
 		$otp = $this->input->post("otp");
 		$device_token = $this->input->post("device_token");
 		$mobiletype = $this->input->post("mobile_type");
+		$unique_number = $this->input->post("unique_number");
 
-		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype);
+		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function guest_login()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Guest";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+		$unique_number = $this->input->post("unique_number");
+		$device_token = $this->input->post("mobile_key");
+		$mobiletype = $this->input->post("mobile_type");
+		$user_stat = $this->input->post("user_stat");
+
+		$data['result']=$this->apicustomermodel->guest_login($unique_number,$device_token,$mobiletype,$user_stat);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+
+//-----------------------------------------------//
+
 
 //-----------------------------------------------//
 

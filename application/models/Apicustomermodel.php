@@ -193,17 +193,44 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Mobile Check End -------------------//
 
+  //-------------------- guest login -------------------//
+
+
+  function guest_login($unique_number,$device_token,$mobiletype,$user_stat){
+    $query="INSERT INTO notification_master (user_master_id,mobile_key,mobile_type,user_stat,created_at) VALUES('$unique_number','$device_token','$mobiletype','$user_stat',NOW())";
+    $res_query = $this->db->query($query);
+    if($res_query){
+      	$response = array("status" => "success", "msg" => "Success");
+    }else{
+      	$response = array("status" => "failed", "msg" => "Something went wrong");
+    }
+    	return $response;
+
+
+  }
+
+
+
+    //-------------------- guest login -------------------//
+
+
 //-------------------- Login -------------------//
 
-	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
+	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number)
 	{
 		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '5' AND status='Active'";
 		$sql_result = $this->db->query($sql);
 
 		if($sql_result->num_rows()>0)
 		{
-			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
+		  $update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
+
+
+      $update_unique_number="UPDATE notification_master SET user_master_id='$user_master_id',user_stat='Register' WHERE user_master_id='$unique_number'";
+      $update_unique_number_result = $this->db->query($update_unique_number);
+
+
 
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
 			$gcm_result = $this->db->query($gcmQuery);

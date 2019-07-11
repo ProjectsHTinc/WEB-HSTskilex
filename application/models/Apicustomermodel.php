@@ -165,7 +165,7 @@ class Apicustomermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-		$digits = 6;
+		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 		if($user_result->num_rows()>0)
@@ -560,6 +560,21 @@ class Apicustomermodel extends CI_Model {
     }
 //-------------------- Remove Services Cart  -------------------//
 
+
+//-------------------- Clear all Services Cart  -------------------//
+
+  function clear_cart($user_master_id){
+    $query="DELETE  FROM order_cart WHERE user_master_id='$user_master_id'";
+    $query_result = $this->db->query($query);
+    if($query_result){
+      $response = array("status" => "success", "msg" => "All Service removed from cart");
+    }else{
+      $response = array("status" => "failed", "msg" => "Something went wrong");
+    }
+      return $response;
+  }
+
+  //--------------------  Clear all Services Cart  -------------------//
 
 //-------------------- Cart list -------------------//
 

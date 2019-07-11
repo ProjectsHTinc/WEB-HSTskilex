@@ -260,7 +260,7 @@ class Apicustomermodel extends CI_Model {
 						} else {
 							$profile_pic_url = "";
 						}
-					  	$address = $rows->address;
+
 					  	$user_type = $rows->user_type;
 				}
 			}
@@ -274,7 +274,6 @@ class Apicustomermodel extends CI_Model {
 					"email_verify" => $email_verify,
 					"gender" => $gender,
 					"profile_pic" => $profile_pic_url,
-					"address" => $address,
 					"user_type" => $user_type
 				);
 

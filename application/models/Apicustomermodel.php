@@ -615,6 +615,54 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Cart list -------------------//
 
 
+
+  function proceed_for_order($user_master_id){
+
+    $check_cart="SELECT * FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
+    $res = $this->db->query($check_cart);
+    $result_no=$res->num_rows();
+    // echo $result_no;
+    if($result_no==1){
+      echo "service";
+    }else if($result_no>1){
+      $result=$res->result();
+      foreach($result as $rows){}
+        $f_cat_id=$rows->category_id;
+        $f_sub_cat_id=$rows->sub_category_id;
+        $f_serv_id=$rows->service_id;
+
+
+        // $insert_service="INSERT INTO service_orders(customer_id,main_cat_id,sub_cat_id,service_id) VALUES('$user_master_id','$f_cat_id','$f_sub_cat_id','$f_serv_id')";
+        // $res_service = $this->db->query($insert_service);
+
+         $count=$result_no-1;
+
+
+        foreach($result as $rows_ad){
+          $ad_service_id[]=$rows_ad->service_id;
+          print_r($ad_service_id);
+
+           }
+           exit;
+          for($i=0;$i<$count;$i++){
+            $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id) VALUES('1','$ad_service_id[$i]')";
+            $res_add_service = $this->db->query($insert_add_service);
+
+
+
+          }
+
+
+
+
+    }else{
+        echo "error";
+    }
+    exit;
+
+  }
+
+
 //-------------------- Service Order -------------------//
 	 function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
 	{

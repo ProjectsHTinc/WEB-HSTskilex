@@ -82,7 +82,7 @@ class Apicustomer extends CI_Controller {
 
 	public function login()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  // $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -546,6 +546,39 @@ class Apicustomer extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function proceed_for_order()
+	{
+	//	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->proceed_for_order($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 
 //-----------------------------------------------//

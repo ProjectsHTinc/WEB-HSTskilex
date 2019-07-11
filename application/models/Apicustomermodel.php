@@ -615,9 +615,10 @@ class Apicustomermodel extends CI_Model {
 
 
 
-  function proceed_for_order($user_master_id){
+  function proceed_to_book_order($user_master_id){
 
-    $check_cart="SELECT * FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
+    $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card FROM order_cart as oc left join services as s on oc.service_id=s.id
+    WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending'";
     $res = $this->db->query($check_cart);
     $result_no=$res->num_rows();
     // echo $result_no;
@@ -625,31 +626,40 @@ class Apicustomermodel extends CI_Model {
       echo "service";
     }else if($result_no>1){
       $result=$res->result();
-      foreach($result as $rows){}
+      foreach($result as $rows){
         $f_cat_id=$rows->category_id;
         $f_sub_cat_id=$rows->sub_category_id;
-        $f_serv_id=$rows->service_id;
+        $f_serv_id[]=$rows->service_id;
+        $ser_rate_card=$rows->rate_card;
+
+        if ($rows === end($result)) {
+          echo $last_ser_id= $rows->service_id;
+           // $insert_service="INSERT INTO service_orders(customer_id,main_cat_id,sub_cat_id,service_id) VALUES('$user_master_id','$f_cat_id','$f_sub_cat_id','$last_ser_id')";
+           // $res_service = $this->db->query($insert_service);
+       }
+      }
 
 
-        // $insert_service="INSERT INTO service_orders(customer_id,main_cat_id,sub_cat_id,service_id) VALUES('$user_master_id','$f_cat_id','$f_sub_cat_id','$f_serv_id')";
-        // $res_service = $this->db->query($insert_service);
+
+       $last_cnt=$result_no;
+
+
+
 
          $count=$result_no-1;
-
-
-        foreach($result as $rows_ad){
-          $ad_service_id[]=$rows_ad->service_id;
-          print_r($ad_service_id);
-
-           }
-           exit;
+         print_r($f_serv_id);
           for($i=0;$i<$count;$i++){
-            $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id) VALUES('1','$ad_service_id[$i]')";
-            $res_add_service = $this->db->query($insert_add_service);
+          echo  $ad_ser= $f_serv_id[$i];
+
+            // $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status) VALUES('1','$ad_ser','$ser_rate_card','Pending')";
+            // $res_add_service = $this->db->query($insert_add_service);
 
 
 
           }
+
+
+          exit;
 
 
 

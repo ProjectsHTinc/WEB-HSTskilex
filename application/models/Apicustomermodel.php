@@ -202,7 +202,7 @@ class Apicustomermodel extends CI_Model {
     if($res_query){
       	$response = array("status" => "success", "msg" => "Success");
     }else{
-      	$response = array("status" => "failed", "msg" => "Something went wrong");
+      	$response = array("status" => "error", "msg" => "Something went wrong");
     }
     	return $response;
 
@@ -547,7 +547,7 @@ class Apicustomermodel extends CI_Model {
 
         $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
       }else{
-        $response = array("status" => "failed", "msg" => "Something went wrong");
+        $response = array("status" => "error", "msg" => "Something went wrong");
       }
         return $response;
     }
@@ -563,7 +563,7 @@ class Apicustomermodel extends CI_Model {
       if($query_result){
         $response = array("status" => "success", "msg" => "Service removed from cart");
       }else{
-        $response = array("status" => "failed", "msg" => "Something went wrong");
+        $response = array("status" => "error", "msg" => "Something went wrong");
       }
         return $response;
     }
@@ -578,7 +578,7 @@ class Apicustomermodel extends CI_Model {
     if($query_result){
       $response = array("status" => "success", "msg" => "All Service removed from cart");
     }else{
-      $response = array("status" => "failed", "msg" => "Something went wrong");
+      $response = array("status" => "error", "msg" => "Something went wrong");
     }
       return $response;
   }
@@ -589,10 +589,10 @@ class Apicustomermodel extends CI_Model {
 
 
   function view_cart_summary($user_master_id){
-    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending'";
+    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.rate_card desc";
     $res = $this->db->query($query);
     if($res->num_rows()==0){
-      $response = array("status" => "failed", "msg" => "Cart is Empty");
+      $response = array("status" => "error", "msg" => "Cart is Empty");
     }else{
       $result=$res->result();
       foreach($result as $rows){
@@ -620,64 +620,143 @@ class Apicustomermodel extends CI_Model {
 
   }
 
+  //-------------------- Cart list -------------------//
 
-//-------------------- Cart list -------------------//
+//-------------------- Time slot -------------------//
+
+  function view_time_slot($user_master_id){
+    $query = "SELECT * from service_timeslot WHERE status = 'Active'";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+       $order_list = $res->result();
+       foreach ($order_list as $rows) {
+         $view_time_slot[]= array(
+           'timeslot_id' => $rows->id,
+           'time_range' => $rows->time_range,
+         );
+       }
+      $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot);
+     } else {
+       $response = array("status" => "error", "msg" => "Service order list not found");
+     }
+
+    return $response;
+  }
+
+
+  //-------------------- Time slot -------------------//
 
 
 
-  function proceed_to_book_order($user_master_id){
+//-------------------- Before booking -------------------//
 
-    $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card FROM order_cart as oc left join services as s on oc.service_id=s.id
-    WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending'";
+
+
+  function proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot){
+
+    $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card,s.advance_amount FROM order_cart as oc left join services as s on oc.service_id=s.id
+    WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending' order by s.advance_amount desc";
     $res = $this->db->query($check_cart);
     $result_no=$res->num_rows();
-    // echo $result_no;
+
+    // Single Service Select
+
     if($result_no==1){
-      echo "service";
+      $result=$res->result();
+      foreach($result as $rows){}
+        $f_cat_id=$rows->category_id;
+        $f_sub_cat_id=$rows->sub_category_id;
+        $f_serv_id=$rows->service_id;
+        $f_rate_card=$rows->rate_card;
+        $last_ser_id= $rows->service_id;
+        $ser_rate_card=$rows->rate_card;
+        $advance_amount=$rows->advance_amount;
+        if($advance_amount=='0.00'){
+        $adva_status='NA';
+        }else{
+          $adva_status='N';
+        }
+
+        $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$order_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
+         $res_service = $this->db->query($insert_service);
+         $last_id=$this->db->insert_id();
+         if($res_service){
+           $service_details=array(
+             "service_id"=>$last_id,
+             "advance_amount"=>$advance_amount,
+             "advance_payment_status"=>$adva_status,
+           );
+
+           $delete_cart="DELETE FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
+           $res_delete = $this->db->query($delete_cart);
+
+             $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details);
+         }else{
+             $response = array("status" => "error", "msg" => "Something Went wrong");
+         }
+         return $response;
+
+         // Multiple Service select
+
     }else if($result_no>1){
       $result=$res->result();
       foreach($result as $rows){
         $f_cat_id=$rows->category_id;
         $f_sub_cat_id=$rows->sub_category_id;
         $f_serv_id[]=$rows->service_id;
-        $ser_rate_card=$rows->rate_card;
+        $f_rate_card[]=$rows->rate_card;
+        if ($rows === reset($result)) {
+           $last_ser_id= $rows->service_id;
+           $ser_rate_card=$rows->rate_card;
+           $advance_amount=$rows->advance_amount;
+          if($advance_amount=='0.00'){
+            $adva_status='NA';
+          }else{
+              $adva_status='N';
+          }
 
-        if ($rows === end($result)) {
-          echo $last_ser_id= $rows->service_id;
-           // $insert_service="INSERT INTO service_orders(customer_id,main_cat_id,sub_cat_id,service_id) VALUES('$user_master_id','$f_cat_id','$f_sub_cat_id','$last_ser_id')";
-           // $res_service = $this->db->query($insert_service);
+            $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$order_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
+             $res_service = $this->db->query($insert_service);
+             $last_id=$this->db->insert_id();
+
        }
       }
 
-
-
        $last_cnt=$result_no;
-
-
-
-
          $count=$result_no-1;
-         print_r($f_serv_id);
-          for($i=0;$i<$count;$i++){
-          echo  $ad_ser= $f_serv_id[$i];
-
-            // $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status) VALUES('1','$ad_ser','$ser_rate_card','Pending')";
-            // $res_add_service = $this->db->query($insert_add_service);
-
-
+          for($i=1;$i<$last_cnt;$i++){
+             $ad_ser= $f_serv_id[$i];
+             $rate_cc=$f_rate_card[$i];
+             $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status) VALUES('$last_id','$ad_ser','$rate_cc','Pending')";
+            $res_add_service = $this->db->query($insert_add_service);
 
           }
+          if($res_add_service){
+            $service_details=array(
+              "service_id"=>$last_id,
+              "advance_amount"=>$advance_amount,
+              "advance_payment_status"=>$adva_status,
+            );
 
 
-          exit;
-
-
+            $delete_cart="DELETE FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
+            $res_delete = $this->db->query($delete_cart);
+              $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details);
+          }else{
+              $response = array("status" => "error", "msg" => "Something Went wrong");
+          }
+          return $response;
 
 
     }else{
-        echo "error";
+
+      // No service Found
+
+      $response = array("status" => "error", "msg" => "Something Went wrong");
+      return $response;
     }
-    exit;
+
 
   }
 

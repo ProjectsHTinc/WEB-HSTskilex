@@ -549,12 +549,43 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function view_time_slot()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 //-----------------------------------------------//
 
 	public function proceed_to_book_order()
 	{
-	//	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -578,9 +609,9 @@ class Apicustomer extends CI_Controller {
 		$service_latlon  = $this->input->post("service_latlon");
 		$service_location  = $this->input->post("service_location");
 		$service_address  = $this->input->post("service_address");
-		$user_master_id  = $this->input->post("user_master_id");
-
-		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id);
+		$order_date  = $this->input->post("order_date");
+		$order_timeslot  = $this->input->post("order_timeslot_id");
+		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

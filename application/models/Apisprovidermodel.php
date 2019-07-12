@@ -737,8 +737,6 @@ class Apisprovidermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-		//$digits = 6;
-		//$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 			
 		if($user_result->num_rows()>0)
 		{
@@ -754,15 +752,6 @@ class Apisprovidermodel extends CI_Model {
 			
 			$insert_query = "INSERT INTO service_person_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
-
-			//$message_details = "Service Person Created;
-			//$this->sendSMS($mobile,$message_details);
-
-			//$enc_user_master_id = base64_encode($service_provider_id);
-			
-			//$subject = "SKILEX - Verification Email";
-			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
-			//$this->sendMail($email,$subject,$email_message);
 		
 			$response = array("status" => "success", "msg" => "Service Person Created", "user_master_id"=>$user_master_id, "serv_person_id"=>$serv_person_id);
 		}
@@ -942,7 +931,7 @@ class Apisprovidermodel extends CI_Model {
 					services D,
 					service_timeslot E
 				WHERE
-					 A.serv_prov_id = '".$user_master_id."' AND A.status = 'Requested' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.serv_prov_id = '".$user_master_id."' AND (A.status = 'Requested' OR A.status = 'Accepted') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -955,6 +944,47 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### List requested services End ####################//
+
+
+//#################### Aassigned detailed services ####################//
+
+	public function Detail_requested_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range
+					
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_prov_id = '".$user_master_id."' AND A.status = 'Requested' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order Details", "detail_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order Not found");
+		}
+		return $response;
+	}
+
+//#################### Aassigned detailed services End ####################//
 
 
 //#################### Accept requested services ####################//
@@ -1000,30 +1030,6 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### Assigned requested services End ####################//
-
-
-//#################### Cancel services ####################//
-
-	public function Cancel_services($user_master_id,$service_order_id)
-	{
-		$update_sql = "UPDATE service_orders SET status = 'Canceled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
-		$update_result = $this->db->query($update_sql);
-
-		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
-		$ins_query = $this->db->query($sQuery);
-		
-		if($update_result){
-				$response=array("status" => "success","msg" => "Cancel Services");
-           }else{
-				$response=array("status" => "error");
-           }
-		   
-		return $response;
-	}
-
-//#################### Cancel services End ####################//
-
-
 
 
 //#################### List Aassigned services ####################//
@@ -1381,6 +1387,52 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Detail completed services End ####################//
 
+
+//#################### Cancel service Resons ####################//
+
+	public function Cancel_service_resons($user_type)
+	{
+		$sQuery = "SELECT id, reasons FROM cancel_master WHERE user_type ='".$user_type."'";
+		$res_result = $this->db->query($sQuery);
+		$reason_result = $res_result->result();
+
+		
+		if($res_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Cancel Service Reasons", "list_reasons"=>$reason_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Reasons Not found");
+		}
+		return $response;
+	}
+
+//#################### Cancel service Resons End ####################//
+
+
+//#################### Cancel services ####################//
+
+	public function Cancel_services($user_master_id,$service_order_id,$cancel_master_id,$comments)
+	{
+		$update_sql = "UPDATE service_orders SET status = 'Canceled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_result = $this->db->query($update_sql);
+
+		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($update_result){
+				$response=array("status" => "success","msg" => "Cancel Services");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Cancel services End ####################//
+
+
 //#################### List canceled services ####################//
 
 	public function List_canceled_services($user_master_id)
@@ -1417,6 +1469,101 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### List canceled services End ####################//
+
+//#################### Detail canceled services ####################//
+
+	public function Detail_canceled_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range
+					
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_prov_id = '".$user_master_id."' AND A.status = 'Canceled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		$reason_query = "SELECT
+						A.id,C.reasons,A.`comments`,B.id as cancel_user_id,D.id as role_id,D.role_name
+					FROM
+						cancel_history A,
+						login_users B,
+						cancel_master C,
+						user_role D
+					WHERE
+						A.`service_order_id` = '".$service_order_id."' AND A.`user_master_id` = B.id AND B.id AND A.`cancel_master_id` = C.id AND B.user_type = D.id";
+		$reason_res = $this->db->query($reason_query);
+		$reason_result = $reason_res->result();
+			if($reason_res->num_rows()>0)
+			{
+				foreach ($reason_res->result() as $rows)
+				{
+					 $role_id = $rows->role_id;
+					 $cancel_user_id = $rows->cancel_user_id;
+				}
+			}
+			
+		if ($role_id == '3'){
+			$usrQuery = "SELECT owner_full_name AS name FROM service_provider_details WHERE user_master_id = '".$cancel_user_id."' LIMIT 1";
+		} else if ($role_id == '4'){
+			$usrQuery = "SELECT full_name AS name FROM service_person_details WHERE user_master_id = '".$cancel_user_id."' LIMIT 1";
+		}
+		else {
+			$usrQuery = "SELECT full_name AS name FROM customer_details WHERE user_master_id = '".$cancel_user_id."' LIMIT 1";
+		}
+			$usr_ress = $this->db->query($usrQuery);
+			$usr_result = $usr_ress->result();
+		
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order Details", "detail_services_order"=>$service_result, "cancel_reason"=>$reason_result, "canceld_by"=>$usr_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order Not found");
+		}
+		return $response;
+	}
+
+//#################### Detail canceled services End ####################//
+
+//#################### Vendor status update ####################//
+
+	public function Vendor_status_update($serv_pro_id,$online_status,$serv_lat,$serv_lon)
+	{
+		
+		$sql = "SELECT * FROM vendor_status WHERE serv_pro_id  ='".$serv_pro_id."'";
+		$user_result = $this->db->query($sql);
+	
+		if($user_result->num_rows()>0)
+		{
+			$update_sql = "UPDATE vendor_status SET online_status = '".$online_status."', serv_lat  = '".$serv_lat."',serv_lon  = '".$serv_lon ."' WHERE serv_pro_id ='".$serv_pro_id."'";
+			$update_result = $this->db->query($update_sql);
+
+		} else {
+			$insert_sql = "INSERT INTO vendor_status (serv_pro_id, online_status, serv_lat, serv_lon, status, created_at, created_by ) VALUES ('". $serv_pro_id . "','". $online_status . "','". $serv_lat . "','". $serv_lon . "','Active',NOW(),'". $serv_pro_id . "')";
+			$insert_result = $this->db->query($insert_sql);
+			
+		}
+		$response = array("status" => "success", "msg" => "Vendor Status Update");
+		return $response;
+	}
+
+//#################### Vendor status update End ####################//
 }
 
 ?>

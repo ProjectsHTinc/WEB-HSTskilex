@@ -352,7 +352,7 @@ class Apismanmodel extends CI_Model {
 	{
             $update_sql= "UPDATE service_person_details SET profile_pic='$profileFileName' WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
-			$picture_url = base_url().'assets/customer/'.$profileFileName;
+			$picture_url = base_url().'assets/persons/'.$profileFileName;
 
 			$response = array("status" => "success", "msg" => "Profile Picture Updated","picture_url" =>$picture_url);
 			return $response;

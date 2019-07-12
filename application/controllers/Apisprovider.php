@@ -890,6 +890,42 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function detail_requested_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "List assigned services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id  ='';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+
+		$data['result']=$this->apisprovidermodel->Detail_requested_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
 //-----------------------------------------------//
 
 	public function accept_requested_services()
@@ -960,44 +996,6 @@ class Apisprovider extends CI_Controller {
 	}
 
 //-----------------------------------------------//
-
-
-
-//-----------------------------------------------//
-
-	public function cancel_services()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Cancel services";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id = '';
-		$service_order_id = '';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$service_order_id  = $this->input->post("service_order_id");
-
-		$data['result']=$this->apisprovidermodel->Cancel_services($user_master_id,$service_order_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-
 
 //-----------------------------------------------//
 
@@ -1186,10 +1184,8 @@ class Apisprovider extends CI_Controller {
 			echo json_encode($res);
 			return;
 		}
-		//$user_master_id = '';
+
 		$service_order_id  ='';
-		
-		//$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
 		$data['result']=$this->apisprovidermodel->Additional_service_orders($service_order_id);
@@ -1245,7 +1241,7 @@ class Apisprovider extends CI_Controller {
 		if($_POST == FALSE)
 		{
 			$res = array();
-			$res["opn"] = "List Completed services";
+			$res["opn"] = "Detail Completed services";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
 
@@ -1259,6 +1255,77 @@ class Apisprovider extends CI_Controller {
 		$service_order_id  = $this->input->post("service_order_id");
 
 		$data['result']=$this->apisprovidermodel->Detail_completed_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function cancel_service_resons()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Cancel services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_type = '';
+		$user_type  = $this->input->post("user_type");
+
+		$data['result']=$this->apisprovidermodel->Cancel_service_resons($user_type);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function cancel_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Cancel services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id = '';
+		$cancel_master_id = '';
+		$comments = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+		$cancel_master_id  = $this->input->post("cancel_master_id");
+		$comments  = $this->input->post("comments");
+
+		$data['result']=$this->apisprovidermodel->Cancel_services($user_master_id,$service_order_id,$cancel_master_id,$comments);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1297,6 +1364,79 @@ class Apisprovider extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function detail_canceled_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Detail canceled services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id = '';	
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+
+		$data['result']=$this->apisprovidermodel->Detail_canceled_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function vendor_status_update()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Detail canceled services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$serv_pro_id  = '';
+		$online_status = '';
+		$serv_lat = '';
+		$serv_lon = '';
+		
+		$serv_pro_id   = $this->input->post("serv_pro_id");
+		$online_status  = $this->input->post("online_status");
+		$serv_lat  = $this->input->post("serv_lat");
+		$serv_lon  = $this->input->post("serv_lon");
+
+		$data['result']=$this->apisprovidermodel->Vendor_status_update($serv_pro_id,$online_status,$serv_lat,$serv_lon);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 }
 ?>

@@ -424,7 +424,8 @@ class Apicustomer extends CI_Controller {
 
 	public function add_service_to_cart()
 	{
-		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
 
 		if(!$this->checkMethod())
 		{
@@ -446,6 +447,7 @@ class Apicustomer extends CI_Controller {
 		$category_id  = $this->input->post("category_id");
 		$sub_category_id  = $this->input->post("sub_category_id");
 		$service_id  = $this->input->post("service_id");
+
 
 		$data['result']=$this->apicustomermodel->add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];

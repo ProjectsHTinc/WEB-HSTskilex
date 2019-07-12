@@ -535,7 +535,17 @@ class Apicustomermodel extends CI_Model {
       $insert="INSERT INTO order_cart(user_master_id,category_id,sub_category_id,service_id,status,created_by,created_at) VALUES('$user_master_id','$category_id','$sub_category_id','$service_id','Pending','$user_master_id',NOW())";
       $insert_result = $this->db->query($insert);
       if($insert_result){
-        $response = array("status" => "success", "msg" => "Service added to cart");
+        $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
+          $cnt_query = $this->db->query($get_total_count);
+          $result=$cnt_query->result();
+          foreach($result as $rows){}
+            $cart_count=array(
+              "service_count" => $rows->service_count,
+              "total_amt" => $rows->total_amt,
+            );
+
+
+        $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
       }else{
         $response = array("status" => "failed", "msg" => "Something went wrong");
       }

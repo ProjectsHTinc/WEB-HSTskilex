@@ -111,14 +111,54 @@ class Apicustomer extends CI_Controller {
 		$otp = $this->input->post("otp");
 		$device_token = $this->input->post("device_token");
 		$mobiletype = $this->input->post("mobile_type");
+		$unique_number = $this->input->post("unique_number");
 
-		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype);
+		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function guest_login()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Guest";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+		$unique_number = $this->input->post("unique_number");
+		$device_token = $this->input->post("mobile_key");
+		$mobiletype = $this->input->post("mobile_type");
+		$user_stat = $this->input->post("user_stat");
+
+		$data['result']=$this->apicustomermodel->guest_login($unique_number,$device_token,$mobiletype,$user_stat);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+
+//-----------------------------------------------//
+
 
 //-----------------------------------------------//
 
@@ -384,7 +424,8 @@ class Apicustomer extends CI_Controller {
 
 	public function add_service_to_cart()
 	{
-		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
 
 		if(!$this->checkMethod())
 		{
@@ -407,12 +448,145 @@ class Apicustomer extends CI_Controller {
 		$sub_category_id  = $this->input->post("sub_category_id");
 		$service_id  = $this->input->post("service_id");
 
+
 		$data['result']=$this->apicustomermodel->add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function remove_service_to_cart()
+	{
+		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$cart_id  = $this->input->post("cart_id");
+
+		$data['result']=$this->apicustomermodel->remove_service_to_cart($cart_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function clear_cart()
+	{
+		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->clear_cart($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+//-----------------------------------------------//
+
+	public function view_cart_summary()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->view_cart_summary($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function proceed_to_book_order()
+	{
+	//	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$contact_person_name  = $this->input->post("contact_person_name");
+		$contact_person_number  = $this->input->post("contact_person_number");
+		$service_latlon  = $this->input->post("service_latlon");
+		$service_location  = $this->input->post("service_location");
+		$service_address  = $this->input->post("service_address");
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 
 //-----------------------------------------------//

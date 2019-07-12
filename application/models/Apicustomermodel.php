@@ -165,7 +165,7 @@ class Apicustomermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-		$digits = 6;
+		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 		if($user_result->num_rows()>0)
@@ -193,17 +193,44 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Mobile Check End -------------------//
 
+  //-------------------- guest login -------------------//
+
+
+  function guest_login($unique_number,$device_token,$mobiletype,$user_stat){
+    $query="INSERT INTO notification_master (user_master_id,mobile_key,mobile_type,user_stat,created_at) VALUES('$unique_number','$device_token','$mobiletype','$user_stat',NOW())";
+    $res_query = $this->db->query($query);
+    if($res_query){
+      	$response = array("status" => "success", "msg" => "Success");
+    }else{
+      	$response = array("status" => "failed", "msg" => "Something went wrong");
+    }
+    	return $response;
+
+
+  }
+
+
+
+    //-------------------- guest login -------------------//
+
+
 //-------------------- Login -------------------//
 
-	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
+	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number)
 	{
 		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '5' AND status='Active'";
 		$sql_result = $this->db->query($sql);
 
 		if($sql_result->num_rows()>0)
 		{
-			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
+		  $update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
+
+
+      $update_unique_number="UPDATE notification_master SET user_master_id='$user_master_id',user_stat='Register' WHERE user_master_id='$unique_number'";
+      $update_unique_number_result = $this->db->query($update_unique_number);
+
+
 
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
 			$gcm_result = $this->db->query($gcmQuery);
@@ -214,7 +241,7 @@ class Apicustomermodel extends CI_Model {
 				 $update_gcm = $this->db->query($sQuery);
 			}
 
-			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, customer_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
+			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic FROM login_users A, customer_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
 			{
@@ -233,7 +260,7 @@ class Apicustomermodel extends CI_Model {
 						} else {
 							$profile_pic_url = "";
 						}
-					  	$address = $rows->address;
+
 					  	$user_type = $rows->user_type;
 				}
 			}
@@ -247,7 +274,6 @@ class Apicustomermodel extends CI_Model {
 					"email_verify" => $email_verify,
 					"gender" => $gender,
 					"profile_pic" => $profile_pic_url,
-					"address" => $address,
 					"user_type" => $user_type
 				);
 
@@ -502,20 +528,158 @@ class Apicustomermodel extends CI_Model {
    }
 
 //-------------------- Services Details  -------------------//
+//-------------------- Add Services Cart  -------------------//
 
 
     function add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id){
       $insert="INSERT INTO order_cart(user_master_id,category_id,sub_category_id,service_id,status,created_by,created_at) VALUES('$user_master_id','$category_id','$sub_category_id','$service_id','Pending','$user_master_id',NOW())";
       $insert_result = $this->db->query($insert);
       if($insert_result){
-        $response = array("status" => "success", "msg" => "Service added to cart");
+        $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
+          $cnt_query = $this->db->query($get_total_count);
+          $result=$cnt_query->result();
+          foreach($result as $rows){}
+            $cart_count=array(
+              "service_count" => $rows->service_count,
+              "total_amt" => $rows->total_amt,
+            );
+
+
+        $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
       }else{
         $response = array("status" => "failed", "msg" => "Something went wrong");
       }
         return $response;
     }
+//-------------------- Add Services Cart  -------------------//
 
-//--------- Service Cart ----------------//
+
+//-------------------- Remove Services Cart  -------------------//
+
+
+    function remove_service_to_cart($cart_id){
+      $query="DELETE  FROM order_cart WHERE id='$cart_id'";
+      $query_result = $this->db->query($query);
+      if($query_result){
+        $response = array("status" => "success", "msg" => "Service removed from cart");
+      }else{
+        $response = array("status" => "failed", "msg" => "Something went wrong");
+      }
+        return $response;
+    }
+//-------------------- Remove Services Cart  -------------------//
+
+
+//-------------------- Clear all Services Cart  -------------------//
+
+  function clear_cart($user_master_id){
+    $query="DELETE  FROM order_cart WHERE user_master_id='$user_master_id'";
+    $query_result = $this->db->query($query);
+    if($query_result){
+      $response = array("status" => "success", "msg" => "All Service removed from cart");
+    }else{
+      $response = array("status" => "failed", "msg" => "Something went wrong");
+    }
+      return $response;
+  }
+
+  //--------------------  Clear all Services Cart  -------------------//
+
+//-------------------- Cart list -------------------//
+
+
+  function view_cart_summary($user_master_id){
+    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending'";
+    $res = $this->db->query($query);
+    if($res->num_rows()==0){
+      $response = array("status" => "failed", "msg" => "Cart is Empty");
+    }else{
+      $result=$res->result();
+      foreach($result as $rows){
+        $service_pic = $rows->service_pic;
+        if ($service_pic != ''){
+          $service_pic_url = base_url().'assets/category/'.$service_pic;
+        }else {
+           $service_pic_url = '';
+        }
+        $cart_list[]=array(
+          "cart_id" => $rows->cart_id,
+          "service_name" => $rows->service_name,
+          "service_ta_name" => $rows->service_ta_name,
+          "service_picture" => $service_pic_url,
+          "rate_card" => $rows->rate_card,
+          "is_advance_payment" => $rows->is_advance_payment,
+          "advance_amount" => $rows->advance_amount,
+          "status" => $rows->status,
+        );
+      }
+        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list);
+
+    }
+      return $response;
+
+  }
+
+
+//-------------------- Cart list -------------------//
+
+
+
+  function proceed_to_book_order($user_master_id){
+
+    $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card FROM order_cart as oc left join services as s on oc.service_id=s.id
+    WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending'";
+    $res = $this->db->query($check_cart);
+    $result_no=$res->num_rows();
+    // echo $result_no;
+    if($result_no==1){
+      echo "service";
+    }else if($result_no>1){
+      $result=$res->result();
+      foreach($result as $rows){
+        $f_cat_id=$rows->category_id;
+        $f_sub_cat_id=$rows->sub_category_id;
+        $f_serv_id[]=$rows->service_id;
+        $ser_rate_card=$rows->rate_card;
+
+        if ($rows === end($result)) {
+          echo $last_ser_id= $rows->service_id;
+           // $insert_service="INSERT INTO service_orders(customer_id,main_cat_id,sub_cat_id,service_id) VALUES('$user_master_id','$f_cat_id','$f_sub_cat_id','$last_ser_id')";
+           // $res_service = $this->db->query($insert_service);
+       }
+      }
+
+
+
+       $last_cnt=$result_no;
+
+
+
+
+         $count=$result_no-1;
+         print_r($f_serv_id);
+          for($i=0;$i<$count;$i++){
+          echo  $ad_ser= $f_serv_id[$i];
+
+            // $insert_add_service="INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status) VALUES('1','$ad_ser','$ser_rate_card','Pending')";
+            // $res_add_service = $this->db->query($insert_add_service);
+
+
+
+          }
+
+
+          exit;
+
+
+
+
+    }else{
+        echo "error";
+    }
+    exit;
+
+  }
 
 
 //-------------------- Service Order -------------------//

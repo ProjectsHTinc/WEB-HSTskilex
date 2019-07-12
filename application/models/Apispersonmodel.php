@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apismanmodel extends CI_Model {
+class Apispersonmodel extends CI_Model {
 
     function __construct()
     {
@@ -162,11 +162,43 @@ class Apismanmodel extends CI_Model {
 
 //#################### Notification End ####################//
 
+
+//#################### Dashboard ####################//
+
+	public function Dashboard($user_master_id)
+	{
+		$assigned_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Assigned'";
+		$assigned_count_res = $this->db->query($assigned_count);
+		$assigned_orders_count = $assigned_count_res->num_rows();
+		
+		$ongoing_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND (status = 'Initiated' OR status = 'Started' OR status = 'Ongoing')";
+		$ongoing_count_res = $this->db->query($ongoing_count);
+		$ongoing_orders_count = $ongoing_count_res->num_rows();
+		
+		//$finished_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Completed'";
+		//$finished_count_res = $this->db->query($finished_count);
+		//$finished_orders_count = $finished_count_res->num_rows();
+		
+		//$canceled_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Canceled'";
+		//$canceled_count_res = $this->db->query($canceled_count);
+		//$canceled_orders_count = $canceled_count_res->num_rows();
+		
+		$dashboardData  = array(
+				"serv_assigned_count" => $assigned_orders_count,
+				"serv_ongoing_count" => $ongoing_orders_count,
+			);
+		$response = array("status" => "success", "msg" => "Dashboard Datas","dashboardData"=>$dashboardData);
+		return $response;
+	}
+
+//#################### Dashboard End ####################//
+
+
 //#################### Mobile Check ####################//
 
 	public function Mobile_check($phone_no)
 	{
-		$sql = "SELECT * FROM login_users WHERE phone_no ='".$phone_no."' AND user_type = '5' AND status='Active'";
+		$sql = "SELECT * FROM login_users WHERE phone_no ='".$phone_no."' AND user_type = '4' AND status='Active'";
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
@@ -182,17 +214,15 @@ class Apismanmodel extends CI_Model {
 			
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
+			
+			$message_details = "Dear Customer your OTP :".$OTP;
+			$this->sendSMS($phone_no,$message_details);
+			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
+		
 		} else {
-			 $insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, mobile_verify, email_verify, document_verify, status) VALUES ('". $phone_no . "','". $OTP . "','5','N','N','N','Active')";
-             $insert_result = $this->db->query($insert_sql);
-			 $user_master_id = $this->db->insert_id();
-			 
-			 $insert_query = "INSERT INTO service_person_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
-             $insert_result = $this->db->query($insert_query);
+			 $response = array("status" => "error", "msg" => "Invalid login");
 		}
-		$message_details = "Dear Customer your OTP :".$OTP;
-		$this->sendSMS($phone_no,$message_details);
-		$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
+		
 		return $response;
 	}
 
@@ -202,7 +232,7 @@ class Apismanmodel extends CI_Model {
 
 	public function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype)
 	{
-		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '5' AND status='Active'";
+		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '4' AND status='Active'";
 		$sql_result = $this->db->query($sql);
 
 		if($sql_result->num_rows()>0)
@@ -234,7 +264,7 @@ class Apismanmodel extends CI_Model {
 						$gender = $rows->gender;
 						$profile_pic = $rows->profile_pic;
 						if ($profile_pic!=''){
-							$profile_pic_url = base_url().'assets/customers/'.$profile_pic;
+							$profile_pic_url = base_url().'assets/persons/'.$profile_pic;
 						} else {
 							$profile_pic_url = "";
 						}
@@ -318,27 +348,9 @@ class Apismanmodel extends CI_Model {
 
 //#################### Profile Update ####################//
 
-	public function Profile_update($user_master_id,$full_name,$gender,$address,$email)
+	public function Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip,$edu_qualification,$language_known)
 	{
-		$sql = "SELECT * FROM login_users WHERE id ='".$user_master_id."'";
-		$user_result = $this->db->query($sql);
-		$ress = $user_result->result();
-
-		if($user_result->num_rows()>0)
-		{
-			foreach ($user_result->result() as $rows)
-			{
-				  $email_verify = $rows->email_verify;
-				  $old_email = $rows->email;
-			}
-		}
-
-		if ($email != $old_email){
-			$update_sql = "UPDATE login_users SET email ='$email', email_verify = 'N' WHERE id ='$user_master_id'";
-			$update_result = $this->db->query($update_sql);
-		}
-		
-		$update_sql = "UPDATE service_person_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
+		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',edu_qualification='$edu_qualification',language_known='$language_known',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 			
 		$response = array("status" => "success", "msg" => "Profile Updated");
@@ -358,6 +370,45 @@ class Apismanmodel extends CI_Model {
 			return $response;
 	}
 //#################### Profile Pic Update End ####################//
+
+//#################### List Aassigned services ####################//
+
+	public function List_assigned_services($user_master_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.status,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					F.owner_full_name AS service_provider
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_provider_details F
+				WHERE
+					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "list_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### List Aassigned services End ####################//
 
 
 }

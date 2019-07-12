@@ -59,7 +59,7 @@ class Apisprovider extends CI_Controller {
 		if($_POST == FALSE)
 		{
 			$res = array();
-			$res["opn"] = "List Service Persons Documents";
+			$res["opn"] = "Dashboard";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
 
@@ -1264,7 +1264,7 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function cancel_service_resons()
+	public function cancel_service_reasons()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -1286,7 +1286,7 @@ class Apisprovider extends CI_Controller {
 		$user_type = '';
 		$user_type  = $this->input->post("user_type");
 
-		$data['result']=$this->apisprovidermodel->Cancel_service_resons($user_type);
+		$data['result']=$this->apisprovidermodel->Cancel_service_reasons($user_type);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

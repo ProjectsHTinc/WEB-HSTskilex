@@ -191,7 +191,7 @@ class Apisprovidermodel extends CI_Model {
 		$ongoing_count_res = $this->db->query($ongoing_count);
 		$ongoing_orders_count = $ongoing_count_res->num_rows();
 		
-		$finished_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Finished'";
+		$finished_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Completed'";
 		$finished_count_res = $this->db->query($finished_count);
 		$finished_orders_count = $finished_count_res->num_rows();
 		
@@ -1390,7 +1390,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Cancel service Resons ####################//
 
-	public function Cancel_service_resons($user_type)
+	public function Cancel_service_reasons($user_type)
 	{
 		$sQuery = "SELECT id, reasons FROM cancel_master WHERE user_type ='".$user_type."'";
 		$res_result = $this->db->query($sQuery);

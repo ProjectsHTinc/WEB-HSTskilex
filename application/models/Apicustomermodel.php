@@ -447,9 +447,10 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Sub Category End -------------------//
 
 //-------------------- Services List -------------------//
-	 function Services_list($main_cat_id,$sub_cat_id)
+	 function Services_list($main_cat_id,$sub_cat_id,$user_master_id)
 	{
-			$query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
+			// $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
+      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active'";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){
@@ -467,7 +468,9 @@ class Apicustomermodel extends CI_Model {
 							"sub_cat_id" => $rows->sub_cat_id,
 							"service_name" => $rows->service_name,
 							"service_ta_name" => $rows->service_ta_name,
-							"service_pic_url" => $service_pic_url
+							"service_pic_url" => $service_pic_url,
+              "selected" => $rows->selected,
+
 					);
 				}
 			     	$response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);

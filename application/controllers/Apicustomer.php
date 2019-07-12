@@ -356,7 +356,7 @@ class Apicustomer extends CI_Controller {
 
 	public function services_list()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -379,8 +379,9 @@ class Apicustomer extends CI_Controller {
 
 		$main_cat_id  = $this->input->post("main_cat_id");
 		$sub_cat_id  = $this->input->post("sub_cat_id");
+		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Services_list($main_cat_id,$sub_cat_id);
+		$data['result']=$this->apicustomermodel->Services_list($main_cat_id,$sub_cat_id,$user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

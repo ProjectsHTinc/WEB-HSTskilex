@@ -371,6 +371,7 @@ class Apispersonmodel extends CI_Model {
 	}
 //#################### Profile Pic Update End ####################//
 
+
 //#################### List Aassigned services ####################//
 
 	public function List_assigned_services($user_master_id)
@@ -410,6 +411,388 @@ class Apispersonmodel extends CI_Model {
 
 //#################### List Aassigned services End ####################//
 
+//#################### Assigned detailed services ####################//
+
+	public function Detail_assigned_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.serv_pers_id,
+					A.service_location,
+					A.service_latlon,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					F.full_name AS service_person
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "detail_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### Assigned detailed services End ####################//
+
+//#################### Initiat services ####################//
+	public function Initiate_services($user_master_id,$service_order_id)
+	{
+            $update_sql = "UPDATE service_orders SET status = 'Initiated', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+			$update_result = $this->db->query($update_sql);
+
+			$response = array("status" => "success", "msg" => "Service Order Initiated");
+			return $response;
+	}
+//#################### Initiat services End ####################//
+
+
+########### List Ongoing services ####################//
+
+	public function List_ongoing_services($user_master_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.status,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					F.full_name AS service_person
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "list_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### List Ongoing services End ####################//
+
+
+########### Initiated detailed services ####################//
+
+	public function Detail_initiated_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					A.service_address,
+					A.service_latlon,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					A.serv_pers_id,
+					F.full_name AS service_person,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					A.status
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "detail_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### Initiated detailed services End ####################//
+
+
+########### Initiated detailed services ####################//
+
+	public function Service_process($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					A.service_address,
+					A.service_latlon,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					A.serv_pers_id,
+					F.owner_full_name AS service_provider,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					A.status
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_provider_details F
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "detail_services_order"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### Initiated detailed services End ####################//
+
+
+//#################### Request otp ####################//
+	public function Request_otp($user_master_id,$service_order_id)
+	{
+		$sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."'";
+		$user_result = $this->db->query($sql);
+		
+		if($user_result->num_rows()>0)
+		{
+			foreach ($user_result->result() as $rows)
+			{
+				   $contact_person_number = $rows->contact_person_number;
+			}
+			
+			$digits = 6;
+			$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+
+			$update_sql = "UPDATE service_orders SET service_otp = '".$OTP."', updated_at=NOW() WHERE id ='".$service_order_id."'";
+			$update_result = $this->db->query($update_sql);
+				
+			 $message_details = "Dear Customer - Service OTP :".$OTP;
+			$this->sendSMS($contact_person_number,$message_details);
+			
+			$response = array("status" => "success", "msg" => "OTP send");
+		} else {
+			$response = array("status" => "error", "msg" => "Something Wrong");
+		}
+		
+		return $response;
+	}
+//#################### Request otp End ####################//
+
+//#################### Request otp ####################//
+	public function Start_services($user_master_id,$service_order_id,$service_otp)
+	{
+		$sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."' AND service_otp = '".$service_otp."'";
+		$user_result = $this->db->query($sql);
+		
+		if($user_result->num_rows()>0)
+		{
+			$update_sql = "UPDATE service_orders SET status = 'Started', start_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+			$update_result = $this->db->query($update_sql);
+
+			$response = array("status" => "success", "msg" => "Service Started");
+		} else {
+			$response = array("status" => "error", "msg" => "Something Wrong");
+		}
+		
+		return $response;
+	}
+//#################### Request otp End ####################//
+
+//#################### Ongoing detailed services ####################//
+
+	public function Detail_started_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					A.serv_pers_id,
+					F.owner_full_name AS service_provider,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.time_range,
+					A.status,
+					A.start_datetime,
+					A.material_notes
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_provider_details F
+				WHERE
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+		$serv_result = $this->db->query($sQuery);
+		$service_result = $serv_result->result();
+
+		$addtional_serv = "SELECT * FROM service_order_additional WHERE service_order_id = '".$service_order_id."' AND status = 'Active'";
+		$addtional_serv_res = $this->db->query($addtional_serv);
+		$addtional_serv_count = $addtional_serv_res->num_rows();
+
+		if($serv_result->num_rows()>0) {
+			$response = array("status" => "success", "msg" => "Service Order List", "detail_services_order"=>$service_result, "addtional_services_count"=>$addtional_serv_count);
+		} else {
+			$response = array("status" => "error", "msg" => "Service Order List Not found");
+		}
+		return $response;
+	}
+
+//#################### Ongoing detailed services End ####################//
+
+
+//#################### Services list ####################//
+
+	public function Services_list($user_master_id)
+	{
+		$sQuery = "SELECT
+					A.main_cat_id,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					A.sub_cat_id,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					A.id AS service_id,
+					D.service_name,
+					D.service_ta_name,
+					D.rate_card,
+					D.service_pic
+				FROM
+					serv_prov_pers_skills A,
+					main_category B,
+					sub_category C,
+					services D
+				WHERE
+					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.`service_id` = D.id AND A.status = 'Active'";
+		$ser_result = $this->db->query($sQuery); 
+		
+		$services_result = $ser_result->result();
+		$services_count = $ser_result->num_rows();
+
+		if($ser_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Services list", "service_count" => $services_count, "service_list"=>$services_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Services list End ####################//
+
+//#################### Add addtional Services ####################//
+
+	public function Add_addtional_services($user_master_id,$service_order_id,$service_id,$ad_service_rate_card)
+	{
+		$sQuery = "INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status,created_at,created_by) VALUES ('". $service_order_id . "','". $service_id . "','". $ad_service_rate_card . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Add addtional Services End ####################//
+
+
+//#################### Additional service orders ####################//
+
+	public function List_addtional_services($user_master_id,$service_order_id)
+	{
+		$sQuery = "SELECT
+						A.`ad_service_rate_card`,
+						B.service_name,
+						B.service_ta_name,
+						C.main_cat_name,
+						C.main_cat_ta_name,
+						D.sub_cat_name,
+						D.sub_cat_ta_name
+					FROM
+						service_order_additional A,
+						services B,
+						main_category C,
+						sub_category D
+					WHERE
+						A.service_order_id = '".$service_order_id."' AND A.service_id = B.id AND B.main_cat_id = C.id AND B.sub_cat_id = D.id";
+		$serv_result = $this->db->query($sQuery);
+		
+		$service_result = $serv_result->result();
+		$service_count = $serv_result->num_rows();
+
+		if($serv_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Addtional Service list", "service_count" => $service_count, "service_list"=>$service_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Additional service orders End ####################//
 
 }
 

@@ -643,8 +643,10 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
+		 $service_date=$this->input->post("service_date");
 
-		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id);
+
+		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id,$service_date);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

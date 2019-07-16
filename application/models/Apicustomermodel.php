@@ -701,16 +701,23 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Time slot -------------------//
 
-  function view_time_slot($user_master_id){
-    $query = "SELECT * from service_timeslot WHERE status = 'Active'";
+  function view_time_slot($user_master_id,$service_date){
+    // $query = "SELECT * from service_timeslot WHERE status = 'Active'";
+      $cur_date=date("d-M-Y");
+      $serv_date = date("d-M-Y", strtotime($service_date));
+      if ($serv_date != $cur_date){
+        $query="SELECT id,DATE_FORMAT(from_time, '%h:%i %p') as from_time,DATE_FORMAT(to_time, '%h:%i %p') as to_time  FROM service_timeslot  WHERE  status='Active'";
+      }else{
+        $query="SELECT id,DATE_FORMAT(from_time, '%h:%i %p') as from_time,DATE_FORMAT(to_time, '%h:%i %p') as to_time  FROM service_timeslot  WHERE from_time >= (NOW() + INTERVAL 1 HOUR) and status='Active'";
+      }
     $res = $this->db->query($query);
-
      if($res->num_rows()>0){
        $order_list = $res->result();
        foreach ($order_list as $rows) {
+         $time_slot=$rows->from_time.'-'.$rows->to_time;
          $view_time_slot[]= array(
            'timeslot_id' => $rows->id,
-           'time_range' => $rows->time_range,
+           'time_range' =>$time_slot
          );
        }
       $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot);

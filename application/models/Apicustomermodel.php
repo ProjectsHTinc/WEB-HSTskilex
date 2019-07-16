@@ -838,33 +838,6 @@ class Apicustomermodel extends CI_Model {
   }
 
 
-//-------------------- Service Order -------------------//
-	 function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
-	{
-		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES
-						('". $customer_id . "','". $contact_person . "','". $main_cat_id . "', '". $sub_cat_id . "','". $service_id . "','". $order_date . "','". $order_timeslot . "','". $service_latlon . "','". $service_location . "', '". $service_address . "','Booked', now(),'". $customer_id . "')";
-		 $insert_result = $this->db->query($insert_sql);
-		$response = array("status" => "success", "msg" => "Service Booked");
-		return $response;
-	}
-//-------------------- Service Order End -------------------//
-
-//-------------------- Service Order List -------------------//
-	 function Service_order_list ($user_master_id)
-	{
-		$query = "SELECT * from service_orders WHERE customer_id = '$user_master_id'";
-		$res = $this->db->query($query);
-
-		 if($res->num_rows()>0){
-			 $order_list = $res->result();
-			$response = array("status" => "success", "msg" => "View Order List","services_orderlist"=>$order_list);
-		 } else {
-			 $response = array("status" => "error", "msg" => "Service order list not found");
-		 }
-
-		return $response;
-	}
-//-------------------- Service Order List End -------------------//
 
 
 //-------------------- Service Reviews Add -------------------//

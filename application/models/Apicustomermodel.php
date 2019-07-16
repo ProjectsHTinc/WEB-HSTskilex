@@ -450,7 +450,7 @@ class Apicustomermodel extends CI_Model {
 	 function Services_list($main_cat_id,$sub_cat_id,$user_master_id)
 	{
 			// $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
-      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active'";
+      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active' GROUP by s.id";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){

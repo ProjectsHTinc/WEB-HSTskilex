@@ -548,4 +548,101 @@ class Masters extends CI_Controller {
 
 
 
+		// Create banners for offers
+
+
+		public function banner_list(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$data['res']=$this->mastermodel->get_banner();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/master/banner/create',$data);
+				$this->load->view('admin/admin_footer');
+
+			}
+		}
+
+
+		public function create_banner(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$banner_title=$this->db->escape_str($this->input->post('banner_title'));
+				$status=$this->db->escape_str($this->input->post('status'));
+				$profilepic = $_FILES['banner_img']['name'];
+				if(empty($profilepic)){
+				$pic=' ';
+			}else{
+				$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+				$pic = round(microtime(true)) . '.' . $temp;
+				$uploaddir = 'assets/banners/';
+				$profilepic = $uploaddir.$pic;
+				move_uploaded_file($_FILES['banner_img']['tmp_name'], $profilepic);
+			}
+			$data['res']=$this->mastermodel->create_banner($banner_title,$pic,$status,$user_id);
+			if($data['res']['status']=="success"){
+				redirect('masters/banner_list');
+			}else{
+				redirect('masters/banner_list');
+			}
+		}else{
+			redirect('/');
+		}
+		}
+
+
+
+		public function get_banner_edit(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+			 $ban_id=$this->uri->segment(3);
+			 $data['res']=$this->mastermodel->get_banner_edit($ban_id);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/master/banner/edit',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else{
+			 	redirect('/');
+		 }
+	}
+
+
+
+	public function update_banner(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type== 1){
+			$banner_title=$this->db->escape_str($this->input->post('banner_title'));
+			$ban_id=$this->db->escape_str($this->input->post('ban_id'));
+			$banner_old_img=$this->db->escape_str($this->input->post('banner_old_img'));
+			$status=$this->db->escape_str($this->input->post('status'));
+			$profilepic = $_FILES['banner_img']['name'];
+			if(empty($profilepic)){
+			$pic=$banner_old_img;
+		}else{
+			$temp = pathinfo($profilepic, PATHINFO_EXTENSION);
+			$pic = round(microtime(true)) . '.' . $temp;
+			$uploaddir = 'assets/banners/';
+			$profilepic = $uploaddir.$pic;
+			move_uploaded_file($_FILES['banner_img']['tmp_name'], $profilepic);
+		}
+		$data['res']=$this->mastermodel->update_banner($banner_title,$pic,$status,$ban_id,$user_id);
+		if($data['res']['status']=="success"){
+			redirect('masters/banner_list');
+		}else{
+			redirect('masters/banner_list');
+		}
+	}else{
+		redirect('/');
+	}
+	}
+
+
+
+
 }

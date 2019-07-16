@@ -380,6 +380,39 @@ class Apicustomermodel extends CI_Model {
 	}
 //-------------------- Profile Pic Update End -------------------//
 
+
+  function view_banner_list($user_master_id){
+    $query = "SELECT * from banners WHERE status = 'Active'";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $cat_pic = $rows->banner_img;
+        if ($cat_pic != ''){
+          $ban_pic_url = base_url().'assets/banners/'.$cat_pic;
+        }else {
+           $cat_pic_url = '';
+        }
+
+        $banData[]  = array(
+            "id" => $rows->id,
+            "banner_img" => $ban_pic_url
+        );
+      }
+          $response = array("status" => "success", "msg" => "View banner list","banners"=>$banData);
+
+    }else{
+            $response = array("status" => "error", "msg" => "banner not found");
+    }
+
+    return $response;
+  }
+
+
+
+
+
 //-------------------- Main Category -------------------//
 	 function View_maincategory($user_master_id)
 	{
@@ -445,6 +478,47 @@ class Apicustomermodel extends CI_Model {
 			return $response;
 	}
 //-------------------- Sub Category End -------------------//
+
+//-------------------- Search Service  -------------------//
+
+    function search_service($service_txt,$service_txt_ta,$user_master_id){
+      // $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
+
+      if($service_txt_ta==''){
+         $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' and status='Active'";
+      }else{
+         $query="SELECT *  FROM services WHERE service_ta_name LIKE '%$service_txt_ta%' and status='Active'";
+      }
+      exit;
+      $res = $this->db->query($query);
+
+       if($res->num_rows()>0){
+          foreach ($res->result() as $rows)
+        {
+          $service_pic = $rows->service_pic;
+          if ($service_pic != ''){
+            $service_pic_url = base_url().'assets/category/'.$service_pic;
+          }else {
+             $service_pic_url = '';
+          }
+          $subcatData[]  = array(
+              "service_id" => $rows->id,
+              "main_cat_id" => $rows->main_cat_id,
+              "sub_cat_id" => $rows->sub_cat_id,
+              "service_name" => $rows->service_name,
+              "service_ta_name" => $rows->service_ta_name,
+              "service_pic_url" => $service_pic_url,
+          );
+        }
+            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+
+      }else{
+              $response = array("status" => "error", "msg" => "Services not found");
+      }
+
+      return $response;
+    }
+//-------------------- Search Service  -------------------//
 
 //-------------------- Services List -------------------//
 	 function Services_list($main_cat_id,$sub_cat_id,$user_master_id)

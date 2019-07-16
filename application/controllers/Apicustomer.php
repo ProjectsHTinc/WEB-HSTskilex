@@ -288,6 +288,41 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function view_banner_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Main Category";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = '';
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->view_banner_list($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
 //-----------------------------------------------//
 
 	public function view_maincategory()
@@ -382,6 +417,41 @@ class Apicustomer extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apicustomermodel->Services_list($main_cat_id,$sub_cat_id,$user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function search_service()
+	{
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+	  $service_txt  = $this->input->post("service_txt");
+		$service_txt_ta  = $this->input->post("service_txt_ta");
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->search_service($service_txt,$service_txt_ta,$user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

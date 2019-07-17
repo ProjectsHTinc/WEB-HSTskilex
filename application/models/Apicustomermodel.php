@@ -380,6 +380,39 @@ class Apicustomermodel extends CI_Model {
 	}
 //-------------------- Profile Pic Update End -------------------//
 
+
+  function view_banner_list($user_master_id){
+    $query = "SELECT * from banners WHERE status = 'Active'";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $cat_pic = $rows->banner_img;
+        if ($cat_pic != ''){
+          $ban_pic_url = base_url().'assets/banners/'.$cat_pic;
+        }else {
+           $cat_pic_url = '';
+        }
+
+        $banData[]  = array(
+            "id" => $rows->id,
+            "banner_img" => $ban_pic_url
+        );
+      }
+          $response = array("status" => "success", "msg" => "View banner list","banners"=>$banData);
+
+    }else{
+            $response = array("status" => "error", "msg" => "banner not found");
+    }
+
+    return $response;
+  }
+
+
+
+
+
 //-------------------- Main Category -------------------//
 	 function View_maincategory($user_master_id)
 	{
@@ -446,11 +479,52 @@ class Apicustomermodel extends CI_Model {
 	}
 //-------------------- Sub Category End -------------------//
 
+//-------------------- Search Service  -------------------//
+
+    function search_service($service_txt,$service_txt_ta,$user_master_id){
+      // $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
+
+      if($service_txt_ta==''){
+         $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' and status='Active'";
+      }else{
+         $query="SELECT *  FROM services WHERE service_ta_name LIKE '%$service_txt_ta%' and status='Active'";
+      }
+      exit;
+      $res = $this->db->query($query);
+
+       if($res->num_rows()>0){
+          foreach ($res->result() as $rows)
+        {
+          $service_pic = $rows->service_pic;
+          if ($service_pic != ''){
+            $service_pic_url = base_url().'assets/category/'.$service_pic;
+          }else {
+             $service_pic_url = '';
+          }
+          $subcatData[]  = array(
+              "service_id" => $rows->id,
+              "main_cat_id" => $rows->main_cat_id,
+              "sub_cat_id" => $rows->sub_cat_id,
+              "service_name" => $rows->service_name,
+              "service_ta_name" => $rows->service_ta_name,
+              "service_pic_url" => $service_pic_url,
+          );
+        }
+            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+
+      }else{
+              $response = array("status" => "error", "msg" => "Services not found");
+      }
+
+      return $response;
+    }
+//-------------------- Search Service  -------------------//
+
 //-------------------- Services List -------------------//
 	 function Services_list($main_cat_id,$sub_cat_id,$user_master_id)
 	{
 			// $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
-      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active'";
+      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active' GROUP by s.id";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){
@@ -627,16 +701,23 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Time slot -------------------//
 
-  function view_time_slot($user_master_id){
-    $query = "SELECT * from service_timeslot WHERE status = 'Active'";
+  function view_time_slot($user_master_id,$service_date){
+    // $query = "SELECT * from service_timeslot WHERE status = 'Active'";
+      $cur_date=date("d-M-Y");
+      $serv_date = date("d-M-Y", strtotime($service_date));
+      if ($serv_date != $cur_date){
+        $query="SELECT id,DATE_FORMAT(from_time, '%h:%i %p') as from_time,DATE_FORMAT(to_time, '%h:%i %p') as to_time  FROM service_timeslot  WHERE  status='Active'";
+      }else{
+        $query="SELECT id,DATE_FORMAT(from_time, '%h:%i %p') as from_time,DATE_FORMAT(to_time, '%h:%i %p') as to_time  FROM service_timeslot  WHERE from_time >= (NOW() + INTERVAL 1 HOUR) and status='Active'";
+      }
     $res = $this->db->query($query);
-
      if($res->num_rows()>0){
        $order_list = $res->result();
        foreach ($order_list as $rows) {
+         $time_slot=$rows->from_time.'-'.$rows->to_time;
          $view_time_slot[]= array(
            'timeslot_id' => $rows->id,
-           'time_range' => $rows->time_range,
+           'time_range' =>$time_slot
          );
        }
       $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot);
@@ -764,33 +845,6 @@ class Apicustomermodel extends CI_Model {
   }
 
 
-//-------------------- Service Order -------------------//
-	 function Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address)
-	{
-		 $insert_sql = "INSERT INTO service_orders (customer_id, contact_person, main_cat_id, sub_cat_id, service_id,order_date, order_timeslot, service_latlon, service_location, service_address, status, created_at,created_by) VALUES
-						('". $customer_id . "','". $contact_person . "','". $main_cat_id . "', '". $sub_cat_id . "','". $service_id . "','". $order_date . "','". $order_timeslot . "','". $service_latlon . "','". $service_location . "', '". $service_address . "','Booked', now(),'". $customer_id . "')";
-		 $insert_result = $this->db->query($insert_sql);
-		$response = array("status" => "success", "msg" => "Service Booked");
-		return $response;
-	}
-//-------------------- Service Order End -------------------//
-
-//-------------------- Service Order List -------------------//
-	 function Service_order_list ($user_master_id)
-	{
-		$query = "SELECT * from service_orders WHERE customer_id = '$user_master_id'";
-		$res = $this->db->query($query);
-
-		 if($res->num_rows()>0){
-			 $order_list = $res->result();
-			$response = array("status" => "success", "msg" => "View Order List","services_orderlist"=>$order_list);
-		 } else {
-			 $response = array("status" => "error", "msg" => "Service order list not found");
-		 }
-
-		return $response;
-	}
-//-------------------- Service Order List End -------------------//
 
 
 //-------------------- Service Reviews Add -------------------//

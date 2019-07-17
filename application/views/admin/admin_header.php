@@ -115,7 +115,8 @@
                    <div class="col-group col-md-2 col-md-offset-1">
                      <p class="category-heading">Master Creation</p>
                      <ul class="submenu-item">
-                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_city">City </a></li>
+                       <!-- <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_city">City </a></li> -->
+                              <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/banner_list">Banners </a></li>
                        <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
                      </ul>
                    </div>

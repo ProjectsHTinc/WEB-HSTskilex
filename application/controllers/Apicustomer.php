@@ -288,6 +288,41 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function view_banner_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Main Category";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = '';
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->view_banner_list($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
 //-----------------------------------------------//
 
 	public function view_maincategory()
@@ -390,6 +425,41 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function search_service()
+	{
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+	  $service_txt  = $this->input->post("service_txt");
+		$service_txt_ta  = $this->input->post("service_txt_ta");
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->search_service($service_txt,$service_txt_ta,$user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
 	public function service_details()
 	{
 		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -425,7 +495,7 @@ class Apicustomer extends CI_Controller {
 
 	public function add_service_to_cart()
 	{
-		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 
 		if(!$this->checkMethod())
@@ -573,8 +643,10 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
+		 $service_date=$this->input->post("service_date");
 
-		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id);
+
+		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id,$service_date);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -621,88 +693,6 @@ class Apicustomer extends CI_Controller {
 
 
 
-//-----------------------------------------------//
-
-	public function book_service()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Service Order";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$customer_id  = '';
-		$contact_person  = '';
-		$main_cat_id  = '';
-		$sub_cat_id  = '';
-		$service_id  = '';
-		$order_date  = '';
-		$order_timeslot  = '';
-		$service_latlon  = '';
-		$service_location  = '';
-		$service_address  = '';
-
-		$customer_id  = $this->input->post("customer_id");
-		$contact_person  = $this->input->post("contact_person");
-		$main_cat_id  = $this->input->post("main_cat_id");
-		$sub_cat_id  = $this->input->post("sub_cat_id");
-		$service_id  = $this->input->post("service_id");
-		$order_date  = $this->input->post("order_date");
-		$order_timeslot  = $this->input->post("order_timeslot");
-		$service_latlon  = $this->input->post("service_latlon");
-		$service_location  = $this->input->post("service_location");
-		$service_address  = $this->input->post("service_address");
-
-		$data['result']=$this->apicustomermodel->Book_service($customer_id,$contact_person,$main_cat_id,$sub_cat_id,$service_id,$order_date,$order_timeslot,$service_latlon,$service_location,$service_address);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-//-----------------------------------------------//
-
-	public function service_order_list()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Service Order List";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id  = '';
-
-		$user_master_id  = $this->input->post("user_master_id");
-
-
-		$data['result']=$this->apicustomermodel->Service_order_list($user_master_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
 
 //-----------------------------------------------//
 

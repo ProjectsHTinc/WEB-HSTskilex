@@ -417,5 +417,63 @@ Class Mastermodel extends CI_Model
 
 
 
+        // Banner section
+
+
+        function get_banner(){
+          $check="SELECT * FROM banners order by id desc";
+          $result=$this->db->query($check);
+          return $result->result();
+
+        }
+
+
+        function get_banner_edit($ban_id){
+          $id=base64_decode($ban_id)/98765;
+          $check="SELECT * FROM banners WHERE id='$id'";
+          $result=$this->db->query($check);
+          return $result->result();
+        }
+
+
+        function create_banner($banner_title,$pic,$status,$user_id){
+          $check="SELECT * FROM banners WHERE banner_title='$banner_title'";
+          $result=$this->db->query($check);
+          if($result->num_rows()==0){
+            $insert="INSERT INTO banners(banner_title,banner_img,status,created_at,created_by) VALUES('$banner_title','$pic','$status',NOW(),'$user_id')";
+            $result=$this->db->query($insert);
+            if($result){
+                $data = array("status" => "success");
+                return $data;
+            }else{
+              $data = array("status" => "failed");
+              return $data;
+            }
+
+          }else{
+            $data = array("status" => "Already exist");
+            return $data;
+          }
+
+        }
+
+
+        function update_banner($banner_title,$pic,$status,$ban_id,$user_id){
+            $id=base64_decode($ban_id)/98765;
+          $query="UPDATE banners SET banner_title='$banner_title',banner_img='$pic',status='$status',updated_at=NOW(),updated_by='$user_id' WHERE id='$id'";
+          $result=$this->db->query($query);
+            if($result){
+                $data = array("status" => "success");
+                return $data;
+            }else{
+              $data = array("status" => "failed");
+              return $data;
+            }
+
+        }
+
+
+
+
 }
 ?>

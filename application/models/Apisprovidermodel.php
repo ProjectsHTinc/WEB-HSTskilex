@@ -922,7 +922,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range
+					E.from_time,
+					E.to_time
 					
 				FROM
 					service_orders A,
@@ -963,7 +964,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range
+					E.from_time,
+					E.to_time
 					
 				FROM
 					service_orders A,
@@ -1047,7 +1049,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					F.full_name AS service_person
 				FROM
 					service_orders A,
@@ -1089,7 +1092,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					F.full_name AS service_person
 					
 				FROM
@@ -1132,7 +1136,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					F.full_name AS service_person
 				FROM
 					service_orders A,
@@ -1157,7 +1162,7 @@ class Apisprovidermodel extends CI_Model {
 //#################### List Ongoing services End ####################//
 
 
-//#################### Aassigned detailed services ####################//
+//#################### Initiated detailed services ####################//
 
 	public function Detail_initiated_services($user_master_id,$service_order_id)
 	{
@@ -1176,7 +1181,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					A.status
 				FROM
 					service_orders A,
@@ -1198,7 +1204,7 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Aassigned detailed services End ####################//
+//#################### Initiated detailed services End ####################//
 
 //#################### Ongoing detailed services ####################//
 
@@ -1219,7 +1225,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					A.status,
 					A.start_datetime,
 					A.material_notes
@@ -1302,7 +1309,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					F.full_name AS service_person,
 					G.rating
 				FROM
@@ -1348,7 +1356,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range,
+					E.from_time,
+					E.to_time,
 					A.status,
 					A.start_datetime,
 					A.finish_datetime,
@@ -1448,7 +1457,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range
+					E.from_time,
+					E.to_time
 				FROM
 					service_orders A,
 					main_category B,
@@ -1487,8 +1497,8 @@ class Apisprovidermodel extends CI_Model {
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.time_range
-					
+					E.from_time,
+					E.to_time
 				FROM
 					service_orders A,
 					main_category B,
@@ -1564,6 +1574,9 @@ class Apisprovidermodel extends CI_Model {
 	}
 
 //#################### Vendor status update End ####################//
+
+
+
 }
 
 ?>

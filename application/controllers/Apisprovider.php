@@ -207,7 +207,6 @@ class Apisprovider extends CI_Controller {
 			}else{
 				echo "Error";
 		}
-
 	}
 
 //-----------------------------------------------//
@@ -296,8 +295,11 @@ class Apisprovider extends CI_Controller {
 	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		$user_master_id = $this->uri->segment(3);
+		
 		$profile = $_FILES["profile_pic"]["name"];
-		$profileFileName = time().'-'.$profile;
+		$extension  = end((explode(".", $document)));
+		
+		$profileFileName = $user_master_id.'-'.time().'.'.$extension ;
 		$uploadPicdir = './assets/providers/';
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);

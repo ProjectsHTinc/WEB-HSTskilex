@@ -738,7 +738,7 @@ class Apicustomermodel extends CI_Model {
 
 
   function proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot){
-
+    $serv_date = date("Y-m-d", strtotime($order_date));
     $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card,s.advance_amount FROM order_cart as oc left join services as s on oc.service_id=s.id
     WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending' order by s.advance_amount desc";
     $res = $this->db->query($check_cart);
@@ -762,8 +762,8 @@ class Apicustomermodel extends CI_Model {
           $adva_status='N';
         }
 
-        $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$order_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
-         $res_service = $this->db->query($insert_service);
+        $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
+      $res_service = $this->db->query($insert_service);
          $last_id=$this->db->insert_id();
          if($res_service){
            $service_details=array(
@@ -800,7 +800,7 @@ class Apicustomermodel extends CI_Model {
               $adva_status='N';
           }
 
-            $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$order_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
+            $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
              $res_service = $this->db->query($insert_service);
              $last_id=$this->db->insert_id();
 
@@ -843,6 +843,62 @@ class Apicustomermodel extends CI_Model {
 
 
   }
+
+
+    function service_advance_payment($user_master_id,$service_id){
+      $select="SELECT * from service_orders WHERE id='$service_id' AND customer_id='$user_master_id'";
+      $res = $this->db->query($select);
+      if($res->num_rows()==1){
+              $result=$res->result();
+              foreach($result as $rows){}
+            $advance_amt=$rows->advance_amount_paid;
+            $update="UPDATE service_orders SET advance_payment_status='Y' WHERE id='$service_id'";
+            $res_update = $this->db->query($update);
+
+            $check_service_payment="SELECT * FROM service_payments WHERE service_order_id='$service_id'";
+            $res_sp=$this->db->query($check_service_payment);
+            if($res_sp->num_rows()==0){
+
+              $insert_sp="INSERT INTO service_payments (service_order_id,paid_advance_amount,status) VALUES ('$service_id','$advance_amt','Pending')";
+              $res_sph=$this->db->query($insert_sp);
+              $last_id=$this->db->insert_id();
+
+              // INSERT into service payment history
+              $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$last_id','Online','123','123','Advance','Success',NOW(),'$user_master_id')";
+              $res_sph=$this->db->query($insert_sph);
+              if($res_sph){
+                $response = array("status" => "success", "msg" => "Advance paid Successfully");
+              }else{
+                $response = array("status" => "error", "msg" => "Service not found");
+              }
+            }else{
+              $result_sp=$res_sp->result();
+              foreach($result_sp as $rows_sp){}
+              $service_payment_id=$rows_sp->id;
+
+
+              //Update in  service_payments
+              $update_sp="UPDATE service_payments SET paid_advance_amount='$advance_amt' WHERE service_order_id='$service_id'";
+              $res_sp=$this->db->query($update_sp);
+
+
+              // INSERT into service payment history
+              $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$service_payment_id','Online','123','123','Advance','Success',NOW(),'$user_master_id')";
+              $res_sph=$this->db->query($insert_sph);
+              if($res_sph){
+                $response = array("status" => "success", "msg" => "Advance paid Successfully");
+              }else{
+                $response = array("status" => "error", "msg" => "Service not found");
+              }
+            }
+      }else{
+           $response = array("status" => "error", "msg" => "Service not found");
+      }
+       return $response;
+
+
+    }
+
 
 
 

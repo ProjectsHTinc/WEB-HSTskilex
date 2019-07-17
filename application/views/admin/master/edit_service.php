@@ -241,7 +241,7 @@
     <script>
 
     $("#is_advance_payment").bind("change  keyup", function() {
-    
+
        var ad=$(this).val();
        if(ad=='Y'){
          $('#adv_amt').show();
@@ -285,7 +285,7 @@
         },
         is_advance_payment:{required:"Select Advance type"},
         advance_amount:{required:"Enter the amount",number:"Enter only numbers"},
-        rate_card:{required:"Enter rate card value"},
+        rate_card:{required:"Enter rate card value",digits: true},
         rate_card_details:{required:"Enter rate card details in english " },
         rate_card_details_ta:{required:"Enter the rate card details in tamil" },
         inclusions:{required:"Enter the inclusions"},

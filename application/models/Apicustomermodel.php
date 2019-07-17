@@ -489,7 +489,7 @@ class Apicustomermodel extends CI_Model {
       }else{
          $query="SELECT *  FROM services WHERE service_ta_name LIKE '%$service_txt_ta%' and status='Active'";
       }
-      exit;
+    
       $res = $this->db->query($query);
 
        if($res->num_rows()>0){

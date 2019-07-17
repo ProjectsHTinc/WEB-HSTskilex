@@ -279,7 +279,7 @@
            },
           is_advance_payment:{required:true},
           advance_amount:{required:true,number:true},
-          rate_card:{required:true},
+          rate_card:{required:true,digits: true},
           rate_card_details:{required:true },
           rate_card_details_ta:{required:true },
           inclusions:{required:true},

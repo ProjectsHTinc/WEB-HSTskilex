@@ -766,8 +766,10 @@ class Apicustomermodel extends CI_Model {
       $res_service = $this->db->query($insert_service);
          $last_id=$this->db->insert_id();
          if($res_service){
+            $tim=time();
+            $order_id=$tim.'-'.$user_master_id.'-'.$last_id;
            $service_details=array(
-             "service_id"=>$last_id,
+             "order_id"=>$order_id,
              "advance_amount"=>$advance_amount,
              "advance_payment_status"=>$adva_status,
            );
@@ -817,8 +819,10 @@ class Apicustomermodel extends CI_Model {
 
           }
           if($res_add_service){
+            $tim=time();
+            $order_id=$tim.'-'.$user_master_id.'-'.$last_id;
             $service_details=array(
-              "service_id"=>$last_id,
+              "order_id"=>$order_id,
               "advance_amount"=>$advance_amount,
               "advance_payment_status"=>$adva_status,
             );

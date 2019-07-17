@@ -845,7 +845,7 @@ class Apispersonmodel extends CI_Model {
 //#################### Document Upload ####################//
 	public function Upload_service_bills($user_master_id,$service_order_id,$documentFileName)
 	{
-		$sQuery = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('". $user_master_id . "','". $doc_master_id . "','". $doc_proof_number . "','". $documentFileName . "','Pending',NOW(),'". $user_master_id . "')";
+		$sQuery = "INSERT INTO service_order_bills(service_order_id,serv_pers_id,file_name,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','". $documentFileName . "',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		$last_insert_id = $this->db->insert_id();
 		$document_url = base_url().'assets/bills/'.$documentFileName;
@@ -854,6 +854,41 @@ class Apispersonmodel extends CI_Model {
 		return $response;
 	}
 //#################### Document Upload End ####################//
+
+
+
+//#################### Document list ####################//
+
+	public function List_service_bills($user_master_id,$service_order_id)
+	{
+		 $bill_url = base_url().'assets/bills/';
+		
+		$sQuery = "SELECT * FROM service_order_bills WHERE service_order_id = '".$service_order_id."' AND serv_pers_id ='".$user_master_id."'";
+		$doc_result = $this->db->query($sQuery);
+		
+		
+		if($doc_result->num_rows()!=0)
+		{
+				foreach ($doc_result->result() as $rows)
+				{
+					 $id = $rows->id;
+					 $bill_copy = $rows->file_name;
+					
+					$data[]  = array(
+						"id" => $id,
+						"bill_copy" => $bill_copy,
+						"bill_copy_url" => $bill_url.$bill_copy
+					);
+				}
+			$response = array("status" => "success", "msg" => "Bill list", "bill_copy_result"=>$data);
+		} else {
+			$response = array("status" => "error", "msg" => "Bills Not Found");
+		}
+		return $response;
+		
+	}
+
+//#################### Document list End ####################//
 
 
 //#################### Additional service remove ####################//

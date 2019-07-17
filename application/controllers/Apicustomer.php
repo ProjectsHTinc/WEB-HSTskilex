@@ -709,7 +709,6 @@ class Apicustomer extends CI_Controller {
 			$res["opn"] = "Service";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
-
 			echo json_encode($res);
 			return;
 		}

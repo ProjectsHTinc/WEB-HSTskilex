@@ -260,20 +260,21 @@ class Apisperson extends CI_Controller {
 	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		$user_master_id = $this->uri->segment(3);
+		
 		$profile = $_FILES["profile_pic"]["name"];
-		$profileFileName = time().'-'.$profile;
+		$extension  = end((explode(".", $document)));
+		
+		$profileFileName = $user_master_id.'-'.time().'.'.$extension ;
 		$uploadPicdir = './assets/persons/';
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
 
-		$data['result']=$this->apispersonmodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$data['result']=$this->apisprovidermodel->Profile_pic_upload($user_master_id,$profileFileName);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
-
-
 
 
 //-----------------------------------------------//
@@ -552,9 +553,11 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+
 //-----------------------------------------------//
 
-	public function detail_started_services()
+	public function detail_ongoing_services()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -579,7 +582,7 @@ class Apisperson extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
-		$data['result']=$this->apispersonmodel->Detail_started_services($user_master_id,$service_order_id);
+		$data['result']=$this->apispersonmodel->Detail_ongoing_services($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -696,19 +699,9 @@ class Apisperson extends CI_Controller {
 //-----------------------------------------------//
 
 
-
-
-
-
-
-
-
-
-
-
 //-----------------------------------------------//
 
-	public function detail_ongoing_services()
+	public function remove_addtional_services()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -720,41 +713,7 @@ class Apisperson extends CI_Controller {
 		if($_POST == FALSE)
 		{
 			$res = array();
-			$res["opn"] = "List assigned services";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id = '';
-		$service_order_id  ='';
-		
-		$user_master_id  = $this->input->post("user_master_id");
-		$service_order_id  = $this->input->post("service_order_id");
-
-		$data['result']=$this->apispersonmodel->Detail_ongoing_services($user_master_id,$service_order_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-//-----------------------------------------------//
-
-	public function additional_service_orders()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "List assigned services";
+			$res["opn"] = "Services list";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
 
@@ -762,47 +721,13 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 
-		$service_order_id  ='';
-		$service_order_id  = $this->input->post("service_order_id");
-
-		$data['result']=$this->apispersonmodel->Additional_service_orders($service_order_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
-
-
-
-
-
-
-//-----------------------------------------------//
-
-	public function list_completed_services()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "List Completed services";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id = '';
+		$user_master_id  = '';
+		$order_additional_id  = '';
 				
 		$user_master_id  = $this->input->post("user_master_id");
-
-		$data['result']=$this->apispersonmodel->List_completed_services($user_master_id);
+		$order_additional_id  = $this->input->post("order_additional_id");
+		
+		$data['result']=$this->apispersonmodel->Remove_addtional_services($user_master_id,$order_additional_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -811,7 +736,30 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function detail_completed_services()
+    public function upload_service_bills()
+	{
+	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		$user_master_id = $this->uri->segment(3);
+		$service_order_id = $this->uri->segment(4);
+		
+		$document = $_FILES["bill_copy"]["name"];
+		$extension  = end((explode(".", $document)));
+		$documentFileName = $service_order_id.'-'.time().'.'.$extension ;
+		$uploaddir = './assets/bills/';
+		$documentFile = $uploaddir.$documentFileName;
+		move_uploaded_file($_FILES['bill_copy']['tmp_name'], $documentFile);
+		
+		$data['result']=$this->apispersonmodel->Upload_service_bills($user_master_id,$service_order_id,$documentFileName);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function update_ongoing_services()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -823,20 +771,23 @@ class Apisperson extends CI_Controller {
 		if($_POST == FALSE)
 		{
 			$res = array();
-			$res["opn"] = "Detail Completed services";
+			$res["opn"] = "Update Ongoing Services";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
 
 			echo json_encode($res);
 			return;
 		}
-		$user_master_id = '';
-		$service_order_id = '';	
-		
+
+		$user_master_id  = '';
+		$service_order_id  = '';
+		$material_notes ='';
+				
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-
-		$data['result']=$this->apispersonmodel->Detail_completed_services($user_master_id,$service_order_id);
+		$material_notes  = $this->input->post("material_notes");
+		
+		$data['result']=$this->apispersonmodel->Update_ongoing_services($user_master_id,$service_order_id,$material_notes);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -980,6 +931,110 @@ class Apisperson extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function complete_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "List Completed services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id = '';	
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+
+		$data['result']=$this->apispersonmodel->Complete_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function list_completed_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "List Completed services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+				
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apispersonmodel->List_completed_services($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function detail_completed_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Detail Completed services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id = '';	
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+
+		$data['result']=$this->apispersonmodel->Detail_completed_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
 
 
 

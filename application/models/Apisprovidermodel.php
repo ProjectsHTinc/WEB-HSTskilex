@@ -466,12 +466,49 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Category list End ####################//
 
+//#################### Sub Category list ####################//
+
+	public function Sub_category_list($user_master_id,$category_id)
+	{
+		$sQuery = "SELECT * FROM sub_category WHERE main_cat_id = '$category_id' AND status='Active'";
+		$cat_result = $this->db->query($sQuery);
+		
+		$category_result = $cat_result->result();
+		$category_count = $cat_result->num_rows();
+
+		if($cat_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Sub Category list", "sub_category_count" => $category_count, "sub_category_list"=>$category_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Category Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Sub Category list End ####################//
 
 //#################### Services list ####################//
 
-	public function Services_list($category_id)
+	public function Services_list($category_id,$sub_category_id)
 	{
-		$sQuery = "SELECT A.main_cat_id,B.main_cat_name,B.main_cat_ta_name,A.sub_cat_id,C.sub_cat_name,C.sub_cat_ta_name,A.id AS service_id,A.service_name,A.service_ta_name,A.service_pic FROM services A, main_category B, sub_category C WHERE A.main_cat_id IN ($category_id) AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status='Active'";
+		$sQuery = "SELECT
+					A.main_cat_id,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					A.sub_cat_id,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					A.id AS service_id,
+					A.service_name,
+					A.service_ta_name,
+					A.service_pic
+				FROM
+					services A,
+					main_category B,
+					sub_category C
+				WHERE
+					A.main_cat_id = '$category_id' AND A.sub_cat_id = '$sub_category_id' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status = 'Active'";
 		$ser_result = $this->db->query($sQuery); 
 		
 		$services_result = $ser_result->result();
@@ -490,9 +527,23 @@ class Apisprovidermodel extends CI_Model {
 //#################### Services list End ####################//
 
 
-//#################### Provider Add Services ####################//
+//#################### Provider Add Category/Services ####################//
 
-	public function Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id)
+	public function Serv_prov_category_add($user_master_id,$category_id)
+	{
+		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	} 
+	
+	/* public function Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id)
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
@@ -504,9 +555,9 @@ class Apisprovidermodel extends CI_Model {
            }
 		   
 		return $response;
-	}
+	} */
 
-//#################### Provider Add Services End ####################//
+//#################### Provider Add Category/Services End ####################//
 
 
 //#################### Update company status ####################//
@@ -888,9 +939,23 @@ class Apisprovidermodel extends CI_Model {
 
 
 
-//#################### Persons Add Services ####################//
+//#################### Persons Add Category/Services ####################//
 
-	public function Serv_pers_services_add($user_master_id,$serv_person_id,$category_id,$sub_category_id,$service_id)
+	public function Serv_pers_category_add($user_master_id,$serv_person_id,$category_id)
+	{
+		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $category_id . "','Active',NOW(),'". $user_master_id . "')";
+		$ins_query = $this->db->query($sQuery);
+		
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	} 
+	
+	/* public function Serv_pers_services_add($user_master_id,$serv_person_id,$category_id,$sub_category_id,$service_id)
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
@@ -902,9 +967,9 @@ class Apisprovidermodel extends CI_Model {
            }
 		   
 		return $response;
-	}
+	} */
 
-//#################### Persons Add Services End ####################//
+//#################### Persons Add Category/Services End ####################//
 
 
 //#################### List requested services ####################//

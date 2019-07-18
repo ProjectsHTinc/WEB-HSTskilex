@@ -719,6 +719,37 @@ class Apispersonmodel extends CI_Model {
 //#################### Ongoing detailed services End ####################//
 
 
+//#################### Person Category list ####################//
+
+	public function Category_list($user_master_id)
+	{
+		$sQuery = "SELECT
+					A.main_cat_id,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+				FROM
+					serv_prov_pers_skills A,
+					main_category B,
+				WHERE
+					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.status = 'Active'";
+		$ser_result = $this->db->query($sQuery); 
+		
+		$category_result = $ser_result->result();
+		$category_count = $ser_result->num_rows();
+
+		if($ser_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Category list", "category_count" => $category_count, "category_list"=>$category_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Person Category list End ####################//
+
+
 //#################### Services list ####################//
 
 	public function Services_list($user_master_id)

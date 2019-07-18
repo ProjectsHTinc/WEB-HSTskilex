@@ -589,10 +589,42 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function category_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Category list";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = '';
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apispersonmodel->Category_list($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
 
 //-----------------------------------------------//
 
-	public function services_list()
+
+//-----------------------------------------------//
+
+	/* public function services_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -617,7 +649,7 @@ class Apisperson extends CI_Controller {
 
 		$data['result']=$this->apispersonmodel->Services_list($user_master_id);
 		$response = $data['result'];
-		echo json_encode($response);
+		echo json_encode($response); */
 	}
 
 //-----------------------------------------------//

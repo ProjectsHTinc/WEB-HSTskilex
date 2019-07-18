@@ -224,7 +224,7 @@ class Apisprovidermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-		$digits = 6;
+		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 			
 		if($user_result->num_rows()>0)
@@ -268,7 +268,7 @@ class Apisprovidermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-		$digits = 6;
+		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 			
 		if($user_result->num_rows()>0)

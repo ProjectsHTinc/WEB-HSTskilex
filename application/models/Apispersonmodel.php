@@ -1222,6 +1222,25 @@ class Apispersonmodel extends CI_Model {
 	}
 
 //#################### Detail completed services End ####################//
+
+//#################### Cancel services ####################//
+
+	public function Add_tracking($user_master_id,$lat_1,$lon_1,$location,$lat_2,$lon_2,$miles_distance_bw,$service_order_id)
+	{
+		$sQuery = "INSERT INTO serv_pers_tracking (user_master_id,lat_1,lon_1,location,lat_2,lon_2,miles_distance_bw,service_order_id,created_at) VALUES ('". $user_master_id . "','". $lat_1 . "','". $lon_1 . "','". $location . "','". $lat_2 . "','". $lon_2 . "','". $miles_distance_bw . "','". $service_order_id . "',NOW())";
+		$ins_query = $this->db->query($sQuery);
+
+		if($ins_query){
+				$response=array("status" => "success","msg" => "Tracking Details Added");
+           }else{
+				$response=array("status" => "error");
+           }
+		   
+		return $response;
+	}
+
+//#################### Cancel services End ####################//
+
 }
 
 ?>

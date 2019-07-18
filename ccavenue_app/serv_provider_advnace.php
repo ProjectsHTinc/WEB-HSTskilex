@@ -4,7 +4,7 @@
     include('Crypto.php');
     include("connection.php");
 
-	$workingKey = 'CA4120A14E0FB331E45F4B110C904EEA';		//Working Key should be provided here.
+	$workingKey = 'BC20CF26E647091B255F2398E6FE9313';		//Working Key should be provided here.
 	$encResponse = $_POST["encResp"];			            //This is the response sent by the CCAvenue Server
 	$rcvdString = decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
 	$order_status = "";
@@ -70,40 +70,48 @@ for($i = 0; $i < $dataSize; $i++)
 		if($i==41)  $bin_country=$information[1];	
 	}
 
-
-    	$string = $orderid;
-        $result = explode("-", $string);
+		$res = array();
+		
+    	$orderid_string = $orderid;
+        $result = explode("-", $orderid_string);
         $order_id=$result[0];  
         $user_id= $result[1];    
 
         $sQuery = "INSERT INTO online_payment_history (order_id,user_id,track_id,bank_ref_no,order_status,failure_message,payment_mode,card_name,status_code,status_message,currency,amount,billing_name,billing_address, billing_city,billing_state,billing_zip,billing_country,billing_tel,billing_email,delievery_name,delievery_address,delievery_city,delievery_state,delievery_zip,delievery_country,delievery_tel,merch_param1,merch_param2,merch_param3,merch_param4,merch_param5,vault,offer_type,offer_code,discount_value, mer_amt,eci_value,retry,response_code,billing_notes,trans_date,bin_country) VALUES ('$orderid','$user_id','$track_id','$bank_ref_no','$order_status','$failure_message','$payment_mode','$card_name','$status_code','$status_message','$currency','$amount','$billing_name','$billing_address','$billing_city','$billing_state','$billing_zip','$billing_country','$billing_tel','$billing_email','$delievery_name','$delievery_address','$delievery_city','$delievery_state','$delievery_zip','$delievery_country','$delievery_tel','$merch_param1','$merch_param2','$merch_param3','$merch_param4','$merch_param5','$vault','$offer_type','$offer_code','$discount_value','$mer_amt','$eci_value','$retry','$response_code','$billing_notes','$transdate','$bin_country')";
         $objRs  = mysql_query($sQuery) or die("Could not select Query ");
-
-        
-
+       
     	if($order_status=="Success")
     	{
-            $query = "UPDATE service_provider_details SET status='Success',refundable_order_id = '$orderid', ccavenue_track_id ='$track_id', refundable_deposit = '$amount' WHERE id = '$purchase_id'";
+            $query = "UPDATE service_provider_details SET status='Success', refundable_order_id = '$orderid', ccavenue_track_id ='$track_id', refundable_deposit = '$amount' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
-    	}
+			
+			$res["message"] = "Success";  	
+		}
 
     	if($order_status=="Aborted")
     	{
-    	   $query = "UPDATE service_provider_details SET status='Success',purchase_order_id = '$orderid' WHERE id = '$purchase_id'";
+			$query = "UPDATE service_provider_details SET status='Aborted' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
+			
+			$res["message"] = "Aborted";
     	}
     	
     	if($order_status=="Failure")
     	{
-    	    $query = "UPDATE service_provider_details SET status='Success',purchase_order_id = '$orderid' WHERE id = '$purchase_id'";
+    	    $query = "UPDATE service_provider_details SET status='Failure' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
+			
+			$res["message"] = "Failure";
     	}
     	
     	if($order_status=="Invalid")
     	{
-    	    $query = "UPDATE service_provider_details SET status='Success',purchase_order_id = '$orderid' WHERE id = '$purchase_id'";
+    	    $query = "UPDATE service_provider_details SET status='Invalid' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
-
+			
+			$res["message"] = "Invalid";
     	}
+		
+		echo json_encode($res);
 
 ?>

@@ -1068,7 +1068,52 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
 
+	public function add_tracking()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service person tracking";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$lat_1 = '';
+		$lon_1 = '';	
+		$lat_1 = '';	
+		$location = '';	
+		$lat_2 = '';	
+		$lon_2 = '';	
+		$miles_distance_bw = '';
+		$service_order_id  = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$lat_1  = $this->input->post("lat_1");
+		$lon_1  = $this->input->post("lon_1");
+		$location  = $this->input->post("location");
+		$lat_2  = $this->input->post("lat_2");
+		$lon_2  = $this->input->post("lon_2");
+		$miles_distance_bw  = $this->input->post("miles_distance_bw");
+		$service_order_id  = $this->input->post("service_order_id");
+
+		$data['result']=$this->apispersonmodel->Add_tracking($user_master_id,$lat_1,$lon_1,$location,$lat_2,$lon_2,$miles_distance_bw,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 
 

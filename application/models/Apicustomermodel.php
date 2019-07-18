@@ -5,6 +5,7 @@ class Apicustomermodel extends CI_Model {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('smsmodel');
     }
 
 
@@ -930,6 +931,7 @@ class Apicustomermodel extends CI_Model {
           $selected_service_id=$rows->service_id;
           $selected_main_cat_id=$rows->main_cat_id;
           $service_latlon=$rows->service_latlon;
+          $contact_person_name=$rows->contact_person_name;
           $result = explode(",", $service_latlon);
           $lat=$result[0];
           $long= $result[1];
@@ -945,21 +947,33 @@ class Apicustomermodel extends CI_Model {
             $last_sp_id=$rows_last_sp_id->serv_prov_id;
             $next_id=$last_sp_id+$display_minute;
 
-            $get_sp_id="SELECT lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+            $get_sp_id="SELECT spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
             COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
             SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
             LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
+            LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
             LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-            WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') HAVING
+            WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
             distance < 25 ORDER BY distance LIMIT 0 , 50";
             $ex_next_id=$this->db->query($get_sp_id);
             if($ex_next_id->num_rows()==0){
               $response = array("status" => "error", "msg" => "Hitback");
             }else{
               $res_next_ip=$ex_next_id->result();
+              foreach($res_next_ip as $rows_id_next){}
+              $phone=$rows_id_next->phone_no;
+              $full_name=$rows_id_next->owner_full_name;
+              $sp_user_master_id=$rows_id_next->user_master_id;
+              $notes="Hi $full_name You Received order from customer $contact_person_name";
+              $this->smsmodel->send_sms($phone,$notes);
+              $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
+              $res_quest=$this->db->query($request_insert_query);
+              if($res_quest){
+                $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept");
+              }else{
+                  $response = array("status" => "error", "msg" => "Something went wrong");
+              }
 
-              print_r($res_next_ip);
-              $response = array("status" => "success", "msg" => "Service Provider found");
             }
 
         }

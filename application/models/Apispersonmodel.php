@@ -174,14 +174,7 @@ class Apispersonmodel extends CI_Model {
 		$ongoing_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND (status = 'Initiated' OR status = 'Started' OR status = 'Ongoing')";
 		$ongoing_count_res = $this->db->query($ongoing_count);
 		$ongoing_orders_count = $ongoing_count_res->num_rows();
-		
-		//$finished_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Completed'";
-		//$finished_count_res = $this->db->query($finished_count);
-		//$finished_orders_count = $finished_count_res->num_rows();
-		
-		//$canceled_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Canceled'";
-		//$canceled_count_res = $this->db->query($canceled_count);
-		//$canceled_orders_count = $canceled_count_res->num_rows();
+
 		
 		$dashboardData  = array(
 				"serv_assigned_count" => $assigned_orders_count,
@@ -1071,7 +1064,7 @@ class Apispersonmodel extends CI_Model {
 
 
 
-//#################### Cancel services ####################//
+//#################### Complete services ####################//
 
 	public function Complete_services($user_master_id,$service_order_id)
 	{
@@ -1119,7 +1112,7 @@ class Apispersonmodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Cancel services End ####################//
+//#################### Complete services End ####################//
 
 
 

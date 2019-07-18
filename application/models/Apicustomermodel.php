@@ -921,15 +921,18 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_provider_allocation($user_master_id,$service_id,$display_minute){
-      $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id'";
+      $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
       $result = $this->db->query($query);
       if($result->num_rows()==1){
           $res=$result->result();
           foreach($res as $rows){}
           $advance_check=$rows->advance_payment_status;
+          $selected_service_id=$rows->service_id;
           if($advance_check=='N'){
               $response = array("status" => "error", "msg" => "Service Advance not Paid");
           }else{
+            echo $selected_service_id;
+            exit;
 
           }
            return $response;

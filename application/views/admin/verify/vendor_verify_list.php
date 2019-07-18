@@ -56,7 +56,7 @@
                 <td><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
                   <a href="<?php echo base_url(); ?>verifyprocess/get_vendor_doc_status/<?php echo $rows->company_status; ?>/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
                   &nbsp;
-                    <a href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-users" aria-hidden="true"></i></a>
+                    <a href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-users" aria-hidden="true"></i></a>
                     &nbsp;
                       <a href="<?php echo base_url(); ?>verifyprocess/get_skills_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
 

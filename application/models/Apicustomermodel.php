@@ -489,7 +489,7 @@ class Apicustomermodel extends CI_Model {
       }else{
          $query="SELECT *  FROM services WHERE service_ta_name LIKE '%$service_txt_ta%' and status='Active'";
       }
-    
+
       $res = $this->db->query($query);
 
        if($res->num_rows()>0){
@@ -609,23 +609,30 @@ class Apicustomermodel extends CI_Model {
 
 
     function add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id){
-      $insert="INSERT INTO order_cart(user_master_id,category_id,sub_category_id,service_id,status,created_by,created_at) VALUES('$user_master_id','$category_id','$sub_category_id','$service_id','Pending','$user_master_id',NOW())";
-      $insert_result = $this->db->query($insert);
-      if($insert_result){
-        $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
-          $cnt_query = $this->db->query($get_total_count);
-          $result=$cnt_query->result();
-          foreach($result as $rows){}
-            $cart_count=array(
-              "service_count" => $rows->service_count,
-              "total_amt" => $rows->total_amt,
-            );
+      $check_service="SELECT * FROM order_cart WHERE service_id='$service_id' AND user_master_id='$user_master_id'";
+      $check_res= $this->db->query($check_service);
+      if($check_res->num_rows()==0){
+        $insert="INSERT INTO order_cart(user_master_id,category_id,sub_category_id,service_id,status,created_by,created_at) VALUES('$user_master_id','$category_id','$sub_category_id','$service_id','Pending','$user_master_id',NOW())";
+        $insert_result = $this->db->query($insert);
+        if($insert_result){
+          $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
+            $cnt_query = $this->db->query($get_total_count);
+            $result=$cnt_query->result();
+            foreach($result as $rows){}
+              $cart_count=array(
+                "service_count" => $rows->service_count,
+                "total_amt" => $rows->total_amt,
+              );
 
 
-        $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
+          $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
+        }else{
+          $response = array("status" => "error", "msg" => "Something went wrong");
+        }
       }else{
-        $response = array("status" => "error", "msg" => "Something went wrong");
+        $response = array("status" => "error", "msg" => "Service Already in cart");
       }
+
         return $response;
     }
 //-------------------- Add Services Cart  -------------------//
@@ -849,6 +856,9 @@ class Apicustomermodel extends CI_Model {
   }
 
 
+  //-------------------- Service Advance  payment-------------------//
+
+
     function service_advance_payment($user_master_id,$service_id){
       $select="SELECT * from service_orders WHERE id='$service_id' AND customer_id='$user_master_id'";
       $res = $this->db->query($select);
@@ -902,6 +912,36 @@ class Apicustomermodel extends CI_Model {
 
 
     }
+
+
+//-------------------- Service Advance  payment-------------------//
+
+
+//-------------------- Service Provider allocation -------------------//
+
+
+    function service_provider_allocation($user_master_id,$service_id,$display_minute){
+      $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id'";
+      $result = $this->db->query($query);
+      if($result->num_rows()==1){
+          $res=$result->result();
+          foreach($res as $rows){}
+          $advance_check=$rows->advance_payment_status;
+          if($advance_check=='N'){
+              $response = array("status" => "error", "msg" => "Service Advance not Paid");
+          }else{
+
+          }
+           return $response;
+      }else{
+        $response = array("status" => "error", "msg" => "Service not found");
+      }
+       return $response;
+
+    }
+
+
+//-------------------- Service Provider allocation -------------------//
 
 
 

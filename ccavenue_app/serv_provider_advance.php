@@ -70,7 +70,7 @@ for($i = 0; $i < $dataSize; $i++)
 		if($i==41)  $bin_country=$information[1];	
 	}
 
-		$res = array();
+		$response = array();
 		
     	$orderid_string = $orderid;
         $result = explode("-", $orderid_string);
@@ -85,7 +85,7 @@ for($i = 0; $i < $dataSize; $i++)
             $query = "UPDATE service_provider_details SET status='Success', refundable_order_id = '$orderid', ccavenue_track_id ='$track_id', refundable_deposit = '$amount' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
 			
-			$res["message"] = "Success";  	
+			$response["status"] = "Success";  
 		}
 
     	if($order_status=="Aborted")
@@ -93,7 +93,7 @@ for($i = 0; $i < $dataSize; $i++)
 			$query = "UPDATE service_provider_details SET status='Aborted' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
 			
-			$res["message"] = "Aborted";
+			$response["status"] = "Aborted";
     	}
     	
     	if($order_status=="Failure")
@@ -101,7 +101,7 @@ for($i = 0; $i < $dataSize; $i++)
     	    $query = "UPDATE service_provider_details SET status='Failure' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
 			
-			$res["message"] = "Failure";
+			$response["status"] = "Failure";
     	}
     	
     	if($order_status=="Invalid")
@@ -109,9 +109,9 @@ for($i = 0; $i < $dataSize; $i++)
     	    $query = "UPDATE service_provider_details SET status='Invalid' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
 			
-			$res["message"] = "Invalid";
+			$response["status"] = "Invalid";
     	}
 		
-		echo json_encode($res);
+		echo json_encode($response);
 
 ?>

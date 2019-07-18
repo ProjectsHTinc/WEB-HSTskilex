@@ -495,7 +495,7 @@ class Apicustomer extends CI_Controller {
 
 	public function add_service_to_cart()
 	{
-	  //$_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 
 		if(!$this->checkMethod())
@@ -658,7 +658,7 @@ class Apicustomer extends CI_Controller {
 
 	public function proceed_to_book_order()
 	{
-		//$_POST = json_decode(file_get_contents("php://input"), TRUE);
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -709,7 +709,6 @@ class Apicustomer extends CI_Controller {
 			$res["opn"] = "Service";
 			$res["scode"] = 204;
 			$res["message"] = "Input error";
-
 			echo json_encode($res);
 			return;
 		}

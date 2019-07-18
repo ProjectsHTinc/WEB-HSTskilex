@@ -928,13 +928,41 @@ class Apicustomermodel extends CI_Model {
           foreach($res as $rows){}
           $advance_check=$rows->advance_payment_status;
           $selected_service_id=$rows->service_id;
+          $selected_main_cat_id=$rows->main_cat_id;
+          $service_latlon=$rows->service_latlon;
+          $result = explode(",", $service_latlon);
+          $lat=$result[0];
+          $long= $result[1];
+
           if($advance_check=='N'){
               $response = array("status" => "error", "msg" => "Service Advance not Paid");
           }else{
-            echo $selected_service_id;
-            exit;
 
-          }
+            $get_last_service_provider_id="SELECT * FROM service_orders where serv_prov_id!=0 ORDER BY id,serv_prov_id LIMIT 1";
+            $result_last_sp_id=$this->db->query($get_last_service_provider_id);
+            $res_sp_id=$result_last_sp_id->result();
+            foreach($res_sp_id as $rows_last_sp_id){}
+            $last_sp_id=$rows_last_sp_id->serv_prov_id;
+            $next_id=$last_sp_id+$display_minute;
+
+            $get_sp_id="SELECT lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+            COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+            SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
+            LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
+            LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+            WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') HAVING
+            distance < 25 ORDER BY distance LIMIT 0 , 50";
+            $ex_next_id=$this->db->query($get_sp_id);
+            if($ex_next_id->num_rows()==0){
+              $response = array("status" => "error", "msg" => "Hitback");
+            }else{
+              $res_next_ip=$ex_next_id->result();
+
+              print_r($res_next_ip);
+              $response = array("status" => "success", "msg" => "Service Provider found");
+            }
+
+        }
            return $response;
       }else{
         $response = array("status" => "error", "msg" => "Service not found");

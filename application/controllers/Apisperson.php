@@ -713,8 +713,8 @@ class Apisperson extends CI_Controller {
 
 		$data['result']=$this->apispersonmodel->Services_list($user_master_id);
 		$response = $data['result'];
-		echo json_encode($response); */
-	}
+		echo json_encode($response); 
+	}*/
 
 //-----------------------------------------------//
 

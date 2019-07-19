@@ -442,7 +442,7 @@ class Apisprovider extends CI_Controller {
 		$data['result']=$this->apisprovidermodel->Serv_prov_category_add($user_master_id,$category_id);
 		$response = $data['result'];
 		echo json_encode($response); 
-
+	}
 
 	/* public function serv_prov_services_add()
 	{
@@ -475,8 +475,8 @@ class Apisprovider extends CI_Controller {
 
 		$data['result']=$this->apisprovidermodel->Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
-		echo json_encode($response); */
-	}
+		echo json_encode($response); 
+	}*/
 
 //-----------------------------------------------//
 

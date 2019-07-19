@@ -749,10 +749,65 @@ class Apispersonmodel extends CI_Model {
 
 //#################### Person Category list End ####################//
 
+//#################### Sub Category list ####################//
+
+	public function Sub_category_list($category_id)
+	{
+		$sQuery = "SELECT * FROM sub_category WHERE main_cat_id = '$category_id' AND status='Active'";
+		$cat_result = $this->db->query($sQuery);
+		
+		$category_result = $cat_result->result();
+		$category_count = $cat_result->num_rows();
+
+		if($cat_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Sub Category list", "sub_category_count" => $category_count, "sub_category_list"=>$category_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Category Not Found");
+		}
+		
+		return $response;
+	}
+
+//#################### Sub Category list End ####################//
 
 //#################### Services list ####################//
 
-	public function Services_list($user_master_id)
+public function Services_list($category_id,$sub_category_id)
+	{
+		$sQuery = "SELECT
+					A.main_cat_id,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					A.sub_cat_id,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					A.id AS service_id,
+					A.service_name,
+					A.service_ta_name,
+					A.service_pic
+				FROM
+					services A,
+					main_category B,
+					sub_category C
+				WHERE
+					A.main_cat_id = '$category_id' AND A.sub_cat_id = '$sub_category_id' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status = 'Active'";
+		$ser_result = $this->db->query($sQuery); 
+		
+		$services_result = $ser_result->result();
+		$services_count = $ser_result->num_rows();
+
+		if($ser_result->num_rows()>0)
+		{
+			$response = array("status" => "success", "msg" => "Services list", "service_count" => $services_count, "service_list"=>$services_result);
+		} else {
+			$response = array("status" => "error", "msg" => "Services Not Found");
+		}
+		
+		return $response;
+	}
+	
+	/* public function Services_list($user_master_id)
 	{
 		$sQuery = "SELECT
 					A.main_cat_id,
@@ -786,7 +841,7 @@ class Apispersonmodel extends CI_Model {
 		}
 		
 		return $response;
-	}
+	} */
 
 //#################### Services list End ####################//
 

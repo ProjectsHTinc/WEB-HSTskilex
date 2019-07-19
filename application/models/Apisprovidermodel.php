@@ -468,7 +468,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Sub Category list ####################//
 
-	public function Sub_category_list($user_master_id,$category_id)
+	public function Sub_category_list($category_id)
 	{
 		$sQuery = "SELECT * FROM sub_category WHERE main_cat_id = '$category_id' AND status='Active'";
 		$cat_result = $this->db->query($sQuery);
@@ -480,7 +480,7 @@ class Apisprovidermodel extends CI_Model {
 		{
 			$response = array("status" => "success", "msg" => "Sub Category list", "sub_category_count" => $category_count, "sub_category_list"=>$category_result);
 		} else {
-			$response = array("status" => "error", "msg" => "Category Not Found");
+			$response = array("status" => "error", "msg" => "Sub Category Not Found");
 		}
 		
 		return $response;
@@ -1271,6 +1271,7 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Initiated detailed services End ####################//
 
+
 //#################### Ongoing detailed services ####################//
 
 	public function Detail_ongoing_services($user_master_id,$service_order_id)
@@ -1620,7 +1621,6 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Vendor_status_update($serv_pro_id,$online_status,$serv_lat,$serv_lon)
 	{
-		
 		$sql = "SELECT * FROM vendor_status WHERE serv_pro_id  ='".$serv_pro_id."'";
 		$user_result = $this->db->query($sql);
 	

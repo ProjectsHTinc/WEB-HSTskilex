@@ -344,6 +344,37 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function sub_category_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Sub category list";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$category_id  = '';
+		$category_id  = $this->input->post("category_id");
+		
+		$data['result']=$this->apisprovidermodel->Sub_category_list($category_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -368,9 +399,12 @@ class Apisprovider extends CI_Controller {
 		}
 
 		$category_id  = '';
+		$sub_category_id  = '';
+		
 		$category_id  = $this->input->post("category_id");
+		$sub_category_id  = $this->input->post("sub_category_id");
 
-		$data['result']=$this->apisprovidermodel->Services_list($category_id);
+		$data['result']=$this->apisprovidermodel->Services_list($category_id,$sub_category_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -379,7 +413,38 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function serv_prov_services_add()
+	 public function serv_prov_category_add()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "User Services Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$category_id  = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$category_id  = $this->input->post("category_id");
+		
+
+		$data['result']=$this->apisprovidermodel->Serv_prov_category_add($user_master_id,$category_id);
+		$response = $data['result'];
+		echo json_encode($response); 
+	}
+
+	/* public function serv_prov_services_add()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -410,8 +475,8 @@ class Apisprovider extends CI_Controller {
 
 		$data['result']=$this->apisprovidermodel->Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
-		echo json_encode($response);
-	}
+		echo json_encode($response); 
+	}*/
 
 //-----------------------------------------------//
 
@@ -822,7 +887,39 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function serv_pers_services_add()
+	public function serv_pers_category_add()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "User Services Add";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$serv_person_id = '';
+		$category_id  = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		$serv_person_id  = $this->input->post("serv_person_id");
+		$category_id  = $this->input->post("category_id");
+
+		$data['result']=$this->apisprovidermodel->Serv_pers_category_add($user_master_id,$serv_person_id,$category_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	} 
+	
+	/* public function serv_pers_services_add()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -856,7 +953,7 @@ class Apisprovider extends CI_Controller {
 		$data['result']=$this->apisprovidermodel->Serv_pers_services_add($user_master_id,$serv_person_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
-	}
+	} */
 
 //-----------------------------------------------//
 

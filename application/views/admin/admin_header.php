@@ -45,69 +45,7 @@
             <li class="nav-item">
               <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="link-icon mdi mdi-television"></i><span class="menu-title">DASHBOARD</span></a>
             </li>
-            <!-- <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-atom"></i><span class="menu-title">Masters</span><i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-4">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="category-heading">Masters</p>
-                      </div>
-                      <div class="col-md-6">
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_city">City </a></li>
-                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
-                        </ul>
-                      </div>
 
-                    </div>
-                  </div>
-                  <div class="col-group col-md-4">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="category-heading">Advanced Elements</p>
-                      </div>
-                      <div class="col-md-6">
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/dragula.html">Dragula</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/carousel.html">Carousel</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/clipboard.html">Clipboard</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/context-menu.html">Context Menu</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/loaders.html">Loader</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/slider.html">Slider</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6">
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/tour.html">Tour</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/popups.html">Popup</a></li>
-                          <li class="nav-item"><a class="nav-link" href="pages/ui-features/notifications.html">Notification</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-group col-md-2">
-                    <p class="category-heading">Table</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/basic-table.html">Basic Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/data-table.html">Data Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/js-grid.html">Js-grid</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/tables/sortable-table.html">Sortable Table</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-2">
-                    <p class="category-heading">Icons</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/simple-line-icon.html">Simple Line Icons</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/icons/themify.html">Themify Icons</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li> -->
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">Main Menu</span><i class="menu-arrow"></i></a>
               <div class="submenu">
@@ -164,18 +102,17 @@
 
 
             <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-flag-outline"></i><span class="menu-title">PAGES</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-flag-outline"></i><span class="menu-title">Orders</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
                   <div class="col-group col-md-3">
-                    <p class="category-heading">User Pages</p>
+                    <p class="category-heading">Services Orders</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/login.html">Login</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/login-2.html">Login 2</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/register.html">Register</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/register-2.html">Register 2</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/lock-screen.html">Lockscreen</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/landing.html">Landing screen</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Waiting Orders</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Rejected Orders</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Completed Orders</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Ongoing  Orders</a></li>
+
                     </ul>
                   </div>
                   <div class="col-group col-md-3">

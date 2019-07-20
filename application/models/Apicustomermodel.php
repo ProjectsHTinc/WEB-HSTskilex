@@ -88,7 +88,7 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Notification -------------------//
 
-	 function sendNotification($gcm_key,$title,$message,$mobiletype)
+	 function sendNotification($gcm_key,$title,$Message,$mobiletype)
 	{
 
 		if ($mobiletype =='1'){
@@ -102,7 +102,7 @@ class Apicustomermodel extends CI_Model {
         //first check if the push has an image with it
 		    $push = new Push(
 					$title,
-					$message,
+					$Message,
 					null
 				);
 
@@ -136,8 +136,8 @@ class Apicustomermodel extends CI_Model {
 
 			$body['aps'] = array(
 				'alert' => array(
-					'body' => $message,
-					'action-loc-key' => 'EDU App',
+					'body' => $Message,
+					'action-loc-key' => 'Skilex',
 				),
 				'badge' => 2,
 				'sound' => 'assets/notification/oven.caf',
@@ -947,12 +947,13 @@ class Apicustomermodel extends CI_Model {
             $last_sp_id=$rows_last_sp_id->serv_prov_id;
             $next_id=$last_sp_id+$display_minute;
 
-            $get_sp_id="SELECT spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+            $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
             COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
             SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
             LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
             LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
             LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+            LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
             WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
             distance < 25 ORDER BY distance LIMIT 0 , 50";
             $ex_next_id=$this->db->query($get_sp_id);
@@ -961,11 +962,16 @@ class Apicustomermodel extends CI_Model {
             }else{
               $res_next_ip=$ex_next_id->result();
               foreach($res_next_ip as $rows_id_next){}
-              $phone=$rows_id_next->phone_no;
+              $Phoneno=$rows_id_next->phone_no;
               $full_name=$rows_id_next->owner_full_name;
               $sp_user_master_id=$rows_id_next->user_master_id;
-              $notes="Hi $full_name You Received order from customer $contact_person_name";
-              $this->smsmodel->send_sms($phone,$notes);
+              $title="Order";
+              $gcm_key=$rows_id_next->mobile_key;
+              $mobiletype=$rows_id_next->mobile_type;
+              $Message="Hi $full_name You Received order from Customer $contact_person_name: $Phoneno";
+              //$this->smsmodel->send_sms($phone,$notes);
+              $this->sendSMS($Phoneno,$Message);
+              ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
               $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
               $res_quest=$this->db->query($request_insert_query);
               if($res_quest){
@@ -989,6 +995,138 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Service Provider allocation -------------------//
 
 
+//-------------------- Service Pending and offers lists -------------------//
+
+
+    function service_pending_and_offers_list($user_master_id){
+      $query_offer="SELECT * FROM offer_master WHERE status='Active' ORDER BY id DESC";
+      $res_offer = $this->db->query($query_offer);
+      if($res_offer->num_rows()==0){
+        	$response_offer = array("status" => "error", "msg" => "No Offers found");
+      }else{
+        $offer_result = $res_offer->result();
+        foreach($offer_result as $rows_offers){
+          $offer_list[]=array(
+            "id"=>$rows_offers->id,
+            "offer_title"=>$rows_offers->offer_title,
+            "offer_code"=>$rows_offers->offer_code,
+            "offer_percent"=>$rows_offers->offer_percent,
+            "max_offer_amount"=>$rows_offers->max_offer_amount,
+            "offer_description"=>$rows_offers->offer_description,
+
+          );
+
+        }
+
+        $response_offer = array("status" => "success", "msg" => "Offers found",'offer_details'=>$offer_list);
+      }
+
+      $service_query="SELECT s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so LEFT JOIN services AS s ON s.id=so.service_id
+      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot  WHERE so.status='Pending' AND customer_id='$user_master_id' ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response_service = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+
+          );
+            $response_service = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+      $response=array("status"=>"success","msg"=>"Service and offer list","offer_response"=>$response_offer,"service_response"=>$response_service);
+
+
+      return $response;
+
+    }
+
+//-------------------- Service Pending and offers lists -------------------//
+
+
+
+
+//-------------------- Service Ongoing -------------------//
+
+
+    function ongoing_services($user_master_id){
+      $service_query="SELECT s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot  WHERE so.status!='Pending' AND so.status!='Completed' AND customer_id='$user_master_id' ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Service Ongoing  -------------------//
+
+
+//-------------------- Service Order details -------------------//
+
+
+    function service_order_details($service_order_id){
+      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+(SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
+LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+ WHERE so.id='$service_order_id'";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "provider_name"=>$rows_service->owner_full_name,
+            "person_name"=>$rows_service->full_name,
+            "person_number"=>$rows_service->phone_no,
+            "estimated_cost"=>$rows_service->ad_serv_rate+$rows_service->service_rate_card,
+
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Service order details  -------------------//
 
 
 

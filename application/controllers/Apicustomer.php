@@ -744,7 +744,9 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$service_id = $this->input->post("service_id");
+		$order_id = $this->input->post("order_id");
+		$result = explode("-", $order_id);
+		$service_id= $result[2];
 		$display_minute = $this->input->post("display_minute");
 		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id,$display_minute);
 		$response = $data['result'];
@@ -753,6 +755,95 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function service_pending_and_offers_list()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->service_pending_and_offers_list($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+//-----------------------------------------------//
+
+	public function ongoing_services()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->ongoing_services($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function service_order_details()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$service_order_id  = $this->input->post("service_order_id");
+		$data['result']=$this->apicustomermodel->service_order_details($service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 
 //-----------------------------------------------//

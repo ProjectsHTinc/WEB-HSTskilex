@@ -242,14 +242,16 @@ class Apisprovidermodel extends CI_Model {
 			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, serv_prov_display_status, serv_prov_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','Inactive','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
-			$message_details = "Dear Customer your OTP :".$OTP;
-			$this->sendSMS($mobile,$message_details);
-
 			$enc_user_master_id = base64_encode($user_master_id);
+
+			$message_details = "Service Provider - OTP :".$OTP;
+			$this->sendSMS($mobile,$message_details);
 			
 			$subject = "SKILEX - Verification Email";
 			$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			//$this->sendMail($email,$subject,$email_message);
+		
+			//$this->sendNotification($gcm_key,$title,$message,$mobiletype)
 		
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$mobile, "otp"=>$OTP);
 		}
@@ -804,6 +806,15 @@ class Apisprovidermodel extends CI_Model {
 			$insert_query = "INSERT INTO service_person_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 		
+			$message_details = "SKILEX - Service Person Created";
+			$this->sendSMS($mobile,$message_details);
+			
+			//$subject = "SKILEX - Verification Email";
+			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
+			//$this->sendMail($email,$subject,$email_message);
+		
+			//$this->sendNotification($gcm_key,$title,$message,$mobiletype)
+			
 			$response = array("status" => "success", "msg" => "Service Person Created", "user_master_id"=>$user_master_id, "serv_person_id"=>$serv_person_id);
 		}
 
@@ -1058,6 +1069,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Accept_requested_services($user_master_id,$service_order_id)
 	{
+		
 		$update_sql = "UPDATE service_orders SET status  = 'Accepted', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
 		
@@ -1065,6 +1077,36 @@ class Apisprovidermodel extends CI_Model {
 		$ins_query = $this->db->query($sQuery);
 		
 		
+		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_id = $rows->customer_id;
+					$contact_person_name = $rows->contact_person_name;
+					$contact_person_number = $rows->contact_person_number;
+				}
+		}
+		
+		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_mobile_key = $rows->mobile_key;
+					$customer_mobile_type = $rows->mobile_type;
+				}
+		}
+		
+		$title = "Service Request Accepted";
+		$message_details = "SKILEX - Service Request Accepted";
+		
+		$this->sendSMS($contact_person_number,$message_details);
+
+		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
+			
 		if($update_result){
 				$response=array("status" => "success","msg" => "Service Request Accepted");
            }else{
@@ -1087,8 +1129,50 @@ class Apisprovidermodel extends CI_Model {
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Assigned',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		
+		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_id = $rows->customer_id;
+					$contact_person_name = $rows->contact_person_name;
+					$contact_person_number = $rows->contact_person_number;
+				}
+		}
+		
+		$sQuery = "SELECT * FROM login_users WHERE id ='".$service_person_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$sperson_mobile = $rows->phone_no;
+				}
+		}
+		
+		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_mobile_key = $rows->mobile_key;
+					$customer_mobile_type = $rows->mobile_type;
+				}
+		}
+		
+		$title = "Service Request Assigned";
+		$message_details = "SKILEX - Service Request Assigned";
+		
+		$this->sendSMS($contact_person_number,$message_details);
+		$this->sendSMS($sperson_mobile,$message_details);
+		
+	
+		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
+		
 		if($update_result){
-				$response=array("status" => "success","msg" => "Service Accept Assigned");
+				$response=array("status" => "success","msg" => "Service Assigned");
            }else{
 				$response=array("status" => "error");
            }
@@ -1496,6 +1580,37 @@ class Apisprovidermodel extends CI_Model {
 		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 		
+		
+		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_id = $rows->customer_id;
+					$contact_person_name = $rows->contact_person_name;
+					$contact_person_number = $rows->contact_person_number;
+				}
+		}
+
+		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+		$user_result = $this->db->query($sQuery);
+		if($user_result->num_rows()>0)
+		{
+				foreach ($user_result->result() as $rows)
+				{
+					$customer_mobile_key = $rows->mobile_key;
+					$customer_mobile_type = $rows->mobile_type;
+				}
+		}
+		
+				
+		$title = "Service Request Canceled";
+		$message_details = "SKILEX - Service Request Canceled";
+		
+		$this->sendSMS($contact_person_number,$message_details);
+		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
+
 		if($update_result){
 				$response=array("status" => "success","msg" => "Cancel Services");
            }else{

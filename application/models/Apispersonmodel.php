@@ -405,7 +405,7 @@ class Apispersonmodel extends CI_Model {
 
 //#################### List Aassigned services End ####################//
 
-//#################### Assigned detailed services ####################//
+//#################### Detailed Assigned services ####################//
 
 	public function Detail_assigned_services($user_master_id,$service_order_id)
 	{
@@ -449,7 +449,7 @@ class Apispersonmodel extends CI_Model {
 
 //#################### Assigned detailed services End ####################//
 
-//#################### Initiat services ####################//
+//#################### Initiate services ####################//
 	public function Initiate_services($user_master_id,$service_order_id)
 	{
             $update_sql = "UPDATE service_orders SET status = 'Initiated', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
@@ -483,7 +483,7 @@ class Apispersonmodel extends CI_Model {
 		}
 		
 				
-		$title = "Service Request Initiated";
+		//$title = "Service Request Initiated";
 		$message_details = "SKILEX - Service Request Initiated";
 		
 		$this->sendSMS($contact_person_number,$message_details);
@@ -537,7 +537,7 @@ class Apispersonmodel extends CI_Model {
 //#################### List Ongoing services End ####################//
 
 
-########### Initiated detailed services ####################//
+########### Detailed Initiated  services ####################//
 
 	public function Detail_initiated_services($user_master_id,$service_order_id)
 	{
@@ -581,7 +581,7 @@ class Apispersonmodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Initiated detailed services End ####################//
+//#################### Detailed Initiated  services End ####################//
 
 
 
@@ -711,7 +711,7 @@ class Apispersonmodel extends CI_Model {
 			}
 			
 					
-			$title = "Service Request Ongoing";
+			//$title = "Service Request Ongoing";
 			$message_details = "SKILEX - Service Request Ongoing";
 			
 			$this->sendSMS($contact_person_number,$message_details);
@@ -731,7 +731,7 @@ class Apispersonmodel extends CI_Model {
 
 
 
-//#################### Ongoing detailed services ####################//
+//#################### Detailed Ongoing  services ####################//
 
 	public function Detail_ongoing_services($user_master_id,$service_order_id)
 	{
@@ -918,7 +918,7 @@ public function Services_list($category_id,$sub_category_id)
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -927,7 +927,7 @@ public function Services_list($category_id,$sub_category_id)
 //#################### Add addtional Services End ####################//
 
 
-//#################### Additional service orders ####################//
+//#################### Additional service list orders ####################//
 
 	public function List_addtional_services($user_master_id,$service_order_id)
 	{
@@ -964,7 +964,7 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Additional service orders End ####################//
 
-//#################### Additional service remove ####################//
+//#################### Remove Additional service remove ####################//
 
 	public function Remove_addtional_services($user_master_id,$order_additional_id)
 	{
@@ -981,10 +981,10 @@ public function Services_list($category_id,$sub_category_id)
 		return $response;
 	}
 
-//#################### Additional service remove End ####################//
+//#################### Remove Additional service remove End ####################//
 
 
-//#################### Document Upload ####################//
+//#################### Upload service bills ####################//
 	public function Upload_service_bills($user_master_id,$service_order_id,$documentFileName)
 	{
 		$sQuery = "INSERT INTO service_order_bills(service_order_id,serv_pers_id,file_name,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','". $documentFileName . "',NOW(),'". $user_master_id . "')";
@@ -995,11 +995,11 @@ public function Services_list($category_id,$sub_category_id)
 		$response = array("status" => "success", "msg" => "Service Bill Uploaded");
 		return $response;
 	}
-//#################### Document Upload End ####################//
+//#################### Upload service bills End ####################//
 
 
 
-//#################### Document list ####################//
+//#################### Service bills list ####################//
 
 	public function List_service_bills($user_master_id,$service_order_id)
 	{
@@ -1030,10 +1030,10 @@ public function Services_list($category_id,$sub_category_id)
 		
 	}
 
-//#################### Document list End ####################//
+//#################### Service bills list End ####################//
 
 
-//#################### Additional service remove ####################//
+//#################### Update ongoing services ####################//
 
 	public function Update_ongoing_services($user_master_id,$service_order_id,$material_notes)
 	{
@@ -1111,7 +1111,7 @@ public function Services_list($category_id,$sub_category_id)
 		}
 		
 				
-		$title = "Service Request Canceled";
+		//$title = "Service Request Canceled";
 		$message_details = "SKILEX - Service Request Canceled";
 		
 		$this->sendSMS($contact_person_number,$message_details);
@@ -1329,7 +1329,7 @@ public function Services_list($category_id,$sub_category_id)
 		
 			$response=array("status" => "success","msg" => "Completed Services");
 	   }else{
-			$response=array("status" => "error");
+			$response=array("status" => "error","msg" => "Something Wrong");
 	   }
 		   
 		return $response;
@@ -1439,7 +1439,7 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Detail completed services End ####################//
 
-//#################### Cancel services ####################//
+//#################### Service Person Tracking ####################//
 
 	public function Add_tracking($user_master_id,$lat_1,$lon_1,$location,$lat_2,$lon_2,$miles_distance_bw,$service_order_id)
 	{
@@ -1449,9 +1449,9 @@ public function Services_list($category_id,$sub_category_id)
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Tracking Details Added");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
+
            }
-		   
 		return $response;
 	}
 

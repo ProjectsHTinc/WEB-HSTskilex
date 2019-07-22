@@ -15,7 +15,8 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Create  Service  <br> <?php echo $this->uri->segment(4); ?> </h4>
+                  <h4 class="card-title">Create  Service   <br> <?php  $string =$this->uri->segment(4);
+                  echo preg_replace("/[^a-zA-Z]/", " ", $string) ?> </h4>
 
                   <form class="forms-sample" id="create_service" method="post" action="<?php echo base_url(); ?>masters/service_creation" enctype="multipart/form-data">
                     <div class="row">

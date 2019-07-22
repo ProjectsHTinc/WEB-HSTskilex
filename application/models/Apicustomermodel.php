@@ -1266,7 +1266,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
           $result_service=  $res_query->result();
-          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id'";
+          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id' WHERE status='Active'";
           $res_query_copun = $this->db->query($query_coup);
           if($res_query_copun->num_rows()==1){
               $result_coupon=  $res_query_copun->result();

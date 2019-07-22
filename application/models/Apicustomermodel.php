@@ -1189,6 +1189,43 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 //-------------------- Service order Summary details  -------------------//
 
+//-------------------- Addtional Service order  details  -------------------//
+
+        function view_addtional_service($user_master_id,$service_order_id){
+            $select="SELECT s.id,s.service_name,s.service_ta_name,s.rate_card,s.service_pic,s.rate_card_details,s.rate_card_details_ta FROM  service_order_additional AS soa LEFT JOIN services AS s ON soa.service_id=s.id WHERE service_order_id='$service_order_id'";
+            $res_offer = $this->db->query($select);
+            if($res_offer->num_rows()==0){
+                $response = array("status" => "error", "msg" => "No Addtional Service found");
+            }else{
+              $offer_result = $res_offer->result();
+              foreach($offer_result as $rows_service){
+                $service_pic = $rows_service->service_pic;
+                if ($service_pic != ''){
+                  $service_pic_url = base_url().'assets/category/'.$service_pic;
+                }else {
+                   $service_pic_url = '';
+                }
+                $service_list[]=array(
+                  "id"=>$rows_service->id,
+                  "service_name"=>$rows_service->service_name,
+                  "service_ta_name"=>$rows_service->service_ta_name,
+                  "rate_card"=>$rows_service->rate_card,
+                  "rate_card_details"=>$rows_service->rate_card_details,
+                  "rate_card_details_ta"=>$rows_service->rate_card_details_ta,
+                  "service_pic"=>$service_pic_url,
+                );
+
+              }
+
+              $response = array("status" => "success", "msg" => "service found",'service_list'=>$service_list);
+            }
+            return $response;
+
+
+        }
+
+
+//-------------------- Addtional Service order  details  -------------------//
 
 //-------------------- Service Coupon list  -------------------//
 

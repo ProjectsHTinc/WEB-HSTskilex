@@ -1128,6 +1128,62 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 //-------------------- Service order details  -------------------//
 
+//-------------------- Service order Summary details  -------------------//
+
+
+    function service_order_summary($user_master_id,$service_order_id){
+      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
+      (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,
+      spa.paid_advance_amount,spa.service_amount,spa.ad_service_amount,spa.sgst_amount,spa.cgst_amount,spa.total_amount,spa.coupon_id,spa.discount_amt,spa.status,
+      so.* FROM service_orders  AS so
+      LEFT JOIN services AS s ON s.id=so.service_id
+      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+      LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+      LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+      LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+      WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
+
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "provider_name"=>$rows_service->owner_full_name,
+            "person_name"=>$rows_service->full_name,
+            "person_number"=>$rows_service->phone_no,
+            "service_start_time"=>$rows_service->start_datetime,
+            "service_end_time"=>$rows_service->finish_datetime,
+            "additional_service"=>$rows_service->count_add,
+            "material_notes"=>$rows_service->material_notes,
+            "paid_advance_amt"=>$rows_service->paid_advance_amount,
+            "service_amount"=>$rows_service->service_amount,
+            "additional_service_amt"=>$rows_service->ad_service_amount,
+            "coupon_id"=>$rows_service->coupon_id,
+            "discount_amt"=>$rows_service->discount_amt,
+            "total_cost"=>$rows_service->ad_serv_rate+$rows_service->service_rate_card,
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+           return $response;
+
+    }
+
+//-------------------- Service order Summary details  -------------------//
 
 
 //-------------------- Service Reviews Add -------------------//

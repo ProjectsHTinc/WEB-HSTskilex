@@ -1128,6 +1128,167 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 //-------------------- Service order details  -------------------//
 
+//-------------------- Service order Summary details  -------------------//
+
+
+    function service_order_summary($user_master_id,$service_order_id){
+      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
+      (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,
+      spa.paid_advance_amount,spa.service_amount,spa.ad_service_amount,spa.sgst_amount,spa.cgst_amount,spa.total_amount,spa.coupon_id,spa.discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+      LEFT JOIN services AS s ON s.id=so.service_id
+      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+      LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+      LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+      LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+      WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
+
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+
+        foreach($service_result as $rows_service){
+          $payment_id=$rows_service->payment_id;
+          $tim=time();
+          $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
+          $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "provider_name"=>$rows_service->owner_full_name,
+            "person_name"=>$rows_service->full_name,
+            "person_number"=>$rows_service->phone_no,
+            "service_start_time"=>$rows_service->start_datetime,
+            "service_end_time"=>$rows_service->finish_datetime,
+            "additional_service"=>$rows_service->count_add,
+            "material_notes"=>$rows_service->material_notes,
+            "paid_advance_amt"=>$rows_service->paid_advance_amount,
+            "service_amount"=>$rows_service->service_amount,
+            "additional_service_amt"=>$rows_service->ad_service_amount,
+            "coupon_id"=>$rows_service->coupon_id,
+            "discount_amt"=>$rows_service->discount_amt,
+            "total_cost"=>$rows_service->total_amount,
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id);
+
+        }
+      }
+
+
+
+           return $response;
+
+    }
+
+//-------------------- Service order Summary details  -------------------//
+
+
+//-------------------- Service Coupon list  -------------------//
+
+
+      function service_coupon_list($user_master_id){
+        $query_offer="SELECT * FROM offer_master WHERE status='Active' ORDER BY id DESC";
+            $res_offer = $this->db->query($query_offer);
+            if($res_offer->num_rows()==0){
+              	$response = array("status" => "error", "msg" => "No Offers found");
+            }else{
+              $offer_result = $res_offer->result();
+              foreach($offer_result as $rows_offers){
+                $offer_list[]=array(
+                  "id"=>$rows_offers->id,
+                  "offer_title"=>$rows_offers->offer_title,
+                  "offer_code"=>$rows_offers->offer_code,
+                  "offer_percent"=>$rows_offers->offer_percent,
+                  "max_offer_amount"=>$rows_offers->max_offer_amount,
+                  "offer_description"=>$rows_offers->offer_description,
+
+                );
+
+              }
+
+              $response = array("status" => "success", "msg" => "Offers found",'offer_details'=>$offer_list);
+            }
+            return $response;
+
+
+      }
+
+//-------------------- Service Coupon list  -------------------//
+
+//-------------------- Apply Coupon to Service Order  -------------------//
+
+    function apply_coupon_to_service($user_master_id,$coupon_id,$service_order_id){
+      $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+      $res_query = $this->db->query($query);
+      if($res_query->num_rows()!=0){
+          $result_service=  $res_query->result();
+          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id'";
+          $res_query_copun = $this->db->query($query_coup);
+          if($res_query_copun->num_rows()==1){
+              $result_coupon=  $res_query_copun->result();
+              foreach($result_coupon as $rows_coupon){}
+              foreach($result_service as $rows_service){}
+                $payment_id=$rows_service->id;
+               $total= $rows_service->total_amount;
+                $coupm_amt=($rows_coupon->offer_percent / 100) * $rows_service->total_amount;
+                $max_amt=$rows_coupon->max_offer_amount;
+                $dis_cp=$total-$coupm_amt;
+                if($coupm_amt > $max_amt){
+                  // echo "greater";
+                  $final_total=$total-$max_amt;
+                  $providrt_amt=0.8* $final_total;
+                  $skilex_amount=0.2*$final_total;
+                  $providrt_amt+$skilex_amount;
+                  $gst=0.18*$skilex_amount;
+                  $gst_amount=0.18*$skilex_amount/2;
+                  $skile_net_amount=$skilex_amount-$gst;
+                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',total_amount='$final_total',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount' WHERE service_order_id='$service_order_id'";
+
+                }else{
+
+                  $final_total=$total-$coupm_amt;
+                  $providrt_amt=0.8* $final_total;
+                  $skilex_amount=0.2*$final_total;
+                  $providrt_amt+$skilex_amount;
+                  $gst=0.18*$skilex_amount;
+                  $gst_amount=0.18*$skilex_amount/2;
+                  $skile_net_amount=$skilex_amount-$gst;
+                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',total_amount='$final_total',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount' WHERE service_order_id='$service_order_id'";
+
+                }
+                	$update_result = $this->db->query($update);
+                  if($update_result){
+                    $tim=time();
+                    $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
+                    $response = array("status" => "success", "msg" => "Coupon applied Successfully","order_id"=>$order_id);
+                  }else{
+                    $response = array("status" => "error", "msg" => "Something went wrong");
+                  }
+
+
+
+          }else{
+            	$response = array("status" => "error", "msg" => "Coupon Invalid");
+          }
+
+
+      }else{
+        	$response = array("status" => "error", "msg" => "Something went wrong");
+
+      }
+      	return $response;
+
+
+    }
+//--------------------  Apply Coupon to Service Order  -------------------//
+
 
 
 //-------------------- Service Reviews Add -------------------//

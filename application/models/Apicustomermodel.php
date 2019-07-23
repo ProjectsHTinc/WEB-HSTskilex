@@ -1080,6 +1080,7 @@ class Apicustomermodel extends CI_Model {
             "sub_category_ta"=>$rows_service->sub_cat_ta_name,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
 

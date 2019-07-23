@@ -909,6 +909,37 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function cancel_service_order()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$service_order_id  = $this->input->post("service_order_id");
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function service_coupon_list()
 	{
 		$_POST = json_decode(file_get_contents("php://input"), TRUE);

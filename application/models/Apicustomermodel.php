@@ -674,7 +674,7 @@ class Apicustomermodel extends CI_Model {
 
 
   function view_cart_summary($user_master_id){
-    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.rate_card desc";
+    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.advance_amount desc";
     $res = $this->db->query($query);
     if($res->num_rows()==0){
       $response = array("status" => "error", "msg" => "Cart is Empty");
@@ -1189,13 +1189,43 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 //-------------------- Service order Summary details  -------------------//
 
+//-------------------- Cancel  Service order    -------------------//
+
+
+        function cancel_service_order($user_master_id,$service_order_id){
+         $select="SELECT id,serv_prov_id,serv_pers_id,customer_id,status FROM  service_orders WHERE id='$service_order_id' AND customer_id='$user_master_id'";
+            $res_offer = $this->db->query($select);
+            if($res_offer->num_rows()==0){
+                $response = array("status" => "error", "msg" => "No  Service found");
+            }else{
+              $offer_result = $res_offer->result();
+              foreach($offer_result as $rows_service){ }
+               $id=$rows_service->id;
+              $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
+              $res_update = $this->db->query($update);
+              if($res_update){
+                  $response = array("status" => "success", "msg" => "Service Cancelled successfully");
+              }else{
+                  $response = array("status" => "error", "msg" => "Something Went Wrong");
+              }
+
+
+            }
+            return $response;
+
+
+        }
+
+//-------------------- Cancel  Service order    -------------------//
+
 //-------------------- Addtional Service order  details  -------------------//
 
-        function view_addtional_service($user_master_id,$service_order_id){
+
+      function view_addtional_service($user_master_id,$service_order_id){
             $select="SELECT s.id,s.service_name,s.service_ta_name,s.rate_card,s.service_pic,s.rate_card_details,s.rate_card_details_ta FROM  service_order_additional AS soa LEFT JOIN services AS s ON soa.service_id=s.id WHERE service_order_id='$service_order_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
-                $response = array("status" => "error", "msg" => "No Addtional Service found");
+                $response = array("status" => "error", "msg" => "No Service found");
             }else{
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){
@@ -1224,8 +1254,8 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
         }
 
+  //-------------------- Addtional Service order  details  -------------------//
 
-//-------------------- Addtional Service order  details  -------------------//
 
 //-------------------- Service Coupon list  -------------------//
 

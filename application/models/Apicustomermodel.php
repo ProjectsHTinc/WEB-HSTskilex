@@ -1165,7 +1165,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
         LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
-        WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'"
+        WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");

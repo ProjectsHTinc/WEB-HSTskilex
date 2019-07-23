@@ -1058,7 +1058,13 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
-      $service_query="SELECT s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot  WHERE so.status!='Pending' AND so.status!='Completed' AND customer_id='$user_master_id' ORDER BY so.id DESC";
+      $service_query="SELECT mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE so.status!='Pending' AND so.status!='Completed' AND so.status!='Rejected' AND so.status!='Cancelled' AND customer_id='$user_master_id'
+        ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");
@@ -1068,6 +1074,10 @@ class Apicustomermodel extends CI_Model {
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
             "order_date"=>$rows_service->order_date,
@@ -1092,9 +1102,9 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
-LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1105,6 +1115,10 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
             "order_date"=>$rows_service->order_date,

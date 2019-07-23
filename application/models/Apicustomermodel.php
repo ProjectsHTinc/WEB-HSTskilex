@@ -1102,7 +1102,7 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
+      $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
 LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
@@ -1146,18 +1146,26 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
 
     function service_order_summary($user_master_id,$service_order_id){
-      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
-      (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
-      (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,
-      spa.paid_advance_amount,spa.service_amount,spa.ad_service_amount,spa.sgst_amount,spa.cgst_amount,spa.total_amount,spa.coupon_id,spa.discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
-      LEFT JOIN services AS s ON s.id=so.service_id
-      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
-      LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
-      LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
-      LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
-      WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
+      // $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      // (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
+      // (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,INULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,INULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+      // LEFT JOIN services AS s ON s.id=so.service_id
+      // LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+      // LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+      // LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+      // LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+      // LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+      // WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
 
+        $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,IFNULL((SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id'),'') as ad_serv_rate,
+        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+        LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+        LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+        LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+        WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'"
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");

@@ -1193,7 +1193,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 
         function cancel_service_order($user_master_id,$service_order_id){
-         $select="SELECT id,serv_prov_id,serv_pers_id,customer_id,status FROM  service_orders WHERE id='$service_order_id' AND customer_id='$user_master_id'";
+         $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
                 $response = array("status" => "error", "msg" => "No  Service found");
@@ -1201,6 +1201,9 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){ }
                $id=$rows_service->id;
+              $Phoneno=$rows_service->phone_no;
+              $Message="Thank you.Your order has been Cancelled";
+              $this->sendSMS($Phoneno,$Message);
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
               $res_update = $this->db->query($update);
               if($res_update){

@@ -972,6 +972,9 @@ class Apicustomermodel extends CI_Model {
               //$this->smsmodel->send_sms($phone,$notes);
               $this->sendSMS($Phoneno,$Message);
               ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+              $update_exper="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_id'";
+              $res_expried=$this->db->query($update_exper);
+
               $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
               $res_quest=$this->db->query($request_insert_query);
               if($res_quest){
@@ -1051,7 +1054,50 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Service Pending and offers lists -------------------//
 
+//-------------------- Service Ongoing -------------------//
 
+
+    function requested_services($user_master_id){
+      $service_query="SELECT mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE so.status='Pending' AND customer_id='$user_master_id'
+        ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "service_address"=>$rows_service->service_address,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Service Ongoing  -------------------//
 
 
 //-------------------- Service Ongoing -------------------//

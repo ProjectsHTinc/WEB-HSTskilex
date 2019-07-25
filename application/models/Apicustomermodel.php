@@ -1253,7 +1253,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         $response = array("status" => "error", "msg" => "No Service found");
       }else{
         $service_result=$res_service->result();
-        foreach($service_result as $rows_service){
+        foreach($service_result as $rows_service){  }
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
            $profic=$rows_service->profile_pic;
            if(empty($profic)){
@@ -1262,7 +1262,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             $pic= base_url().'assets/person/'.$profic;
 
            }
-          $service_list[]=array(
+          $service_list=array(
             "service_order_id"=>$rows_service->id,
             "main_category"=>$rows_service->main_cat_name,
             "main_category_ta"=>$rows_service->main_cat_ta_name,
@@ -1284,7 +1284,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
 
-        }
+
       }
 
 

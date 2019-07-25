@@ -1178,6 +1178,7 @@ class Apicustomermodel extends CI_Model {
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
             "contact_person_name"=>$rows_service->contact_person_name,
+            "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "order_status"=>$rows_service->order_status,
@@ -1223,6 +1224,7 @@ class Apicustomermodel extends CI_Model {
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
             "contact_person_name"=>$rows_service->contact_person_name,
+            "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "order_status"=>$rows_service->order_status,
@@ -1245,7 +1247,7 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
+      $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
 LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
@@ -1256,6 +1258,13 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+           $profic=$rows_service->profile_pic;
+           if(empty($profic)){
+             $pic="";
+           }else{
+            $pic= base_url().'assets/person/'.$profic;
+
+           }
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
             "main_category"=>$rows_service->main_cat_name,
@@ -1272,6 +1281,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "provider_name"=>$rows_service->owner_full_name,
             "person_name"=>$rows_service->full_name,
             "person_number"=>$rows_service->phone_no,
+            "pic"=>$pic,
             "estimated_cost"=>$rows_service->ad_serv_rate+$rows_service->service_rate_card,
 
           );

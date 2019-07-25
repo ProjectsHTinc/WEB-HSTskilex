@@ -1319,8 +1319,8 @@ public function Services_list($category_id,$sub_category_id)
 		}
 		
 				
-		$title = "Service Request Completed - '".$total_amount."'";
-		$message_details = "SKILEX - Service Request Completed - '".$total_amount."'";
+		$title = "Service Request Completed";
+		$message_details = "SKILEX - Service Request Completed";
 		
 		$this->sendSMS($contact_person_number,$message_details);
 	

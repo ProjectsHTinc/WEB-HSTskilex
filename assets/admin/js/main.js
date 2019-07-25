@@ -48,7 +48,7 @@ submitHandler: function(form) {
 $('#forgot_password_form').validate({
 rules: {
     phone_number: {
-        required: true,  minlength:10,maxlength:10
+        required: true,digits:true,minlength:10,maxlength:10
     }
 },
 messages: {
@@ -84,7 +84,7 @@ $.ajax({
 $('#reset_otp_form').validate({
 rules: {
     phone_number_otp: {
-        required: true
+        required: true,digits:true,minlength:10,maxlength:10
         }
 },
 messages: {
@@ -170,7 +170,7 @@ rules: {
     gender: {required: true },
     address: {required: true },
     city: {required: true },
-    phone: {required: true,  remote: {
+    phone: {required: true,digits:true,minlength:10,maxlength:10,  remote: {
              url: "home/check_phone_exist",
              type: "post"
           }
@@ -245,7 +245,7 @@ rules: {
     address: {required: true },
     city: {required: true },
     qualification: {required: true },
-    phone: {required: true,  remote: {
+    phone: {required: true, digits:true,minlength:10,maxlength:10,  remote: {
              url: "checkphone",
              type: "post"
           }

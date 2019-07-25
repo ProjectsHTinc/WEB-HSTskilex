@@ -360,7 +360,7 @@ class Apicustomermodel extends CI_Model {
 			$update_result = $this->db->query($update_sql);
 		}
 
-		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender', address ='$address' WHERE user_master_id ='$user_master_id'";
+		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender' WHERE user_master_id ='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 
 		$response = array("status" => "success", "msg" => "Profile Updated");
@@ -380,6 +380,34 @@ class Apicustomermodel extends CI_Model {
 			return $response;
 	}
 //-------------------- Profile Pic Update End -------------------//
+
+
+
+  function user_info($user_master_id){
+    $select="SELECT * FROM login_users as lu LEFT JOIN customer_details as cd ON lu.id=cd.user_master_id WHERE lu.id='$user_master_id'";
+    $res = $this->db->query($select);
+    if($res->num_rows()==1){
+      foreach($res->result()  as $rows){}
+        $profile=$rows->profile_pic;
+        if(empty($profile)){
+          $pic="";
+        }else{
+            $pic=base_url().'assets/customers/'.$profile;
+        }
+        $user_info=array(
+          "phone_no"=>$rows->phone_no,
+          "email"=>$rows->email,
+          "full_name"=>$rows->full_name,
+          "gender"=>$rows->gender,
+          "profile_pic"=>$pic,
+        );
+        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info);
+
+    }else{
+        $response=array("status"=>"error","msg"=>"No User information found");
+    }
+    return $response;
+  }
 
 
   function view_banner_list($user_master_id){
@@ -674,7 +702,7 @@ class Apicustomermodel extends CI_Model {
 
 
   function view_cart_summary($user_master_id){
-    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.rate_card desc";
+    $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.advance_amount desc";
     $res = $this->db->query($query);
     if($res->num_rows()==0){
       $response = array("status" => "error", "msg" => "Cart is Empty");
@@ -917,6 +945,27 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Service Advance  payment-------------------//
 
+//-------------------- Service Order status-------------------//
+
+
+  function service_order_status($user_master_id,$service_order_id){
+      $query="SELECT * FROM service_orders as so WHERE id='$service_order_id' AND customer_id='$user_master_id'";
+      $res=$this->db->query($query);
+      if($res->num_rows()==1){
+        foreach($res->result() as $rows){}
+          $order_status=$rows->status;
+          $response = array("status" => "success", "msg" => "Service status","order_status"=>$order_status);
+      }else{
+        $response = array("status" => "error", "msg" => "Service not found");
+
+      }
+      return $response;
+
+  }
+
+//-------------------- Service Order status-------------------//
+
+
 
 //-------------------- Service Provider allocation -------------------//
 
@@ -972,6 +1021,9 @@ class Apicustomermodel extends CI_Model {
               //$this->smsmodel->send_sms($phone,$notes);
               $this->sendSMS($Phoneno,$Message);
               ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+              $update_exper="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_id'";
+              $res_expried=$this->db->query($update_exper);
+
               $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
               $res_quest=$this->db->query($request_insert_query);
               if($res_quest){
@@ -1051,14 +1103,17 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Service Pending and offers lists -------------------//
 
+//-------------------- Requested Service  -------------------//
 
 
-
-//-------------------- Service Ongoing -------------------//
-
-
-    function ongoing_services($user_master_id){
-      $service_query="SELECT s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot  WHERE so.status!='Pending' AND so.status!='Completed' AND customer_id='$user_master_id' ORDER BY so.id DESC";
+    function requested_services($user_master_id){
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE so.status='Pending' AND customer_id='$user_master_id'
+        ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");
@@ -1068,11 +1123,64 @@ class Apicustomermodel extends CI_Model {
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
+            "order_status"=>$rows_service->order_status,
 
+
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Requested Service   -------------------//
+
+
+//-------------------- Service Ongoing -------------------//
+
+
+    function ongoing_services($user_master_id){
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE so.status!='Pending' AND so.status!='Completed' AND so.status!='Rejected' AND so.status!='Cancelled' AND customer_id='$user_master_id'
+        ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "order_status"=>$rows_service->order_status,
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
 
@@ -1088,13 +1196,58 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Service Ongoing  -------------------//
 
 
+//-------------------- Service History -------------------//
+
+
+    function service_history($user_master_id){
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE  customer_id='$user_master_id'
+        ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "order_status"=>$rows_service->order_status,
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Service History  -------------------//
+
+
 //-------------------- Service Order details -------------------//
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
-LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1105,8 +1258,14 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "contact_person_number"=>$rows_service->contact_person_number,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,
@@ -1132,18 +1291,26 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
 
     function service_order_summary($user_master_id,$service_order_id){
-      $service_query="SELECT lu.phone_no,spp.full_name,spd.owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
-      (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
-      (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,
-      spa.paid_advance_amount,spa.service_amount,spa.ad_service_amount,spa.sgst_amount,spa.cgst_amount,spa.total_amount,spa.coupon_id,spa.discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
-      LEFT JOIN services AS s ON s.id=so.service_id
-      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
-      LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
-      LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
-      LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
-      WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
+      // $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
+      // (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
+      // (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,INULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,INULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+      // LEFT JOIN services AS s ON s.id=so.service_id
+      // LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+      // LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+      // LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+      // LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+      // LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+      // WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
 
+        $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,IFNULL((SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id'),'') as ad_serv_rate,
+        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+        LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+        LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+        LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+        WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");
@@ -1160,6 +1327,8 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
             "service_order_id"=>$rows_service->id,
             "service_name"=>$rows_service->service_name,
             "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "contact_person_number"=>$rows_service->contact_person_number,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,
@@ -1188,6 +1357,76 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
     }
 
 //-------------------- Service order Summary details  -------------------//
+
+//-------------------- Cancel  Service order    -------------------//
+
+
+        function cancel_service_order($user_master_id,$service_order_id){
+         $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
+            $res_offer = $this->db->query($select);
+            if($res_offer->num_rows()==0){
+                $response = array("status" => "error", "msg" => "No  Service found");
+            }else{
+              $offer_result = $res_offer->result();
+              foreach($offer_result as $rows_service){ }
+               $id=$rows_service->id;
+              $Phoneno=$rows_service->phone_no;
+              $Message="Thank you.Your order has been Cancelled";
+              $this->sendSMS($Phoneno,$Message);
+              $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
+              $res_update = $this->db->query($update);
+              if($res_update){
+                  $response = array("status" => "success", "msg" => "Service Cancelled successfully");
+              }else{
+                  $response = array("status" => "error", "msg" => "Something Went Wrong");
+              }
+
+
+            }
+            return $response;
+
+
+        }
+
+//-------------------- Cancel  Service order    -------------------//
+
+//-------------------- Addtional Service order  details  -------------------//
+
+
+      function view_addtional_service($user_master_id,$service_order_id){
+            $select="SELECT s.id,s.service_name,s.service_ta_name,s.rate_card,s.service_pic,s.rate_card_details,s.rate_card_details_ta FROM  service_order_additional AS soa LEFT JOIN services AS s ON soa.service_id=s.id WHERE service_order_id='$service_order_id'";
+            $res_offer = $this->db->query($select);
+            if($res_offer->num_rows()==0){
+                $response = array("status" => "error", "msg" => "No Service found");
+            }else{
+              $offer_result = $res_offer->result();
+              foreach($offer_result as $rows_service){
+                $service_pic = $rows_service->service_pic;
+                if ($service_pic != ''){
+                  $service_pic_url = base_url().'assets/category/'.$service_pic;
+                }else {
+                   $service_pic_url = '';
+                }
+                $service_list[]=array(
+                  "id"=>$rows_service->id,
+                  "service_name"=>$rows_service->service_name,
+                  "service_ta_name"=>$rows_service->service_ta_name,
+                  "rate_card"=>$rows_service->rate_card,
+                  "rate_card_details"=>$rows_service->rate_card_details,
+                  "rate_card_details_ta"=>$rows_service->rate_card_details_ta,
+                  "service_pic"=>$service_pic_url,
+                );
+
+              }
+
+              $response = array("status" => "success", "msg" => "service found",'service_list'=>$service_list);
+            }
+            return $response;
+
+
+        }
+
+  //-------------------- Addtional Service order  details  -------------------//
 
 
 //-------------------- Service Coupon list  -------------------//
@@ -1229,7 +1468,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
           $result_service=  $res_query->result();
-          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id'";
+          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id' WHERE status='Active'";
           $res_query_copun = $this->db->query($query_coup);
           if($res_query_copun->num_rows()==1){
               $result_coupon=  $res_query_copun->result();
@@ -1288,6 +1527,32 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN service_timeslot AS st O
 
     }
 //--------------------  Apply Coupon to Service Order  -------------------//
+
+
+//--------------------  Service Person Tracking  -------------------//
+
+
+        function service_person_tracking($user_master_id,$person_id){
+          $select="SELECT * FROM vendor_status WHERE serv_pro_id='$person_id' AND online_status='Online'";
+          $res = $this->db->query($select);
+           if($res->num_rows()==1){
+             $result = $res->result();
+             foreach($result as $rows){}
+             $tracking_info=array(
+               "lat"=>$rows->serv_lat,
+               "lon"=>$rows->serv_lon,
+             );
+            $response = array("status" => "success", "msg" => "Tracking found","track_info"=>$tracking_info);
+           } else {
+             $response = array("status" => "error", "msg" => "No Tracking found");
+           }
+
+           return $response;
+
+
+        }
+
+//--------------------  Service Person Tracking  -------------------//
 
 
 

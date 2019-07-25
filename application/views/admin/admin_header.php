@@ -101,7 +101,7 @@
             </li>
 
 
-            <li class="nav-item mega-menu">
+            <!-- <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-flag-outline"></i><span class="menu-title">Orders</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
@@ -149,6 +149,19 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Service Orders</span><i class="menu-arrow"></i></a>
+              <div class="submenu">
+                <ul class="submenu-item">
+
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/pending_orders">Waiting Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">OnGoing Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Completed Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Ongoing  Orders</a></li>
+
+                </ul>
               </div>
             </li>
             <li class="nav-item mega-menu">

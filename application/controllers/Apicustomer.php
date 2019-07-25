@@ -267,6 +267,38 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function user_info()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Customer Profile Update";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->user_info($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 //-----------------------------------------------//
 
     public function profile_pic_upload()
@@ -722,6 +754,37 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function service_order_status()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id = $this->input->post("service_order_id");
+		$data['result']=$this->apicustomermodel->service_order_status($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 //-----------------------------------------------//
 
 	public function service_provider_allocation()
@@ -785,6 +848,39 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+
+
+//-----------------------------------------------//
+
+	public function ongoing_services()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->ongoing_services($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
 //-----------------------------------------------//
 
 	public function requested_services()
@@ -817,7 +913,7 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function ongoing_services()
+	public function service_history()
 	{
 		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -837,12 +933,13 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->ongoing_services($user_master_id);
+		$data['result']=$this->apicustomermodel->service_history($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
+
 
 //-----------------------------------------------//
 
@@ -1061,6 +1158,44 @@ class Apicustomer extends CI_Controller {
 		$reviews  = $this->input->post("reviews");
 
 		$data['result']=$this->apicustomermodel->Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+//-----------------------------------------------//
+
+	public function service_person_tracking()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service Tracking";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id  = '';
+		$service_order_id = '';
+		$ratings = '';
+		$reviews = '';
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$person_id  = $this->input->post("person_id");
+
+		$data['result']=$this->apicustomermodel->service_person_tracking($user_master_id,$person_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

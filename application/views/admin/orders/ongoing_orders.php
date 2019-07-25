@@ -10,7 +10,7 @@ th{
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Pending Orders</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Ongoing Orders</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -26,7 +26,7 @@ th{
               <?php } ?>
 
                 <div class="card-body"  >
-                  <h4 class="card-title">List of Pending Orders </h4>
+                  <h4 class="card-title">List of Ongoing Orders </h4>
 
               <table id="example" class="table table-striped table-bordered">
       <thead >
@@ -61,7 +61,7 @@ th{
                 <button type="button" class="btn btn-danger"><?php echo $rows->status; ?></button>
 
                </td>
-              <td><a title="View order details" href="<?php echo base_url(); ?>service_orders/get_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
+              <td><a title="View order details" href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
                 <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
               </td>
           </tr>

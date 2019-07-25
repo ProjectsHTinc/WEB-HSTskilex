@@ -382,6 +382,34 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Profile Pic Update End -------------------//
 
 
+
+  function user_info($user_master_id){
+    $select="SELECT * FROM login_users as lu LEFT JOIN customer_details as cd ON lu.id=cd.user_master_id WHERE lu.id='$user_master_id'";
+    $res = $this->db->query($select);
+    if($res->num_rows()==1){
+      foreach($res->result()  as $rows){}
+        $profile=$rows->profile_pic;
+        if(empty($profile)){
+          $pic="";
+        }else{
+            $pic=base_url().'assets/customers/'.$profile;
+        }
+        $user_info=array(
+          "phone_no"=>$rows->phone_no,
+          "email"=>$rows->email,
+          "full_name"=>$rows->full_name,
+          "gender"=>$rows->gender,
+          "profile_pic"=>$pic,
+        );
+        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info);
+
+    }else{
+        $response=array("status"=>"error","msg"=>"No User information found");
+    }
+    return $response;
+  }
+
+
   function view_banner_list($user_master_id){
     $query = "SELECT * from banners WHERE status = 'Active'";
     $res = $this->db->query($query);
@@ -917,6 +945,27 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Service Advance  payment-------------------//
 
+//-------------------- Service Order status-------------------//
+
+
+  function service_order_status($user_master_id,$service_order_id){
+      $query="SELECT * FROM service_orders as so WHERE id='$service_order_id' AND customer_id='$user_master_id'";
+      $res=$this->db->query($query);
+      if($res->num_rows()==1){
+        foreach($res->result() as $rows){}
+          $order_status=$rows->status;
+          $response = array("status" => "success", "msg" => "Service status","order_status"=>$order_status);
+      }else{
+        $response = array("status" => "error", "msg" => "Service not found");
+
+      }
+      return $response;
+
+  }
+
+//-------------------- Service Order status-------------------//
+
+
 
 //-------------------- Service Provider allocation -------------------//
 
@@ -1054,11 +1103,11 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Service Pending and offers lists -------------------//
 
-//-------------------- Service Ongoing -------------------//
+//-------------------- Requested Service  -------------------//
 
 
     function requested_services($user_master_id){
-      $service_query="SELECT mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
@@ -1084,6 +1133,8 @@ class Apicustomermodel extends CI_Model {
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
+            "order_status"=>$rows_service->order_status,
+
 
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
@@ -1097,14 +1148,14 @@ class Apicustomermodel extends CI_Model {
 
     }
 
-//-------------------- Service Ongoing  -------------------//
+//-------------------- Requested Service   -------------------//
 
 
 //-------------------- Service Ongoing -------------------//
 
 
     function ongoing_services($user_master_id){
-      $service_query="SELECT mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
@@ -1129,7 +1180,7 @@ class Apicustomermodel extends CI_Model {
             "contact_person_name"=>$rows_service->contact_person_name,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
-
+            "order_status"=>$rows_service->order_status,
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
 
@@ -1143,6 +1194,51 @@ class Apicustomermodel extends CI_Model {
     }
 
 //-------------------- Service Ongoing  -------------------//
+
+
+//-------------------- Service History -------------------//
+
+
+    function service_history($user_master_id){
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        WHERE  customer_id='$user_master_id'
+        ORDER BY so.id DESC";
+      $res_service = $this->db->query($service_query);
+      if($res_service->num_rows()==0){
+        $response = array("status" => "error", "msg" => "No Service found");
+      }else{
+        $service_result=$res_service->result();
+        foreach($service_result as $rows_service){
+           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+          $service_list[]=array(
+            "service_order_id"=>$rows_service->id,
+            "main_category"=>$rows_service->main_cat_name,
+            "main_category_ta"=>$rows_service->main_cat_ta_name,
+            "sub_category"=>$rows_service->sub_cat_name,
+            "sub_category_ta"=>$rows_service->sub_cat_ta_name,
+            "service_name"=>$rows_service->service_name,
+            "service_ta_name"=>$rows_service->service_ta_name,
+            "contact_person_name"=>$rows_service->contact_person_name,
+            "order_date"=>$rows_service->order_date,
+            "time_slot"=>$time_slot,
+            "order_status"=>$rows_service->order_status,
+          );
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+
+        }
+      }
+
+
+
+      return $response;
+
+    }
+
+//-------------------- Service History  -------------------//
 
 
 //-------------------- Service Order details -------------------//
@@ -1431,6 +1527,32 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
     }
 //--------------------  Apply Coupon to Service Order  -------------------//
+
+
+//--------------------  Service Person Tracking  -------------------//
+
+
+        function service_person_tracking($user_master_id,$person_id){
+          $select="SELECT * FROM vendor_status WHERE serv_pro_id='$person_id' AND online_status='Online'";
+          $res = $this->db->query($select);
+           if($res->num_rows()==1){
+             $result = $res->result();
+             foreach($result as $rows){}
+             $tracking_info=array(
+               "lat"=>$rows->serv_lat,
+               "lon"=>$rows->serv_lon,
+             );
+            $response = array("status" => "success", "msg" => "Tracking found","track_info"=>$tracking_info);
+           } else {
+             $response = array("status" => "error", "msg" => "No Tracking found");
+           }
+
+           return $response;
+
+
+        }
+
+//--------------------  Service Person Tracking  -------------------//
 
 
 

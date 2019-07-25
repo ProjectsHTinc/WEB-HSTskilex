@@ -11,7 +11,7 @@ class Service_orders extends CI_Controller {
 	 }
 
 
-	 public function index(){
+	 public function pending_orders(){
 
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
@@ -27,68 +27,73 @@ class Service_orders extends CI_Controller {
 
 	 }
 
-
-	 public function create_offers(){
+	 public function ongoing_orders(){
 
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'){
-		  	$offer_title=$this->db->escape_str($this->input->post('offer_title'));
-				$offer_code=$this->db->escape_str($this->input->post('offer_code'));
-				$offer_percent=$this->db->escape_str($this->input->post('offer_percent'));
-				$max_offer_amount=$this->db->escape_str($this->input->post('max_offer_amount'));
-				$offer_description=$this->db->escape_str($this->input->post('offer_description'));
-				$status=$this->db->escape_str($this->input->post('status'));
-				$data['res']=$this->offersmodel->create_offers($offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id);
-				if($data['res']['status']=="success"){
-					$this->session->set_flashdata('msg','Successfully Added' );
-					redirect('offers/#list' );
-				}else{
-					$this->session->set_flashdata('msg',$data['res']['status']);
-					redirect('offers/#list');
-				}
+			 $data['res']=$this->service_order_model->get_ongoing_orders();
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/orders/ongoing_orders',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
 
-		}else {
-			 redirect('/login');
-		}
 	 }
 
 
-	 public function checkoffer_title(){
-		 $offer_title=$this->input->post('offer_title');
-		 $data=$this->offersmodel->checkoffer_title($offer_title);
-	 }
-	 public function checkoffer_code(){
-		 $offer_code=$this->input->post('offer_code');
-		 $data=$this->offersmodel->checkoffer_code($offer_code);
-	 }
-
-
-
-	 public function get_offer_edit(){
+	 public function get_order_details(){
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'){
-			$offer_id=$this->uri->segment(3);
-			$data['res']=$this->offersmodel->get_offer_edit($offer_id);
+			$service_order_id=$this->uri->segment(3);
+			$data['res']=$this->service_order_model->get_order_details($service_order_id);
+			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
+			$data['res_prov']=$this->service_order_model->get_service_provider($service_order_id);
+			$data['res_payments']=$this->service_order_model->get_service_payments($service_order_id);
+			$data['res_pay_history']=$this->service_order_model->get_payment_history($service_order_id);
+			$data['res_provider_list']=$this->service_order_model->get_provider_list($service_order_id);
 			$this->load->view('admin/admin_header');
-			$this->load->view('admin/master/offers/edit_offer',$data);
+			$this->load->view('admin/orders/pending_order_details',$data);
 			$this->load->view('admin/admin_footer');
 		 }else{
 			  redirect('/login');
 		 }
 	 }
 
-	 public function checkoffer_title_exist(){
+
+	 public function get_ongoing_order_details(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			$service_order_id=$this->uri->segment(3);
+			$data['res']=$this->service_order_model->get_order_details($service_order_id);
+			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
+			$data['res_prov']=$this->service_order_model->get_service_provider($service_order_id);
+			$data['res_payments']=$this->service_order_model->get_service_payments($service_order_id);
+			$data['res_pay_history']=$this->service_order_model->get_payment_history($service_order_id);
+			$data['res_provider_list']=$this->service_order_model->get_provider_list($service_order_id);
+			$this->load->view('admin/admin_header');
+			$this->load->view('admin/orders/ongoing_order_details',$data);
+			$this->load->view('admin/admin_footer');
+		 }else{
+				redirect('/login');
+		 }
+	 }
+
+	 public function assign_orders(){
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
 		 if($user_type== 1){
-			 $offer_title=$this->input->post('offer_title');
-			 $id=$this->uri->segment(3);
-			 $data=$this->offersmodel->checkoffer_title_exist($offer_title,$id);
+			 $prov_id=$this->input->post('prov_id');
+			 $id=$this->input->post('id');
+			 $data['res']=$this->service_order_model->assign_orders($prov_id,$id);
+			 echo json_encode( $data['res']);
 		 }
 	 }
 

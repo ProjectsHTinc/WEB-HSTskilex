@@ -23,6 +23,7 @@
  	echo "</table><br>";
 */
 
+
 for($i = 0; $i < $dataSize; $i++)
 	{
 		$information=explode('=',$decryptValues[$i]);

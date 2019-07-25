@@ -9,14 +9,14 @@
 	  	$openMode = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '','cbc', '');
 	  	$blockSize = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, 'cbc');
 		$plainPad = pkcs5_pad($plainText, $blockSize);
-	  	if (mcrypt_generic_init($openMode, $secretKey, $initVector) != -1) 
+	  	if (mcrypt_generic_init($openMode, $secretKey, $initVector) != -1)
 		{
 		      $encryptedText = mcrypt_generic($openMode, $plainPad);
 	      	      mcrypt_generic_deinit($openMode);
-		      			
-		} 
+
+		}
 		return bin2hex($encryptedText);
-	}
+	} 
 
 	function decrypt($encryptedText,$key)
 	{
@@ -29,7 +29,7 @@
 		$decryptedText = rtrim($decryptedText, "\0");
 	 	mcrypt_generic_deinit($openMode);
 		return $decryptedText;
-		
+
 	}
 	//*********** Padding Function *********************
 
@@ -41,28 +41,27 @@
 
 	//********** Hexadecimal to Binary function for php 4.0 version ********
 
-	function hextobin($hexString) 
-   	 { 
-        	$length = strlen($hexString); 
-        	$binString="";   
-        	$count=0; 
-        	while($count<$length) 
-        	{       
-        	    $subString =substr($hexString,$count,2);           
-        	    $packedString = pack("H*",$subString); 
+	function hextobin($hexString)
+   	 {
+        	$length = strlen($hexString);
+        	$binString="";
+        	$count=0;
+        	while($count<$length)
+        	{
+        	    $subString =substr($hexString,$count,2);
+        	    $packedString = pack("H*",$subString);
         	    if ($count==0)
 		    {
 				$binString=$packedString;
-		    } 
-        	    
-		    else 
+		    }
+
+		    else
 		    {
 				$binString.=$packedString;
-		    } 
-        	    
-		    $count+=2; 
-        	} 
-  	        return $binString; 
-    	  } 
-?>
+		    }
 
+		    $count+=2;
+        	}
+  	        return $binString;
+    	  }
+?>

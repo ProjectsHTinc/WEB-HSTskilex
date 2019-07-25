@@ -1266,6 +1266,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "service_ta_name"=>$rows_service->service_ta_name,
             "contact_person_name"=>$rows_service->contact_person_name,
             "contact_person_number"=>$rows_service->contact_person_number,
+            "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,

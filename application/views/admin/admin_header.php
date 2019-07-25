@@ -156,7 +156,7 @@
               <div class="submenu">
                 <ul class="submenu-item">
 
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/pending_orders">Waiting Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/pending_orders">Pending Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">OnGoing Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Completed Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="#">Ongoing  Orders</a></li>

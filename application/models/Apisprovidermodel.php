@@ -247,8 +247,8 @@ class Apisprovidermodel extends CI_Model {
 			$message_details = "Service Provider - OTP :".$OTP;
 			$this->sendSMS($mobile,$message_details);
 			
-			$subject = "SKILEX - Verification Email";
-			$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
+			//$subject = "SKILEX - Verification Email";
+			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			//$this->sendMail($email,$subject,$email_message);
 		
 			//$this->sendNotification($gcm_key,$title,$message,$mobiletype)
@@ -539,7 +539,7 @@ class Apisprovidermodel extends CI_Model {
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -570,9 +570,9 @@ class Apisprovidermodel extends CI_Model {
 		$ins_query = $this->db->query($sQuery);
 		
 		if($ins_query){
-				$response=array("status" => "success","msg" => "Company_status updated");
+				$response=array("status" => "success","msg" => "Company status updated");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -613,10 +613,14 @@ class Apisprovidermodel extends CI_Model {
 		$insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_query);
 
+
+			$message_details = "Dear Customer your OTP :".$OTP;
+			$this->sendSMS($phone_no,$message_details);
+			
 		if($insert_result){
 				$response=array("status" => "success","msg" => "Individual updated");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -639,7 +643,7 @@ class Apisprovidermodel extends CI_Model {
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Company Details updated");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -649,7 +653,7 @@ class Apisprovidermodel extends CI_Model {
 
 
 
-//#################### Master ID Proff list ####################//
+//#################### Master ID Proof list ####################//
 
 	public function List_idaddress_proofs($company_type)
 	{
@@ -665,12 +669,12 @@ class Apisprovidermodel extends CI_Model {
 		{
 			$response = array("status" => "success", "msg" => "ID / Address Master list", "proof_list"=>$document_result);
 		} else {
-			$response = array("status" => "error", "msg" => "Services Not Found");
+			$response = array("status" => "error", "msg" => "Master Proof Not Found");
 		}
 		return $response;
 	}
 
-//#################### Master ID Proff list End ####################//
+//#################### Master ID Proof list End ####################//
 
 
 //#################### Master Building Proof list ####################//
@@ -685,7 +689,7 @@ class Apisprovidermodel extends CI_Model {
 		{
 			$response = array("status" => "success", "msg" => "Building Proof", "proof_list"=>$document_result);
 		} else {
-			$response = array("status" => "error", "msg" => "Services Not Found");
+			$response = array("status" => "error", "msg" => "Building Proof Not Found");
 		}
 		return $response;
 	}
@@ -824,7 +828,7 @@ class Apisprovidermodel extends CI_Model {
 //#################### Create Service Persons ####################//
 
 
-//#################### Document Service Persons list ####################//
+//#################### Service Persons list ####################//
 
 	public function List_serv_persons($user_master_id)
 	{
@@ -841,10 +845,10 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Document list End ####################//
+//#################### Service Persons list End ####################//
 
 
-//#################### Document Service Persons list ####################//
+//#################### Service Person Details ####################//
 
 	public function Serv_person_details($serv_pres_id)
 	{
@@ -869,14 +873,14 @@ class Apisprovidermodel extends CI_Model {
 			);
 			
 		if($usr_result->num_rows()>0) {
-			$response = array("status" => "success", "msg" => "Service Persons list", "list_service_persons"=>$user_result, "service_order_details"=>$dashboardData);
+			$response = array("status" => "success", "msg" => "Service Person Details", "list_service_persons"=>$user_result, "service_order_details"=>$dashboardData);
 		} else {
-			$response = array("status" => "error", "msg" => "Service Persons Not found");
+			$response = array("status" => "error", "msg" => "Service Person Not found");
 		}
 		return $response;
 	}
 
-//#################### Document list End ####################//
+//#################### Service Persons Details ####################//
 
 //#################### Service Person Document Upload ####################//
 	public function Serv_person_upload_doc($user_master_id,$serv_person_id,$doc_master_id,$doc_proof_number,$documentFileName)
@@ -895,7 +899,7 @@ class Apisprovidermodel extends CI_Model {
 //#################### Service Person Document Upload End ####################//
 
 
-//#################### Document Service Persons list ####################//
+//#################### Service Persons Document list ####################//
 
 	public function List_persons_doc($serv_person_id)
 	{
@@ -946,7 +950,7 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Document list End ####################//
+//#################### Service Persons Document list End ####################//
 
 
 
@@ -960,7 +964,7 @@ class Apisprovidermodel extends CI_Model {
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error", "msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -987,6 +991,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function List_requested_services($user_master_id)
 	{
+/*
 		$sQuery = "SELECT
 					A.id,
 					A.service_location,
@@ -1009,6 +1014,29 @@ class Apisprovidermodel extends CI_Model {
 					service_timeslot E
 				WHERE
 					 A.serv_prov_id = '".$user_master_id."' AND (A.status = 'Requested' OR A.status = 'Accepted') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+*/
+			$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') AS order_date,
+					AA.status,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time
+				FROM
+					service_order_history AA,
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E
+				WHERE
+					AA.serv_prov_id = '".$user_master_id."' AND AA.status = 'Requested' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1027,7 +1055,8 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Detail_requested_services($user_master_id,$service_order_id)
 	{
-		$sQuery = "SELECT
+/*
+		$sQuery = "SELECT 
 					A.id,
 					A.service_location,
 					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
@@ -1051,6 +1080,32 @@ class Apisprovidermodel extends CI_Model {
 					service_timeslot E
 				WHERE
 					 A.id = '".$service_order_id."' AND A.serv_prov_id = '".$user_master_id."' AND A.status = 'Requested' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+*/
+				$sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time
+					
+				FROM
+                	service_order_history AA,
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E
+				WHERE
+					  AA.serv_prov_id = '".$user_master_id."' AND AA.status = 'Requested' AND A.id = '".$service_order_id."' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1070,7 +1125,7 @@ class Apisprovidermodel extends CI_Model {
 	public function Accept_requested_services($user_master_id,$service_order_id)
 	{
 		
-		$update_sql = "UPDATE service_orders SET status  = 'Accepted', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_sql = "UPDATE service_orders SET serv_prov_id = '".$user_master_id."', status  = 'Accepted', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
 		
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Accepted',NOW(),'". $user_master_id . "')";
@@ -1110,7 +1165,7 @@ class Apisprovidermodel extends CI_Model {
 		if($update_result){
 				$response=array("status" => "success","msg" => "Service Request Accepted");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -1174,7 +1229,7 @@ class Apisprovidermodel extends CI_Model {
 		if($update_result){
 				$response=array("status" => "success","msg" => "Service Assigned");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;
@@ -1547,7 +1602,7 @@ class Apisprovidermodel extends CI_Model {
 //#################### Detail completed services End ####################//
 
 
-//#################### Cancel service Resons ####################//
+//#################### Cancel service Reasons ####################//
 
 	public function Cancel_service_reasons($user_type)
 	{
@@ -1564,7 +1619,7 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Cancel service Resons End ####################//
+//#################### Cancel service Reasons End ####################//
 
 
 //#################### Cancel services ####################//
@@ -1614,7 +1669,7 @@ class Apisprovidermodel extends CI_Model {
 		if($update_result){
 				$response=array("status" => "success","msg" => "Cancel Services");
            }else{
-				$response=array("status" => "error");
+				$response=array("status" => "error","msg" => "Something Wrong");
            }
 		   
 		return $response;

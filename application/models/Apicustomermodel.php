@@ -511,16 +511,8 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Search Service  -------------------//
 
     function search_service($service_txt,$service_txt_ta,$user_master_id){
-      // $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
-
-      if($service_txt_ta==''){
-         $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' and status='Active'";
-      }else{
-         $query="SELECT *  FROM services WHERE service_ta_name LIKE '%$service_txt_ta%' and status='Active'";
-      }
-
-      $res = $this->db->query($query);
-
+       $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' and service_ta_name LIKE '%$service_txt%' and status='Active'";
+       $res = $this->db->query($query);
        if($res->num_rows()>0){
           foreach ($res->result() as $rows)
         {

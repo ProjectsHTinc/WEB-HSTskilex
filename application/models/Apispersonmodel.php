@@ -1274,17 +1274,17 @@ public function Services_list($category_id,$sub_category_id)
 					$add_service_amount = '0.00';
 			}
 
-		$total_amount  = ($service_rate_card+$add_service_amount)-$advance_amount_paid;
+		$total_amount  = $service_rate_card+$add_service_amount;
 		
 		$sQuery = "SELECT * FROM service_payments WHERE service_order_id = '".$service_order_id."'";
 		$query_res = $this->db->query($sQuery);
 			if($query_res->num_rows()>0) {
-				$sQuery = "UPDATE service_payments SET paid_advance_amount='". $advance_amount_paid . "', service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "', total_amount ='". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
-				$update_result = $this->db->query($sQuery);
+				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+				$update_result = $this->db->query($sQuery); 
 					
 			} else {
 				
-				$sQuery = "INSERT INTO service_payments (service_order_id,paid_advance_amount,service_amount,ad_service_amount,total_amount,status,created_at,created_by) VALUES ('". $service_order_id . "','". $advance_amount_paid . "','". $service_rate_card . "','". $add_service_amount . "','". $total_amount . "','Pending',NOW(),'". $user_master_id . "')";
+				$sQuery = "INSERT INTO service_payments (service_order_id,service_amount,ad_service_amount,total_service_amount,status,created_at,created_by) VALUES ('". $service_order_id . "','". $service_rate_card . "','". $add_service_amount . "','". $total_amount . "','Pending',NOW(),'". $user_master_id . "')";
 				$ins_query = $this->db->query($sQuery);
 			}
 		

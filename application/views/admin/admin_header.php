@@ -158,8 +158,8 @@
 
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/pending_orders">Pending Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">OnGoing Orders</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Completed Orders</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Ongoing  Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/completed_orders">Completed Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">Rejected  Orders</a></li>
 
                 </ul>
               </div>

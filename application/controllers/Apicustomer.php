@@ -1031,6 +1031,34 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function list_reason_for_cancel()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->list_reason_for_cancel($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -1054,8 +1082,10 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$service_order_id  = $this->input->post("service_order_id");
+		$cancel_id  = $this->input->post("cancel_id");
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id);
+		$comments= $this->input->post("comments");
+		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1095,7 +1125,75 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function apply_coupon_to_service()
+
+		function apply_coupon_to_order(){
+
+				$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+				if(!$this->checkMethod())
+				{
+					return FALSE;
+				}
+
+				if($_POST == FALSE)
+				{
+					$res = array();
+					$res["opn"] = "Service";
+					$res["scode"] = 204;
+					$res["message"] = "Input error";
+					echo json_encode($res);
+					return;
+				}
+
+				$user_master_id  = $this->input->post("user_master_id");
+				$coupon_id  = $this->input->post("coupon_id");
+				$service_order_id  = $this->input->post("service_order_id");
+
+				$data['result']=$this->apicustomermodel->apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id);
+				$response = $data['result'];
+				echo json_encode($response);
+		}
+
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+
+		function remove_coupon_from_order(){
+
+				$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+				if(!$this->checkMethod())
+				{
+					return FALSE;
+				}
+
+				if($_POST == FALSE)
+				{
+					$res = array();
+					$res["opn"] = "Service";
+					$res["scode"] = 204;
+					$res["message"] = "Input error";
+					echo json_encode($res);
+					return;
+				}
+
+				$user_master_id  = $this->input->post("user_master_id");
+				$service_order_id  = $this->input->post("service_order_id");
+				$data['result']=$this->apicustomermodel->remove_coupon_from_order($user_master_id,$service_order_id);
+				$response = $data['result'];
+				echo json_encode($response);
+		}
+
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function proceed_for_payment()
 	{
 		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -1115,17 +1213,14 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$coupon_id  = $this->input->post("coupon_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
-		$data['result']=$this->apicustomermodel->apply_coupon_to_service($user_master_id,$coupon_id,$service_order_id);
+		$data['result']=$this->apicustomermodel->proceed_for_payment($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
-
-
 //-----------------------------------------------//
 
 	public function service_reviews_add()
@@ -1201,6 +1296,41 @@ class Apicustomer extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function pay_by_cash()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$order_id = $this->input->post("order_id");
+		$result = explode("-", $order_id);
+		$payment_id= $result[3];
+		$service_id= $result[2];
+		$amount  = $this->input->post("amount");
+		$data['result']=$this->apicustomermodel->pay_by_cash($user_master_id,$service_id,$payment_id,$amount);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 //-----------------------------------------------//
 

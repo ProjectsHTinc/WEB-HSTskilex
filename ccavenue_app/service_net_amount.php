@@ -4,7 +4,7 @@
     include('Crypto.php');
     include("connection.php");
 
-	$workingKey = 'BC20CF26E647091B255F2398E6FE9313';		//Working Key should be provided here.
+	$workingKey = '7FB71109FBD688214546E4C2BFF63D8B';		//Working Key should be provided here.
 	$encResponse = $_POST["encResp"];			            //This is the response sent by the CCAvenue Server
 	$rcvdString = decrypt($encResponse,$workingKey);		//Crypto Decryption used as per the specified working key.
 	$order_status = "";
@@ -89,7 +89,7 @@ for($i = 0; $i < $dataSize; $i++)
         $update_so="UPDATE service_orders SET status='Paid' WHERE id='$service_id'";
         $objRs  = mysql_query($update_so) or die("Could not select Query ");
 
-        $update="UPDATE service_payments SET status='Paid' WHERE id='$payment_id'";
+        $update="UPDATE service_payments SET status='Paid',online_amount=online_amount+'$amount' WHERE id='$payment_id'";
         $objRs  = mysql_query($update) or die("Could not select Query ");
 
         $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Online','$string','$track_id','Netamount','$order_status',NOW(),'$user_id')";

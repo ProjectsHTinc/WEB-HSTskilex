@@ -1157,7 +1157,7 @@ class Apicustomermodel extends CI_Model {
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE so.status!='Pending' AND so.status!='Completed' AND so.status!='Rejected' AND so.status!='Cancelled' AND customer_id='$user_master_id'
+        WHERE so.status!='Pending' AND so.status!='Completed' AND so.status!='Rejected' AND so.status!='Paid' AND so.status!='Cancelled' AND customer_id='$user_master_id'
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1244,7 +1244,8 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
+      $service_query="SELECT so.status as order_status,IFNULL(so.serv_pers_id,'') as person_id,IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS
+       owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
 LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
@@ -1277,9 +1278,11 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,
             "person_name"=>$rows_service->full_name,
+            "person_id"=>$rows_service->person_id,
             "person_number"=>$rows_service->phone_no,
             "pic"=>$pic,
             "estimated_cost"=>$rows_service->ad_serv_rate+$rows_service->service_rate_card,
+            "order_status"=>$rows_service->order_status,
 
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
@@ -1311,7 +1314,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
       // WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
 
         $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,IFNULL((SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id'),'') as ad_serv_rate,
-        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_service_amount,'') as total_service_amount,IFNULL(spa.net_service_amount,'') as net_service_amount,IFNULL(spa.payable_amount,'') as payable_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
         LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
@@ -1351,7 +1354,11 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "additional_service_amt"=>$rows_service->ad_service_amount,
             "coupon_id"=>$rows_service->coupon_id,
             "discount_amt"=>$rows_service->discount_amt,
-            "total_cost"=>$rows_service->total_amount,
+            "total_service_cost"=>$rows_service->total_service_amount,
+            "net_service_amount"=>$rows_service->net_service_amount,
+            "payable_amount"=>$rows_service->payable_amount,
+
+
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id);
 
@@ -1366,10 +1373,36 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
 //-------------------- Service order Summary details  -------------------//
 
+
+
+    function list_reason_for_cancel($user_master_id){
+
+      $select="SELECT * FROM cancel_master WHERE user_type=5";
+         $res_offer = $this->db->query($select);
+         if($res_offer->num_rows()==0){
+             $response = array("status" => "error", "msg" => "No  Service found");
+         }else{
+           $offer_result = $res_offer->result();
+           foreach($offer_result as $rows){
+             $cancel_list=array(
+               "id"=>$rows->id,
+               "cancel_reason"=>$rows->reasons,
+             );
+            }
+
+            $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list);
+
+
+
+         }
+         return $response;
+    }
+
+
 //-------------------- Cancel  Service order    -------------------//
 
 
-        function cancel_service_order($user_master_id,$service_order_id){
+        function cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments){
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
@@ -1381,6 +1414,8 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
               $Phoneno=$rows_service->phone_no;
               $Message="Thank you.Your order has been Cancelled";
               $this->sendSMS($Phoneno,$Message);
+              $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
+              $res_insert = $this->db->query($insert);
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
               $res_update = $this->db->query($update);
               if($res_update){
@@ -1471,50 +1506,38 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
 //-------------------- Apply Coupon to Service Order  -------------------//
 
-    function apply_coupon_to_service($user_master_id,$coupon_id,$service_order_id){
+  function apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id){
       $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
           $result_service=  $res_query->result();
-          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id' WHERE status='Active'";
+          $query_coup="SELECT * FROM offer_master WHERE id='$coupon_id' AND status='Active'";
           $res_query_copun = $this->db->query($query_coup);
           if($res_query_copun->num_rows()==1){
               $result_coupon=  $res_query_copun->result();
               foreach($result_coupon as $rows_coupon){}
               foreach($result_service as $rows_service){}
                 $payment_id=$rows_service->id;
-               $total= $rows_service->total_amount;
-                $coupm_amt=($rows_coupon->offer_percent / 100) * $rows_service->total_amount;
+                $advance=$rows_service->paid_advance_amount;
+                $total= $rows_service->total_service_amount;
+
+                $coupm_amt=($rows_coupon->offer_percent / 100) * $total;
                 $max_amt=$rows_coupon->max_offer_amount;
                 $dis_cp=$total-$coupm_amt;
                 if($coupm_amt > $max_amt){
-                  // echo "greater";
                   $final_total=$total-$max_amt;
-                  $providrt_amt=0.8* $final_total;
-                  $skilex_amount=0.2*$final_total;
-                  $providrt_amt+$skilex_amount;
-                  $gst=0.18*$skilex_amount;
-                  $gst_amount=0.18*$skilex_amount/2;
-                  $skile_net_amount=$skilex_amount-$gst;
-                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',total_amount='$final_total',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount' WHERE service_order_id='$service_order_id'";
+                  $payable=$final_total-$advance;
+                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
 
                 }else{
-
                   $final_total=$total-$coupm_amt;
-                  $providrt_amt=0.8* $final_total;
-                  $skilex_amount=0.2*$final_total;
-                  $providrt_amt+$skilex_amount;
-                  $gst=0.18*$skilex_amount;
-                  $gst_amount=0.18*$skilex_amount/2;
-                  $skile_net_amount=$skilex_amount-$gst;
-                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',total_amount='$final_total',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount' WHERE service_order_id='$service_order_id'";
-
+                  $payable=$final_total-$advance;
+                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$coupm_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
                 }
+
                 	$update_result = $this->db->query($update);
                   if($update_result){
-                    $tim=time();
-                    $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
-                    $response = array("status" => "success", "msg" => "Coupon applied Successfully","order_id"=>$order_id);
+                    $response = array("status" => "success", "msg" => "Coupon applied Successfully");
                   }else{
                     $response = array("status" => "error", "msg" => "Something went wrong");
                   }
@@ -1535,6 +1558,87 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
     }
 //--------------------  Apply Coupon to Service Order  -------------------//
+
+
+//--------------------  Remove Coupon to Service Order  -------------------//
+
+    function remove_coupon_from_order($user_master_id,$service_order_id){
+      $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+      $res_query = $this->db->query($query);
+      if($res_query->num_rows()!=0){
+        $res_select=  $res_query->result();
+        foreach($res_select as $rows_service){}
+          $payment_id=$rows_service->id;
+          $advance=$rows_service->paid_advance_amount;
+          $total= $rows_service->total_service_amount;
+          $payable=$total-$advance;
+          $update="UPDATE service_payments SET coupon_id='0',discount_amt='0',net_service_amount='$total',payable_amount='$payable' WHERE service_order_id='$service_order_id' ";
+          $update_result = $this->db->query($update);
+          if($update_result){
+            $response = array("status" => "success", "msg" => "Coupon removed Successfully");
+          }else{
+            $response = array("status" => "error", "msg" => "Something went wrong");
+          }
+
+      }else{
+        	$response = array("status" => "error", "msg" => "Something went wrong");
+      }
+      	return $response;
+
+    }
+//--------------------  Remove Coupon to Service Order  -------------------//
+
+
+//-------------------- Payment to Service Order  -------------------//
+
+function proceed_for_payment($user_master_id,$service_order_id){
+      $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+      $res_query = $this->db->query($query);
+      if($res_query->num_rows()!=0){
+          $result_service=  $res_query->result();
+              foreach($result_service as $rows_service){}
+                $payment_id=$rows_service->id;
+                $payable=$rows_service->payable_amount;
+                $advance=$rows_service->paid_advance_amount;
+                $total_service_amount=$rows_service->total_service_amount;
+                $net_amount=$rows_service->net_service_amount;
+                if($net_amount=='0.00'){
+                $net_service_amount=$total_service_amount;
+                }else{
+                  $net_service_amount= $rows_service->net_service_amount;
+                }
+
+                // echo $net_service_amount;exit;
+                $providrt_amt=0.8* $net_service_amount;
+                $skilex_amount=0.2*$net_service_amount;
+                $gst=0.18*$skilex_amount;
+                $gst_amount=0.18*$skilex_amount/2;
+                $skile_net_amount=$skilex_amount-$gst;
+                $payable=$net_service_amount-$advance;
+                $update="UPDATE service_payments SET net_service_amount='$net_service_amount',payable_amount='$payable',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";
+                	$update_result = $this->db->query($update);
+                  if($update_result){
+                    $tim=time();
+                    $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
+                    $pay_details=array(
+                      "order_id"=>$order_id,
+                      "payable_amount"=>$payable,
+                    );
+                    $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details);
+                  }else{
+                    $response = array("status" => "error", "msg" => "Something went wrong");
+                  }
+
+      }else{
+        	$response = array("status" => "error", "msg" => "Something went wrong");
+
+      }
+      	return $response;
+
+
+    }
+//--------------------  Payment  to Service Order  -------------------//
+
 
 
 //--------------------  Service Person Tracking  -------------------//
@@ -1561,6 +1665,39 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         }
 
 //--------------------  Service Person Tracking  -------------------//
+
+
+//--------------------  Pay By cash  -------------------//
+
+    function pay_by_cash($user_master_id,$service_id,$payment_id,$amount){
+
+      $select="SELECT * FROM service_orders as so WHERE so.id='$service_id'";
+      $res = $this->db->query($select);
+      if($res->num_rows()==1){
+        $result = $res->result();
+        foreach($result as $rows){}
+        $update="UPDATE service_orders SET status='Paid' WHERE id='$service_id'";
+        $res_update = $this->db->query($update);
+        $update_pay="UPDATE service_payments SET status='Paid',online_amount=online_amount+'$amount' WHERE id='$payment_id'";
+        $res_pay = $this->db->query($update_pay);
+        $insert="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Offline','Netamount','Success',NOW(),'$user_master_id')";
+        $res_ins = $this->db->query($insert);
+        if($res_ins){
+           $response = array("status" => "success", "msg" => "Thank you for Payment");
+        }else{
+           $response = array("status" => "error", "msg" => "Something went wrong");
+        }
+
+      } else {
+        $response = array("status" => "error", "msg" => "No Service found");
+      }
+
+      return $response;
+
+
+    }
+//--------------------  Pay By cash  -------------------//
+
 
 
 

@@ -105,12 +105,12 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Location :</label>
+                          <label class="col-sm-4 col-form-label">Service Order Status :</label>
                           <div class="col-sm-8">
-                                <textarea type="text" class="form-control" readonly><?php echo $rows->service_address; ?></textarea>
-                                </div>
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->status; ?>">
                         </div>
                       </div>
+                    </div>
                       <div class="col-md-12">
                         <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Material Used :</label>
@@ -120,35 +120,65 @@
                         </div>
                       </div>
                     </div>
+                    <br>
+                    <h5 class="card-title">Assigned Provider and  Person details</h5>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Service Provider</label>
+                          <div class="col-sm-8">
+                                <p class="val_label"><?php echo $rows->owner_full_name; ?></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Service Person</label>
+                          <div class="col-sm-4">
+                            <?php if(empty($rows->profile_pic)){ ?>
+                            <img src="<?php echo base_url(); ?>assets/profile/dummy.jpg" style="width:100px;" class="img-circle">
+                            <?php }else{ ?>
+                            <img src="<?php echo base_url(); ?>assets/person/<?php echo $rows->profile_pic; ?>" style="width:100px;" class="img-circle">
+                          <?php  }  ?>
+
+                          </div>
+                          <div class="col-sm-4">
+                                <p class="val_label"><?php echo $rows->full_name; ?></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+<br>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service iniate Time</label>
-                          <div class="col-sm-8">
-                                <p class="val_label"><?php echo $rows->iniate_datetime; ?></p>
+                          <label class="col-sm-5 col-form-label">Service iniate Time</label>
+                          <div class="col-sm-7">
+                                <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
+                                  <input type="text" class="form-control" readonly value="<?php echo $rows->iniate_datetime; ?>">
                           </div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service iniate Time</label>
-                          <div class="col-sm-8">
-                                <p class="val_label"><?php echo $rows->start_datetime; ?></p>
+                          <label class="col-sm-5 col-form-label">Service Start Time</label>
+                          <div class="col-sm-7">
+                                <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
+                                  <input type="text" class="form-control" readonly value="<?php echo $rows->start_datetime; ?>">
                           </div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service iniate Time</label>
-                          <div class="col-sm-8">
-                                  <p class="val_label"><?php echo $rows->finish_datetime; ?></p>
+                          <label class="col-sm-5 col-form-label">Service End Time</label>
+                          <div class="col-sm-7">
+                                  <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
+                            <input type="text" class="form-control" readonly value="<?php echo $rows->finish_datetime; ?>">
                           </div>
                         </div>
                       </div>
-
-
                     </div>
-
+<br>
                   <h4 class="card-title">List of additional Services</h4>
                   <table id="example1" class="table table-striped table-bordered">
                       <thead>
@@ -176,7 +206,7 @@
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Provider </h4>
+                  <h4 class="card-title">List of Service Provider request sent </h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>

@@ -43,6 +43,38 @@ class Service_orders extends CI_Controller {
 
 	 }
 
+	 public function completed_orders(){
+
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $data['res']=$this->service_order_model->completed_orders();
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/orders/completed_orders',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+
+	 }
+
+
+	 public function get_cost_details(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $service_order_id=$this->uri->segment(3);
+			 $data['res']=$this->service_order_model->get_cost_details($service_order_id);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/orders/order_invoice',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+	 }
+
 
 	 public function get_order_details(){
 		 $data=$this->session->userdata();
@@ -71,7 +103,7 @@ class Service_orders extends CI_Controller {
 		 $user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'){
 			$service_order_id=$this->uri->segment(3);
-			$data['res']=$this->service_order_model->get_order_details($service_order_id);
+			$data['res']=$this->service_order_model->get_ongoing_order_details($service_order_id);
 			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
 			$data['res_prov']=$this->service_order_model->get_service_provider($service_order_id);
 			$data['res_payments']=$this->service_order_model->get_service_payments($service_order_id);
@@ -97,40 +129,8 @@ class Service_orders extends CI_Controller {
 		 }
 	 }
 
-	 public function checkoffer_code_exist(){
-		 $data=$this->session->userdata();
-		 $user_id=$this->session->userdata('user_id');
-		 $user_type=$this->session->userdata('user_role');
-		 if($user_type== 1){
-			 $offer_code=$this->input->post('offer_code');
-			 $id=$this->uri->segment(3);
-			 $data=$this->offersmodel->checkoffer_code_exist($offer_code,$id);
-		 }
-	 }
 
 
-	 public function update_offers(){
-		 $data=$this->session->userdata();
-		 $user_id=$this->session->userdata('user_id');
-		 $user_type=$this->session->userdata('user_role');
-		 if($user_type== 1){
-			 $offer_title=$this->db->escape_str($this->input->post('offer_title'));
-			 $offer_code=$this->db->escape_str($this->input->post('offer_code'));
-			 $offer_percent=$this->db->escape_str($this->input->post('offer_percent'));
-			 $max_offer_amount=$this->db->escape_str($this->input->post('max_offer_amount'));
-			 $offer_description=$this->db->escape_str($this->input->post('offer_description'));
-			 $status=$this->db->escape_str($this->input->post('status'));
-			 $offer_id=$this->db->escape_str($this->input->post('offer_id'));
-			 $data['res']=$this->offersmodel->update_offers($offer_id,$offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id);
-			 if($data['res']['status']=="success"){
-				 $this->session->set_flashdata('msg','Successfully Updated' );
-				 redirect('offers/#list' );
-			 }else{
-				 $this->session->set_flashdata('msg',$data['res']['status']);
-				 redirect('offers/#list');
-			 }
-		 }
-	 }
 
 
 

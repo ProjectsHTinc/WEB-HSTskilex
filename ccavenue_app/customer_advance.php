@@ -89,7 +89,7 @@ for($i = 0; $i < $dataSize; $i++)
         $update="UPDATE service_orders SET advance_payment_status='Y' WHERE service_order_id='$service_id'";
         $objRs  = mysql_query($update) or die("Could not select Query ");
 
-        $insert_sp="INSERT INTO service_payments (service_order_id,paid_advance_amount) VALUES ('$service_id','$amount')";
+        $insert_sp="INSERT INTO service_payments (service_order_id,paid_advance_amount,online_amount) VALUES ('$service_id','$amount','$amount')";
         $objRs  = mysql_query($insert_sp) or die("Could not select Query ");
         $last_id=mysql_insert_id();
 

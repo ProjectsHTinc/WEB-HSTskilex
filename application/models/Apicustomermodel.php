@@ -1373,10 +1373,36 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
 //-------------------- Service order Summary details  -------------------//
 
+
+
+    function list_reason_for_cancel($user_master_id){
+
+      $select="SELECT * FROM cancel_master WHERE user_type=5";
+         $res_offer = $this->db->query($select);
+         if($res_offer->num_rows()==0){
+             $response = array("status" => "error", "msg" => "No  Service found");
+         }else{
+           $offer_result = $res_offer->result();
+           foreach($offer_result as $rows){
+             $cancel_list=array(
+               "id"=>$rows->id,
+               "cancel_reason"=>$rows->reasons,
+             );
+            }
+
+            $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list);
+
+
+
+         }
+         return $response;
+    }
+
+
 //-------------------- Cancel  Service order    -------------------//
 
 
-        function cancel_service_order($user_master_id,$service_order_id){
+        function cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments){
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
@@ -1388,6 +1414,8 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
               $Phoneno=$rows_service->phone_no;
               $Message="Thank you.Your order has been Cancelled";
               $this->sendSMS($Phoneno,$Message);
+              $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
+              $res_insert = $this->db->query($insert);
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
               $res_update = $this->db->query($update);
               if($res_update){

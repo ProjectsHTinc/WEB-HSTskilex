@@ -1031,6 +1031,34 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function list_reason_for_cancel()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apicustomermodel->list_reason_for_cancel($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 //-----------------------------------------------//
 
@@ -1054,8 +1082,10 @@ class Apicustomer extends CI_Controller {
 		}
 
 		$service_order_id  = $this->input->post("service_order_id");
+		$cancel_id  = $this->input->post("cancel_id");
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id);
+		$comments= $this->input->post("comments");
+		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

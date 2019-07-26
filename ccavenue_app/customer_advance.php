@@ -11,6 +11,7 @@
 	$decryptValues = explode('&', $rcvdString);
 	$dataSize = sizeof($decryptValues);
 
+
 /*
 	echo "<table cellspacing=4 cellpadding=4>";
  	for($i = 0; $i < $dataSize; $i++)

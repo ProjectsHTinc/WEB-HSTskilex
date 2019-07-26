@@ -1244,7 +1244,8 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT so.status as order_status,IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
+      $service_query="SELECT so.status as order_status,IFNULL(so.serv_pers_id,'') as person_id,IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS
+       owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
 LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
@@ -1277,6 +1278,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,
             "person_name"=>$rows_service->full_name,
+            "person_id"=>$rows_service->person_id,
             "person_number"=>$rows_service->phone_no,
             "pic"=>$pic,
             "estimated_cost"=>$rows_service->ad_serv_rate+$rows_service->service_rate_card,
@@ -1635,6 +1637,39 @@ function proceed_for_payment($user_master_id,$service_order_id){
         }
 
 //--------------------  Service Person Tracking  -------------------//
+
+
+//--------------------  Pay By cash  -------------------//
+
+    function pay_by_cash($user_master_id,$service_id,$payment_id,$amount){
+
+      $select="SELECT * FROM service_orders as so WHERE so.id='$service_id'";
+      $res = $this->db->query($select);
+      if($res->num_rows()==1){
+        $result = $res->result();
+        foreach($result as $rows){}
+        $update="UPDATE service_orders SET status='Paid' WHERE id='$service_id'";
+        $res_update = $this->db->query($update);
+        $update_pay="UPDATE service_payments SET status='Paid',online_amount=online_amount+'$amount' WHERE id='$payment_id'";
+        $res_pay = $this->db->query($update_pay);
+        $insert="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Offline','Netamount','Success',NOW(),'$user_master_id')";
+        $res_ins = $this->db->query($insert);
+        if($res_ins){
+           $response = array("status" => "success", "msg" => "Thank you for Payment");
+        }else{
+           $response = array("status" => "error", "msg" => "Something went wrong");
+        }
+
+      } else {
+        $response = array("status" => "error", "msg" => "No Service found");
+      }
+
+      return $response;
+
+
+    }
+//--------------------  Pay By cash  -------------------//
+
 
 
 

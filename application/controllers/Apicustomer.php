@@ -1269,6 +1269,41 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function pay_by_cash()
+	{
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$order_id = $this->input->post("order_id");
+		$result = explode("-", $order_id);
+		$payment_id= $result[3];
+		$service_id= $result[2];
+		$amount  = $this->input->post("amount");
+		$data['result']=$this->apicustomermodel->pay_by_cash($user_master_id,$service_id,$payment_id,$amount);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function service_reviews_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);

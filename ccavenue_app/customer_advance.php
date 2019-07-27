@@ -92,7 +92,7 @@ for($i = 0; $i < $dataSize; $i++)
         $objRs  = mysql_query($insert_sp) or die("Could not select Query ");
         $last_id=mysql_insert_id();
 
-        echo $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$last_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
+         $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$last_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
         $objRs  = mysql_query($insert_sph) or die("Could not select Query ");
         $response["status"] = "Success";
 

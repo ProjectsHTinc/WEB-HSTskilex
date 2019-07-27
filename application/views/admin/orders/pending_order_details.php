@@ -181,13 +181,17 @@
                           <th>Advance amt</th>
                           <th>Service amt</th>
                           <th>Additional Service amt</th>
-                          <th>Total</th>
+                          <th>Discount amt</th>
+                          <th>Tax amt (CGST + SGST)</th>
+                          <th>Skilex commission amt</th>
+                          <th>Provider commission amt</th>
+                          <th>Payable amount</th>
                         </tr>
                       </thead>
                     <tbody>
                     <?php $i=1;
                         if(empty($res_payments)){ ?>
-                        <td colspan="5" style="width:100%">No Record Found</td>
+                        <td colspan="9" style="width:100%">No Record Found</td>
                         <?php  }else{
                         foreach($res_payments as $rows_pay){ ?>
                         <tr>
@@ -195,7 +199,11 @@
                         <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
                         <td><?php echo $rows_pay->service_amount; ?>  </td>
                         <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
-                        <td><?php echo $rows_pay->total_amount; ?></td>
+                        <td><?php echo $rows_pay->discount_amt; ?></td>
+                        <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
+                        <td><?php echo $rows_pay->skilex_net_amount; ?></td>
+                        <td><?php echo $rows_pay->serv_pro_net_amount; ?></td>
+                        <td><?php echo $rows_pay->payable_amount; ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>

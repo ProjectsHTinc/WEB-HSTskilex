@@ -1336,7 +1336,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
           $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
 
-          $service_list[]=array(
+          $service_list=array(
             "service_order_id"=>$rows_service->id,
             "main_category"=>$rows_service->main_cat_name,
             "main_category_ta"=>$rows_service->main_cat_ta_name,

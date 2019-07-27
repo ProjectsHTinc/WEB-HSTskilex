@@ -2,8 +2,8 @@
 date_default_timezone_set('Asia/Kolkata');
 $current_time = date("h:i A", time());
 
-//$con = @mysql_connect("localhost","root","O+E7vVgBr#{}");
-$con = @mysql_connect("localhost","root","");
+$con = @mysql_connect("localhost","root","O+E7vVgBr#{}");
+//$con = @mysql_connect("localhost","root","");
 if ($con) {
 		mysql_select_db('skilex');
     } else {

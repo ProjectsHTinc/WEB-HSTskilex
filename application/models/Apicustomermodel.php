@@ -1203,7 +1203,7 @@ class Apicustomermodel extends CI_Model {
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE  customer_id='$user_master_id' AND (so.status='Paid' OR so.status='Cancelled') ORDER BY so.id DESC";
+        WHERE  customer_id='$user_master_id' AND (so.status='Paid' OR so.status='Cancelled' OR so.status='Completed') ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");
@@ -1543,7 +1543,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
                 	$update_result = $this->db->query($update);
                   if($update_result){
-                    $response = array("status" => "success", "msg" => "Coupon applied Successfully");
+                    $response = array("status" => "success", "msg" => "You saved $rows_coupon->offer_percent");
                   }else{
                     $response = array("status" => "error", "msg" => "Something went wrong");
                   }

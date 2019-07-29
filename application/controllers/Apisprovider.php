@@ -1536,6 +1536,109 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
+
+	public function transaction_details()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Transaction_details";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id  = '';
+		
+		$user_master_id   = $this->input->post("user_master_id");
+		
+
+		$data['result']=$this->apisprovidermodel->Transaction_details($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function transaction_list()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Transaction_details";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id  = '';
+		
+		$user_master_id   = $this->input->post("user_master_id");
+		
+
+		$data['result']=$this->apisprovidermodel->Transaction_list($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function view_transaction_details()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "View Transaction_details";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id  = '';
+		$daily_payment_id  = '';
+		
+		$user_master_id   = $this->input->post("user_master_id");
+		$daily_payment_id   = $this->input->post("daily_payment_id");
+		
+
+		$data['result']=$this->apisprovidermodel->View_transaction_details($user_master_id,$daily_payment_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 }
 ?>

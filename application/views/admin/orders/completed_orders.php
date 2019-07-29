@@ -58,12 +58,23 @@ th{
                   <td><?php echo $rows->service_rate_card; ?></td>
                     <td><?php echo $rows->advance_amount_paid; ?> / <?php echo $rows->advance_payment_status; ?>  </td>
                 <td>
-                <button type="button" class="btn btn-danger"><?php echo $rows->status; ?></button>
+                  <?php if($rows->status=='Paid'){
+                    $btn_color="btn-success";
+                  }else{
+                    $btn_color="btn-primary";
+                  } ?>
+                <button type="button" class="btn <?php echo $btn_color; ?>"><?php echo $rows->status; ?></button>
 
                </td>
               <td>
-                <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_completed_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
-                    <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_cost_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-id-card-o"></i></a> &nbsp;&nbsp;
+
+                <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
+                <?php if($rows->status=='Paid'){ ?>
+                  <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_cost_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-id-card-o"></i></a> &nbsp;&nbsp;
+
+              <?php  }else{
+
+                } ?>
                 <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
               </td>
           </tr>

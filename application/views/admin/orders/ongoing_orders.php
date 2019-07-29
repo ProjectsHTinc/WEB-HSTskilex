@@ -58,7 +58,12 @@ th{
                   <td><?php echo $rows->service_rate_card; ?></td>
                     <td><?php echo $rows->advance_amount_paid; ?> / <?php echo $rows->advance_payment_status; ?>  </td>
                 <td>
-                <button type="button" class="btn btn-danger"><?php echo $rows->status; ?></button>
+                  <?php if($rows->status=='Ongoing'){
+                    $btn_color="btn-info";
+                  }else{
+                    $btn_color="btn-success";
+                  } ?>
+                <button type="button" class="btn <?php echo $btn_color; ?>"><?php echo $rows->status; ?></button>
 
                </td>
               <td><a title="View order details" href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;

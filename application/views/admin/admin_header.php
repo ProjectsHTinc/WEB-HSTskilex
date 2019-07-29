@@ -164,45 +164,23 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">FORMS</span><i class="menu-arrow"></i></a>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Transaction</span><i class="menu-arrow"></i></a>
               <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Basic Elements</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/advanced_elements.html">Advanced Elements</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/validation.html">Validation</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/wizard.html">Wizard</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/text_editor.html">Text Editor</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/forms/code_editor.html">Code Editor</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Charts</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/chartjs.html">Chart Js</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/morris.html">Morris</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/flot-chart.html">Flaot</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/google-charts.html">Google Chart</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/sparkline.html">Sparkline</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/c3.html">C3 Chart</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/chartist.html">Chartist</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/charts/justGage.html">JustGage</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Maps</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/mapeal.html">Mapeal</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/vector-map.html">Vector Map</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/maps/google-maps.html">Google Map</a></li>
-                    </ul>
-                  </div>
-                </div>
+                <ul class="submenu-item">
+
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/daily_transaction">Daily transaction</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">From & To date </a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/completed_orders">Provider transactions</a></li>
+
+
+                </ul>
               </div>
             </li>
+
+
+
             <li class="nav-item">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Setting</span><i class="menu-arrow"></i></a>
               <div class="submenu">

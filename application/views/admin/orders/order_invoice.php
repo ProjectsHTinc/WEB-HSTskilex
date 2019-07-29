@@ -16,11 +16,11 @@
                   <div class="card px-2">
                       <div class="card-body"  id="printableArea">
                           <div class="container-fluid">
-                            <h3 class="text-right my-5">Invoice&nbsp;&nbsp;#INV-17</h3>
+                            <h3 class="text-right">Invoice&nbsp;&nbsp;#SKILEX-17</h3>
                             <hr>
                           </div>
                           <?php foreach($res as $rows)  ?>
-                          <div class="container-fluid d-flex justify-content-between">
+                          <!-- <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
                               <p class="mt-5 mb-2"><b>LibertyUI</b></p>
                               <p>104,<br>Minare SK,<br>Canada, K1A 0G9.</p>
@@ -29,11 +29,11 @@
                               <p class="mt-5 mb-2 text-right"><b>Invoice to</b></p>
                               <p class="text-right">Gaala &amp; Sons,<br> C-201, Beykoz-34800,<br> Canada, K1A 0G9.</p>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
                               <p class="mb-0 mt-5">Invoice Date : 23rd Jan 2016</p>
-                              <p>Due Date : 25th Jan 2017</p>
+
                             </div>
                           </div>
                           <div class="container-fluid mt-5 d-flex justify-content-center w-100">
@@ -74,8 +74,8 @@
                           </div>
                           <div class="container-fluid mt-5 w-100">
 
-                            <p class="text-right">CGST (8%) : <?php echo $rows->cgst_amount; ?></p>
-                              <p class="text-right">SGST (8%) : <?php echo $rows->sgst_amount; ?></p>
+                            <!-- <p class="text-right">CGST (8%) : <?php echo $rows->cgst_amount; ?></p>
+                              <p class="text-right">SGST (8%) : <?php echo $rows->sgst_amount; ?></p> -->
                             <h4 class="text-right mb-5">Total : <?php echo $rows->payable_amount; ?></h4>
                             <hr>
                           </div>

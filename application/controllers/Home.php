@@ -8,6 +8,7 @@ class Home extends CI_Controller {
 					$this->load->helper('cookie');
 			    $this->load->library('session');
 					$this->load->model('loginmodel');
+					$this->load->model('dashboardmodel');
 					$this->load->model('smsmodel');
 	 }
 
@@ -21,15 +22,23 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		// print_r($data);exit;
+		$data['res_provider_count']=$this->dashboardmodel->get_number_providers();
+		$data['res_person_count']=$this->dashboardmodel->get_number_persons();
+		$data['res_cust_count']=$this->dashboardmodel->get_number_customer_count();
+		$data['res_paid_count']=$this->dashboardmodel->get_number_paid_orders();
+		$data['res_pending_count']=$this->dashboardmodel->get_number_pending_orders();
+		$data['res_cancelled_count']=$this->dashboardmodel->get_number_cancelled_orders();
+		$data['res_onging_count']=$this->dashboardmodel->get_number_ongoing_orders();
+		$data['res_total_trans_count']=$this->dashboardmodel->get_total_transaction();
+
 		if($user_type=='1'){
 			$this->load->view('admin/admin_header');
-			$this->load->view('admin/dashboard');
+			$this->load->view('admin/dashboard',$data);
 			$this->load->view('admin/admin_footer');
 		}else if ($user_type=='2'){
-			$this->load->view('site_header');
-			$this->load->view('dashboard',$data);
-			$this->load->view('site_footer');
+			$this->load->view('admin/admin_header');
+				$this->load->view('admin/dashboard',$data);
+			$this->load->view('admin/admin_footer');
 		} else {
 			 redirect('/login');
 		}

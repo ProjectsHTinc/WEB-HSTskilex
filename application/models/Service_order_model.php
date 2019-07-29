@@ -39,10 +39,18 @@ Class service_order_model extends CI_Model
        return $result->result();
       }
 
+      function cancelled_orders(){
+     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
+       FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Cancelled' OR so.status='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
+       $result=$this->db->query($check);
+       return $result->result();
+      }
+
 
       function get_cost_details($service_order_id){
           $id=base64_decode($service_order_id)/98765;
-          $select="SELECT sp.*,om.offer_title,om.offer_code FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id   where service_order_id='$id'";        
+          $select="SELECT sp.*,om.offer_title,om.offer_code FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id   where service_order_id='$id'";
           $result=$this->db->query($select);
           return $result->result();
 
@@ -114,6 +122,14 @@ Class service_order_model extends CI_Model
       return $result->result();
     }
 
+
+    function get_cancel_details($service_order_id){
+      $id=base64_decode($service_order_id)/98765;
+      $query="";
+      $result=$this->db->query($query);
+      return $result->result();
+
+    }
 
     function assign_orders($prov_id,$id){
       $service_order_id=base64_decode($id)/98765;

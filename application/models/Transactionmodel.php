@@ -22,6 +22,14 @@ Class Transactionmodel extends CI_Model
     }
 
 
+      function provider_based_transaction(){
+     $check="SELECT spd.owner_full_name,sum(total_service_per_day) as total_service_per_day,sum(serv_prov_commission_amt) as serv_provider_total,sum(skilex_commission_amt) as skilex_commission_amt,sum(serv_total_amount) as serv_total_amount FROM daily_payment_transaction as dpt LEFT JOIN
+        service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id   GROUP BY  dpt.serv_prov_id";
+        $result=$this->db->query($check);
+        return $result->result();
+
+        }
+
 
 
 
@@ -40,6 +48,18 @@ Class Transactionmodel extends CI_Model
   }
 
 
+  function online_payment_history(){
+       $check="SELECT * FROM online_payment_history ORDER BY id desc";
+       $result=$this->db->query($check);
+       return $result->result();
+  }
+
+  function online_payment_details($online_id){
+    $id=base64_decode($online_id)/98765;
+     $check="SELECT * FROM online_payment_history WHERE id='$id'";
+    $result=$this->db->query($check);
+    return $result->result();
+  }
 
 
 

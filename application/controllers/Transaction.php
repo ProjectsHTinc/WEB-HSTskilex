@@ -27,6 +27,67 @@ class Transaction extends CI_Controller {
 
 	 }
 
+	 public function provider_based_transaction(){
+
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $data['res']=$this->transactionmodel->provider_based_transaction();
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/provider_based_transaction',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+
+	 }
+
+	 public function from_date_and_to_date_transactions(){
+
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/datewise_transactions',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+
+	 }
+
+	 public function online_payment_history(){
+
+		 		 $data=$this->session->userdata();
+		 		 $user_id=$this->session->userdata('user_id');
+		 		 $user_type=$this->session->userdata('user_role');
+		 		 if($user_type=='1'){
+					 $data['res']=$this->transactionmodel->online_payment_history();
+		 			 $this->load->view('admin/admin_header');
+		 			 $this->load->view('admin/transactions/online_payment_history',$data);
+		 			 $this->load->view('admin/admin_footer');
+		 		 }else {
+		 				redirect('/login');
+		 		 }
+	 }
+
+	 public function online_payment_details(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $online_id=$this->uri->segment(3);
+			 $data['res']=$this->transactionmodel->online_payment_details($online_id);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/online_payment_details',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+	 }
+
 
 	 public function update_trans_status(){
 		 $data=$this->session->userdata();

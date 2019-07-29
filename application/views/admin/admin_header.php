@@ -159,7 +159,7 @@
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/pending_orders">Pending Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">OnGoing Orders</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/completed_orders">Completed Orders</a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">Rejected  Orders</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/cancelled_orders">Rejected  Orders</a></li>
 
                 </ul>
               </div>
@@ -171,13 +171,14 @@
                 <ul class="submenu-item">
 
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/daily_transaction">Daily transaction</a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/ongoing_orders">From & To date </a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>service_orders/completed_orders">Provider transactions</a></li>
+                  <!-- <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_and_to_date_transactions">From & To date </a></li> -->
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Provider transactions</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/online_payment_history">Online Payment History</a></li>
 
+                </li>
 
                 </ul>
               </div>
-            </li>
 
 
 

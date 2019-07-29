@@ -1812,6 +1812,84 @@ class Apisprovidermodel extends CI_Model {
 
 
 
+
+
+
+
+//#################### Dashboard ####################//
+
+	public function Transaction_list($user_master_id)
+	{
+		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."'";
+		$tran_ress = $this->db->query($sql);
+		
+		if($tran_ress->num_rows()>0)
+		{
+			$transaction_result = $tran_ress->result();
+			
+			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
+		} else {
+			$response = array("status" => "error", "msg" => "No Records Found");
+		}
+		
+		
+		return $response;
+	}
+
+//#################### Dashboard End ####################//
+
+//#################### Dashboard ####################//
+
+	public function Transaction_details($user_master_id)
+	{
+		$sql = "SELECT total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND DATE(`service_date`) >= Date(NOW()) - INTERVAL 1 DAY";
+		$tran_ress = $this->db->query($sql);
+		
+		if($tran_ress->num_rows()>0)
+		{
+			$yesterday_result = $tran_ress->result();
+		} else {
+			$yesterday_result = "No Records Found";
+		}
+		
+		$sQuery = "SELECT SUM(total_service_per_day) AS total_services,SUM(serv_total_amount) AS total_amount,SUM(serv_prov_commission_amt) AS total_serv_prov_commission,SUM(skilex_commission_amt) AS total_skilex_commission,SUM(online_transaction_amt) AS total_online_transaction,SUM(offline_transaction_amt) AS total_offline_transaction,SUM(taxable_amount) AS total_taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND `service_date` <= Date(NOW()) - INTERVAL 2 DAY AND service_date < CURDATE()";
+		$overall_ress = $this->db->query($sQuery);
+		
+		if($overall_ress->num_rows()>0)
+		{
+			$overall_result = $overall_ress->result();
+		} else {
+			$overall_result = "No Records Found";
+		}
+	
+		$response = array("status" => "success", "msg" => "Transaction Details","yesterdayResult"=>$yesterday_result,"overallResult"=>$overall_result);
+		return $response;
+	}
+
+//#################### Dashboard End ####################//
+
+//#################### Dashboard ####################//
+
+	public function View_transaction_details($user_master_id,$daily_payment_id)
+	{
+		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND id='".$daily_payment_id."'";
+		$tran_ress = $this->db->query($sql);
+		
+		if($tran_ress->num_rows()>0)
+		{
+			$transaction_result = $tran_ress->result();
+			
+			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
+		} else {
+			$response = array("status" => "error", "msg" => "No Records Found");
+		}
+		
+		
+		return $response;
+	}
+
+//#################### Dashboard End ####################//
+
 }
 
 ?>

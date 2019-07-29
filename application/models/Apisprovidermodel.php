@@ -1813,32 +1813,7 @@ class Apisprovidermodel extends CI_Model {
 
 
 
-
-
-
-//#################### Dashboard ####################//
-
-	public function Transaction_list($user_master_id)
-	{
-		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."'";
-		$tran_ress = $this->db->query($sql);
-		
-		if($tran_ress->num_rows()>0)
-		{
-			$transaction_result = $tran_ress->result();
-			
-			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
-		} else {
-			$response = array("status" => "error", "msg" => "No Records Found");
-		}
-		
-		
-		return $response;
-	}
-
-//#################### Dashboard End ####################//
-
-//#################### Dashboard ####################//
+//#################### Transaction Details ####################//
 
 	public function Transaction_details($user_master_id)
 	{
@@ -1866,9 +1841,34 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Dashboard End ####################//
+//#################### Transaction Details End ####################//
 
-//#################### Dashboard ####################//
+
+//#################### Transaction list ####################//
+
+	public function Transaction_list($user_master_id)
+	{
+		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."'";
+		$tran_ress = $this->db->query($sql);
+		
+		if($tran_ress->num_rows()>0)
+		{
+			$transaction_result = $tran_ress->result();
+			
+			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
+		} else {
+			$response = array("status" => "error", "msg" => "No Records Found");
+		}
+		
+		
+		return $response;
+	}
+
+//#################### Transaction list End ####################//
+
+
+
+//#################### View Transaction Details ####################//
 
 	public function View_transaction_details($user_master_id,$daily_payment_id)
 	{
@@ -1888,7 +1888,7 @@ class Apisprovidermodel extends CI_Model {
 		return $response;
 	}
 
-//#################### Dashboard End ####################//
+//#################### View Transaction Details End ####################//
 
 }
 

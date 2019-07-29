@@ -1536,10 +1536,38 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
+//-----------------------------------------------//
 
+	public function transaction_details()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
 
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Transaction_details";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
 
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id  = '';
+		
+		$user_master_id   = $this->input->post("user_master_id");
+		
+
+		$data['result']=$this->apisprovidermodel->Transaction_details($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 
 //-----------------------------------------------//
@@ -1575,38 +1603,6 @@ class Apisprovider extends CI_Controller {
 
 //-----------------------------------------------//
 
-//-----------------------------------------------//
-
-	public function transaction_details()
-	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
-
-		if(!$this->checkMethod())
-		{
-			return FALSE;
-		}
-
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Transaction_details";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-		$user_master_id  = '';
-		
-		$user_master_id   = $this->input->post("user_master_id");
-		
-
-		$data['result']=$this->apisprovidermodel->Transaction_details($user_master_id);
-		$response = $data['result'];
-		echo json_encode($response);
-	}
-
-//-----------------------------------------------//
 
 //-----------------------------------------------//
 

@@ -125,7 +125,10 @@ Class service_order_model extends CI_Model
 
     function get_cancel_details($service_order_id){
       $id=base64_decode($service_order_id)/98765;
-      $query="";
+      $query="SELECT cm.reasons,ur.role_name,ch.* FROM cancel_history as ch
+      left join cancel_master as cm ON cm.id=ch.cancel_master_id
+      left join user_role as ur ON ur.id=cm.user_type
+      where ch.service_order_id='$id'";
       $result=$this->db->query($query);
       return $result->result();
 

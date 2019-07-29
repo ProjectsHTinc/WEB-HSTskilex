@@ -244,6 +244,39 @@
                     </tbody>
                   </table>
                   <br>
+                  <h4 class="card-title">Cancel details</h4>
+                  <table id="example" class="table table-striped table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>S.no</th>
+                          <th>Role</th>
+                          <th>Reason</th>
+                          <th>status</th>
+                          <th>Comments</th>
+                          <th>Updated on</th>
+
+                        </tr>
+                      </thead>
+                    <tbody>
+                    <?php $i=1;
+                        if(empty($res_cancel_list)){ ?>
+                        <td colspan="5" style="width:100%">No Record Found</td>
+                        <?php  }else{
+                        foreach($res_cancel_list as $rows_cancel_list){ ?>
+                        <tr>
+                          <td><?php echo $i; ?></td>
+                          <td><?php echo $rows_cancel_list->role_name; ?>  </td>
+                          <td><?php echo $rows_cancel_list->reasons; ?>  </td>
+                          <td><?php echo $rows_cancel_list->status; ?>  </td>
+                          <td><?php echo $rows_cancel_list->comments; ?></td>
+                          <td><?php echo $rows_cancel_list->created_at; ?></td>
+
+                        <?php  $i++;  }  ?>
+                        <?php   } ?>
+                    </tbody>
+                  </table>
+                  <br>
+                  <br>
                   <h4 class="card-title">Service Payment</h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>

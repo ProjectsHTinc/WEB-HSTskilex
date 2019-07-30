@@ -125,6 +125,7 @@ class Service_orders extends CI_Controller {
 			$data['res_payments']=$this->service_order_model->get_service_payments($service_order_id);
 			$data['res_pay_history']=$this->service_order_model->get_payment_history($service_order_id);
 			$data['res_provider_list']=$this->service_order_model->get_provider_list($service_order_id);
+			$data['res_reviews']=$this->service_order_model->get_reviews($service_order_id);
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/orders/ongoing_order_details',$data);
 			$this->load->view('admin/admin_footer');

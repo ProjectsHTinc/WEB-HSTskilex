@@ -159,6 +159,15 @@ Class service_order_model extends CI_Model
 
 
 
+    function get_reviews($service_order_id){
+      $id=base64_decode($service_order_id)/98765;
+      $query="SELECT sr.* from service_reviews as sr  where sr.service_order_id='$id'";
+      $result=$this->db->query($query);
+      return $result->result();
+    }
+
+
+
 
 
 

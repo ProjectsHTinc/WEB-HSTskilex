@@ -116,8 +116,8 @@ Class service_order_model extends CI_Model
     function get_provider_list($service_order_id){
       $id=base64_decode($service_order_id)/98765;
       $query="SELECT lu.id AS user_id,spd.owner_full_name,vs.* FROM vendor_status AS vs
-      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=vs.serv_pro_id AND spd.serv_prov_display_status='Active'
-      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id)";
+      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=vs.serv_pro_id
+      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id) AND spd.serv_prov_display_status='Active'";
       $result=$this->db->query($query);
       return $result->result();
     }

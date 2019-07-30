@@ -1017,7 +1017,7 @@ class Apicustomermodel extends CI_Model {
                 //$this->smsmodel->send_sms($phone,$notes);
                 $this->sendSMS($Phoneno,$Message);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
-                $update_exper="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_id'";
+                $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
 
                 $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
@@ -1198,12 +1198,15 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_history($user_master_id){
-      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
-        LEFT JOIN services AS s ON s.id=so.service_id
-        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
-        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
-        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE  customer_id='$user_master_id' AND (so.status='Paid' OR so.status='Cancelled' OR so.status='Completed') ORDER BY so.id DESC";
+      $service_query="SELECT ifnull(srv.rating,'0') as rating,ifnull(srv.review,'-') as review,so.status AS order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,
+      s.service_name,s.service_ta_name,st.from_time,st.to_time,so.*
+      FROM service_orders  AS so
+      LEFT JOIN services AS s ON s.id=so.service_id
+      LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+      LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+      left join service_reviews as srv on srv.service_order_id=so.id
+      WHERE  so.customer_id='$user_master_id' AND (so.status='Paid' OR so.status='Cancelled' OR so.status='Completed') ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found");
@@ -1223,6 +1226,8 @@ class Apicustomermodel extends CI_Model {
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
+            "rating"=>$rows_service->rating,
+            "review"=>$rows_service->review,
             "order_status"=>$rows_service->order_status,
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
@@ -1390,7 +1395,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
          }else{
            $offer_result = $res_offer->result();
            foreach($offer_result as $rows){
-             $cancel_list=array(
+             $cancel_list[]=array(
                "id"=>$rows->id,
                "cancel_reason"=>$rows->reasons,
              );

@@ -70,7 +70,7 @@ th{
 
                 <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
                 <?php if($rows->status=='Paid'){ ?>
-                  <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_cost_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-id-card-o"></i></a> &nbsp;&nbsp;
+                  <a title="View bill" href="<?php echo base_url(); ?>service_orders/get_cost_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-id-card-o"></i></a> &nbsp;&nbsp;
 
               <?php  }else{
 

@@ -5,12 +5,12 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Customers List</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Service men List</span></li>
             </ol>
           </nav>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">View Customer Details</h4>
+              <h4 class="card-title">View Service men list</h4>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">
@@ -18,11 +18,11 @@
             <tr>
                 <th>S.no</th>
                 <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Gender</th>
-                <th>Status</th>
+                <th>Online status</th>
+                <th>Login status</th>
+
+                <th>Last login</th>
+
                 <th>Actions</th>
             </tr>
         </thead>
@@ -33,21 +33,23 @@
             <tr>
                   <td><?php echo $i; ?></td>
                 <td><?php echo $rows->full_name; ?></td>
-                <td><?php echo $rows->username; ?></td>
-                <td><?php echo $rows->email; ?></td>
-                <td><?php echo $rows->phone_no; ?></td>
-                <td><?php echo $rows->gender; ?></td>
-                <td><?php if($rows->status=='Inactive'){ ?>
-                  <button type="button" class="btn btn-danger btn-fw">Inactive</button>
+                <td><?php if($rows->online_status=='Online'){ ?>
+                  <button type="button" class="badge badge-success ">Online</button>
               <?php   }else{ ?>
-                <button type="button" class="btn btn-success btn-fw">Active</button>
+                <button type="button" class="badge badge-danger">Offline</button>
               <?php   }
                  ?></td>
-                <td>
-                  <a title="Customer details" href="<?php echo base_url(); ?>home/get_customer_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                  <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
-                  <a title="Order list" href="<?php echo base_url(); ?>home/get_customer_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
+                <td><?php if($rows->status=='Inactive'){ ?>
+                  <button type="button" class="badge badge-success ">Inactive</button>
+              <?php   }else{ ?>
+                <button type="button" class="badge badge-danger">Active</button>
+              <?php   }
+                 ?></td>
+                <td><?php echo $rows->company_status; ?></td>
+                <td><?php echo $rows->updated_at; ?></td>
 
+                <td><a href="<?php echo base_url(); ?>home/get_provider_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                  <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
                 </td>
             </tr>
           <?php  $i++;  }  ?>

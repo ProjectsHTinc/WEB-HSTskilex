@@ -244,6 +244,37 @@
                     </tbody>
                   </table>
                   <br>
+                  <h4 class="card-title">Service Review</h4>
+                  <table id="example" class="table table-striped table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>S.no</th>
+                          <th>Rating</th>
+                          <th>Review</th>
+                          <th>status</th>
+                          <th>Review on</th>
+
+                        </tr>
+                      </thead>
+                    <tbody>
+                    <?php $i=1;
+                        if(empty($res_reviews)){ ?>
+                        <td colspan="9" style="width:100%">No Record Found</td>
+                        <?php  }else{
+                        foreach($res_reviews as $rows_reviews){ ?>
+                        <tr>
+                          <td><?php echo $i; ?></td>
+                          <td><?php echo $rows_reviews->rating; ?>  </td>
+                          <td><?php echo $rows_reviews->review; ?>  </td>
+                            <td><?php echo $rows_reviews->status; ?>  </td>
+                          <td><?php echo $rows_reviews->created_at; ?>  </td>
+
+                        </tr>
+                        <?php  $i++;  }  ?>
+                        <?php   } ?>
+                    </tbody>
+                  </table>
+                  <br>
                   <h4 class="card-title">Service Payment</h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>

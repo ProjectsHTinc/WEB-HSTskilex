@@ -39,10 +39,18 @@ Class service_order_model extends CI_Model
        return $result->result();
       }
 
+      function cancelled_orders(){
+     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
+       FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Cancelled' OR so.status='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
+       $result=$this->db->query($check);
+       return $result->result();
+      }
+
 
       function get_cost_details($service_order_id){
           $id=base64_decode($service_order_id)/98765;
-          $select="SELECT sp.*,om.offer_title,om.offer_code FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id   where service_order_id='$id'";        
+          $select="SELECT sp.*,om.offer_title,om.offer_code FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id   where service_order_id='$id'";
           $result=$this->db->query($select);
           return $result->result();
 
@@ -108,12 +116,24 @@ Class service_order_model extends CI_Model
     function get_provider_list($service_order_id){
       $id=base64_decode($service_order_id)/98765;
       $query="SELECT lu.id AS user_id,spd.owner_full_name,vs.* FROM vendor_status AS vs
-      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=vs.serv_pro_id AND spd.serv_prov_display_status='Active'
-      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id)";
+      LEFT JOIN service_provider_details AS spd ON spd.user_master_id=vs.serv_pro_id
+      LEFT JOIN serv_prov_pers_skills AS spps ON spd.user_master_id=spps.user_master_id and spps.service_id='$id'
+      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id) AND spd.serv_prov_display_status='Active' GROUP by user_id";
       $result=$this->db->query($query);
       return $result->result();
     }
 
+
+    function get_cancel_details($service_order_id){
+      $id=base64_decode($service_order_id)/98765;
+      $query="SELECT cm.reasons,ur.role_name,ch.* FROM cancel_history as ch
+      left join cancel_master as cm ON cm.id=ch.cancel_master_id
+      left join user_role as ur ON ur.id=cm.user_type
+      where ch.service_order_id='$id'";
+      $result=$this->db->query($query);
+      return $result->result();
+
+    }
 
     function assign_orders($prov_id,$id){
       $service_order_id=base64_decode($id)/98765;
@@ -135,6 +155,15 @@ Class service_order_model extends CI_Model
           $data = array("status" => "failed");
             return $data;
         }
+    }
+
+
+
+    function get_reviews($service_order_id){
+      $id=base64_decode($service_order_id)/98765;
+      $query="SELECT sr.* from service_reviews as sr  where sr.service_order_id='$id'";
+      $result=$this->db->query($query);
+      return $result->result();
     }
 
 

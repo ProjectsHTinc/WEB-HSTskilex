@@ -196,14 +196,14 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Display  Status :</label>
+                        <label class="col-sm-4 col-form-label">Login  Status :</label>
                         <div class="col-sm-8">
-                              <!-- <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>"> -->
+                              <!-- <input type="text" class="form-control" value="<?php echo $rows->status; ?>"> -->
                               <select class="form-control form-control-sm border-info" id="serv_prov_display_status" name="serv_prov_display_status">
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                               </select>
-                                <script>$('#serv_prov_display_status').val('<?php echo $rows->serv_prov_display_status; ?>');</script>
+                                <script>$('#serv_prov_display_status').val('<?php echo $rows->status; ?>');</script>
                           </div>
                       </div>
                     </div>

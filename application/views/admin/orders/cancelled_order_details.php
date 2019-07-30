@@ -1,3 +1,8 @@
+<style>
+.val_label{
+  margin-top: 10px;
+}
+</style>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -5,8 +10,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Pending orders </a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span> Service orders details</span></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list"> orders </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span> Cancelled or Rejected orders details</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -14,7 +19,7 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">View Service Order details details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+                  <h4 class="card-title">View Service Order details  <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
                   <div class="row">
                       <div class="col-md-6">
@@ -100,14 +105,80 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Location :</label>
+                          <label class="col-sm-4 col-form-label">Service Order Status :</label>
                           <div class="col-sm-8">
-                                <textarea type="text" rows="5" class="form-control" readonly><?php echo $rows->service_address; ?></textarea>
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->status; ?>">
+                        </div>
+                      </div>
+                    </div>
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Material Used :</label>
+                          <div class="col-sm-10">
+                                <textarea type="text" class="form-control" rows="4" readonly><?php echo $rows->material_notes; ?></textarea>
                                 </div>
                         </div>
                       </div>
                     </div>
+                    <br>
+                    <h5 class="card-title">Assigned Provider and  Person details</h5>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Service Provider</label>
+                          <div class="col-sm-8">
+                                <p class="val_label"><?php echo $rows->owner_full_name; ?></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Service Person</label>
+                          <div class="col-sm-4">
+                            <?php if(empty($rows->profile_pic)){ ?>
+                            <img src="<?php echo base_url(); ?>assets/profile/dummy.jpg" style="width:100px;" class="img-circle">
+                            <?php }else{ ?>
+                            <img src="<?php echo base_url(); ?>assets/person/<?php echo $rows->profile_pic; ?>" style="width:100px;" class="img-circle">
+                          <?php  }  ?>
 
+                          </div>
+                          <div class="col-sm-4">
+                                <p class="val_label"><?php echo $rows->full_name; ?></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+<br>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Service iniate Time</label>
+                          <div class="col-sm-7">
+                                <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
+                                  <input type="text" class="form-control" readonly value="<?php echo $rows->iniate_datetime; ?>">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Service Start Time</label>
+                          <div class="col-sm-7">
+                                <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
+                                  <input type="text" class="form-control" readonly value="<?php echo $rows->start_datetime; ?>">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-5 col-form-label">Service End Time</label>
+                          <div class="col-sm-7">
+                                  <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
+                            <input type="text" class="form-control" readonly value="<?php echo $rows->finish_datetime; ?>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+<br>
                   <h4 class="card-title">List of additional Services</h4>
                   <table id="example1" class="table table-striped table-bordered">
                       <thead>
@@ -135,7 +206,7 @@
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Provider <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Provider</a></span></h4>
+                  <h4 class="card-title">List of Service Provider request sent </h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
@@ -173,6 +244,39 @@
                     </tbody>
                   </table>
                   <br>
+                  <h4 class="card-title">Cancel details</h4>
+                  <table id="example" class="table table-striped table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>S.no</th>
+                          <th>Role</th>
+                          <th>Reason</th>
+                          <th>status</th>
+                          <th>Comments</th>
+                          <th>Updated on</th>
+
+                        </tr>
+                      </thead>
+                    <tbody>
+                    <?php $i=1;
+                        if(empty($res_cancel_list)){ ?>
+                        <td colspan="5" style="width:100%">No Record Found</td>
+                        <?php  }else{
+                        foreach($res_cancel_list as $rows_cancel_list){ ?>
+                        <tr>
+                          <td><?php echo $i; ?></td>
+                          <td><?php echo $rows_cancel_list->role_name; ?>  </td>
+                          <td><?php echo $rows_cancel_list->reasons; ?>  </td>
+                          <td><?php echo $rows_cancel_list->status; ?>  </td>
+                          <td><?php echo $rows_cancel_list->comments; ?></td>
+                          <td><?php echo $rows_cancel_list->created_at; ?></td>
+
+                        <?php  $i++;  }  ?>
+                        <?php   } ?>
+                    </tbody>
+                  </table>
+                  <br>
+                  <br>
                   <h4 class="card-title">Service Payment</h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
@@ -195,15 +299,15 @@
                         <?php  }else{
                         foreach($res_payments as $rows_pay){ ?>
                         <tr>
-                        <td><?php echo $i; ?></td>
-                        <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
-                        <td><?php echo $rows_pay->service_amount; ?>  </td>
-                        <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
-                        <td><?php echo $rows_pay->discount_amt; ?></td>
-                        <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
-                        <td><?php echo $rows_pay->skilex_net_amount; ?></td>
-                        <td><?php echo $rows_pay->serv_pro_net_amount; ?></td>
-                        <td><?php echo $rows_pay->payable_amount; ?></td>
+                          <td><?php echo $i; ?></td>
+                          <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
+                          <td><?php echo $rows_pay->service_amount; ?>  </td>
+                          <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
+                          <td><?php echo $rows_pay->discount_amt; ?></td>
+                          <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
+                          <td><?php echo $rows_pay->skilex_net_amount; ?></td>
+                          <td><?php echo $rows_pay->serv_pro_net_amount; ?></td>
+                          <td><?php echo $rows_pay->payable_amount; ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>
@@ -253,38 +357,6 @@
       </div>
     </div>
 
-      <div class="modal fade" id="exampleModal-4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Providers</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-              <div class="modal-body">
-                    <form action="" method="post" id="doc_status_form">
-                        <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Select Provider</label>
-                            <select class="form-control form-control-sm" id="provider_list" name="provider_id">
-                              <option value="">--Select--</option>
-                          <?php foreach($res_provider_list as $rows_p_list){ ?>
-                              <option value="<?php echo $rows_p_list->user_id; ?>"><?php   echo $rows_p_list->owner_full_name; ?></option>
-                        <?php  } ?>
-                            </select>
-                        </div>
-                        <div class="text-center">
-                          <input type="hidden" name="service_order_id" id="service_order_id" value="<?php echo base64_encode($rows->id*98765);  ?>"/>
-
-                        </div>
-
-
-
-                    </form>
-              </div>
-              </div>
-          </div>
-      </div>
 
     <script>
 

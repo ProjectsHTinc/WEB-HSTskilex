@@ -10,7 +10,7 @@ th{
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Ongoing Orders</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Cancelled & Rejected Orders Orders</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -26,14 +26,14 @@ th{
               <?php } ?>
 
                 <div class="card-body"  >
-                  <h4 class="card-title">List of Ongoing Orders </h4>
+                  <h4 class="card-title">List of Cancelled & Rejected Orders </h4>
 
               <table id="example" class="table table-striped table-bordered">
       <thead >
           <tr>
               <th>S.no</th>
               <th>Customer Phone</th>
-              <th>Service </th>
+              <th>Service Name ()</th>
               <th>Contact Person / Number</th>
               <th>Order date / Timeslot</th>
               <th>Service Amount</th>
@@ -66,8 +66,8 @@ th{
                 <button type="button" class="btn <?php echo $btn_color; ?>"><?php echo $rows->status; ?></button>
 
                </td>
-              <td><a title="View order details" href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
-                <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
+              <td>
+                <a title="View order details" href="<?php echo base_url(); ?>service_orders/get_cancelled_order_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-info-circle"></i></a> &nbsp;&nbsp;
               </td>
           </tr>
         <?php  $i++;  }  ?>

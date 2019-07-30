@@ -33,7 +33,7 @@ th{
           <tr>
               <th>S.no</th>
               <th>Customer Phone</th>
-              <th>Service Name ()</th>
+              <th>Service </th>
               <th>Contact Person / Number</th>
               <th>Order date / Timeslot</th>
               <th>Service Amount</th>

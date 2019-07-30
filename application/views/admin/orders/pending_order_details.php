@@ -102,7 +102,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Service Location :</label>
                           <div class="col-sm-8">
-                                <textarea type="text" class="form-control" readonly><?php echo $rows->service_address; ?></textarea>
+                                <textarea type="text" rows="5" class="form-control" readonly><?php echo $rows->service_address; ?></textarea>
                                 </div>
                         </div>
                       </div>

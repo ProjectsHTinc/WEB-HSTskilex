@@ -1279,7 +1279,7 @@ public function Services_list($category_id,$sub_category_id)
 		$sQuery = "SELECT * FROM service_payments WHERE service_order_id = '".$service_order_id."'";
 		$query_res = $this->db->query($sQuery);
 			if($query_res->num_rows()>0) {
-				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', net_service_amount = '". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 				$update_result = $this->db->query($sQuery); 
 					
 			} else {

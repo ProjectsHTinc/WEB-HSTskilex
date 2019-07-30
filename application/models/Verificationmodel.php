@@ -29,7 +29,7 @@ Class Verificationmodel extends CI_Model
 
   function update_deposit_status($status,$id){
       $pro_id=base64_decode($id)/98765;
-      $update="UPDATE service_provider_details SET deposit_status='$status' WHERE user_master_id='$pro_id'";
+     $update="UPDATE service_provider_details SET deposit_status='$status' WHERE user_master_id='$pro_id'";
       $result=$this->db->query($update);
       if($result){
           $data = array("status" => "success");
@@ -55,7 +55,7 @@ Class Verificationmodel extends CI_Model
 
   function update_serv_display_status($status,$id){
     $pro_id=base64_decode($id)/98765;
-    $update="UPDATE service_provider_details SET serv_prov_display_status='$status' WHERE user_master_id='$pro_id'";
+    $update="UPDATE login_users SET status='$status' WHERE id='$pro_id'";
     $result=$this->db->query($update);
     if($result){
         $data = array("status" => "success");
@@ -143,7 +143,7 @@ Class Verificationmodel extends CI_Model
 
   function service_person_details($person_id){
     $pro_id=base64_decode($person_id)/98765;
-    $select="SELECT lu.id as user_master_id,lu.*,spd.* FROM login_users as lu left join service_person_details as spd on spd.user_master_id=lu.id where lu.user_type='4'  and spd.user_master_id='$pro_id'";
+    $select="SELECT lu.status as login_status,lu.id as user_master_id,lu.*,spd.* FROM login_users as lu left join service_person_details as spd on spd.user_master_id=lu.id where lu.user_type='4'  and spd.user_master_id='$pro_id'";
     $result=$this->db->query($select);
     return $result->result();
   }
@@ -163,9 +163,9 @@ Class Verificationmodel extends CI_Model
 
   function update_serv_person_display_status($status,$id){
     $pro_id=base64_decode($id)/98765;
-    $update="UPDATE service_person_details SET serv_pers_display_status='$status' WHERE user_master_id='$pro_id'";
-    $result=$this->db->query($update);
-    if($result){
+    $update_lu="UPDATE login_users SET status='$status' WHERE id='$pro_id'";
+    $result_lu=$this->db->query($update_lu);
+    if($result_lu){
         $data = array("status" => "success");
           return $data;
     }else{

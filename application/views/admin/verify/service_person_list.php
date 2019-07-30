@@ -19,7 +19,7 @@
                 <th >S.no</th>
                 <th>Name <br> Phone No <br> Email</th>
                 <th>Profile Pic</th>
-                <th>Display</th>
+                <th>Login status</th>
                 <th>Verify status</th>
                 <th>Actions</th>
             </tr>
@@ -34,7 +34,7 @@
                 <td><?php echo $rows->profile_pic; ?></td>
 
 
-                <td><?php if($rows->serv_pers_display_status=='Inactive'){ ?>
+                <td><?php if($rows->status=='Inactive'){ ?>
                   <button type="button" class="btn btn-danger ">Inactive</button>
               <?php   }else{ ?>
                 <button type="button" class="btn btn-success ">Active</button>

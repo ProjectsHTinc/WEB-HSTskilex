@@ -67,7 +67,7 @@
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Verify Provider</p>
+                    <p class="category-heading">Verify Providers</p>
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Provider list </a></li>
 
@@ -77,7 +77,7 @@
                   <div class="col-group col-md-2">
                     <p class="category-heading">Service Provider</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">List of Provider </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">List of Provider </a></li>
 
 
                     </ul>
@@ -85,7 +85,7 @@
                   <div class="col-group col-md-2">
                     <p class="category-heading">Service Person</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="">List of Service person </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">List of Service person </a></li>
 
                     </ul>
                   </div>
@@ -101,56 +101,7 @@
             </li>
 
 
-            <!-- <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-flag-outline"></i><span class="menu-title">Orders</span><i class="menu-arrow"></i></a>
-              <div class="submenu">
-                <div class="col-group-wrapper row">
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Services Orders</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="#">Waiting Orders</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Rejected Orders</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Completed Orders</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Ongoing  Orders</a></li>
 
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Error Pages</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-400.html">400</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-404.html">404</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-500.html">500</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/error-505.html">505</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">E-commerce</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/invoice.html">Invoice</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/pricing-table.html">Pricing Table</a></li>
-                      <li class="nav-item"><a class="nav-link" href="pages/samples/orders.html">Orders</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <div class="row">
-                      <div class="col-12">
-                        <p class="category-heading">Layout</p>
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/layouts/rtl.html">RTL Layout</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-12 mt-3">
-                        <p class="category-heading">Documentation</p>
-                        <ul class="submenu-item">
-                          <li class="nav-item"><a class="nav-link" href="pages/documentation.html">Documentation</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li> -->
             <li class="nav-item">
               <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Service Orders</span><i class="menu-arrow"></i></a>
               <div class="submenu">

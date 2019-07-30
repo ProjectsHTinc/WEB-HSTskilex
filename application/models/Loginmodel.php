@@ -309,6 +309,44 @@ Class Loginmodel extends CI_Model
          return $resultset->result();
        }
 
+       function get_all_provider_list(){
+         $query="SELECT lu.id,spd.owner_full_name,vs.online_status,lu.status,spd.company_status,lu.updated_at from vendor_status as vs
+        left join service_provider_details as spd on spd.user_master_id=vs.serv_pro_id
+        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=3 order by lu.id desc";
+         $resultset=$this->db->query($query);
+         return $resultset->result();
+
+       }
+
+       function get_all_person_list(){
+         $query="SELECT lu.id,spd.full_name,vs.online_status,lu.status,lu.updated_at from vendor_status as vs
+        left join service_person_details as spd on spd.user_master_id=vs.serv_pro_id
+        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=4 order by lu.id desc";
+         $resultset=$this->db->query($query);
+         return $resultset->result();
+
+       }
+
+
+       function get_provider_orders($p_id){
+           $id=base64_decode($p_id)/98765;
+         $query="SELECT so.order_date,spd.full_name,so.status,s.service_name,so.id,so.iniate_datetime FROM service_orders AS so
+          LEFT JOIN services AS s ON s.id=so.service_id
+          LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+          WHERE so.serv_prov_id='$id' ORDER BY so.order_date desc";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+
+       function get_customer_orders($c_id){
+           $id=base64_decode($c_id)/98765;
+          $query="SELECT so.order_date,cd.full_name,so.status,s.service_name,so.id FROM service_orders AS so
+          LEFT JOIN services AS s ON s.id=so.service_id
+            LEFT JOIN customer_details AS cd ON cd.user_master_id=so.serv_pers_id
+          WHERE so.customer_id='$id' ORDER BY so.order_date desc";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
 
 }
 ?>

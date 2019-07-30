@@ -15,7 +15,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">View Service Person details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
-                  <?php foreach($res as $rows){} ?>
+                  <?php  foreach($res as $rows){}  ?>
                   <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
@@ -136,14 +136,14 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Display  Status :</label>
+                        <label class="col-sm-4 col-form-label">Login  Status :</label>
                         <div class="col-sm-8">
                               <!-- <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>"> -->
                               <select class="form-control form-control-sm border-info" id="serv_pers_display_status" name="serv_pers_display_status">
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                               </select>
-                                <script>$('#serv_pers_display_status').val('<?php echo $rows->serv_pers_display_status; ?>');</script>
+                                <script>$('#serv_pers_display_status').val('<?php echo $rows->login_status; ?>');</script>
                           </div>
                       </div>
                     </div>

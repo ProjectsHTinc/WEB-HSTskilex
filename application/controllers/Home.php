@@ -193,6 +193,69 @@ class Home extends CI_Controller {
 			}
 
 		}
+		public function get_all_provider_list(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$data['res']=$this->loginmodel->get_all_provider_list();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/providers/view_providers',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+		public function get_all_person_list(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$data['res']=$this->loginmodel->get_all_person_list();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/providers/view_persons',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+
+
+		public function get_provider_orders(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$p_id=$this->uri->segment(3);
+				$data['res']=$this->loginmodel->get_provider_orders($p_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/providers/view_providers_orders',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+
+
+		public function get_customer_orders(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$c_id=$this->uri->segment(3);
+				$data['res']=$this->loginmodel->get_customer_orders($c_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/customer/view_customer_orders',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+
 
 
 		public function get_customer_details(){

@@ -17,7 +17,7 @@
 									<h4><?php echo $row_customer_info->full_name; ?></h4>
 									<p class="text-muted">	<?php echo $row_customer_info->gender; ?></p>
 									<p class="mt-4 card-text">
-										<?php echo $row_customer_info->address; ?>
+									
 									</p>
 									<button class="btn btn-primary btn-sm mt-3 mb-4" onclick="change_status(<?php echo $row_customer_info->status; ?>)"><?php echo $row_customer_info->status; ?></button>
 									<div class="border-top pt-3">

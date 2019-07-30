@@ -1395,7 +1395,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
          }else{
            $offer_result = $res_offer->result();
            foreach($offer_result as $rows){
-             $cancel_list=array(
+             $cancel_list[]=array(
                "id"=>$rows->id,
                "cancel_reason"=>$rows->reasons,
              );

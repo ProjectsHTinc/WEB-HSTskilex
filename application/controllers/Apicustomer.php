@@ -308,7 +308,9 @@ class Apicustomer extends CI_Controller {
 		$user_master_id = $this->uri->segment(3);
 		//$user_master_id = '3';
 		$profile = $_FILES["profile_pic"]["name"];
-		$profileFileName = time().'-'.$profile;
+		$temp = pathinfo($profile, PATHINFO_EXTENSION);
+
+		$profileFileName = time().'.'.$temp;
 		$uploadPicdir = './assets/customers/';
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);

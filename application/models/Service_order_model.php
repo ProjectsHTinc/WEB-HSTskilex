@@ -50,7 +50,7 @@ Class service_order_model extends CI_Model
 
       function get_cost_details($service_order_id){
           $id=base64_decode($service_order_id)/98765;
-          $select="SELECT sp.*,om.offer_title,om.offer_code FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id   where service_order_id='$id'";
+          $select="SELECT sp.*,om.offer_title,om.offer_code,so.order_date,so.id as so_id FROM service_payments as sp left join offer_master as om on om.id=sp.coupon_id left join service_orders as so on so.id=sp.service_order_id where service_order_id='$id'";
           $result=$this->db->query($select);
           return $result->result();
 

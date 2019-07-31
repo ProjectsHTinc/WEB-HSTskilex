@@ -16,10 +16,11 @@
                   <div class="card px-2">
                       <div class="card-body"  id="printableArea">
                           <div class="container-fluid">
-                            <h3 class="text-right">Invoice&nbsp;&nbsp;#SKILEX-17</h3>
+                              <?php foreach($res as $rows)  ?>
+                            <h3 class="text-right">Invoice&nbsp;&nbsp;#SKILEX-<?php echo $rows->id; ?><?php echo $rows->so_id;  ?></h3>
                             <hr>
                           </div>
-                          <?php foreach($res as $rows)  ?>
+
                           <!-- <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
                               <p class="mt-5 mb-2"><b>LibertyUI</b></p>
@@ -32,7 +33,7 @@
                           </div> -->
                           <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
-                              <p class="mb-0 mt-5">Invoice Date : 23rd Jan 2016</p>
+                              <p class="mb-0 mt-5">Order  Date : <?php echo $rows->order_date; ?></p>
 
                             </div>
                           </div>

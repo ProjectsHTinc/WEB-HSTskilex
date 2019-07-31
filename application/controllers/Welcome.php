@@ -33,8 +33,15 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type=="1"){
+			redirect('home/dashboard');
+		}else{
+				$this->load->view('admin/login.php');
+		}
 
-		$this->load->view('admin/login.php');
 
 	}
 

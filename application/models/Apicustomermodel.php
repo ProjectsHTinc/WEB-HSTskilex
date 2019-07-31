@@ -699,6 +699,12 @@ class Apicustomermodel extends CI_Model {
     if($res->num_rows()==0){
       $response = array("status" => "error", "msg" => "Cart is Empty");
     }else{
+
+      $total="SELECT sum(s.rate_card)  as grand_total FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.advance_amount desc";
+      $res_total = $this->db->query($total);
+      $result_total=$res_total->result();
+      foreach($result_total as $rows_total){}
+      $grand_total=$rows_total->grand_total;
       $result=$res->result();
       foreach($result as $rows){
         $service_pic = $rows->service_pic;
@@ -718,7 +724,7 @@ class Apicustomermodel extends CI_Model {
           "status" => $rows->status,
         );
       }
-        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list);
+        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list,"grand_total"=>$grand_total);
 
     }
       return $response;

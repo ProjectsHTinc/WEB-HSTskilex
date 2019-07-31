@@ -1,0 +1,22 @@
+.content_heading{
+    font-size: 16px;
+    font-weight: 600;
+	text-align: justify;
+}
+.content_text{
+	font-size: 15px;
+    font-weight: 500;
+    text-align: justify;
+}
+.center_points{
+	font-size: 15px;
+    font-weight: 500;
+}
+.content_links li{
+    font-size: 14px;
+    display: inline-block !important;
+    margin-top: 0px !important;
+}
+.content_links li a{
+        text-decoration: underline;
+}

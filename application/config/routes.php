@@ -54,6 +54,13 @@ $route['404_override'] = '';
 
 // -----Admin routes------//
 $route['login'] = 'welcome/login';
+$route['index'] = 'welcome/index';
+$route['terms'] = 'welcome/terms';
+$route['privacy'] = 'welcome/privacy';
+$route['refund'] = 'welcome/refund';
+
+
+
 $route['forgotpassword'] = 'welcome/forgotpassword';
 $route['logout'] = 'home/logout';
 $route['dashboard'] = 'home/dashboard';

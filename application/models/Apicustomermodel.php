@@ -1072,32 +1072,10 @@ class Apicustomermodel extends CI_Model {
           );
 
         }
-
-        $response_offer = array("status" => "success", "msg" => "Offers found",'offer_details'=>$offer_list);
       }
 
-      $service_query="SELECT s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so LEFT JOIN services AS s ON s.id=so.service_id
-      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot  WHERE so.status='Pending' AND customer_id='$user_master_id' ORDER BY so.id DESC";
-      $res_service = $this->db->query($service_query);
-      if($res_service->num_rows()==0){
-        $response_service = array("status" => "error", "msg" => "No Service found");
-      }else{
-        $service_result=$res_service->result();
-        foreach($service_result as $rows_service){
-           $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
-          $service_list[]=array(
-            "service_order_id"=>$rows_service->id,
-            "service_name"=>$rows_service->service_name,
-            "service_ta_name"=>$rows_service->service_ta_name,
-            "order_date"=>$rows_service->order_date,
-            "time_slot"=>$time_slot,
 
-          );
-            $response_service = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
-
-        }
-      }
-      $response=array("status"=>"success","msg"=>"Service and offer list","offer_response"=>$response_offer,"service_response"=>$response_service);
+      $response=array("status"=>"success","msg"=>"Service and offer list","offer_response"=>$offer_list);
 
 
       return $response;

@@ -1367,9 +1367,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "discount_amt"=>$rows_service->discount_amt,
             "total_service_cost"=>$rows_service->total_service_amount,
             "net_service_amount"=>$rows_service->net_service_amount,
-            "payable_amount"=>$rows_service->payable_amount,
-
-
+          
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id);
 

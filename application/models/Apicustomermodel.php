@@ -122,11 +122,11 @@ class Apicustomermodel extends CI_Model {
 
 			$device_token = explode(",", $gcm_key);
 			$passphrase = 'hs123';
-		    $loction ='assets/notification/happysanz.pem';
+		    $loction ='assets/pushcert.pem';
 
 			$ctx = stream_context_create();
 			stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-			stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+			stream_context_set_option($ctx, 'ssl', 'hs123', $passphrase);
 
 			// Open a connection to the APNS server
 			$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
@@ -511,7 +511,7 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Search Service  -------------------//
 
     function search_service($service_txt,$service_txt_ta,$user_master_id){
-       $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' and service_ta_name LIKE '%$service_txt%' and status='Active'";
+       $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' or service_ta_name LIKE '%$service_txt%' and status='Active'";
        $res = $this->db->query($query);
        if($res->num_rows()>0){
           foreach ($res->result() as $rows)

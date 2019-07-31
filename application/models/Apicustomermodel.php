@@ -1319,7 +1319,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
         $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,
         s.service_name,s.service_ta_name,IFNULL((SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id'),'') as ad_serv_rate,
-        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_service_amount,'') as total_service_amount,IFNULL(spa.net_service_amount,'') as net_service_amount,IFNULL(spa.payable_amount,'') as payable_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
+        (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,IFNULL(spa.total_service_amount,'') as total_service_amount,IFNULL(spa.net_service_amount,'') as net_service_amount,IFNULL(spa.payable_amount,'') as payable_amount,IFNULL(spa.coupon_id,'') as coupon_id,IFNULL(om.offer_code,'') as offer_code,IFNULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
@@ -1328,6 +1328,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
         LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
+        LEFT JOIN offer_master AS om ON spa.coupon_id=om.id
         WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1364,10 +1365,11 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "service_amount"=>$rows_service->service_amount,
             "additional_service_amt"=>$rows_service->ad_service_amount,
             "coupon_id"=>$rows_service->coupon_id,
+            "coupon_code"=>$rows_service->offer_code,
             "discount_amt"=>$rows_service->discount_amt,
             "total_service_cost"=>$rows_service->total_service_amount,
             "net_service_amount"=>$rows_service->net_service_amount,
-          
+
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id);
 

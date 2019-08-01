@@ -153,7 +153,7 @@ class Apisprovider extends CI_Controller {
 
 	public function login()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	   //$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -477,6 +477,40 @@ class Apisprovider extends CI_Controller {
 		$response = $data['result'];
 		echo json_encode($response); 
 	}*/
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	 public function list_prov_person_category()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "User Services List";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$category_id  = '';
+		
+		$user_master_id  = $this->input->post("user_master_id");
+		
+
+		$data['result']=$this->apisprovidermodel->List_prov_person_category($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response); 
+	}
 
 //-----------------------------------------------//
 

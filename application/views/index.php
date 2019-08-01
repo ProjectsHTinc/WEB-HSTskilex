@@ -209,6 +209,15 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_6.png">
                         </div>
+                        <h3 class="title">Home Cleaning </h3>
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_7.png">
+                        </div>
                         <h3 class="title">AC</h3>
                       <p></p>
                     </div>
@@ -216,21 +225,146 @@
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                            <img src="<?php echo base_url(); ?>assets/images/service_7.png">
+                            <img src="<?php echo base_url(); ?>assets/images/service_8.png">
                         </div>
                         <h3 class="title">Gardening</h3>
+                      <p></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_9.png">
+                        </div>
+                        <h3 class="title">Driver</h3>
                       <p></p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_8.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_10.png">
                         </div>
-                        <h3 class="title">Driver</h3>
+
+                          <h3 class="title">Cook</h3>
                       <p></p>
                     </div>
                 </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_11.png">
+                        </div>
+                          <h3 class="title">Ups Service</h3>
+
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_12.png">
+                        </div>
+                          <h3 class="title">Beautician  </h3>
+
+                      <p></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_13.png">
+                        </div>
+                        <h3 class="title">Appliance Service</h3>
+
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_14.png">
+                        </div>
+                        <h3 class="title">Pest Control</h3>
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_15.png">
+                        </div>
+                      <h3 class="title">Painting Services</h3>
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_16.png">
+                        </div>
+                         <h3 class="title">Computer Service</h3>
+                      <p></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_17.png">
+                        </div>
+                        <h3 class="title">  Tutor-Home Tuition</h3>
+
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_18.png">
+                        </div>
+                          <h3 class="title">Physiotheraphy</h3>
+
+                      <p></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_19.png">
+                        </div>
+                          <h3 class="title">Car cleaning Service</h3>
+
+                      <p></p>
+                    </div>
+                </div>  <div class="col-xs-12 col-md-3">
+                      <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                          <div class="box-icon">
+                                <img src="<?php echo base_url(); ?>assets/images/service_21.png">
+                          </div>
+                        <h3 class="title">Personalized Fitness Tutor</h3>
+                        <p></p>
+                      </div>
+                  </div>
+                
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                        </div>
+                        <h3 class="title">Clinical Service(Nurse)</h3>
+                      <p></p>
+                    </div>
+                </div>
+
+
+
+
+
+
+
             </div>
         </div>
     </section>

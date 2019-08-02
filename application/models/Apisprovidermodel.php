@@ -341,10 +341,12 @@ class Apisprovidermodel extends CI_Model {
 						$city  = $rows->city;
 						$state  = $rows->state;
 						$zip   = $rows->zip;
-						$serv_prov_display_status  = $rows->serv_prov_display_status ;
-						$serv_prov_verify_status    = $rows->serv_prov_verify_status ;					
+						$serv_prov_display_status  = $rows->serv_prov_display_status;
+						$serv_prov_verify_status    = $rows->serv_prov_verify_status;					
 						$refundable_deposit   = $rows->refundable_deposit;
-						$deposit_status    = $rows->deposit_status ;
+						$deposit_status    = $rows->deposit_status;
+						$company_status    = $rows->company_status;
+						$also_service_person    = $rows->also_service_person;
 						$status    = $rows->status ;
 					  	$user_type = $rows->user_type;
 				}
@@ -361,15 +363,60 @@ class Apisprovidermodel extends CI_Model {
 					"profile_pic" => $profile_pic_url,
 					"address" => $address,
 					"city" => $city,
-					"vendor_display_status" => $vendor_display_status,
-					"vendor_verify_status" => $vendor_verify_status,
+					"serv_prov_display_status" => $serv_prov_display_status,
+					"serv_prov_verify_status" => $serv_prov_verify_status,
 					"refundable_deposit" => $refundable_deposit,
 					"deposit_status" => $deposit_status,
+					"company_status" => $company_status,
+					"also_service_person" => $also_service_person,
 					"status" => $status,
 					"user_type" => $user_type
 				);
 
-			$response = array("status" => "success", "msg" => "Login Successfully", "userData" => $userData);
+				$sQuery = "SELECT A.main_cat_id,B.main_cat_name,B.main_cat_ta_name FROM serv_prov_pers_skills A,main_category B WHERE A.user_master_id ='".$user_master_id."' AND A.main_cat_id = B.id";
+				$cat_result = $this->db->query($sQuery);
+				$category_count = $cat_result->num_rows();
+				if($cat_result->num_rows()!=0)
+				{
+					$category_result = $cat_result->result();
+				} else {
+					$category_result = "";
+				}
+
+				$doc_url = base_url().'assets/providers/documents/';
+				$sQuery = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
+				$doc_result = $this->db->query($sQuery);
+				if($doc_result->num_rows()!=0)
+				{
+						foreach ($doc_result->result() as $rows)
+						{
+							 $id = $rows->id;
+							 $doc_master_id = $rows->doc_master_id;
+							 $doc_name = $rows->doc_name;
+							 $doc_proof_number = $rows->doc_proof_number;
+							 $file_name = $rows->file_name;
+							
+							$documet_list[]  = array(
+								"id" => $id,
+								"doc_master_id" => $doc_master_id,
+								"doc_name" => $doc_name,
+								"doc_proof_number" => $doc_proof_number,
+								"file_name" => $file_name,
+								"file_url" => $doc_url.$file_name
+							);
+						}
+				}
+			
+				$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='".$user_master_id."'";
+				$comp_result = $this->db->query($sQuery);
+				if($cat_result->num_rows()!=0)
+				{
+					$company_result = $comp_result->result();
+				} else {
+					$company_result = "";
+				}
+
+			$response = array("status" => "success", "msg" => "Login Successfully", "userData" => $userData, "categoryCount" => $category_count, "docData" => $documet_list, "companyData" => $company_result );
 			return $response;
 		} else {
 			$response = array("status" => "error", "msg" => "Invalid login");
@@ -561,6 +608,24 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Provider Add Category/Services End ####################//
 
+//#################### Provider List Category/Services ####################//
+	public function List_prov_person_category($user_master_id)
+	{
+			$sQuery = "SELECT A.main_cat_id,B.main_cat_name,B.main_cat_ta_name FROM serv_prov_pers_skills A,main_category B WHERE A.user_master_id ='".$user_master_id."' AND A.main_cat_id = B.id";
+				$cat_result = $this->db->query($sQuery);
+				$category_count = $cat_result->num_rows();
+				if($cat_result->num_rows()!=0)
+				{
+					$category_result = $cat_result->result();
+					$response=array("status" => "success","msg" => "List Category","listCategory"=>$category_result );
+				} else {
+					$response=array("status" => "error","msg" => "Something Wrong");
+				}
+				return $response;
+	}
+//#################### Provider List Category/Services End ####################//
+
+
 
 //#################### Update company status ####################//
 
@@ -584,7 +649,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function add_individual_status($user_master_id,$no_of_service_person,$also_service_person)
 	{
-		$sQuery = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = 'Y', updated_at=NOW() WHERE user_master_id='$user_master_id'";
+		$sQuery = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = '$also_service_person', updated_at=NOW() WHERE user_master_id='$user_master_id'";
 		$uptdate_query = $this->db->query($sQuery);
 
 		$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";

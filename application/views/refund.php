@@ -50,6 +50,7 @@
                         <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
                         <li><a href="<?php echo base_url(); ?>#team-area">Team</a></li>
                         <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
+                          <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li>
                       </ul>
                     </div>
                 </div>
@@ -100,7 +101,8 @@
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                              <p><a href="https://happysanztech.com/" target="_blank"> Developed by Happy Sanz Tech.</a></p>
+                          <p><a href="https://happysanztech.com/" target="_blank">Designed and developed by Happy Sanz Tech.</a></p>
+
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

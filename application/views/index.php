@@ -66,6 +66,7 @@
                           <li><a href="#about-area">About</a></li>
                           <li><a href="#team-area">Team</a></li>
                           <li><a href="#contact-area">Contact</a></li>
+                          <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li>
                         </ul>
                    </div>
 
@@ -115,14 +116,14 @@
                 <div class="col-xs-12 col-md-7">
                     <!-- Header-Text -->
                     <div class="text-box white-box">
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s"><strong>Get access </strong>to local and personal services on tap</h2>
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s" style="margin-top:-200px;">Local and personal services on a tap</h2>
 
 
                     </div>
                     <!-- Header-Text / -->
                     <div class="space-40"></div>
-                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Get on App Store <i class="icofont-download"></i></a>
-                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Get on Play Store <i class="icofont-download"></i></a>
+                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Download on App Store <i class="icofont-download"></i></a>
+                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="icofont-download"></i></a>
                 </div>
                 <div class="col-xs-12 col-md-5 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->
@@ -187,6 +188,15 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                        </div>
+                        <h3 class="title">Clinical Services(Nurse)</h3>
+                      <p></p>
+                    </div>
+                </div>
+                <!-- <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="0.9s" >
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_4.png">
@@ -194,7 +204,7 @@
                         <h3 class="title">Cleaning Toilet</h3>
                       <p></p>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.1s" >
                         <div class="box-icon">
@@ -218,7 +228,7 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_7.png">
                         </div>
-                        <h3 class="title">AC</h3>
+                        <h3 class="title">AC Services</h3>
                       <p></p>
                     </div>
                 </div>
@@ -256,7 +266,7 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_11.png">
                         </div>
-                          <h3 class="title">Ups Service</h3>
+                          <h3 class="title">Ups Services</h3>
 
                       <p></p>
                     </div>
@@ -305,7 +315,7 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_16.png">
                         </div>
-                         <h3 class="title">Computer Service</h3>
+                         <h3 class="title">Computer Services</h3>
                       <p></p>
                     </div>
                 </div>
@@ -335,7 +345,7 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_19.png">
                         </div>
-                          <h3 class="title">Car cleaning Service</h3>
+                          <h3 class="title">Car cleaning Services</h3>
 
                       <p></p>
                     </div>
@@ -348,16 +358,8 @@
                         <p></p>
                       </div>
                   </div>
-                
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
-                        </div>
-                        <h3 class="title">Clinical Service(Nurse)</h3>
-                      <p></p>
-                    </div>
-                </div>
+
+
 
 
 
@@ -382,11 +384,16 @@
                     <div class="title-box left">
 
                         <h2 class="title">SkilEx is an online platform</h2>
-                        <p class="desc">To get the best professionals to sort all your home needs. With the help of SkilEx App, you can book various household services at time and place of your own choice, we simplify your everyday living with a variety of at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible.</p>
+                        <p class="desc">To get the best professionals to sort all your home needs.
+                        <br>  <br>
+                        With the help of SkilEx App, you can book various household services at time and place of your own choice. <br>  <br>
+                          we simplify your everyday living with a variety of   <br> at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service.<br>  <br>
+                          These services are given by the professionals who are qualified to do the job in an accurate way possible.
+                      </p>
 
                     </div>
                     <div class="space-30"></div>
-                    <a href="#" class="bttn-4">Get Started</a>
+
                 </div>
             </div>
         </div>
@@ -453,57 +460,7 @@
     </section>
     <!-- Feature-area / -->
 
-    <!-- Team-area -->
-    <section class="team-area section-padding gray-bg" id="team-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <div class="title-box">
-                        <h5 class="top-title">Our Team</h5>
-                        <h2 class="title">Meet the team</h2>
 
-                        <div class="space-70"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="team-slider">
-                        <div class="team-box">
-                            <div class="team-photo">
-                                <img src="<?php echo base_url(); ?>assets/images/team.png" alt="">
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4 class="title">Brett Lee </h4> -->
-                                <h5 class="position">Founder</h5>
-                            </div>
-                        </div>
-                        <div class="team-box">
-                            <div class="team-photo">
-                                <img src="<?php echo base_url(); ?>assets/images/team.png" alt="">
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4 class="title">Trent Boult</h4> -->
-                                <h5 class="position">Co-Founder</h5>
-                            </div>
-                        </div>
-                        <div class="team-box">
-                            <div class="team-photo">
-                                <img src="<?php echo base_url(); ?>assets/images/team.png" alt="">
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4 class="title">Jason Gillespie</h4> -->
-                                <h5 class="position">CCO</h5>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Team-area / -->
     <!-- Subscribe-area -->
     <div class="section-padding subscribe-area">
         <div class="container">
@@ -511,7 +468,7 @@
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <div class="title-box">
                         <h5 class="top-title">Connect With Our Community</h5>
-                        <h2 class="title">Take control of your data</h2>
+
                         <div class="space-40"></div>
                     </div>
                 </div>
@@ -592,7 +549,7 @@
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                            <p><a href="https://happysanztech.com/" target="_blank"> Developed by Happy Sanz Tech.</a></p>
+                            <p><a href="https://happysanztech.com/" target="_blank">Designed and developed by Happy Sanz Tech.</a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

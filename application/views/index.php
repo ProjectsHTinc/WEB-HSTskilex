@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/style.css">
 	 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/demo.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/responsive.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr-2-8-3-min.js"></script>
-    
 </head>
 
 <body data-spy="scroll" data-target=".mainmenu-area" data-offset="50">
@@ -123,8 +123,9 @@
                     </div>
                     <!-- Header-Text / -->
                     <div class="space-40"></div>
-                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Download on App Store <i class="fa fa-download" aria-hidden="true"></i></a>
-                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="icofont-download"></i></a>
+                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Download on App Store <i class="fa fa-download" aria-hidden="true"></i>
+</a>
+                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="fa fa-download" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-xs-12 col-md-5 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->

@@ -530,7 +530,7 @@
                             <textarea class="input-box" id="form-message" placeholder="Messages" cols="30" rows="4" name="form-message" required></textarea>
                         </div>
                         <div class="form-box">
-                            <button class="bttn-4" type="submit">Send Message <i class="icofont-paper-plane"></i></button>
+                            <button class="bttn-4" type="submit">Send Message <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                     </form>
                     <!-- Contact-Form / -->

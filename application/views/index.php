@@ -23,7 +23,7 @@
 	 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/demo.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/responsive.css">
     <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr-2-8-3-min.js"></script>
-    <script src="https://use.fontawesome.com/8410115f70.js"></script>
+    
 </head>
 
 <body data-spy="scroll" data-target=".mainmenu-area" data-offset="50">
@@ -124,7 +124,7 @@
                     <!-- Header-Text / -->
                     <div class="space-40"></div>
                     <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Download on App Store <i class="fa fa-download" aria-hidden="true"></i></a>
-                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="fa fa-download" aria-hidden="true"></a>
+                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="icofont-download"></i></a>
                 </div>
                 <div class="col-xs-12 col-md-5 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->

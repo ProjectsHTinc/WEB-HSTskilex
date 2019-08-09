@@ -66,7 +66,7 @@ class Apisprovider extends CI_Controller {
 			echo json_encode($res);
 			return;
 		}
-		
+
 		$user_master_id  = '';
 		$user_master_id  = $this->input->post("user_master_id");
 
@@ -201,7 +201,7 @@ class Apisprovider extends CI_Controller {
 		$dec_user_master_id = base64_decode($user_master_id);
 
 		$data['result']=$this->apisprovidermodel->Email_verfication($dec_user_master_id);
-		
+
 		if($data['result']['status']=='success'){
 				echo "Success";
 			}else{
@@ -272,7 +272,7 @@ class Apisprovider extends CI_Controller {
 		$city = '';
 		$state = '';
 		$zip = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$full_name = $this->input->post("full_name");
 		$gender  = $this->input->post("gender");
@@ -295,10 +295,10 @@ class Apisprovider extends CI_Controller {
 	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		$user_master_id = $this->uri->segment(3);
-		
+
 		$profile = $_FILES["profile_pic"]["name"];
 		$extension  = end((explode(".", $document)));
-		
+
 		$profileFileName = $user_master_id.'-'.time().'.'.$extension ;
 		$uploadPicdir = './assets/providers/';
 		$profilepic = $uploadPicdir.$profileFileName;
@@ -368,7 +368,7 @@ class Apisprovider extends CI_Controller {
 
 		$category_id  = '';
 		$category_id  = $this->input->post("category_id");
-		
+
 		$data['result']=$this->apisprovidermodel->Sub_category_list($category_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -400,7 +400,7 @@ class Apisprovider extends CI_Controller {
 
 		$category_id  = '';
 		$sub_category_id  = '';
-		
+
 		$category_id  = $this->input->post("category_id");
 		$sub_category_id  = $this->input->post("sub_category_id");
 
@@ -434,14 +434,14 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$category_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$category_id  = $this->input->post("category_id");
-		
+
 
 		$data['result']=$this->apisprovidermodel->Serv_prov_category_add($user_master_id,$category_id);
 		$response = $data['result'];
-		echo json_encode($response); 
+		echo json_encode($response);
 	}
 
 	/* public function serv_prov_services_add()
@@ -467,7 +467,7 @@ class Apisprovider extends CI_Controller {
 		$category_id  = '';
 		$sub_category_id  = '';
 		$service_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$category_id  = $this->input->post("category_id");
 		$sub_category_id  = $this->input->post("sub_category_id");
@@ -475,7 +475,7 @@ class Apisprovider extends CI_Controller {
 
 		$data['result']=$this->apisprovidermodel->Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
-		echo json_encode($response); 
+		echo json_encode($response);
 	}*/
 
 //-----------------------------------------------//
@@ -503,13 +503,13 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$category_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
-		
+
 
 		$data['result']=$this->apisprovidermodel->List_prov_person_category($user_master_id);
 		$response = $data['result'];
-		echo json_encode($response); 
+		echo json_encode($response);
 	}
 
 //-----------------------------------------------//
@@ -537,7 +537,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$company_status = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$company_status  = $this->input->post("company_status");
 
@@ -573,11 +573,11 @@ class Apisprovider extends CI_Controller {
 		$user_master_id = '';
 		$no_of_service_person = '';
 		$also_service_person = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$no_of_service_person  = $this->input->post("no_of_service_person");
 		$also_service_person  = $this->input->post("also_service_person");
-		
+
 		$data['result']=$this->apisprovidermodel->Add_individual_status($user_master_id,$no_of_service_person,$also_service_person);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -617,7 +617,7 @@ class Apisprovider extends CI_Controller {
 		$company_zip  = '';
 		$company_info = '';
 		$company_building_type = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$company_name  = $this->input->post("company_name");
 		$no_of_service_person  = $this->input->post("no_of_service_person");
@@ -657,7 +657,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$company_type = '';
-		
+
 		$company_type  = $this->input->post("company_type");
 
 		$data['result']=$this->apisprovidermodel->List_idaddress_proofs($company_type);
@@ -690,7 +690,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_building_proofs($user_master_id);
@@ -709,7 +709,7 @@ class Apisprovider extends CI_Controller {
 		$user_master_id = $this->uri->segment(3);
 		$doc_master_id = $this->uri->segment(4);
 		$doc_proof_number = $this->uri->segment(5);
-		
+
 		$document = $_FILES["document_file"]["name"];
 		$extension  = end((explode(".", $document)));
 		$documentFileName = $user_master_id.'-'.time().'.'.$extension ;
@@ -747,7 +747,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_provider_doc($user_master_id);
@@ -783,7 +783,7 @@ class Apisprovider extends CI_Controller {
 		$name = '';
 		$mobile = '';
 		$email = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$name = $this->input->post("name");
 		$mobile = $this->input->post("mobile");
@@ -818,7 +818,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_serv_persons($user_master_id);
@@ -851,7 +851,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$serv_pres_id = '';
-				
+
 		$serv_pres_id  = $this->input->post("serv_pres_id");
 
 		$data['result']=$this->apisprovidermodel->Serv_person_details($serv_pres_id);
@@ -871,7 +871,7 @@ class Apisprovider extends CI_Controller {
 		$serv_person_id = $this->uri->segment(4);
 		$doc_master_id = $this->uri->segment(5);
 		$doc_proof_number = $this->uri->segment(6);
-		
+
 		$document = $_FILES["document_file"]["name"];
 		$extension  = end((explode(".", $document)));
 		$documentFileName = $user_master_id.'-'.time().'.'.$extension ;
@@ -908,7 +908,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$serv_person_id = '';
-				
+
 		$serv_person_id  = $this->input->post("serv_person_id");
 
 		$data['result']=$this->apisprovidermodel->List_persons_doc($serv_person_id);
@@ -943,7 +943,7 @@ class Apisprovider extends CI_Controller {
 		$user_master_id = '';
 		$serv_person_id = '';
 		$category_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$serv_person_id  = $this->input->post("serv_person_id");
 		$category_id  = $this->input->post("category_id");
@@ -951,8 +951,8 @@ class Apisprovider extends CI_Controller {
 		$data['result']=$this->apisprovidermodel->Serv_pers_category_add($user_master_id,$serv_person_id,$category_id);
 		$response = $data['result'];
 		echo json_encode($response);
-	} 
-	
+	}
+
 	/* public function serv_pers_services_add()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -977,7 +977,7 @@ class Apisprovider extends CI_Controller {
 		$category_id  = '';
 		$sub_category_id  = '';
 		$service_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$serv_person_id  = $this->input->post("serv_person_id");
 		$category_id  = $this->input->post("category_id");
@@ -1013,7 +1013,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_requested_services($user_master_id);
@@ -1047,7 +1047,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1082,7 +1082,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1118,7 +1118,7 @@ class Apisprovider extends CI_Controller {
 		$user_master_id = '';
 		$service_order_id = '';
 		$service_person_id = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$service_person_id  = $this->input->post("service_person_id");
@@ -1152,7 +1152,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_assigned_services($user_master_id);
@@ -1185,7 +1185,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1218,7 +1218,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_ongoing_services($user_master_id);
@@ -1251,7 +1251,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1285,7 +1285,7 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1350,7 +1350,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_completed_services($user_master_id);
@@ -1382,8 +1382,8 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-		$service_order_id = '';	
-		
+		$service_order_id = '';
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1452,7 +1452,7 @@ class Apisprovider extends CI_Controller {
 		$service_order_id = '';
 		$cancel_master_id = '';
 		$comments = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$cancel_master_id  = $this->input->post("cancel_master_id");
@@ -1488,7 +1488,7 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apisprovidermodel->List_canceled_services($user_master_id);
@@ -1520,8 +1520,8 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-		$service_order_id = '';	
-		
+		$service_order_id = '';
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1557,7 +1557,7 @@ class Apisprovider extends CI_Controller {
 		$online_status = '';
 		$serv_lat = '';
 		$serv_lon = '';
-		
+
 		$serv_pro_id   = $this->input->post("serv_pro_id");
 		$online_status  = $this->input->post("online_status");
 		$serv_lat  = $this->input->post("serv_lat");
@@ -1592,9 +1592,9 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id  = '';
-		
+
 		$user_master_id   = $this->input->post("user_master_id");
-		
+
 
 		$data['result']=$this->apisprovidermodel->Transaction_details($user_master_id);
 		$response = $data['result'];
@@ -1626,9 +1626,9 @@ class Apisprovider extends CI_Controller {
 			return;
 		}
 		$user_master_id  = '';
-		
+
 		$user_master_id   = $this->input->post("user_master_id");
-		
+
 
 		$data['result']=$this->apisprovidermodel->Transaction_list($user_master_id);
 		$response = $data['result'];
@@ -1661,10 +1661,10 @@ class Apisprovider extends CI_Controller {
 		}
 		$user_master_id  = '';
 		$daily_payment_id  = '';
-		
+
 		$user_master_id   = $this->input->post("user_master_id");
 		$daily_payment_id   = $this->input->post("daily_payment_id");
-		
+
 
 		$data['result']=$this->apisprovidermodel->View_transaction_details($user_master_id,$daily_payment_id);
 		$response = $data['result'];

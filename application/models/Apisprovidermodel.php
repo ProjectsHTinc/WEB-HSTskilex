@@ -412,14 +412,16 @@ class Apisprovidermodel extends CI_Model {
 
 				$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='".$user_master_id."'";
 				$comp_result = $this->db->query($sQuery);
+        
 				if($cat_result->num_rows()!=0)
 				{
-					$company_result = $comp_result->result();
-				} else {
-					$company_result = "";
+				  $company_data_result=array("status"=>"success","msg"=>"Company data found","company_data"=>$comp_result->result());
+				}else{
+
+          $company_data_result=array("status"=>"error","msg"=>"No Company data found");
 				}
 
-			$response = array("status" => "success", "msg" => "Login Successfully", "userData" => $userData, "categoryCount" => $category_count, "docData" => $documet_list, "companyData" => $company_result );
+			$response = array("status" => "success", "msg" => "Login Successfully", "userData" => $userData, "categoryCount" => $category_count, "docData" => $documet_list, "companyData" => $company_data_result );
 			return $response;
 		} else {
 			$response = array("status" => "error", "msg" => "Invalid login");

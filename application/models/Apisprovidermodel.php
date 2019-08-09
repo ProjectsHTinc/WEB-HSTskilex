@@ -174,11 +174,11 @@ class Apisprovidermodel extends CI_Model {
 		$request_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Requested'";
 		$request_count_res = $this->db->query($request_count);
 		$request_orders_count = $request_count_res->num_rows();
-		
+
 		$accept_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Accepted'";
 		$accept_count_res = $this->db->query($accept_count);
 		$accept_orders_count = $accept_count_res->num_rows();
-		
+
 		$assigned_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Assigned'";
 		$assigned_count_res = $this->db->query($assigned_count);
 		$assigned_orders_count = $assigned_count_res->num_rows();
@@ -186,19 +186,19 @@ class Apisprovidermodel extends CI_Model {
 		$initiated_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Initiated'";
 		$initiated_count_res = $this->db->query($initiated_count);
 		$initiated_orders_count = $initiated_count_res->num_rows();
-		
+
 		$ongoing_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Ongoing'";
 		$ongoing_count_res = $this->db->query($ongoing_count);
 		$ongoing_orders_count = $ongoing_count_res->num_rows();
-		
+
 		$finished_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Completed'";
 		$finished_count_res = $this->db->query($finished_count);
 		$finished_orders_count = $finished_count_res->num_rows();
-		
+
 		$canceled_count = "SELECT * FROM service_orders WHERE serv_prov_id = '".$user_master_id."' AND status = 'Canceled'";
 		$canceled_count_res = $this->db->query($canceled_count);
 		$canceled_orders_count = $canceled_count_res->num_rows();
-		
+
 		$dashboardData  = array(
 				"serv_person_count" => $sperson_count,
 				"serv_requested_count" => $request_orders_count,
@@ -226,7 +226,7 @@ class Apisprovidermodel extends CI_Model {
 
 		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-			
+
 		if($user_result->num_rows()>0)
 		{
 			$response = array("status" => "error", "msg" => "User already Exist.");
@@ -238,7 +238,7 @@ class Apisprovidermodel extends CI_Model {
 
 			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$insert_query = "INSERT INTO service_provider_details (user_master_id, owner_full_name, serv_prov_display_status, serv_prov_verify_status, deposit_status, status,created_at,created_by ) VALUES ('". $user_master_id . "','". $name . "','Inactive','Pending','Unpaid','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
 
@@ -246,13 +246,13 @@ class Apisprovidermodel extends CI_Model {
 
 			$message_details = "Service Provider - OTP :".$OTP;
 			$this->sendSMS($mobile,$message_details);
-			
+
 			//$subject = "SKILEX - Verification Email";
 			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			//$this->sendMail($email,$subject,$email_message);
-		
+
 			//$this->sendNotification($gcm_key,$title,$message,$mobiletype)
-		
+
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$mobile, "otp"=>$OTP);
 		}
 
@@ -272,25 +272,25 @@ class Apisprovidermodel extends CI_Model {
 
 		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-			
+
 		if($user_result->num_rows()>0)
 		{
 			foreach ($user_result->result() as $rows)
 			{
 				  $user_master_id = $rows->id;
 			}
-			
+
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$message_details = "Dear Customer your OTP :".$OTP;
 			$this->sendSMS($phone_no,$message_details);
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
-		
+
 		} else {
 			 $response = array("status" => "error", "msg" => "User not found.");
 		}
-		
+
 		return $response;
 	}
 
@@ -308,7 +308,7 @@ class Apisprovidermodel extends CI_Model {
 		{
 			$update_sql = "UPDATE login_users SET mobile_verify ='Y', updated_at=NOW() WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
 			$gcm_result = $this->db->query($gcmQuery);
 			$gcm_ress = $gcm_result->result();
@@ -321,7 +321,7 @@ class Apisprovidermodel extends CI_Model {
 			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
-			{			
+			{
 				foreach ($user_result->result() as $rows)
 				{
 						$user_master_id = $rows->user_master_id;
@@ -342,7 +342,7 @@ class Apisprovidermodel extends CI_Model {
 						$state  = $rows->state;
 						$zip   = $rows->zip;
 						$serv_prov_display_status  = $rows->serv_prov_display_status;
-						$serv_prov_verify_status    = $rows->serv_prov_verify_status;					
+						$serv_prov_verify_status    = $rows->serv_prov_verify_status;
 						$refundable_deposit   = $rows->refundable_deposit;
 						$deposit_status    = $rows->deposit_status;
 						$company_status    = $rows->company_status;
@@ -351,7 +351,7 @@ class Apisprovidermodel extends CI_Model {
 					  	$user_type = $rows->user_type;
 				}
 			}
-			
+
 			$userData  = array(
 					"user_master_id" => $user_master_id,
 					"full_name" => $full_name,
@@ -395,8 +395,8 @@ class Apisprovidermodel extends CI_Model {
 							 $doc_name = $rows->doc_name;
 							 $doc_proof_number = $rows->doc_proof_number;
 							 $file_name = $rows->file_name;
-							
-							$documet_list[]  = array(
+
+							$doc_list[]  = array(
 								"id" => $id,
 								"doc_master_id" => $doc_master_id,
 								"doc_name" => $doc_name,
@@ -405,8 +405,11 @@ class Apisprovidermodel extends CI_Model {
 								"file_url" => $doc_url.$file_name
 							);
 						}
-				}
-			
+            $documet_list=array("status"=>"success","msg"=>"Document found","documents_list"=>$doc_list);
+				}else{
+          $documet_list=array("status"=>"error","msg"=>"No data");
+        }
+
 				$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='".$user_master_id."'";
 				$comp_result = $this->db->query($sQuery);
 				if($cat_result->num_rows()!=0)
@@ -439,7 +442,7 @@ class Apisprovidermodel extends CI_Model {
            }else{
 				$response=array("status" => "error");
            }
-		   
+
 		return $response;
 	}
 
@@ -473,7 +476,7 @@ class Apisprovidermodel extends CI_Model {
 	{
             $update_sql= "UPDATE service_provider_details SET owner_full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$response = array("status" => "success", "msg" => "Profile Updated");
 			return $response;
 	}
@@ -499,7 +502,7 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sQuery = "SELECT * FROM main_category WHERE status='Active'";
 		$cat_result = $this->db->query($sQuery);
-		
+
 		$category_result = $cat_result->result();
 		$category_count = $cat_result->num_rows();
 
@@ -509,7 +512,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Category Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -521,7 +524,7 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sQuery = "SELECT * FROM sub_category WHERE main_cat_id = '$category_id' AND status='Active'";
 		$cat_result = $this->db->query($sQuery);
-		
+
 		$category_result = $cat_result->result();
 		$category_count = $cat_result->num_rows();
 
@@ -531,7 +534,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Sub Category Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -558,8 +561,8 @@ class Apisprovidermodel extends CI_Model {
 					sub_category C
 				WHERE
 					A.main_cat_id = '$category_id' AND A.sub_cat_id = '$sub_category_id' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status = 'Active'";
-		$ser_result = $this->db->query($sQuery); 
-		
+		$ser_result = $this->db->query($sQuery);
+
 		$services_result = $ser_result->result();
 		$services_count = $ser_result->num_rows();
 
@@ -569,7 +572,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -582,27 +585,27 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
-	} 
-	
+	}
+
 	/* public function Serv_prov_services_add($user_master_id,$category_id,$sub_category_id,$service_id)
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
 				$response=array("status" => "error");
            }
-		   
+
 		return $response;
 	} */
 
@@ -633,13 +636,13 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sQuery = "UPDATE service_provider_details SET company_status ='$company_status',updated_at=NOW() WHERE user_master_id='$user_master_id'";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Company status updated");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -655,7 +658,7 @@ class Apisprovidermodel extends CI_Model {
 		$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 		$user_result = $this->db->query($user_sql);
 		if($user_result->num_rows()>0)
-		{			
+		{
 			foreach ($user_result->result() as $rows)
 			{
 					$full_name = $rows->owner_full_name;
@@ -674,20 +677,20 @@ class Apisprovidermodel extends CI_Model {
 		$insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status,created_at,created_by) VALUES ('4','". $mobile . "','N','". $email . "','N','N','N','Active',NOW(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_sql);
 		$sperson_master_id = $this->db->insert_id();
-		
+
 		$insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_query);
 
 
 			$message_details = "Dear Customer your OTP :".$OTP;
 			$this->sendSMS($phone_no,$message_details);
-			
+
 		if($insert_result){
 				$response=array("status" => "success","msg" => "Individual updated");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -698,19 +701,19 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Add_company_status($user_master_id,$company_name,$no_of_service_person,$company_address,$company_city,$company_state,$company_zip,$company_info,$company_building_type)
 	{
-		
+
 		$sQuery = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = 'N', updated_at=NOW() WHERE user_master_id='$user_master_id'";
 		$uptdate_query = $this->db->query($sQuery);
-		
+
 		$sQuery = "INSERT INTO service_provider_company_details (user_master_id,company_name,company_address,company_city,company_state,company_zip,company_info,company_building_type,status,created_at,created_by) VALUES ('". $user_master_id . "','". $company_name . "','". $company_address . "','". $company_city . "','". $company_state . "','". $company_zip . "','". $company_info . "','". $company_building_type . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Company Details updated");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -727,7 +730,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$sQuery = "SELECT * FROM document_master WHERE doc_type = 'AddressProof' AND company_doc_type = '".$company_type."' AND status='Active'";
 		}
-		$doc_result = $this->db->query($sQuery); 
+		$doc_result = $this->db->query($sQuery);
 		$document_result = $doc_result->result();
 
 		if($doc_result->num_rows()>0)
@@ -747,7 +750,7 @@ class Apisprovidermodel extends CI_Model {
 	public function List_building_proofs($user_master_id)
 	{
 		$sQuery = "SELECT * FROM document_master WHERE doc_type = 'BuildingProof' AND company_doc_type = 'Company' AND status='Active'";
-		$doc_result = $this->db->query($sQuery); 
+		$doc_result = $this->db->query($sQuery);
 		$document_result = $doc_result->result();
 
 		if($doc_result->num_rows()>0)
@@ -769,14 +772,14 @@ class Apisprovidermodel extends CI_Model {
 		$ins_query = $this->db->query($sQuery);
 		$last_insert_id = $this->db->insert_id();
 		$document_url = base_url().'assets/providers/documents/'.$documentFileName;
-		
+
 		$sQuery = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('". $user_master_id . "','". $last_insert_id . "','Uploaded','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		$prov_sql = "SELECT * FROM service_provider_details WHERE user_master_id = '".$user_master_id."' AND also_service_person = 'Y'";
 		$prov_result = $this->db->query($prov_sql);
 		if($prov_result->num_rows()>0)
-		{			
+		{
 				$pers_sql = "SELECT * FROM service_person_details WHERE service_provider_id = '".$user_master_id."'";
 				$pers_result = $this->db->query($pers_sql);
 				if($pers_result->num_rows()>0)
@@ -785,13 +788,13 @@ class Apisprovidermodel extends CI_Model {
 					{
 							$person_user_master_id = $rows->user_master_id;
 					}
-					
+
 				}
 
 				$doc_sql = "SELECT * FROM document_master WHERE id = '".$doc_master_id."'";
 				$doc_result = $this->db->query($doc_sql);
 				if($doc_result->num_rows()>0)
-				{			
+				{
 					foreach ($doc_result->result() as $rows)
 					{
 							$doc_type = trim($rows->doc_type);
@@ -815,11 +818,11 @@ class Apisprovidermodel extends CI_Model {
 	public function List_provider_doc($user_master_id)
 	{
 		 $doc_url = base_url().'assets/providers/documents/';
-		
+
 		$sQuery = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$user_master_id."'";
 		$doc_result = $this->db->query($sQuery);
-		
-		
+
+
 		if($doc_result->num_rows()!=0)
 		{
 				foreach ($doc_result->result() as $rows)
@@ -829,7 +832,7 @@ class Apisprovidermodel extends CI_Model {
 					 $doc_name = $rows->doc_name;
 					 $doc_proof_number = $rows->doc_proof_number;
 					 $file_name = $rows->file_name;
-					
+
 					$data[]  = array(
 						"id" => $id,
 						"doc_master_id" => $doc_master_id,
@@ -844,7 +847,7 @@ class Apisprovidermodel extends CI_Model {
 			$response = array("status" => "error", "msg" => "Documents Not Found");
 		}
 		return $response;
-		
+
 	}
 
 //#################### Document list End ####################//
@@ -859,7 +862,7 @@ class Apisprovidermodel extends CI_Model {
 		$user_result = $this->db->query($sql);
 		$ress = $user_result->result();
 
-			
+
 		if($user_result->num_rows()>0)
 		{
 			$response = array("status" => "error", "msg" => "User already Exist.");
@@ -871,19 +874,19 @@ class Apisprovidermodel extends CI_Model {
 
 			$update_sql = "UPDATE login_users SET created_by  = '".$user_master_id."', created_at =NOW() WHERE id ='".$serv_person_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$insert_query = "INSERT INTO service_person_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('". $serv_person_id . "','". $user_master_id . "','". $name . "','Inactive','Pending','N','Active',NOW(),'". $user_master_id . "')";
 			$insert_result = $this->db->query($insert_query);
-		
+
 			$message_details = "SKILEX - Service Person Created";
 			$this->sendSMS($mobile,$message_details);
-			
+
 			//$subject = "SKILEX - Verification Email";
 			//$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 			//$this->sendMail($email,$subject,$email_message);
-		
+
 			//$this->sendNotification($gcm_key,$title,$message,$mobiletype)
-			
+
 			$response = array("status" => "success", "msg" => "Service Person Created", "user_master_id"=>$user_master_id, "serv_person_id"=>$serv_person_id);
 		}
 
@@ -901,7 +904,7 @@ class Apisprovidermodel extends CI_Model {
 		$usr_result = $this->db->query($sQuery);
 		$user_result = $usr_result->result();
 
-		
+
 		if($usr_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Service Persons list", "list_service_persons"=>$user_result);
 		} else {
@@ -926,17 +929,17 @@ class Apisprovidermodel extends CI_Model {
 		$assigned_count_res = $this->db->query($assigned_count);
 		$assigned_orders_count = $assigned_count_res->num_rows();
 
-		
+
 		$ongoing_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$serv_pres_id."' AND (status = 'Initiated' OR status = 'Started' OR status = 'Ongoing')";
 		$ongoing_count_res = $this->db->query($ongoing_count);
 		$ongoing_orders_count = $ongoing_count_res->num_rows();
-		
-		
+
+
 		$dashboardData  = array(
 				"serv_assigned_count" => $assigned_orders_count,
 				"serv_ongoing_count" => $ongoing_orders_count,
 			);
-			
+
 		if($usr_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Service Person Details", "list_service_persons"=>$user_result, "service_order_details"=>$dashboardData);
 		} else {
@@ -954,10 +957,10 @@ class Apisprovidermodel extends CI_Model {
 		$ins_query = $this->db->query($sQuery);
 		$last_insert_id = $this->db->insert_id();
 		$document_url = base_url().'assets/persons/documents/'.$documentFileName;
-		
+
 		$sQuery = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $last_insert_id . "','Uploaded','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		$response = array("status" => "success", "msg" => "Document Uploaded","document_id" =>$last_insert_id,"doc_master_id" =>$doc_master_id,"document_url" =>$document_url);
 		return $response;
 	}
@@ -968,7 +971,7 @@ class Apisprovidermodel extends CI_Model {
 
 	public function List_persons_doc($serv_person_id)
 	{
-		
+
 		$sQuery = "SELECT * FROM service_person_details WHERE user_master_id ='".$serv_person_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -977,18 +980,18 @@ class Apisprovidermodel extends CI_Model {
 				{
 					$also_service_provider = $rows->also_service_provider;
 				}
-				
+
 				if ($also_service_provider == 'Y'){
 					$doc_url = base_url().'assets/providers/documents/';
 				}else {
 					$doc_url = base_url().'assets/persons/documents/';
 				}
-		
+
 		}
-		
+
 		$sQuery = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='".$serv_person_id."'";
 		$doc_result = $this->db->query($sQuery);
-				
+
 		if($doc_result->num_rows()>0)
 		{
 				foreach ($doc_result->result() as $rows)
@@ -998,7 +1001,7 @@ class Apisprovidermodel extends CI_Model {
 					 $doc_name = $rows->doc_name;
 					 $doc_proof_number = $rows->doc_proof_number;
 					 $file_name = $rows->file_name;
-					
+
 					$data[]  = array(
 						"id" => $id,
 						"doc_master_id" => $doc_master_id,
@@ -1025,27 +1028,27 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $category_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
 				$response=array("status" => "error", "msg" => "Something Wrong");
            }
-		   
+
 		return $response;
-	} 
-	
+	}
+
 	/* public function Serv_pers_services_add($user_master_id,$serv_person_id,$category_id,$sub_category_id,$service_id)
 	{
 		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,sub_cat_id,service_id,status,created_at,created_by) VALUES ('". $serv_person_id . "','". $category_id . "','". $sub_category_id . "','". $service_id . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
 				$response=array("status" => "error");
            }
-		   
+
 		return $response;
 	} */
 
@@ -1070,7 +1073,7 @@ class Apisprovidermodel extends CI_Model {
 					D.service_ta_name,
 					E.from_time,
 					E.to_time
-					
+
 				FROM
 					service_orders A,
 					main_category B,
@@ -1121,7 +1124,7 @@ class Apisprovidermodel extends CI_Model {
 	public function Detail_requested_services($user_master_id,$service_order_id)
 	{
 /*
-		$sQuery = "SELECT 
+		$sQuery = "SELECT
 					A.id,
 					A.service_location,
 					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
@@ -1136,7 +1139,7 @@ class Apisprovidermodel extends CI_Model {
 					D.service_ta_name,
 					E.from_time,
 					E.to_time
-					
+
 				FROM
 					service_orders A,
 					main_category B,
@@ -1161,7 +1164,7 @@ class Apisprovidermodel extends CI_Model {
 					D.service_ta_name,
 					E.from_time,
 					E.to_time
-					
+
 				FROM
                 	service_order_history AA,
 					service_orders A,
@@ -1189,14 +1192,14 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Accept_requested_services($user_master_id,$service_order_id)
 	{
-		
+
 		$update_sql = "UPDATE service_orders SET serv_prov_id = '".$user_master_id."', status  = 'Accepted', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
-		
+
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Accepted',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
-		
+
+
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1208,7 +1211,7 @@ class Apisprovidermodel extends CI_Model {
 					$contact_person_number = $rows->contact_person_number;
 				}
 		}
-		
+
 		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1219,20 +1222,20 @@ class Apisprovidermodel extends CI_Model {
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
+
 		$title = "Service Request Accepted";
 		$message_details = "SKILEX - Service Request Accepted";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
 
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-			
+
 		if($update_result){
 				$response=array("status" => "success","msg" => "Service Request Accepted");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -1245,10 +1248,10 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$update_sql = "UPDATE service_orders SET status = 'Assigned', serv_pers_id = '".$service_person_id."', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
-		
+
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Assigned',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1260,7 +1263,7 @@ class Apisprovidermodel extends CI_Model {
 					$contact_person_number = $rows->contact_person_number;
 				}
 		}
-		
+
 		$sQuery = "SELECT * FROM login_users WHERE id ='".$service_person_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1270,7 +1273,7 @@ class Apisprovidermodel extends CI_Model {
 					$sperson_mobile = $rows->phone_no;
 				}
 		}
-		
+
 		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1281,22 +1284,22 @@ class Apisprovidermodel extends CI_Model {
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
+
 		$title = "Service Request Assigned";
 		$message_details = "SKILEX - Service Request Assigned";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
 		$this->sendSMS($sperson_mobile,$message_details);
-		
-	
+
+
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-		
+
 		if($update_result){
 				$response=array("status" => "success","msg" => "Service Assigned");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -1364,7 +1367,7 @@ class Apisprovidermodel extends CI_Model {
 					E.from_time,
 					E.to_time,
 					F.full_name AS service_person
-					
+
 				FROM
 					service_orders A,
 					main_category B,
@@ -1547,7 +1550,7 @@ class Apisprovidermodel extends CI_Model {
 					WHERE
 						A.service_order_id = '".$service_order_id."' AND A.service_id = B.id AND B.main_cat_id = C.id AND B.sub_cat_id = D.id";
 		$serv_result = $this->db->query($sQuery);
-		
+
 		$service_result = $serv_result->result();
 		$service_count = $serv_result->num_rows();
 
@@ -1557,7 +1560,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -1675,7 +1678,7 @@ class Apisprovidermodel extends CI_Model {
 		$res_result = $this->db->query($sQuery);
 		$reason_result = $res_result->result();
 
-		
+
 		if($res_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Cancel Service Reasons", "list_reasons"=>$reason_result);
 		} else {
@@ -1696,11 +1699,11 @@ class Apisprovidermodel extends CI_Model {
 
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
-		
+
+
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1723,11 +1726,11 @@ class Apisprovidermodel extends CI_Model {
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
-				
+
+
 		$title = "Service Request Canceled";
 		$message_details = "SKILEX - Service Request Canceled";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
@@ -1736,7 +1739,7 @@ class Apisprovidermodel extends CI_Model {
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -1830,7 +1833,7 @@ class Apisprovidermodel extends CI_Model {
 					 $cancel_user_id = $rows->cancel_user_id;
 				}
 			}
-			
+
 		if ($role_id == '3'){
 			$usrQuery = "SELECT owner_full_name AS name FROM service_provider_details WHERE user_master_id = '".$cancel_user_id."' LIMIT 1";
 		} else if ($role_id == '4'){
@@ -1841,7 +1844,7 @@ class Apisprovidermodel extends CI_Model {
 		}
 			$usr_ress = $this->db->query($usrQuery);
 			$usr_result = $usr_ress->result();
-		
+
 		if($serv_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Service Order Details", "detail_services_order"=>$service_result, "cancel_reason"=>$reason_result, "canceld_by"=>$usr_result);
 		} else {
@@ -1858,7 +1861,7 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sql = "SELECT * FROM vendor_status WHERE serv_pro_id  ='".$serv_pro_id."'";
 		$user_result = $this->db->query($sql);
-	
+
 		if($user_result->num_rows()>0)
 		{
 			$update_sql = "UPDATE vendor_status SET online_status = '".$online_status."', serv_lat  = '".$serv_lat."',serv_lon  = '".$serv_lon ."' WHERE serv_pro_id ='".$serv_pro_id."'";
@@ -1867,7 +1870,7 @@ class Apisprovidermodel extends CI_Model {
 		} else {
 			$insert_sql = "INSERT INTO vendor_status (serv_pro_id, online_status, serv_lat, serv_lon, status, created_at, created_by ) VALUES ('". $serv_pro_id . "','". $online_status . "','". $serv_lat . "','". $serv_lon . "','Active',NOW(),'". $serv_pro_id . "')";
 			$insert_result = $this->db->query($insert_sql);
-			
+
 		}
 		$response = array("status" => "success", "msg" => "Vendor Status Update");
 		return $response;
@@ -1884,24 +1887,24 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sql = "SELECT total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND DATE(`service_date`) >= Date(NOW()) - INTERVAL 1 DAY";
 		$tran_ress = $this->db->query($sql);
-		
+
 		if($tran_ress->num_rows()>0)
 		{
 			$yesterday_result = $tran_ress->result();
 		} else {
 			$yesterday_result = "No Records Found";
 		}
-		
+
 		$sQuery = "SELECT SUM(total_service_per_day) AS total_services,SUM(serv_total_amount) AS total_amount,SUM(serv_prov_commission_amt) AS total_serv_prov_commission,SUM(skilex_commission_amt) AS total_skilex_commission,SUM(online_transaction_amt) AS total_online_transaction,SUM(offline_transaction_amt) AS total_offline_transaction,SUM(taxable_amount) AS total_taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND `service_date` <= Date(NOW()) - INTERVAL 2 DAY AND service_date < CURDATE()";
 		$overall_ress = $this->db->query($sQuery);
-		
+
 		if($overall_ress->num_rows()>0)
 		{
 			$overall_result = $overall_ress->result();
 		} else {
 			$overall_result = "No Records Found";
 		}
-	
+
 		$response = array("status" => "success", "msg" => "Transaction Details","yesterdayResult"=>$yesterday_result,"overallResult"=>$overall_result);
 		return $response;
 	}
@@ -1915,17 +1918,17 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."'";
 		$tran_ress = $this->db->query($sql);
-		
+
 		if($tran_ress->num_rows()>0)
 		{
 			$transaction_result = $tran_ress->result();
-			
+
 			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
 		} else {
 			$response = array("status" => "error", "msg" => "No Records Found");
 		}
-		
-		
+
+
 		return $response;
 	}
 
@@ -1939,17 +1942,17 @@ class Apisprovidermodel extends CI_Model {
 	{
 		$sql = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '".$user_master_id."' AND id='".$daily_payment_id."'";
 		$tran_ress = $this->db->query($sql);
-		
+
 		if($tran_ress->num_rows()>0)
 		{
 			$transaction_result = $tran_ress->result();
-			
+
 			$response = array("status" => "success", "msg" => "Transaction List","transactionResult"=>$transaction_result);
 		} else {
 			$response = array("status" => "error", "msg" => "No Records Found");
 		}
-		
-		
+
+
 		return $response;
 	}
 

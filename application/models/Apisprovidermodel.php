@@ -500,23 +500,42 @@ class Apisprovidermodel extends CI_Model {
 
 //#################### Category list ####################//
 
-	public function Category_list($user_master_id)
-	{
-		$sQuery = "SELECT * FROM main_category WHERE status='Active'";
-		$cat_result = $this->db->query($sQuery);
 
-		$category_result = $cat_result->result();
-		$category_count = $cat_result->num_rows();
+   function Category_list($user_master_id)
+{
 
-		if($cat_result->num_rows()>0)
-		{
-			$response = array("status" => "success", "msg" => "Category list", "category_count" => $category_count, "category_list"=>$category_result);
-		} else {
-			$response = array("status" => "error", "msg" => "Category Not Found");
-		}
+    $query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
+    $res = $this->db->query($query);
 
-		return $response;
-	}
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $cat_pic = $rows->cat_pic;
+        if ($cat_pic != ''){
+          $cat_pic_url = base_url().'assets/category/'.$cat_pic;
+        }else {
+           $cat_pic_url = '';
+        }
+
+        $catData[]  = array(
+            "cat_id" => $rows->id,
+            "cat_name" => $rows->main_cat_name,
+            "cat_ta_name" => $rows->main_cat_ta_name,
+            "cat_pic_url" => $cat_pic_url,
+            "user_preference" => 'N'
+        );
+      }
+           $response = array("status" => "success", "msg" => "View Category","categories"=>$catData);
+
+    }else{
+            $response = array("status" => "error", "msg" => "Category not found");
+    }
+
+    return $response;
+    }
+
+
+
 
 //#################### Category list End ####################//
 

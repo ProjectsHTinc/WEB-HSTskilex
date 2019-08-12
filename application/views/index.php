@@ -113,11 +113,11 @@
 
         <!-- Header-Content -->
         <div class="container">
-            <div class="row row-flex">
+            <div class="row ">
                 <div class="col-xs-12 col-md-7">
                     <!-- Header-Text -->
-                    <div class="text-box white-box">
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s" style="margin-top:-200px;">Local and personal services on a tap</h2>
+                    <div class="text-box white-box  service_content">
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Local and personal services on a tap</h2>
 
 
                     </div>

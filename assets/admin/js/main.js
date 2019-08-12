@@ -84,7 +84,7 @@ $.ajax({
 $('#reset_otp_form').validate({
 rules: {
     phone_number_otp: {
-        required: true,digits:true,minlength:10,maxlength:10
+        required: true
         }
 },
 messages: {

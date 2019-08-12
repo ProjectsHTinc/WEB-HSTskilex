@@ -412,7 +412,7 @@ class Apisprovidermodel extends CI_Model {
 
 				$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='".$user_master_id."'";
 				$comp_result = $this->db->query($sQuery);
-        
+
 				if($cat_result->num_rows()!=0)
 				{
 				  $company_data_result=array("status"=>"success","msg"=>"Company data found","company_data"=>$comp_result->result());
@@ -585,9 +585,14 @@ class Apisprovidermodel extends CI_Model {
 
 	public function Serv_prov_category_add($user_master_id,$category_id)
 	{
-		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('". $user_master_id . "','". $category_id . "','Active',NOW(),'". $user_master_id . "')";
-		$ins_query = $this->db->query($sQuery);
 
+    $result = explode(",", $category_id);
+    $cnt=count($result);
+        for($i=0;$i<$cnt;$i++){
+
+        		$sQuery = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('$user_master_id','$result[$i]','Active',NOW(),'$user_master_id')";
+        		$ins_query = $this->db->query($sQuery);
+      }
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{

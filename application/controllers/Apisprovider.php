@@ -415,7 +415,7 @@ class Apisprovider extends CI_Controller {
 
 	 public function serv_prov_category_add()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -436,7 +436,7 @@ class Apisprovider extends CI_Controller {
 		$category_id  = '';
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$category_id  = $this->input->post("category_id");
+		$category_id  = $this->input->post("category_ids");
 
 
 		$data['result']=$this->apisprovidermodel->Serv_prov_category_add($user_master_id,$category_id);

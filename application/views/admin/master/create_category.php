@@ -47,7 +47,17 @@
             </div>
 
             <div class="col-md-8 grid-margin stretch-card">
+
+
               <div class="card">
+
+
+                <?php if($this->session->flashdata('msg')) {
+                $message = $this->session->flashdata('msg');?>
+                <div class="<?php echo $message['class'] ?>">
+                  <?php echo $message['message']; ?>
+                </div>
+              <?php  }  ?>
                 <div class="card-body">
                   <h4 class="card-title">List of Category </h4>
               <table id="example" class="table table-striped table-bordered">

@@ -63,7 +63,7 @@
                     <div class="collapse navbar-collapse mainmenu" id="navigationbar" >
                         <ul class="nav navbar-nav">
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                          <li><a href="#service-area">Service</a></li>
+                          <li><a href="#service-area">Services</a></li>
                           <li><a href="#about-area">About</a></li>
                           <li><a href="#team-area">Team</a></li>
                           <li><a href="#contact-area">Contact</a></li>
@@ -117,7 +117,8 @@
                 <div class="col-xs-12 col-md-7">
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Local and personal services on a tap</h2>
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable
+From people that are capable</h2>
 
 
                     </div>
@@ -167,7 +168,7 @@
                         <div class="box-icon">
                             <img src="<?php echo base_url(); ?>assets/images/service_1.png">
                         </div>
-                        <h3 class="title">Electrical Service</h3>
+                        <h3 class="title">Electrical Services</h3>
                       <p></p>
                     </div>
                 </div>
@@ -176,7 +177,7 @@
                         <div class="box-icon">
                           <img src="<?php echo base_url(); ?>assets/images/service_2.png">
                         </div>
-                        <h3 class="title">Plumbing Service</h3>
+                        <h3 class="title">Plumbing</h3>
                       <p></p>
                     </div>
                 </div>
@@ -185,7 +186,7 @@
                         <div class="box-icon">
                             <img src="<?php echo base_url(); ?>assets/images/service_3.png">
                         </div>
-                        <h3 class="title">Carpentry Services</h3>
+                        <h3 class="title">Carpentry</h3>
                       <p></p>
                     </div>
                 </div>
@@ -249,7 +250,7 @@
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_9.png">
                         </div>
-                        <h3 class="title">Driver</h3>
+                        <h3 class="title">Driving Services</h3>
                       <p></p>
                     </div>
                 </div>
@@ -384,8 +385,8 @@
                 </div>
                 <div class="col-xs-12 col-md-5 col-md-offset-1 wow fadeInRight">
                     <div class="title-box left">
-
-                        <h2 class="title">SkilEx is an online platform</h2>
+                        <h2 class="title">Who are we?</h2>
+                        <p class="title">SkilEx is an online platform</p>
                         <p class="desc">To get the best professionals to sort all your home needs.
                         <br>  <br>
                         With the help of SkilEx App, you can book various household services at time and place of your own choice. <br>  <br>
@@ -409,7 +410,7 @@
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <div class="title-box box-white">
 
-                        <h2 class="title">FAQ’s Frequently Asked Questions</h2>
+                        <h2 class="title">Frequently Asked Questions</h2>
 
 
                     </div>
@@ -430,19 +431,19 @@
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
 
-                        <h3 class="title">2.What are the Services you Provide?</h3>
+                        <h3 class="title">2.What are the services you provide?</h3>
                         <p>We provide all services related to maintenance of your home and upkeep of your premises so that you can focus on your business. Services include plumbing, electrical, carpentry, cleaning, pest control, painting, appliance repair and maintenance and more.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
-                        <h3 class="title">3.Which Business you serve?</h3>
+                        <h3 class="title">3.Which business you serve?</h3>
                         <p>Our clients are spread across different industry verticals, housing societies and more. If still not sure, get in touch with us and we will take care of your requirements.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
-                        <h3 class="title">4.How does it Work?</h3>
+                        <h3 class="title">4.How does it work?</h3>
                         <p>Once you reach out to us, our SkilEx partner will meet you to get a clear understanding of your requirements. Our experts will visit your premises for an inspection to get a clear scope of work. Post this we will share the custom estimate with detailed scope of work and the requested service will be performed.</p>
                     </div>
                 </div>
@@ -496,7 +497,7 @@
                 <div class="col-xs-12 col-md-5">
                     <div class="title-box left">
                         <!-- <h5 class="top-title wow fadeInUp" data-wow-delay="0.3s" >Social Marketing &amp; Analytics</h5> -->
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.5s" >Keep in Touch</h2>
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.5s" >Stay in touch</h2>
 
                     </div>
                     <div class="space-30"></div>
@@ -527,7 +528,7 @@
                             <input type="text" name="form-subject" id="form-subject" placeholder="Subject" class="input-box" required>
                         </div>
                         <div class="form-box">
-                            <textarea class="input-box" id="form-message" placeholder="Messages" cols="30" rows="4" name="form-message" required></textarea>
+                            <textarea class="input-box" id="form-message" placeholder="Message" cols="30" rows="4" name="form-message" required></textarea>
                         </div>
                         <div class="form-box">
                             <button class="bttn-4" type="submit">Send Message <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
@@ -551,7 +552,7 @@
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                            <p><a href="https://happysanztech.com/" target="_blank">Designed and developed by Happy Sanz Tech.</a></p>
+                            <p><a href="https://happysanztech.com/" target="_blank">Developed by Happy Sanz Tech.</a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

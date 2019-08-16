@@ -38,7 +38,7 @@
                     breakpoint: 1024,
                     settings: {
                         dots: true,
-                        arrows: false,                        
+                        arrows: false,
                     }
                 }
             ]
@@ -107,16 +107,8 @@
             ]
         });
 
-        /*-- Mail-Chimp Integration--*/
-        $('#mc-form').ajaxChimp({
-            url: 'http://www.devitfamily.us14.list-manage.com/subscribe/post?u=b2a3f199e321346f8785d48fb&amp;id=d0323b0697', //Set Your Mailchamp URL
-            callback: function (resp) {
-                if (resp.result === 'success') {
-                    $('.subscribe .input-box, .subscribe .bttn-4').fadeOut();
-                }
-            }
-        });
-        
+  
+
         /*-- Drop-Down-Menu--*/
         function dropdown_menu() {
             $('.hamburger .mainmenu').hide();
@@ -159,7 +151,7 @@
             }
             $(window).on('resize',function(){
                 var wSize = $(window).width();
-                if(wSize < 768){                    
+                if(wSize < 768){
                     burger.removeClass('play');
                     burger.siblings('.mainmenu').hide();
                    menu_item.on('click', function () {
@@ -205,7 +197,7 @@
             $iframe.attr('src', src);
             $(".play-btn").html('<i class="icofont-ui-pause"></i>');
         }
-        
+
         $(".play-btn").on("click", function (ev) {
             var $wrapper = $('.js-videoWrapper');
             var $iframe = $wrapper.find('.js-videoIframe');
@@ -230,8 +222,8 @@
           .on('click', function(event) {
             // On-page links
             if (
-              location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-              && 
+              location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+              &&
               location.hostname == this.hostname
             ) {
               // Figure out element to scroll to

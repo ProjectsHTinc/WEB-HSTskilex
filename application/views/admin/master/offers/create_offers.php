@@ -76,12 +76,12 @@
 
               <div class="card">
 
-                 <?php if($this->session->flashdata('msg')){ ?>
-                <div class="alert alert-success" role="alert">
-                   <button type="button" class="close" data-dismiss="alert">x</button>
-                        <?php  echo $this->session->flashdata('msg'); ?>
+                <?php if($this->session->flashdata('msg')) {
+                $message = $this->session->flashdata('msg');?>
+                <div class="<?php echo $message['class'] ?>">
+                  <?php echo $message['message']; ?>
                 </div>
-              <?php } ?>
+              <?php  }  ?>
 
                 <div class="card-body"  >
                   <h4 class="card-title">List of Offers </h4>

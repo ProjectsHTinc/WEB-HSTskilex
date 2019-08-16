@@ -156,8 +156,12 @@ class Masters extends CI_Controller {
 		 }
 			 $data['res']=$this->mastermodel->category_creation($main_cat_name,$main_cat_ta_name,$status,$cat_pic,$user_id);
 				if($data['res']['status']=="success"){
+					$messge = array('message' => 'New service category has been created','class' => 'alert alert-success fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_category');
 				}else{
+					$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_category');
 				}
 
@@ -216,8 +220,12 @@ class Masters extends CI_Controller {
 			}
 				$data['res']=$this->mastermodel->category_update($main_cat_name,$main_cat_ta_name,$status,$cat_pic,$user_id,$cat_id);
 				 if($data['res']['status']=="success"){
+					 $messge = array('message' => 'Category has been Updated Successfully','class' => 'alert alert-success fade in');
+ 					 $this->session->set_flashdata('msg', $messge);
 					 redirect('masters/create_category');
 				 }else{
+					 $messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					 $this->session->set_flashdata('msg', $messge);
 					 redirect('masters/create_category');
 				 }
 
@@ -306,8 +314,12 @@ class Masters extends CI_Controller {
 			}
 				$data['res']=$this->mastermodel->sub_category_creation($sub_cat_name,$sub_cat_ta_name,$status,$cat_pic,$user_id,$main_cat_id);
 				if($data['res']['status']=="success"){
+					$messge = array('message' => 'New service sub-category  has been created','class' => 'alert alert-success fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_sub_category/'.$this->input->post('main_cat_id').'');
 				}else{
+					$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_sub_category/'.$this->input->post('main_cat_id').'');
 				}
 
@@ -350,8 +362,12 @@ class Masters extends CI_Controller {
 			}
 				$data['res']=$this->mastermodel->sub_category_update($sub_cat_name,$sub_cat_ta_name,$status,$cat_pic,$user_id,$cat_id);
 				 if($data['res']['status']=="success"){
+					 $messge = array('message' => 'Sub category has been saved','class' => 'alert alert-success fade in');
+					 $this->session->set_flashdata('msg', $messge);
 						redirect('masters/create_sub_category/'.$main_cat_id.'');
 				 }else{
+					 $messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					 $this->session->set_flashdata('msg', $messge);
 						redirect('masters/create_sub_category/'.$main_cat_id.'');
 				 }
 
@@ -438,8 +454,12 @@ class Masters extends CI_Controller {
 			}
 				$data['res']=$this->mastermodel->service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				if($data['res']['status']=="success"){
+					$messge = array('message' => 'New service  has been created','class' => 'alert alert-success fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'#list');
 				}else{
+					$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('masters/create_service/'.$this->input->post('sub_cat_id').'#list');
 				}
 
@@ -511,8 +531,12 @@ class Masters extends CI_Controller {
 			}
 				$data['res']=$this->mastermodel->service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta);
 				 if($data['res']['status']=="success"){
+					 $messge = array('message' => 'Service  has been saved','class' => 'alert alert-success fade in');
+					 $this->session->set_flashdata('msg', $messge);
 						redirect('masters/create_service/'.$main_cat_id.'#list');
 				 }else{
+					 $messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					 $this->session->set_flashdata('msg', $messge);
 						redirect('masters/create_service/'.$main_cat_id.'#list');
 				 }
 
@@ -584,8 +608,12 @@ class Masters extends CI_Controller {
 			}
 			$data['res']=$this->mastermodel->create_banner($banner_title,$pic,$status,$user_id);
 			if($data['res']['status']=="success"){
+				$messge = array('message' => 'New banner  has been created','class' => 'alert alert-success fade in');
+				$this->session->set_flashdata('msg', $messge);
 				redirect('masters/banner_list');
 			}else{
+				$messge = array('message' => 'Something went wrong','class' => 'alert alert-danger fade in');
+				$this->session->set_flashdata('msg', $messge);
 				redirect('masters/banner_list');
 			}
 		}else{
@@ -633,8 +661,12 @@ class Masters extends CI_Controller {
 		}
 		$data['res']=$this->mastermodel->update_banner($banner_title,$pic,$status,$ban_id,$user_id);
 		if($data['res']['status']=="success"){
+			$messge = array('message' => 'Banner Updated Successfully','class' => 'alert alert-success fade in');
+			$this->session->set_flashdata('msg', $messge);
 			redirect('masters/banner_list');
 		}else{
+			$messge = array('message' => 'Something went wrong','class' => 'alert alert-danger fade in');
+			$this->session->set_flashdata('msg', $messge);
 			redirect('masters/banner_list');
 		}
 	}else{

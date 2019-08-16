@@ -23,7 +23,7 @@
                 <th>Company status</th>
                 <th>Service Person Count</th>
                 <th>Deposit status</th>
-                <th>Vendor Display</th>
+                <th>Login Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -40,17 +40,17 @@
                 <td><?php echo $rows->no_of_service_person; ?></td>
                 <td>
                   <?php if($rows->deposit_status=='Unpaid'){ ?>
-                    <button type="button" class="btn btn-danger">Unpaid</button>
+                    <button type="button" class="badge badge-danger">Unpaid</button>
                 <?php   }else{ ?>
-                  <button type="button" class="btn btn-success">Paid</button>
+                  <button type="button" class="badge badge-success">Paid</button>
                 <?php   }
                    ?>
                 </td>
 
-                <td><?php if($rows->serv_prov_display_status=='Inactive'){ ?>
-                  <button type="button" class="btn btn-danger ">Inactive</button>
+                <td><?php if($rows->login_status=='Inactive'){ ?>
+                  <button type="button" class="badge badge-danger ">Inactive</button>
               <?php   }else{ ?>
-                <button type="button" class="btn btn-success ">Active</button>
+                <button type="button" class="badge badge-success ">Active</button>
               <?php   }
                  ?></td>
                 <td><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;

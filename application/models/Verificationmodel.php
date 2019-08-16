@@ -14,7 +14,7 @@ Class Verificationmodel extends CI_Model
 
 
   function get_all_vendors(){
-    $select="SELECT lu.id as user_master_id,lu.*,spd.* FROM login_users as lu left join service_provider_details as spd on spd.user_master_id=lu.id where lu.user_type='3' and document_verify='N' ORDER BY lu.id DESC";
+    $select="SELECT lu.id as user_master_id,lu.status as login_status,lu.*,spd.* FROM login_users as lu left join service_provider_details as spd on spd.user_master_id=lu.id where lu.user_type='3' and document_verify='N' ORDER BY lu.id DESC";
     $result=$this->db->query($select);
     return $result->result();
   }
@@ -68,7 +68,7 @@ Class Verificationmodel extends CI_Model
 
 
   function get_doc_details($ser_pro_id,$company_status){
-     $pro_id=base64_decode($ser_pro_id)/98765;  
+     $pro_id=base64_decode($ser_pro_id)/98765;
     if($company_status=="Individual"){
       $query="SELECT dd.id,dd.doc_master_id,dm.doc_name,dm.company_doc_type,dd.user_master_id,dd.doc_proof_number,dd.file_name,dd.status,dd.created_at FROM document_master as dm left join document_details as dd on dm.id=dd.doc_master_id and dd.user_master_id='$pro_id' where dm.company_doc_type='$company_status' AND dm.status='Active'";
     }else{

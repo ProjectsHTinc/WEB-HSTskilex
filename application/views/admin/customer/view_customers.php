@@ -23,7 +23,7 @@
                 <th>Phone</th>
                 <th>Gender</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Order details</th>
             </tr>
         </thead>
         <tbody>

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/responsive.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr-2-8-3-min.js"></script>
+
 </head>
 
 <body data-spy="scroll" data-target=".mainmenu-area" data-offset="50">
@@ -169,7 +170,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_1.png">
                         </div>
                         <h3 class="title">Electrical Services</h3>
-                      <p></p>
+                      <p class="ser_desc">From repairs and fixes to installation of appliances and security systems</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -178,7 +179,7 @@ From people that are capable</h2>
                           <img src="<?php echo base_url(); ?>assets/images/service_2.png">
                         </div>
                         <h3 class="title">Plumbing</h3>
-                      <p></p>
+                      <p class="ser_desc">From repairs and fixes to accessories</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -187,7 +188,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_3.png">
                         </div>
                         <h3 class="title">Carpentry</h3>
-                      <p></p>
+                      <p class="ser_dec">From woodworks to wood carving</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -196,7 +197,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_20.png">
                         </div>
                         <h3 class="title">Clinical Services(Nurse)</h3>
-                      <p></p>
+                      <p class="ser_dec">Dressings and injections</p>
                     </div>
                 </div>
                 <!-- <div class="col-xs-12 col-md-3">
@@ -214,7 +215,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_5.png">
                         </div>
                         <h3 class="title">Janitorial Services</h3>
-                      <p></p>
+                      <p class="ser_dec">From cleaning and sanitation to overall maintenance of buildings</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -223,7 +224,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_6.png">
                         </div>
                         <h3 class="title">Home Cleaning </h3>
-                      <p></p>
+                      <p class="ser_dec">From kitchen and living room to full home deep cleaning</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -232,7 +233,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_7.png">
                         </div>
                         <h3 class="title">AC Services</h3>
-                      <p></p>
+                      <p class="ser_dec">From dry and wet services to overall  maintenance</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -241,7 +242,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_8.png">
                         </div>
                         <h3 class="title">Gardening</h3>
-                      <p></p>
+                      <p class="ser_dec">From mowing and blowing to patio designing</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -251,7 +252,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_9.png">
                         </div>
                         <h3 class="title">Driving Services</h3>
-                      <p></p>
+                      <p class="ser_dec">From local to out-of-town trips on hourly and daily basis</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -260,8 +261,8 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_10.png">
                         </div>
 
-                          <h3 class="title">Cook</h3>
-                      <p></p>
+                          <h3 class="title">Cooking</h3>
+                      <p class="ser_dec">From local cuisines to continental</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -271,7 +272,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Ups Services</h3>
 
-                      <p></p>
+                      <p class="ser_dec">From repairs and fixes to installation and maintenance</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -279,9 +280,9 @@ From people that are capable</h2>
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_12.png">
                         </div>
-                          <h3 class="title">Beautician  </h3>
+                          <h3 class="title">Personal Care </h3>
 
-                      <p></p>
+                      <p class="ser_dec">From pedicure and manicure to party and bridal makeup</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -290,9 +291,9 @@ From people that are capable</h2>
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_13.png">
                         </div>
-                        <h3 class="title">Appliance Service</h3>
+                        <h3 class="title">Home Appliance Services</h3>
 
-                      <p></p>
+                      <p class="ser_dec">From kitchen appliances to home automation</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -301,7 +302,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_14.png">
                         </div>
                         <h3 class="title">Pest Control</h3>
-                      <p></p>
+                      <p class="ser_dec">From insects to rodents</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -310,7 +311,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_15.png">
                         </div>
                       <h3 class="title">Painting Services</h3>
-                      <p></p>
+                      <p class="ser_dec">Both interior and exterior</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -319,7 +320,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_16.png">
                         </div>
                          <h3 class="title">Computer Services</h3>
-                      <p></p>
+                      <p class="ser_dec">From software and router installations to hardware repairs and services</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -330,7 +331,7 @@ From people that are capable</h2>
                         </div>
                         <h3 class="title">  Tutor-Home Tuition</h3>
 
-                      <p></p>
+                      <p class="ser_dec">From Classes 1 to 12  of all boards and Engineering Mathematics</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -340,7 +341,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Physiotheraphy</h3>
 
-                      <p></p>
+                      <p class="ser_dec">From sports injuries to surgical rehabilitation</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -348,9 +349,9 @@ From people that are capable</h2>
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_19.png">
                         </div>
-                          <h3 class="title">Car cleaning Services</h3>
+                          <h3 class="title">Car Wash</h3>
 
-                      <p></p>
+                      <p class="ser_dec">Interior, exterior, puncture services,and maintenance</p>
                     </div>
                 </div>  <div class="col-xs-12 col-md-3">
                       <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
@@ -358,7 +359,7 @@ From people that are capable</h2>
                                 <img src="<?php echo base_url(); ?>assets/images/service_21.png">
                           </div>
                         <h3 class="title">Personalized Fitness Tutor</h3>
-                        <p></p>
+                        <p class="ser_dec">From fitness training to dietary classes</p>
                       </div>
                   </div>
 
@@ -479,8 +480,8 @@ From people that are capable</h2>
             <div class="row">
                 <div class="col-xs-12 col-md-8 col-md-offset-2">
                     <div class="subscribe">
-                        <form id="mc-form" method="post">
-                            <input type="email" placeholder="Enter Your Email Address" id="mc-email" class="input-box" required>
+                        <form id="newletter_form" method="post" action="">
+                            <input type="email" name="email" placeholder="Enter Your Email Address" id="mc-email" class="input-box" required>
                             <button class="bttn-4" type="submit">Send <i class="icofont-paper-plane"></i></button>
                         </form>
                     </div>
@@ -515,20 +516,23 @@ From people that are capable</h2>
                 </div>
                 <div class="col-xs-12 col-md-7">
                     <!-- Contact-Form -->
-                    <form class="contact-form" id="" method="post">
+                    <form class="contact-form" id="contact_form" method="post" acction="">
                         <div class="form-double">
                             <div class="form-box">
-                                <input type="text" name="form-name" id="form-name" class="input-box" placeholder="Name" required>
+                                <input type="text" name="name" id="name" class="input-box" placeholder="Name"  >
                             </div>
                             <div class="form-box left">
-                                <input type="email" name="form-email" id="form-email" placeholder="Email" class="input-box" required>
+                                <input type="email" name="email" id="email" placeholder="Email" class="input-box" >
                             </div>
                         </div>
                         <div class="form-box">
-                            <input type="text" name="form-subject" id="form-subject" placeholder="Subject" class="input-box" required>
+                            <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number" class="input-box" >
                         </div>
                         <div class="form-box">
-                            <textarea class="input-box" id="form-message" placeholder="Message" cols="30" rows="4" name="form-message" required></textarea>
+                            <input type="text" name="subject" id="form-subject" placeholder="Subject" class="input-box" >
+                        </div>
+                        <div class="form-box">
+                            <textarea class="input-box" id="message" placeholder="Message" cols="30" rows="4" name="message" ></textarea>
                         </div>
                         <div class="form-box">
                             <button class="bttn-4" type="submit">Send Message <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
@@ -579,6 +583,7 @@ From people that are capable</h2>
     </footer>
     <!-- Footer-Area / -->
     <!--Vendor JS-->
+
     <script src="<?php echo base_url(); ?>assets/js/vendor/jquery-1-12-4-min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/vendor/bootstrap-min.js"></script>
     <!--Plugin JS-->
@@ -588,6 +593,104 @@ From people that are capable</h2>
     <script src="<?php echo base_url(); ?>assets/js/wow-min.js"></script>
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+    <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
+    <script>
+
+    $('#contact_form').validate({
+    rules: {
+        phone_number: {
+            required: true,digits:true,minlength:10,maxlength:10
+        },
+        name: {
+            required: true
+        },
+        email: {
+            required: true,email:true
+        },
+        subject: {
+            required: true
+        },
+        message: {
+            required: true
+        }
+
+    },
+    messages: {
+        phone_number: {
+          required:"Please Enter Mobile number",
+          maxlength:"Maximum 10 digits",
+          minlength:"Minimum 10 digits"
+        },
+        name: {
+          required:"Please Enter Name"
+        },
+        email: {
+          required:"Please Enter Email",email:"Please Enter Valid Email"
+        },
+        subject: {
+          required:"Please Enter Subject"
+        },
+        message: {
+          required:"Please Enter Message"
+        },
+    },
+    submitHandler: function(form) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>home/contact_form",
+               type: 'POST',
+               data: $('#contact_form').serialize(),
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     alert("Thank you for contacting us. We will get back to you soon.");
+                     setTimeout(function(){
+                        location.reload();
+                    }, 1000)
+                 }else{
+                    alert(stats);
+                     }
+               }
+           });
+         }
+    });
+
+    $('#newletter_form').validate({
+    rules: {
+        email: {
+            required: true,email:true
+        }
+    },
+    messages: {
+
+        email: {
+          required:"Please Enter Email",email:"Please Enter Valid Email"
+        }
+    },
+    submitHandler: function(form) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>home/newsletter_form",
+               type: 'POST',
+               data: $('#newletter_form').serialize(),
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     alert("Thank you for subscribing! ");
+                     setTimeout(function(){
+                        location.reload();
+                    }, 1000)
+                 }else{
+                   alert(stats);
+                     }
+               }
+           });
+         }
+    });
+
+
+    </script>
 </body>
 
 </html>

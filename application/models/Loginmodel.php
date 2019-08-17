@@ -348,5 +348,36 @@ Class Loginmodel extends CI_Model
           return $resultset->result();
        }
 
+
+       function contact_form($name,$email,$subject,$phone_number,$message){
+         $insert="INSERT INTO tb_contact_form (name,email,subject,phone_number,message,created_at) VALUES ('$name','$email','$subject','$phone_number','$message',NOW())";
+         $resultset=$this->db->query($insert);
+         if($insert){
+           $data=array("status"=>"success");
+         }else{
+           $data=array("status"=>"error");
+         }
+         return $data;
+       }
+
+       function newsletter_form($email){
+         $select="SELECT * FROM tb_newsletter WHERE email_id='$email'";
+         $res=$this->db->query($select);
+         if($res->num_rows()==0){
+           $insert="INSERT INTO tb_newsletter (email_id,status,created_at) VALUES ('$email','Active',NOW())";
+           $resultset=$this->db->query($insert);
+           if($insert){
+             $data=array("status"=>"success");
+           }else{
+             $data=array("status"=>"error");
+           }
+         }else{
+           $data=array("status"=>"You have already subscribed!");
+         }
+
+
+         return $data;
+       }
+
 }
 ?>

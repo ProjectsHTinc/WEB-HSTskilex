@@ -101,7 +101,7 @@ Class service_order_model extends CI_Model
 
   function get_service_payments($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-    $query="SELECT  * FROM  service_payments WHERE service_order_id='$id'";
+    $query="SELECT  sp.*,om.offer_code FROM  service_payments as sp  left join offer_master as om on om.id=sp.coupon_id  WHERE service_order_id='$id'";
     $result=$this->db->query($query);
     return $result->result();
   }

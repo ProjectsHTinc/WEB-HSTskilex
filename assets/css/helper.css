@@ -286,7 +286,7 @@
 -----------------------*/
 
 .text-box .title {
-    font-size: 60px;
+    font-size: 45px;
     margin-bottom: 30px;
 }
 
@@ -627,4 +627,13 @@
 .post-carousel .post-single {
     margin: 15px;
     background-color: #ffffff;
+}
+.ser_desc{
+    font-size: 14px;
+    font-weight: 500;
+    color: #58585a;
+}
+.error{
+  font-size: 13px;
+  color:red;
 }

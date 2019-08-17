@@ -68,25 +68,25 @@
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Verify Providers</p>
+                    <p class="category-heading">Verify Associates</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Provider list </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Associate list </a></li>
 
 
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Service Provider</p>
+                    <p class="category-heading">Service Associate</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">List of Provider </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">List of Associate </a></li>
 
 
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Service Person</p>
+                    <p class="category-heading">Service Expert</p>
                     <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">List of Service person </a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">List of Expert </a></li>
 
                     </ul>
                   </div>
@@ -124,7 +124,7 @@
 
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/daily_transaction">Daily transaction</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_and_to_date_transactions">From & To date </a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Provider transactions</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Associate transactions</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/online_payment_history">Online Payment History</a></li>
 
                 </li>

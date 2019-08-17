@@ -5,12 +5,12 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Provider order  List</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Associates order  List</span></li>
             </ol>
           </nav>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">View Provider orders <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+              <h4 class="card-title">View Associates orders <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">

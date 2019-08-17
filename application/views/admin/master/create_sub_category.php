@@ -21,12 +21,12 @@
 
                     <div class="form-group">
                       <label for="username">Sub Category name (English)</label>
-                      <input type="text" class="form-control" id="main_cat_name" name="sub_cat_name" placeholder="Category Name">
+                      <input type="text" class="form-control" id="main_cat_name" name="sub_cat_name" placeholder="Sub Category Name">
                       <input type="hidden" class="form-control" id="main_cat_id" name="main_cat_id" value="<?php echo $this->uri->segment(3); ?>">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">Sub Category Name(Tamil)</label>
-                      <input type="text" class="form-control" id="sub_cat_ta_name" name="sub_cat_ta_name" placeholder="Category Tamil Name" >
+                      <input type="text" class="form-control" id="sub_cat_ta_name" name="sub_cat_ta_name" placeholder="Sub Category Tamil Name" >
                     </div>
                     <div class="form-group">
                       <label for="latitude">Sub Category Picture</label>
@@ -51,7 +51,7 @@
 
             <div class="col-md-8 grid-margin stretch-card">
               <div class="card">
-                
+
                 <?php if($this->session->flashdata('msg')) {
                 $message = $this->session->flashdata('msg');?>
                 <div class="<?php echo $message['class'] ?>">

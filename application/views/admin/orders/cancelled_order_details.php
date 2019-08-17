@@ -186,7 +186,7 @@
                           <th>S.no</th>
                           <th>Service name</th>
                           <th>service Rate</th>
-                          <th>status</th>
+
                         </tr>
                       </thead>
                     <tbody>
@@ -199,19 +199,19 @@
                         <td><?php echo $i; ?></td>
                         <td><?php echo $rows_ad->service_name; ?>  </td>
                         <td><?php echo $rows_ad->ad_service_rate_card; ?>  </td>
-                        <td><button type="button" class="btn btn-danger btn-fw"><?php echo $rows_ad->status; ?></button></td>
+
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Provider request sent </h4>
+                  <h4 class="card-title">List of Service Associate request sent </h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
-                          <th>Provider name</th>
+                          <th>Associate name</th>
                           <th>Requested on</th>
                           <th>status</th>
                         </tr>
@@ -288,7 +288,7 @@
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
                           <th>Skilex commission amt</th>
-                          <th>Provider commission amt</th>
+                          <th>Associate commission amt</th>
                           <th>Payable amount</th>
                         </tr>
                       </thead>
@@ -407,7 +407,7 @@ $('#provider_list').change(function(){
                  success: function(response) {
                     var stats=response.status;
                      if (stats=="success") {
-                       swal('Provider assigned successfully')
+                       swal('Associate assigned successfully')
                        setTimeout(function() {
                            location.reload();
                        }, 1000);

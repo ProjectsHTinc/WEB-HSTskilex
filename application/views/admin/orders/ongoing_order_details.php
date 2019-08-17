@@ -2,6 +2,9 @@
 .val_label{
   margin-top: 10px;
 }
+.table td, .jsgrid .jsgrid-table td, .table th, .jsgrid .jsgrid-table th{
+padding: 15px;
+}
 </style>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
@@ -121,11 +124,11 @@
                       </div>
                     </div>
                     <br>
-                    <h5 class="card-title">Assigned Provider and  Person details</h5>
+                    <h5 class="card-title">Assigned Associate and  Person details</h5>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Provider</label>
+                          <label class="col-sm-4 col-form-label">Service Associate</label>
                           <div class="col-sm-8">
                                 <p class="val_label"><?php echo $rows->owner_full_name; ?></p>
                           </div>
@@ -186,7 +189,7 @@
                           <th>S.no</th>
                           <th>Service name</th>
                           <th>service Rate</th>
-                          <th>status</th>
+
                         </tr>
                       </thead>
                     <tbody>
@@ -199,19 +202,19 @@
                         <td><?php echo $i; ?></td>
                         <td><?php echo $rows_ad->service_name; ?>  </td>
                         <td><?php echo $rows_ad->ad_service_rate_card; ?>  </td>
-                        <td><button type="button" class="btn btn-danger btn-fw"><?php echo $rows_ad->status; ?></button></td>
+
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Provider request sent </h4>
+                  <h4 class="card-title">List of Service Associates request sent </h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
-                          <th>Provider name</th>
+                          <th>Associates name</th>
                           <th>Requested on</th>
                           <th>status</th>
                         </tr>
@@ -283,17 +286,18 @@
                           <th>Advance amt</th>
                           <th>Service amt</th>
                           <th>Additional Service amt</th>
+                          <th>Offer code</th>
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
                           <th>Skilex commission amt</th>
-                          <th>Provider commission amt</th>
+                          <th>Associate commission amt</th>
                           <th>Payable amount</th>
                         </tr>
                       </thead>
                     <tbody>
                     <?php $i=1;
                         if(empty($res_payments)){ ?>
-                        <td colspan="9" style="width:100%">No Record Found</td>
+                        <td colspan="10" style="width:100%">No Record Found</td>
                         <?php  }else{
                         foreach($res_payments as $rows_pay){ ?>
                         <tr>
@@ -301,6 +305,7 @@
                           <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
                           <td><?php echo $rows_pay->service_amount; ?>  </td>
                           <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
+                          <td><?php echo $rows_pay->offer_code; ?></td>
                           <td><?php echo $rows_pay->discount_amt; ?></td>
                           <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
                           <td><?php echo $rows_pay->skilex_net_amount; ?></td>
@@ -359,7 +364,7 @@
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Providers</h5>
+                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Associate</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -367,7 +372,7 @@
               <div class="modal-body">
                     <form action="" method="post" id="doc_status_form">
                         <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Select Provider</label>
+                        <label for="recipient-name" class="col-form-label">Select Associate</label>
                             <select class="form-control form-control-sm" id="provider_list" name="provider_id">
                               <option value="">--Select--</option>
                           <?php foreach($res_provider_list as $rows_p_list){ ?>
@@ -437,7 +442,7 @@ $('#provider_list').change(function(){
                  success: function(response) {
                     var stats=response.status;
                      if (stats=="success") {
-                       swal('Provider assigned successfully')
+                       swal('Associate assigned successfully')
                        setTimeout(function() {
                            location.reload();
                        }, 1000);

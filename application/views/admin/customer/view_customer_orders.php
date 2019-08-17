@@ -20,8 +20,8 @@
                 <th>Order date</th>
                 <th>Service</th>
                 <th>Service men</th>
-
                 <th>Order status</th>
+                <th>Order details</th>
 
             </tr>
         </thead>
@@ -37,6 +37,17 @@
 
                 <td>
                   <button type="button" class="badge badge-info "><?php echo $rows->status; ?></button>
+              </td>
+              <td><?php if($rows->status=='Pending'){ ?>
+                  <a href="<?php echo base_url(); ?>service_orders/get_order_details/<?php echo base64_encode($rows->id*98765); ?>" class="btn btn-primary">View</a>
+            <?php  }else if($rows->status=='Pending'){ ?>
+              <a href="<?php echo base_url(); ?>service_orders/get_cancelled_order_details/<?php echo base64_encode($rows->id*98765); ?>" class="btn btn-primary">View</a>
+            <?php  }else if($rows->status=='Completed' || $rows->status=='Paid'){ ?>
+              <a href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>" class="btn btn-primary">View</a>
+            <?php  }else{ ?>
+              <a href="<?php echo base_url(); ?>service_orders/get_ongoing_order_details/<?php echo base64_encode($rows->id*98765); ?>" class="btn btn-primary">View</a>
+            <?php  } ?>
+
               </td>
 
 

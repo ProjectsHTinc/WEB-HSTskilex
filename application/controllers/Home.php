@@ -418,6 +418,24 @@ class Home extends CI_Controller {
 		}
 	}
 
+
+	public function contact_form(){
+		$name=$this->input->post('name');
+		$email=$this->input->post('email');
+		$subject=$this->input->post('subject');
+		$phone_number=$this->input->post('phone_number');
+		$message=$this->input->post('message');
+		$data['res']=$this->loginmodel->contact_form($name,$email,$subject,$phone_number,$message);
+		echo json_encode($data['res']);
+	}
+
+
+	public function newsletter_form(){
+		$email=$this->input->post('email');
+		$data['res']=$this->loginmodel->newsletter_form($email);
+		echo json_encode($data['res']);
+	}
+
 	public function logout(){
 		$datas=$this->session->userdata();
 		$this->session->unset_userdata($datas);

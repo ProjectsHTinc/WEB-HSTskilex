@@ -188,7 +188,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_3.png">
                         </div>
                         <h3 class="title">Carpentry</h3>
-                      <p class="ser_dec">From woodworks to wood carving</p>
+                      <p class="ser_desc">From woodworks to wood carving</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -197,7 +197,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_20.png">
                         </div>
                         <h3 class="title">Clinical Services(Nurse)</h3>
-                      <p class="ser_dec">Dressings and injections</p>
+                      <p class="ser_desc">Dressings and injections</p>
                     </div>
                 </div>
                 <!-- <div class="col-xs-12 col-md-3">
@@ -215,7 +215,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_5.png">
                         </div>
                         <h3 class="title">Janitorial Services</h3>
-                      <p class="ser_dec">From cleaning and sanitation to overall maintenance of buildings</p>
+                      <p class="ser_desc">From cleaning and sanitation to overall maintenance of buildings</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -224,7 +224,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_6.png">
                         </div>
                         <h3 class="title">Home Cleaning </h3>
-                      <p class="ser_dec">From kitchen and living room to full home deep cleaning</p>
+                      <p class="ser_desc">From kitchen and living room to full home deep cleaning</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -233,7 +233,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_7.png">
                         </div>
                         <h3 class="title">AC Services</h3>
-                      <p class="ser_dec">From dry and wet services to overall  maintenance</p>
+                      <p class="ser_desc">From dry and wet services to overall  maintenance</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -242,7 +242,7 @@ From people that are capable</h2>
                             <img src="<?php echo base_url(); ?>assets/images/service_8.png">
                         </div>
                         <h3 class="title">Gardening</h3>
-                      <p class="ser_dec">From mowing and blowing to patio designing</p>
+                      <p class="ser_desc">From mowing and blowing to patio designing</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -252,7 +252,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_9.png">
                         </div>
                         <h3 class="title">Driving Services</h3>
-                      <p class="ser_dec">From local to out-of-town trips on hourly and daily basis</p>
+                      <p class="ser_desc">From local to out-of-town trips on hourly and daily basis</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -262,7 +262,7 @@ From people that are capable</h2>
                         </div>
 
                           <h3 class="title">Cooking</h3>
-                      <p class="ser_dec">From local cuisines to continental</p>
+                      <p class="ser_desc">From local cuisines to continental</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -272,7 +272,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Ups Services</h3>
 
-                      <p class="ser_dec">From repairs and fixes to installation and maintenance</p>
+                      <p class="ser_desc">From repairs and fixes to installation and maintenance</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -282,7 +282,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Personal Care </h3>
 
-                      <p class="ser_dec">From pedicure and manicure to party and bridal makeup</p>
+                      <p class="ser_desc">From pedicure and manicure to party and bridal makeup</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -293,7 +293,7 @@ From people that are capable</h2>
                         </div>
                         <h3 class="title">Home Appliance Services</h3>
 
-                      <p class="ser_dec">From kitchen appliances to home automation</p>
+                      <p class="ser_desc">From kitchen appliances to home automation</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -302,7 +302,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_14.png">
                         </div>
                         <h3 class="title">Pest Control</h3>
-                      <p class="ser_dec">From insects to rodents</p>
+                      <p class="ser_desc">From insects to rodents</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -311,7 +311,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_15.png">
                         </div>
                       <h3 class="title">Painting Services</h3>
-                      <p class="ser_dec">Both interior and exterior</p>
+                      <p class="ser_desc">Both interior and exterior</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -320,7 +320,7 @@ From people that are capable</h2>
                               <img src="<?php echo base_url(); ?>assets/images/service_16.png">
                         </div>
                          <h3 class="title">Computer Services</h3>
-                      <p class="ser_dec">From software and router installations to hardware repairs and services</p>
+                      <p class="ser_desc">From software and router installations to hardware repairs and services</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -331,7 +331,7 @@ From people that are capable</h2>
                         </div>
                         <h3 class="title">  Tutor-Home Tuition</h3>
 
-                      <p class="ser_dec">From Classes 1 to 12  of all boards and Engineering Mathematics</p>
+                      <p class="ser_desc">From Classes 1 to 12  of all boards and Engineering Mathematics</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -341,7 +341,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Physiotheraphy</h3>
 
-                      <p class="ser_dec">From sports injuries to surgical rehabilitation</p>
+                      <p class="ser_desc">From sports injuries to surgical rehabilitation</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -351,7 +351,7 @@ From people that are capable</h2>
                         </div>
                           <h3 class="title">Car Wash</h3>
 
-                      <p class="ser_dec">Interior, exterior, puncture services,and maintenance</p>
+                      <p class="ser_desc">Interior, exterior, puncture services,and maintenance</p>
                     </div>
                 </div>  <div class="col-xs-12 col-md-3">
                       <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
@@ -359,7 +359,7 @@ From people that are capable</h2>
                                 <img src="<?php echo base_url(); ?>assets/images/service_21.png">
                           </div>
                         <h3 class="title">Personalized Fitness Tutor</h3>
-                        <p class="ser_dec">From fitness training to dietary classes</p>
+                        <p class="ser_desc">From fitness training to dietary classes</p>
                       </div>
                   </div>
 

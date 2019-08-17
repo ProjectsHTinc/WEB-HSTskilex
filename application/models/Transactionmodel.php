@@ -22,6 +22,17 @@ Class Transactionmodel extends CI_Model
     }
 
 
+    function from_date_to_date($from_date,$to_date){
+      $timestamp = strtotime($from_date);
+      $from_date_new = date('Y-m-d', $timestamp);
+      $timestamp_to_date = strtotime($to_date);
+      $to_date_new = date('Y-m-d', $timestamp_to_date);
+      $check="SELECT spd.owner_full_name,dpt.* FROM daily_payment_transaction as dpt LEFT JOIN
+      service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id WHERE (service_date BETWEEN '$from_date_new' AND '$to_date_new') ORDER BY dpt.service_date DESC";
+     $result=$this->db->query($check);
+      return $result->result();
+    }
+
       function provider_based_transaction(){
      $check="SELECT spd.owner_full_name,sum(total_service_per_day) as total_service_per_day,sum(serv_prov_commission_amt) as serv_provider_total,sum(skilex_commission_amt) as skilex_commission_amt,sum(serv_total_amount) as serv_total_amount FROM daily_payment_transaction as dpt LEFT JOIN
         service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id   GROUP BY  dpt.serv_prov_id";

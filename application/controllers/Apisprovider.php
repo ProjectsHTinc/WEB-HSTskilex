@@ -725,6 +725,47 @@ class Apisprovider extends CI_Controller {
 //-----------------------------------------------//
 
 
+// ------------------Update service provider bank detail--------------------------- //
+
+    public function update_provider_bank_detail()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Bank info update";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id = '';
+		$full_name = '';
+		$gender = '';
+		$address = '';
+		$city = '';
+		$state = '';
+		$zip = '';
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$bank_name = $this->input->post("bank_name");
+		$branch_name  = $this->input->post("branch_name");
+		$acc_no  = $this->input->post("acc_no");
+		$ifsc_code  = $this->input->post("ifsc_code");
+
+		$data['result']=$this->apisprovidermodel->Update_provider_bank_detail($user_master_id,$bank_name,$branch_name,$acc_no,$ifsc_code);
+		$response = $data['result'];
+		echo json_encode($response);
+    }
+
 //-----------------------------------------------//
 
 	public function list_provider_doc()

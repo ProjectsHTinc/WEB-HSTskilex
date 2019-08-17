@@ -24,7 +24,6 @@
 
 
 
-
 for($i = 0; $i < $dataSize; $i++)
 	{
 		$information=explode('=',$decryptValues[$i]);
@@ -72,7 +71,7 @@ for($i = 0; $i < $dataSize; $i++)
 		if($i==41)  $bin_country=$information[1];
 	}
 
-		$response = array();
+// 		$response = array();
 
     	$orderid_string = $orderid;
         $result = explode("-", $orderid_string);

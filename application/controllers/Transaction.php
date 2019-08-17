@@ -27,6 +27,22 @@ class Transaction extends CI_Controller {
 
 	 }
 
+	 public function from_date_to_date(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'){
+			 $from_date=$this->input->post('from_date');
+			 $to_date=$this->input->post('to_date');
+			 $data['res']=$this->transactionmodel->from_date_to_date($from_date,$to_date);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/from_date_to_date_transaction',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+	 }
+
 	 public function provider_based_transaction(){
 
 		 $data=$this->session->userdata();

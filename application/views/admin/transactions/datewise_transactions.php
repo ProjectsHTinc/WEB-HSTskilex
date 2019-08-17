@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
+<script src="<?php echo base_url(); ?>assets/admin/js/datepicker.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" rel="stylesheet">
 
 <style>
@@ -18,7 +18,7 @@ table.dataTable thead th, table.dataTable thead td{
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="#">Transactions</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Daily Transaction</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>From and To Date Transaction</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -32,23 +32,23 @@ table.dataTable thead th, table.dataTable thead td{
                   <?php } ?>
                       <div class="card-body"  >
                           <h4 class="card-title">Date between Transactions</h4>
-                          <form action="" method="post" id="doc_status_form">
+                          <form action="<?php echo base_url();  ?>transaction/from_date_to_date" method="post" id="">
                             <div class="col-md-12">
                               <div class="form-group row">
-                                <label class="col-sm-1 col-form-label">To date  :</label>
+                                <label class="col-sm-2 col-form-label">From date :</label>
                                 <div class="col-sm-3">
-                                      <input type="text" class="form-control" value="" id="datepicker">
+                                      <input type="text" name="from_date" class="form-control selector" value="" id="datepicker" autocomplete="off">
 
                                   </div>
-                                  <label class="col-sm-1 col-form-label">To date  :</label>
+                                  <label class="col-sm-2 col-form-label">To date  :</label>
                                   <div class="col-sm-3">
-                                        <input type="text" class="form-control" value="" id="datepicker_1">
+                                        <input type="text" name="to_date" class="form-control" value="" id="datepicker_1" autocomplete="off">
 
                                     </div>
                               </div>
                             </div>
                             <div class="col-md-12">
-                              <div class="col-md-4 text-center">
+                              <div class="col-md-6 text-center">
                                 <button type="submit" class="btn btn-success">Get Result</button>
                               </div>
 
@@ -78,9 +78,12 @@ table.dataTable thead th, table.dataTable thead td{
     </style>
     <script>
     $(function() {
-        $( "#datepicker" ).datepicker();
+      $("#datepicker").datepicker();
         $( "#datepicker_1" ).datepicker();
     });
+
+
+
 $('#doc_status_form').validate({
 rules: {
 

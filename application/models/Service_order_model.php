@@ -88,6 +88,12 @@ Class service_order_model extends CI_Model
       return $result->result();
   }
 
+  function get_service_bills($service_order_id){
+      $id=base64_decode($service_order_id)/98765;
+      $query="SELECT * FROM service_order_bills WHERE service_order_id='$id'";
+      $result=$this->db->query($query);
+      return $result->result();
+  }
 
 
 

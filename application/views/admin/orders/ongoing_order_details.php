@@ -119,8 +119,17 @@ padding: 15px;
                           <label class="col-sm-2 col-form-label">Material Used :</label>
                           <div class="col-sm-10">
                                 <textarea type="text" class="form-control" rows="4" readonly><?php echo $rows->material_notes; ?></textarea>
+                                <?php if(empty($res_bills)){ ?>
+
+                              <?php  }else{ foreach($res_bills as $rows_bills) {}?>
+
+                                <a href="<?php echo base_url(); ?>assets/bills/<?php echo $rows_bills->file_name; ?>">View bill</a>
+                            <?php    } ?>
+
                                 </div>
+
                         </div>
+
                       </div>
                     </div>
                     <br>

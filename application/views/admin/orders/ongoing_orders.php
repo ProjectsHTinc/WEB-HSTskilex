@@ -61,7 +61,7 @@ th{
                   <?php if($rows->status=='Ongoing'){
                     $btn_color="btn-info";
                   }else{
-                    $btn_color="btn-success";
+                    $btn_color="btn-warning";
                   } ?>
                 <button type="button" class="btn <?php echo $btn_color; ?>"><?php echo $rows->status; ?></button>
 

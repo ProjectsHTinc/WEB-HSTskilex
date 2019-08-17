@@ -64,7 +64,7 @@
       <thead>
           <tr>
               <th>S.no</th>
-              <th>Categorys name</th>
+              <th>Category name</th>
               <th>Category Pciture</th>
               <th>Status</th>
               <th>Actions</th>

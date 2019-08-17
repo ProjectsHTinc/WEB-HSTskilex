@@ -59,7 +59,7 @@ th{
                     <td><?php echo $rows->advance_amount_paid; ?> / <?php echo $rows->advance_payment_status; ?>  </td>
                 <td>
                   <?php if($rows->status=='Paid'){
-                    $btn_color="btn-success";
+                    $btn_color="btn-info";
                   }else{
                     $btn_color="btn-primary";
                   } ?>

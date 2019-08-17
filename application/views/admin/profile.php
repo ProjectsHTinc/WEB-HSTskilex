@@ -45,7 +45,7 @@
                       <label for="exampleTextarea1">Address</label>
                       <textarea class="form-control" id="exampleTextarea1" rows="2" name="address"><?php echo $rows->address; ?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Update</button>
+                    <button type="submit" class="btn btn-primary mr-2">Update</button>
 
                   </form>
                 </div>

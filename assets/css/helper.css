@@ -481,7 +481,7 @@
 ------------------------*/
 .feature-box {
     position: relative;
-    padding-left: 80px;
+    /* padding-left: 80px; */
     color: #4F506F;
     margin-bottom: 40px;
 }

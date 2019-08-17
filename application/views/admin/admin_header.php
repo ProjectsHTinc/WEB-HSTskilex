@@ -25,7 +25,11 @@
 
 
   <!-- <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script> -->
-
+<style>
+.fa{
+  color: #125ba1;
+}
+</style>
 </head>
 
 <body>
@@ -43,11 +47,12 @@
         <div class="container">
           <ul class="nav page-navigation">
             <li class="nav-item">
-              <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="link-icon mdi mdi-television"></i><span class="menu-title">DASHBOARD</span></a>
+              <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="fa fa-desktop" aria-hidden="true"></i> &nbsp; <span class="menu-title">DASHBOARD</span></a>
             </li>
 
             <li class="nav-item mega-menu">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-android-studio"></i><span class="menu-title">Main Menu</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="fa fa-bars" aria-hidden="true"></i></i>&nbsp;
+                <span class="menu-title">Main Menu</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
                    <div class="col-group col-md-2 col-md-offset-1">
@@ -104,7 +109,8 @@
 
 
             <li class="nav-item">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Service Orders</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
+                <span class="menu-title">Service Orders</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
 
@@ -118,7 +124,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Transaction</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<span class="menu-title">Transaction</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
 
@@ -135,7 +141,7 @@
 
 
             <li class="nav-item">
-              <a href="#" class="nav-link"><i class="link-icon mdi mdi-asterisk"></i><span class="menu-title">Setting</span><i class="menu-arrow"></i></a>
+              <a href="#" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span class="menu-title">Setting</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
 

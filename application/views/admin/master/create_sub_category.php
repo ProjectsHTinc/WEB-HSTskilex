@@ -42,7 +42,7 @@
 
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Create Sub category</button>
+                    <button type="submit" class="btn btn-primary mr-2">Create Sub category</button>
 
                   </form>
                 </div>

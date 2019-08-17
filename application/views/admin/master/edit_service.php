@@ -212,7 +212,7 @@
                       </select>
                       <script>$('#status').val('<?php echo $rows->status; ?>');</script>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Update Service</button>
+                    <button type="submit" class="btn btn-primary mr-2">Update Service</button>
 
                   </form>
                 </div>

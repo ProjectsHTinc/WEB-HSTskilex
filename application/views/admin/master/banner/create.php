@@ -34,7 +34,7 @@
 
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Create</button>
+                    <button type="submit" class="btn btn-primary mr-2">Create</button>
 
                   </form>
                 </div>
@@ -49,7 +49,7 @@
                   <?php echo $message['message']; ?>
                 </div>
               <?php  }  ?>
-              
+
                 <div class="card-body">
                   <h4 class="card-title">List of Banners </h4>
               <table id="example" class="table table-striped table-bordered">

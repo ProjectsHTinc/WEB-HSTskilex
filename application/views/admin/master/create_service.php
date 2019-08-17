@@ -186,7 +186,7 @@
 
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Create Service</button>
+                    <button type="submit" class="btn btn-primary mr-2">Create Service</button>
 
                   </form>
                 </div>

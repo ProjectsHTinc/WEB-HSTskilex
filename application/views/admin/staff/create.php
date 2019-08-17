@@ -56,7 +56,7 @@
 
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Create</button>
+                    <button type="submit" class="btn btn-primary mr-2">Create</button>
 
                   </form>
                 </div>

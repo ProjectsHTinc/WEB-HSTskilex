@@ -49,7 +49,7 @@ table.dataTable thead th, table.dataTable thead td{
                             </div>
                             <div class="col-md-12">
                               <div class="col-md-6 text-center">
-                                <button type="submit" class="btn btn-success">Get Result</button>
+                                <button type="submit" class="btn btn-primary">Get Result</button>
                               </div>
 
                             </div>

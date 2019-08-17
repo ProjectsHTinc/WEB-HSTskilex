@@ -43,7 +43,7 @@
                       </select>
                       <script>$('#status').val('<?php echo $rows->status; ?>');</script>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Update Category</button>
+                    <button type="submit" class="btn btn-primary mr-2">Update Category</button>
 
                   </form>
                 </div>

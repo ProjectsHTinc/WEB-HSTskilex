@@ -7596,7 +7596,7 @@ sup {
   top: -.5em; }
 
 a {
-  color: #007bff;
+  color: #125ba1;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects; }
@@ -9313,8 +9313,12 @@ fieldset:disabled a {
 
 .btn-primary, .wizard > .actions a {
   color: #fff;
-  background-color: #464de4;
-  border-color: #464de4; }
+  background-color: #125ba1;
+  border-color:#125ba1; }
+  .btn-primary{
+    color: #fff;
+    background-color: #125ba1;
+    border-color:#125ba1; }
   .btn-primary:hover, .wizard > .actions a:hover {
     color: #fff;
     background-color: #252ddf;
@@ -9363,8 +9367,8 @@ fieldset:disabled a {
 
 .btn-success {
   color: #212529;
-  background-color: #4CCEAC;
-  border-color: #4CCEAC; }
+  background-color: #4aaa49;
+  border-color: #4aaa49; }
   .btn-success:hover {
     color: #fff;
     background-color: #34bf9b;
@@ -9386,8 +9390,8 @@ fieldset:disabled a {
 
 .btn-info, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit {
   color: #fff;
-  background-color: #857bff;
-  border-color: #857bff; }
+  background-color: #AE84BB;
+  border-color: #AE84BB; }
   .btn-info:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:hover {
     color: #fff;
     background-color: #6255ff;
@@ -9434,8 +9438,8 @@ fieldset:disabled a {
 
 .btn-danger {
   color: #fff;
-  background-color: #DB504A;
-  border-color: #DB504A; }
+  background-color: #bf362f;
+  border-color: #bf362f; }
   .btn-danger:hover {
     color: #fff;
     background-color: #d4312a;
@@ -11493,7 +11497,7 @@ input[type="button"].btn-block {
 
 .badge-success, .preview-list .preview-item .preview-thumbnail .badge.badge-online {
   color: #212529;
-  background-color: #4CCEAC; }
+  background-color: #3d8c35; }
   .badge-success[href]:hover, .preview-list .preview-item .preview-thumbnail [href].badge.badge-online:hover, .badge-success[href]:focus, .preview-list .preview-item .preview-thumbnail [href].badge.badge-online:focus {
     color: #212529;
     text-decoration: none;
@@ -22105,7 +22109,7 @@ div.tagsinput {
     background-size: cover; }
   .auth.theme-one .auto-form-wrapper {
     background: #fff;
-    padding: 40px 40px 10px;
+    padding: 30px 40px 10px;
     border-radius: 4px;
     box-shadow: 0 -25px 37.7px 11.3px rgba(8, 143, 220, 0.07); }
     .auth.theme-one .auto-form-wrapper .form-group .input-group, .auth.theme-one .auto-form-wrapper .form-group .asColorPicker-wrap {

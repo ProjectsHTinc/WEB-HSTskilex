@@ -66,9 +66,9 @@
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
                           <li><a href="#service-area">Services</a></li>
                           <li><a href="#about-area">About</a></li>
-                          <li><a href="#team-area">Team</a></li>
+                          <li><a href="#feature-area">Faq</a></li>
                           <li><a href="#contact-area">Contact</a></li>
-                          <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li>
+                          <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                         </ul>
                    </div>
 
@@ -125,9 +125,9 @@ From people that are capable</h2>
                     </div>
                     <!-- Header-Text / -->
                     <div class="space-40"></div>
-                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s">Download on App Store <i class="fa fa-download" aria-hidden="true"></i>
+                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s"><i class="fa fa-download" aria-hidden="true"></i>  Download on App Store
 </a>
-                    <a href="#" class="bttn-2 wow fadeInRight" data-wow-delay="1s">Download on Play Store <i class="fa fa-download" aria-hidden="true"></i></a>
+                    <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="1s"><i class="fa fa-download" aria-hidden="true"></i>  Download on Play Store </a>
                 </div>
                 <div class="col-xs-12 col-md-5 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->
@@ -379,12 +379,12 @@ From people that are capable</h2>
     <section class="about-area section-padding section-bg" id="about-area">
         <div class="container">
             <div class="row row-flex">
-                <div class="col-xs-12 col-md-6 hidden-xs hidden-sm">
+                <div class="col-xs-12 col-md-6 hidden-xs hidden-sm text-center">
                     <figure class="single-image wow fadeInDown" data-wow-delay="0.5s" >
-                        <img src="<?php echo base_url(); ?>/assets/images/screen-1.png" alt="">
+                        <img src="<?php echo base_url(); ?>/assets/images/screen-1.png" alt="" style="height:500px;">
                     </figure>
                 </div>
-                <div class="col-xs-12 col-md-5 col-md-offset-1 wow fadeInRight">
+                <div class="col-xs-12 col-md-6 wow fadeInRight">
                     <div class="title-box left">
                         <h2 class="title">Who are we?</h2>
                         <p class="title">SkilEx is an online platform</p>
@@ -571,8 +571,8 @@ From people that are capable</h2>
                             </div>
                         </div>
                         <ul class="content_links">
-                          <li><a href="<?php echo base_url(); ?>terms">Terms & Conditions </a></li>
-                          <li><a href="<?php echo base_url(); ?>privacy">Privacy Policy </a></li>
+                          <li><a href="<?php echo base_url(); ?>terms">Terms & Conditions </a></li> &nbsp;
+                          <li><a href="<?php echo base_url(); ?>privacy">Privacy Policy </a></li> &nbsp;
                           <li><a href="<?php echo base_url(); ?>refund">Refund Policy </a></li>
                        </ul>
                     </div>

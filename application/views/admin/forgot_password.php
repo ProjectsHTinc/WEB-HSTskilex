@@ -25,6 +25,7 @@
             <div class="auto-form-wrapper" id="forgot_password_mobile_number_section">
               <form action="#" method="post" id="forgot_password_form">
                   <center> <img src="<?php echo base_url(); ?>assets/logo.png"> </center>
+                  <br>
                 <div class="form-group">
                   <label for="phone_number">Enter Mobile Number</label>
                   <input id="phone_number" class="form-control" name="phone_number"  type="text" >
@@ -33,7 +34,7 @@
                 <div class="form-group">
                   <button class="btn btn-primary submit-btn btn-block">Reset Password</button>
                 </div>
-                <div class="form-group d-flex justify-content-between">
+                <div class="form-group d-flex justify-content-center">
                     <a href="<?php echo base_url(); ?>login" class="text-small forgot-password text-black">Back to Login</a>
                 </div>
               </form>

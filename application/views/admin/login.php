@@ -28,7 +28,7 @@
 
               <form action="#" method="post" id="login_form">
                   <center> <img src="<?php echo base_url(); ?>assets/logo.png"> </center>
-
+                  <br>
                 <div class="form-group">
                         <label for="username">Username</label>
                         <input id="username" class="form-control" name="username"  type="text" >

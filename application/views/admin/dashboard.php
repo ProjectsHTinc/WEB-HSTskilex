@@ -5,12 +5,14 @@
   margin-right: 10px;
 }
 </style>
+
 <div class="container-fluid page-body-wrapper">
   <div class="main-panel">
     <div class="content-wrapper">
       <div class="row">
-        <div class="col-12 grid-margin">
+        <div class="col-12 grid-margin" style="margin-top:60px;">
           <div class="card card-statistics">
+
             <div class="row">
               <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6">
                 <div class="card-body">
@@ -49,7 +51,7 @@
               <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
-                    <img src="<?php echo base_url(); ?>assets/admin/images/paid_orders.png" class="img-responsive dash_icons">
+                    <img src="<?php echo base_url(); ?>assets/admin/images/total_customer.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
                         <a href="<?php echo base_url(); ?>home/get_all_customer_details"><p class="card-text mb-0">Total Customers</p></a>
                         <div class="fluid-container">
@@ -66,7 +68,7 @@
               <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
-                    <img src="<?php echo base_url(); ?>assets/admin/images/total_providers.png" class="img-responsive dash_icons">
+                    <img src="<?php echo base_url(); ?>assets/admin/images/paid_orders.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
                         <a href="<?php echo base_url(); ?>service_orders/completed_orders"><p class="card-text mb-0">Total Paid orders</p></a>
                         <div class="fluid-container">

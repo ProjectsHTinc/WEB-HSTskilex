@@ -1114,6 +1114,8 @@ class Apicustomermodel extends CI_Model {
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
+            "advance_payment_status"=>$rows_service->advance_payment_status,
+            "advance_amount_paid"=>$rows_service->advance_amount_paid,
             "order_status"=>$rows_service->order_status,
 
 

@@ -1369,6 +1369,36 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
     }
 
+
+//----------------------Service order bills---------------//
+
+  function service_order_bills($user_master_id,$service_order_id){
+
+    $select="SELECT * FROM service_order_bills WHERE service_order_id='$service_order_id'";
+       $res_offer = $this->db->query($select);
+       if($res_offer->num_rows()==0){
+           $response = array("status" => "error", "msg" => "No  Bills found");
+       }else{
+         $offer_result = $res_offer->result();
+         foreach($offer_result as $rows){}
+           $service_bill[]=array(
+             "id"=>$rows->id,
+             "file_bill"=>$rows->file_name,
+           );
+
+
+          $response = array("status" => "success", "msg" => "Service Bill Found","service_bill"=>$service_bill);
+
+
+
+       }
+       return $response;
+
+  }
+
+
+  //----------------------Service order bills---------------//
+
 //-------------------- Service order Summary details  -------------------//
 
 

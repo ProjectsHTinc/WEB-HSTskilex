@@ -48,9 +48,9 @@
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
                           <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
                           <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
-                          <li><a href="<?php echo base_url(); ?>#team-area">Team</a></li>
+                            <li><a href="#feature-area">FAQ</a></li>
                           <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
-                            <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li>
+                            <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                       </ul>
                     </div>
                 </div>

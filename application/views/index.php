@@ -66,7 +66,7 @@
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
                           <li><a href="#service-area">Services</a></li>
                           <li><a href="#about-area">About</a></li>
-                          <li><a href="#feature-area">Faq</a></li>
+                          <li><a href="#feature-area">FAQ</a></li>
                           <li><a href="#contact-area">Contact</a></li>
                           <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                         </ul>
@@ -115,7 +115,7 @@
         <!-- Header-Content -->
         <div class="container">
             <div class="row ">
-                <div class="col-xs-12 col-md-7">
+                <div class="col-xs-12 col-md-8">
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
                         <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable
@@ -129,7 +129,7 @@ From people that are capable</h2>
 </a>
                     <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="1s"><i class="fa fa-download" aria-hidden="true"></i>  Download on Play Store </a>
                 </div>
-                <div class="col-xs-12 col-md-5 hidden-xs hidden-sm">
+                <div class="col-xs-12 col-md-4 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->
                     <figure class="single-image-slide">
                         <div>

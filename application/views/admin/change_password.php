@@ -21,8 +21,8 @@
                       <input type="password" class="form-control" id="exampleInputName1" name="new_password" placeholder="New Password">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputName1">Confrim Password</label>
-                      <input type="password" class="form-control" id="exampleInputEmail3" name="confrim_password" placeholder="Confrim Password">
+                      <label for="exampleInputName1">Confirm Password</label>
+                      <input type="password" class="form-control" id="exampleInputEmail3" name="confrim_password" placeholder="Confirm Password">
                     </div>
 
                     <button type="submit" class="btn btn-success mr-2">Update Password</button>

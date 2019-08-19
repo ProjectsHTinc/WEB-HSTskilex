@@ -1381,9 +1381,16 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
        }else{
          $offer_result = $res_offer->result();
          foreach($offer_result as $rows){}
+           $file=$rows->file_name;
+           if(empty($file)){
+             $pic="";
+           }else{
+            $pic= base_url().'assets/bills/'.$file;
+
+           }
            $service_bill[]=array(
              "id"=>$rows->id,
-             "file_bill"=>$rows->file_name,
+             "file_bill"=>$pic,
            );
 
 

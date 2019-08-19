@@ -86,7 +86,12 @@ table.dataTable thead th, table.dataTable thead td{
                   <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex')" data-toggle="modal" data-target="#exampleModal-5"
                     >Unpaid</a>
               <?php  }else{ ?>
-                <p class="paid_text"><?php echo $rows->skilex_closing_status; ?></p>
+                <!-- <p class="paid_text"><?php echo $rows->skilex_closing_status; ?></p> -->
+                <?php  if($rows->skilex_closing_status=="Notreceived"){ ?>
+                  <p class="paid_text">Not Received</p>
+              <?php  }else{ ?>
+                  <p class="paid_text"><?php echo $rows->skilex_closing_status; ?></p>
+              <?php  } ?>
 
                 <?php } ?></td>
                 <td>
@@ -96,7 +101,12 @@ table.dataTable thead th, table.dataTable thead td{
                       >Unpaid</a> -->
                       <p class="paid_text">Unpaid</p>
                 <?php  }else{ ?>
-                  <p class="paid_text"><?php echo $rows->serv_prov_closing_status; ?></p>
+                  <?php  if($rows->serv_prov_closing_status=="Notreceived"){ ?>
+                    <p class="paid_text">No Received</p>
+                <?php  }else{ ?>
+                    <p class="paid_text"><?php echo $rows->serv_prov_closing_status; ?></p>
+                <?php  } ?>
+
 
                   <?php } ?></td>
 

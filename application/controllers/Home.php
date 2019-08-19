@@ -287,6 +287,7 @@ class Home extends CI_Controller {
 		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
+	
 		$data['res']=$this->loginmodel->update_profile($email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
 		echo json_encode($data['res']);
 		}else{

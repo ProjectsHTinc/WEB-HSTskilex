@@ -756,7 +756,7 @@ class Apicustomermodel extends CI_Model {
        }
       $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot);
      } else {
-       $response = array("status" => "error", "msg" => "Service order list not found");
+       $response = array("status" => "error", "msg" => "Service timeslot not found");
      }
 
     return $response;

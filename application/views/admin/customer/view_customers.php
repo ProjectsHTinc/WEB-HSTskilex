@@ -46,7 +46,7 @@
                 <td>
                   <!-- <a title="Customer details" href="<?php echo base_url(); ?>home/get_customer_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp; -->
                   <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
-                  <a title="Order list" href="<?php echo base_url(); ?>home/get_customer_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
+                  <a title="Order list" href="<?php echo base_url(); ?>home/get_customer_orders/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
 
                 </td>
             </tr>

@@ -118,7 +118,7 @@
                 <div class="col-xs-12 col-md-8">
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable <br>
 From people that are capable</h2>
 
 

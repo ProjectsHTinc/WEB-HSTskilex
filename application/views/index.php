@@ -505,9 +505,12 @@ From people that are capable</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <ul class="contact-info">
-                                <li class="wow fadeInUp" data-wow-delay="0.9s" ><span class="icon"><i class="icofont-home"></i></span>Virtual Automation Services Private Ltd ("SkilEx") <br>30/6, New Damunagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
-                                <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="icofont-envelope-open"></i></span>dhanasekar@virtualgroup.net.in</li>
-                                <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="icofont-telephone"></i></span>+91 984 321 8272</li>
+                                <li class="wow fadeInUp" data-wow-delay="0.9s" ><span class="icon">
+                                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                </span>Virtual Automation Services Private Ltd ("SkilEx") <br>30/6, New Damunagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
+                                <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>dhanasekar@virtualgroup.net.in</li>
+                                <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i>
+</span>+91 984 321 8272</li>
                                 <!-- <li class="wow fadeInUp" data-wow-delay="1.5s" ><span class="icon"><i class="icofont-globe"></i></span>www.skilex.com</li> -->
                             </ul>
                         </div>

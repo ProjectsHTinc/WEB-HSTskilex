@@ -86,7 +86,7 @@
         gender: {required: true },
         address: {required: true },
         city: {required: true },
-        phone: {required: true,digits:true,,minlength:10,maxlength:10,  remote: {
+        phone: {required: true,digits:true,minlength:10,maxlength:10,  remote: {
                  url: "<?php echo base_url(); ?>home/check_staff_phone_exist/<?php echo $rows->id; ?>",
                  type: "post"
               }

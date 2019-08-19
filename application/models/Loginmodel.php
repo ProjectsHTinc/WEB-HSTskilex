@@ -228,8 +228,8 @@ Class Loginmodel extends CI_Model
 
  	   function update_staff_profile($email,$phone,$name,$city,$address,$gender,$user_id,$id,$status){
        $staff_id=base64_decode($id)/98765;
- 			 $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status' WHERE id='$staff_id'";
- 			$result = $this->db->query($select);
+ 			  $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status' WHERE id='$staff_id'";
+ 		$result = $this->db->query($select);
  				if($result){
  					$data = array("status" => "success");
  				}else{

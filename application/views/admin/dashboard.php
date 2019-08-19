@@ -19,7 +19,7 @@
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
                       <img src="<?php echo base_url(); ?>assets/admin/images/total_providers.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
-                          <a href="<?php echo base_url(); ?>home/get_all_provider_list"><p class="card-text mb-0">Total Providers</p></a>
+                          <a href="<?php echo base_url(); ?>home/get_all_provider_list"><p class="card-text mb-0">Total Associate</p></a>
                         <div class="fluid-container">
                           <?php if(empty($res_provider_count)){
                           }else{
@@ -36,7 +36,7 @@
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
                     <img src="<?php echo base_url(); ?>assets/admin/images/total_serviceman.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
-                        <a href="<?php echo base_url(); ?>home/get_all_person_list"><p class="card-text mb-0">Total Service men</p></a>
+                        <a href="<?php echo base_url(); ?>home/get_all_person_list"><p class="card-text mb-0">Total Experts men</p></a>
                         <div class="fluid-container">
                           <?php if(empty($res_person_count)){
                           }else{

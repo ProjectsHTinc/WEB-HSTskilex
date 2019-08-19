@@ -391,7 +391,7 @@ From people that are capable</h2>
                         <p class="desc">To get the best professionals to sort all your home needs.
                         <br>  <br>
                         With the help of SkilEx App, you can book various household services at time and place of your own choice. <br>  <br>
-                          we simplify your everyday living with a variety of   <br> at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service.<br>  <br>
+                          We simplify your everyday living with a variety of   <br> at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service.<br>  <br>
                           These services are given by the professionals who are qualified to do the job in an accurate way possible.
                       </p>
 

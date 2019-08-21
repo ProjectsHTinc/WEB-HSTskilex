@@ -1097,7 +1097,7 @@ class Apicustomermodel extends CI_Model {
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
       }else{
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){
@@ -1147,7 +1147,7 @@ class Apicustomermodel extends CI_Model {
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
       }else{
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){

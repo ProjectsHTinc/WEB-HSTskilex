@@ -188,7 +188,7 @@ class Apicustomermodel extends CI_Model {
 		}
 		$message_details = "Dear Customer your OTP :".$OTP;
 		$this->sendSMS($phone_no,$message_details);
-		$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
+		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 		return $response;
 	}
 
@@ -201,7 +201,7 @@ class Apicustomermodel extends CI_Model {
     $query="INSERT INTO notification_master (user_master_id,mobile_key,mobile_type,user_stat,created_at) VALUES('$unique_number','$device_token','$mobiletype','$user_stat',NOW())";
     $res_query = $this->db->query($query);
     if($res_query){
-      	$response = array("status" => "success", "msg" => "Success");
+      	$response = array("status" => "success", "msg" => "Success","msg_en"=>"","msg_ta"=>"");
     }else{
       	$response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
     }
@@ -278,10 +278,10 @@ class Apicustomermodel extends CI_Model {
 					"user_type" => $user_type
 				);
 
-			$response = array("status" => "success", "msg" => "Login Successfully", "userData" => $userData);
+			$response = array("status" => "success", "msg" => "Login Successfully","msg_en"=>"","msg_ta"=>"","userData" => $userData);
 			return $response;
 		} else {
-			$response = array("status" => "error", "msg" => "Invalid login");
+			$response = array("status" => "error", "msg" => "Invalid login","msg_en"=>"","msg_ta"=>"");
 			return $response;
 		}
 	}
@@ -303,7 +303,7 @@ class Apicustomermodel extends CI_Model {
 				  $email_verify = $rows->email_verify;
 			}
 		}
-		$response = array("status" => "success", "msg" => "Email Verify Status", "user_master_id"=>$user_master_id, "email_verify_satus"=>$email_verify);
+		$response = array("status" => "success", "msg" => "Email Verify Status", "user_master_id"=>$user_master_id, "email_verify_satus"=>$email_verify,"msg_en"=>"","msg_ta"=>"");
 		return $response;
 	}
 
@@ -376,7 +376,7 @@ class Apicustomermodel extends CI_Model {
 			$update_result = $this->db->query($update_sql);
 			$picture_url = base_url().'assets/customers/'.$profileFileName;
 
-			$response = array("status" => "success", "msg" => "Profile Picture Updated","picture_url" =>$picture_url);
+			$response = array("status" => "success", "msg" => "Profile Picture Updated","picture_url" =>$picture_url,"msg_en"=>"","msg_ta"=>"");
 			return $response;
 	}
 //-------------------- Profile Pic Update End -------------------//
@@ -401,7 +401,7 @@ class Apicustomermodel extends CI_Model {
           "gender"=>$rows->gender,
           "profile_pic"=>$pic,
         );
-        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info);
+        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info,"msg_en"=>"","msg_ta"=>"");
 
     }else{
         $response=array("status"=>"error","msg"=>"No User information found","msg_en"=>"User details not found!","msg_ta"=>"பயனர் விபரங்கள் கிடைக்கவில்லை!");
@@ -429,10 +429,10 @@ class Apicustomermodel extends CI_Model {
             "banner_img" => $ban_pic_url
         );
       }
-          $response = array("status" => "success", "msg" => "View banner list","banners"=>$banData);
+          $response = array("status" => "success", "msg" => "View banner list","banners"=>$banData,"msg_en"=>"","msg_ta"=>"");
 
     }else{
-            $response = array("status" => "error", "msg" => "banner not found");
+            $response = array("status" => "error", "msg" => "banner not found","msg_en"=>"","msg_ta"=>"");
     }
 
     return $response;
@@ -465,7 +465,7 @@ class Apicustomermodel extends CI_Model {
 							"cat_pic_url" => $cat_pic_url
 					);
 				}
-			     	$response = array("status" => "success", "msg" => "View Category","categories"=>$catData);
+			     	$response = array("status" => "success", "msg" => "View Category","categories"=>$catData,"msg_en"=>"","msg_ta"=>"");
 
 			}else{
 			        $response = array("status" => "error", "msg" => "Category not found","msg_en"=>"Categories not found!","msg_ta"=>"பிரிவுகள் கிடைக்கவில்லை!");
@@ -498,7 +498,7 @@ class Apicustomermodel extends CI_Model {
 							"sub_cat_pic_url" => $sub_cat_pic_url
 					);
 				}
-			     	$response = array("status" => "success", "msg" => "View Sub Category","sub_categories"=>$subcatData);
+			     	$response = array("status" => "success", "msg" => "View Sub Category","sub_categories"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
 
 			}else{
 			        $response = array("status" => "error", "msg" => "Sub Category not found","msg_en"=>"Sub-categories not found!","msg_ta"=>"துணைப்பிரிவுகள் கிடைக்கவில்லை!");
@@ -531,7 +531,7 @@ class Apicustomermodel extends CI_Model {
               "service_pic_url" => $service_pic_url,
           );
         }
-            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+            $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
 
       }else{
               $response = array("status" => "error", "msg" => "Services not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
@@ -568,7 +568,7 @@ class Apicustomermodel extends CI_Model {
 
 					);
 				}
-			     	$response = array("status" => "success", "msg" => "View Services","services"=>$subcatData);
+			     	$response = array("status" => "success", "msg" => "View Services","services"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
 
 			}else{
 			        $response = array("status" => "error", "msg" => "Services not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
@@ -615,7 +615,7 @@ class Apicustomermodel extends CI_Model {
 
           );
 
-            $response = array("status" => "success", "msg" => "Service Details","service_details"=>$subcatData);
+            $response = array("status" => "success", "msg" => "Service Details","service_details"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
 
       }else{
               $response = array("status" => "error", "msg" => "Services not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
@@ -646,7 +646,7 @@ class Apicustomermodel extends CI_Model {
               );
 
 
-          $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count);
+          $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count,"msg_en"=>"","msg_ta"=>"");
         }else{
           $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
         }
@@ -681,7 +681,7 @@ class Apicustomermodel extends CI_Model {
     $query="DELETE  FROM order_cart WHERE user_master_id='$user_master_id'";
     $query_result = $this->db->query($query);
     if($query_result){
-      $response = array("status" => "success", "msg" => "All Service removed from cart");
+      $response = array("status" => "success", "msg" => "All Service removed from cart","msg_en"=>"","msg_ta"=>"");
     }else{
       $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
     }
@@ -697,7 +697,7 @@ class Apicustomermodel extends CI_Model {
     $query="SELECT oc.id as cart_id,s.service_name,s.service_ta_name,s.service_pic,oc.status,oc.user_master_id,s.rate_card,s.is_advance_payment,s.advance_amount FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.advance_amount desc";
     $res = $this->db->query($query);
     if($res->num_rows()==0){
-      $response = array("status" => "error", "msg" => "Cart is Empty");
+      $response = array("status" => "error", "msg" => "Cart is Empty","msg_en"=>"","msg_ta"=>"");
     }else{
 
       $total="SELECT sum(s.rate_card)  as grand_total FROM order_cart as oc left join main_category as mc on oc.category_id=mc.id left join sub_category as sc on oc.sub_category_id=sc.id left join services as s on oc.service_id=s.id where oc.user_master_id='$user_master_id' and oc.status='Pending' order by s.advance_amount desc";
@@ -724,7 +724,7 @@ class Apicustomermodel extends CI_Model {
           "status" => $rows->status,
         );
       }
-        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list,"grand_total"=>$grand_total);
+        $response = array("status" => "success", "msg" => "Cart list found","cart_list"=>$cart_list,"grand_total"=>$grand_total,"msg_en"=>"","msg_ta"=>"");
 
     }
       return $response;
@@ -754,7 +754,7 @@ class Apicustomermodel extends CI_Model {
            'time_range' =>$time_slot
          );
        }
-      $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot);
+      $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot,"msg_en"=>"","msg_ta"=>"");
      } else {
        $response = array("status" => "error", "msg" => "Service timeslot not found","msg_en"=>"Service time not found!","msg_ta"=>"சேவை நேரம் கிடைக்கவில்லை!");
      }
@@ -811,7 +811,7 @@ class Apicustomermodel extends CI_Model {
            $delete_cart="DELETE FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
            $res_delete = $this->db->query($delete_cart);
 
-             $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details);
+             $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details,"msg_en"=>"","msg_ta"=>"");
          }else{
            $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
          }
@@ -864,7 +864,7 @@ class Apicustomermodel extends CI_Model {
 
             $delete_cart="DELETE FROM order_cart WHERE user_master_id='$user_master_id' AND status='Pending'";
             $res_delete = $this->db->query($delete_cart);
-              $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details);
+              $response = array("status" => "success", "msg" => "Service done","service_details"=>$service_details,"msg_en"=>"","msg_ta"=>"");
           }else{
             $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
           }
@@ -908,9 +908,9 @@ class Apicustomermodel extends CI_Model {
               $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$last_id','Online','123','123','Advance','Success',NOW(),'$user_master_id')";
               $res_sph=$this->db->query($insert_sph);
               if($res_sph){
-                $response = array("status" => "success", "msg" => "Advance paid Successfully");
+                $response = array("status" => "success", "msg" => "Advance paid Successfully","msg_en"=>"","msg_ta"=>"");
               }else{
-                $response = array("status" => "error", "msg" => "Service not found");
+                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
               }
             }else{
               $result_sp=$res_sp->result();
@@ -927,13 +927,13 @@ class Apicustomermodel extends CI_Model {
               $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$service_payment_id','Online','123','123','Advance','Success',NOW(),'$user_master_id')";
               $res_sph=$this->db->query($insert_sph);
               if($res_sph){
-                $response = array("status" => "success", "msg" => "Advance paid Successfully");
+                $response = array("status" => "success", "msg" => "Advance paid Successfully","msg_en"=>"","msg_ta"=>"");
               }else{
-                $response = array("status" => "error", "msg" => "Service not found");
+                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
               }
             }
       }else{
-           $response = array("status" => "error", "msg" => "Service not found");
+           $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
       }
        return $response;
 
@@ -952,9 +952,9 @@ class Apicustomermodel extends CI_Model {
       if($res->num_rows()==1){
         foreach($res->result() as $rows){}
           $order_status=$rows->status;
-          $response = array("status" => "success", "msg" => "Service status","order_status"=>$order_status);
+          $response = array("status" => "success", "msg" => "Service status","order_status"=>$order_status,"msg_en"=>"","msg_ta"=>"");
       }else{
-        $response = array("status" => "error", "msg" => "Service not found");
+        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
 
       }
       return $response;
@@ -984,7 +984,7 @@ class Apicustomermodel extends CI_Model {
           $long= $result[1];
 
           if($advance_check=='N'){
-              $response = array("status" => "error", "msg" => "Service Advance not Paid");
+              $response = array("status" => "error", "msg" => "Service Advance not Paid","msg_en"=>"","msg_ta"=>"");
           }else{
 
             $get_last_service_provider_id="SELECT * FROM service_orders where serv_prov_id!=0 ORDER BY id,serv_prov_id LIMIT 1";
@@ -1009,7 +1009,7 @@ class Apicustomermodel extends CI_Model {
               distance < 25 ORDER BY distance LIMIT 0 , 50";
               $ex_next_id=$this->db->query($get_sp_id);
               if($ex_next_id->num_rows()==0){
-                $response = array("status" => "error", "msg" => "Hitback");
+                $response = array("status" => "error", "msg" => "Hitback","msg_en"=>"","msg_ta"=>"");
               }else{
                 $res_next_ip=$ex_next_id->result();
                 foreach($res_next_ip as $rows_id_next){}
@@ -1029,7 +1029,7 @@ class Apicustomermodel extends CI_Model {
                 $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
                 $res_quest=$this->db->query($request_insert_query);
                 if($res_quest){
-                  $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept");
+                  $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
                 }else{
                   $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
                 }
@@ -1040,7 +1040,7 @@ class Apicustomermodel extends CI_Model {
         }
            return $response;
       }else{
-        $response = array("status" => "error", "msg" => "Service not found");
+        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
       }
        return $response;
 
@@ -1057,7 +1057,7 @@ class Apicustomermodel extends CI_Model {
       $query_offer="SELECT * FROM offer_master WHERE status='Active' ORDER BY id DESC";
       $res_offer = $this->db->query($query_offer);
       if($res_offer->num_rows()==0){
-        	$response_offer = array("status" => "error", "msg" => "No Offers found");
+        	$response_offer = array("status" => "error", "msg" => "No Offers found","msg_en"=>"","msg_ta"=>"");
       }else{
         $offer_result = $res_offer->result();
         foreach($offer_result as $rows_offers){
@@ -1075,7 +1075,7 @@ class Apicustomermodel extends CI_Model {
       }
 
 
-      $response=array("status"=>"success","msg"=>"Service and offer list","offer_response"=>$offer_list);
+      $response=array("status"=>"success","msg"=>"Service and offer list","offer_response"=>$offer_list,"msg_en"=>"","msg_ta"=>"");
 
 
       return $response;
@@ -1097,7 +1097,7 @@ class Apicustomermodel extends CI_Model {
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
       }else{
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){
@@ -1120,7 +1120,7 @@ class Apicustomermodel extends CI_Model {
 
 
           );
-            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
 
         }
       }
@@ -1166,7 +1166,7 @@ class Apicustomermodel extends CI_Model {
             "time_slot"=>$time_slot,
             "order_status"=>$rows_service->order_status,
           );
-            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
 
         }
       }
@@ -1195,7 +1195,7 @@ class Apicustomermodel extends CI_Model {
       WHERE  so.customer_id='$user_master_id' AND (so.status='Paid' OR so.status='Cancelled' OR so.status='Completed') ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
       }else{
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){
@@ -1216,7 +1216,7 @@ class Apicustomermodel extends CI_Model {
             "review"=>$rows_service->review,
             "order_status"=>$rows_service->order_status,
           );
-            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
 
         }
       }
@@ -1241,7 +1241,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
  WHERE so.id='$service_order_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
       }else{
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){  }
@@ -1275,7 +1275,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "order_status"=>$rows_service->order_status,
 
           );
-            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list);
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
 
 
       }
@@ -1358,7 +1358,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "net_service_amount"=>$rows_service->net_service_amount,
 
           );
-            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id);
+            $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,'order_id'=>$order_id,"msg_en"=>"","msg_ta"=>"");
 
         }
       }
@@ -1394,7 +1394,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
            );
 
 
-          $response = array("status" => "success", "msg" => "Service Bill Found","service_bill"=>$service_bill);
+          $response = array("status" => "success", "msg" => "Service Bill Found","service_bill"=>$service_bill,"msg_en"=>"","msg_ta"=>"");
 
 
 
@@ -1415,7 +1415,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
       $select="SELECT * FROM cancel_master WHERE user_type=5";
          $res_offer = $this->db->query($select);
          if($res_offer->num_rows()==0){
-             $response = array("status" => "error", "msg" => "No  Service found");
+             $response = array("status" => "error", "msg" => "No  Service found","msg_en"=>"","msg_ta"=>"");
          }else{
            $offer_result = $res_offer->result();
            foreach($offer_result as $rows){
@@ -1425,7 +1425,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
              );
             }
 
-            $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list);
+            $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list,"msg_en"=>"","msg_ta"=>"");
 
 
 
@@ -1441,7 +1441,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
-                $response = array("status" => "error", "msg" => "No  Service found");
+                $response = array("status" => "error", "msg" => "No  Service found","msg_en"=>"","msg_ta"=>"");
             }else{
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){ }
@@ -1454,7 +1454,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
               $res_update = $this->db->query($update);
               if($res_update){
-                  $response = array("status" => "success", "msg" => "Service Cancelled successfully");
+                  $response = array("status" => "success", "msg" => "Service Cancelled successfully","msg_en"=>"","msg_ta"=>"");
               }else{
                 $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
               }
@@ -1475,7 +1475,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             $select="SELECT s.id,s.service_name,s.service_ta_name,s.rate_card,s.service_pic,s.rate_card_details,s.rate_card_details_ta FROM  service_order_additional AS soa LEFT JOIN services AS s ON soa.service_id=s.id WHERE service_order_id='$service_order_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
-                $response = array("status" => "error", "msg" => "No Service found");
+                $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
             }else{
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){
@@ -1497,7 +1497,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
               }
 
-              $response = array("status" => "success", "msg" => "service found",'service_list'=>$service_list);
+              $response = array("status" => "success", "msg" => "service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
             }
             return $response;
 
@@ -1530,7 +1530,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
               }
 
-              $response = array("status" => "success", "msg" => "Offers found",'offer_details'=>$offer_list);
+              $response = array("status" => "success", "msg" => "Offers found",'offer_details'=>$offer_list,"msg_en"=>"","msg_ta"=>"");
             }
             return $response;
 
@@ -1572,7 +1572,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
 
                 	$update_result = $this->db->query($update);
                   if($update_result){
-                    $response = array("status" => "success", "msg" => "You saved $rows_coupon->offer_percent");
+                    $response = array("status" => "success", "msg" => "You saved $rows_coupon->offer_percent","msg_en"=>"","msg_ta"=>"");
                   }else{
                     $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
                   }
@@ -1610,7 +1610,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
           $update="UPDATE service_payments SET coupon_id='0',discount_amt='0',net_service_amount='$total',payable_amount='$payable' WHERE service_order_id='$service_order_id' ";
           $update_result = $this->db->query($update);
           if($update_result){
-            $response = array("status" => "success", "msg" => "Coupon removed Successfully");
+            $response = array("status" => "success", "msg" => "Coupon removed Successfully","msg_en"=>"","msg_ta"=>"");
           }else{
             $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
           }
@@ -1659,7 +1659,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                       "order_id"=>$order_id,
                       "payable_amount"=>$payable,
                     );
-                    $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details);
+                    $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details,"msg_en"=>"","msg_ta"=>"");
                   }else{
                     $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
                   }
@@ -1691,7 +1691,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
              );
             $response = array("status" => "success", "msg" => "Tracking found","track_info"=>$tracking_info);
            } else {
-             $response = array("status" => "error", "msg" => "No Tracking found");
+             $response = array("status" => "error", "msg" => "No Tracking found","msg_en"=>"","msg_ta"=>"");
            }
 
            return $response;
@@ -1718,13 +1718,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
         $insert="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Offline','Netamount','Success',NOW(),'$user_master_id')";
         $res_ins = $this->db->query($insert);
         if($res_ins){
-           $response = array("status" => "success", "msg" => "Thank you for Payment");
+           $response = array("status" => "success", "msg" => "Thank you for Payment","msg_en"=>"","msg_ta"=>"");
         }else{
           $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
         }
 
       } else {
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
       }
 
       return $response;
@@ -1742,7 +1742,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
 		$insert_sql = "INSERT INTO service_reviews (service_order_id, customer_id, rating, review, status,created_at,created_by) VALUES
 					('". $service_order_id . "','". $user_master_id . "','". $ratings . "', '". $reviews . "','Pending', now(),'". $user_master_id . "')";
 		$insert_result = $this->db->query($insert_sql);
-		$response = array("status" => "success", "msg" => "Review Added");
+		$response = array("status" => "success", "msg" => "Review Added","msg_en"=>"","msg_ta"=>"");
 		return $response;
 	}
 //-------------------- Service Reviews Add End -------------------//
@@ -1756,9 +1756,9 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 		 if($res->num_rows()>0){
 			 $review_list = $res->result();
-			$response = array("status" => "success", "msg" => "View Reviews List","services_reviewlist"=>$review_list);
+			$response = array("status" => "success", "msg" => "View Reviews List","services_reviewlist"=>$review_list,"msg_en"=>"","msg_ta"=>"");
 		 } else {
-			 $response = array("status" => "error", "msg" => "Service order Reviews not found");
+			 $response = array("status" => "error", "msg" => "Service order Reviews not found","msg_en"=>"","msg_ta"=>"");
 		 }
 
 		 return $response;

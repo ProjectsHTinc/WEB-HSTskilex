@@ -89,6 +89,21 @@ class Transaction extends CI_Controller {
 		 		 }
 	 }
 
+	 public function day_wise_transaction(){
+
+				 $data=$this->session->userdata();
+				 $user_id=$this->session->userdata('user_id');
+				 $user_type=$this->session->userdata('user_role');
+				 if($user_type=='1'){
+					 $data['res']=$this->transactionmodel->day_wise_transaction();
+					 $this->load->view('admin/admin_header');
+					 $this->load->view('admin/transactions/day_wise_transaction',$data);
+					 $this->load->view('admin/admin_footer');
+				 }else {
+						redirect('/login');
+				 }
+	 }
+
 	 public function online_payment_details(){
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');

@@ -170,12 +170,12 @@ class Apispersonmodel extends CI_Model {
 		$assigned_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND status = 'Assigned'";
 		$assigned_count_res = $this->db->query($assigned_count);
 		$assigned_orders_count = $assigned_count_res->num_rows();
-		
+
 		$ongoing_count = "SELECT * FROM service_orders WHERE serv_pers_id = '".$user_master_id."' AND (status = 'Initiated' OR status = 'Started' OR status = 'Ongoing')";
 		$ongoing_count_res = $this->db->query($ongoing_count);
 		$ongoing_orders_count = $ongoing_count_res->num_rows();
 
-		
+
 		$dashboardData  = array(
 				"serv_assigned_count" => $assigned_orders_count,
 				"serv_ongoing_count" => $ongoing_orders_count,
@@ -197,25 +197,25 @@ class Apispersonmodel extends CI_Model {
 
 		$digits = 4;
 		$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
-			
+
 		if($user_result->num_rows()>0)
 		{
 			foreach ($user_result->result() as $rows)
 			{
 				  $user_master_id = $rows->id;
 			}
-			
+
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$message_details = "Dear Customer your OTP :".$OTP;
 			$this->sendSMS($phone_no,$message_details);
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
-		
+
 		} else {
 			 $response = array("status" => "error", "msg" => "Invalid login");
 		}
-		
+
 		return $response;
 	}
 
@@ -232,7 +232,7 @@ class Apispersonmodel extends CI_Model {
 		{
 			$update_sql = "UPDATE login_users SET mobile_verify ='Y' WHERE id='$user_master_id'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
 			$gcm_result = $this->db->query($gcmQuery);
 			$gcm_ress = $gcm_result->result();
@@ -241,11 +241,11 @@ class Apispersonmodel extends CI_Model {
 				 $sQuery = "INSERT INTO notification_master (user_master_id,mobile_key,mobile_type) VALUES ('". $user_master_id . "','". $device_token . "','". $mobiletype . "')";
 				 $update_gcm = $this->db->query($sQuery);
 			}
-						
+
 			$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.user_type, B.full_name, B.gender, B.profile_pic, B.address FROM login_users A, service_person_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
 			$user_result = $this->db->query($user_sql);
 			if($user_result->num_rows()>0)
-			{			
+			{
 				foreach ($user_result->result() as $rows)
 				{
 						$user_master_id = $rows->user_master_id;
@@ -265,7 +265,7 @@ class Apispersonmodel extends CI_Model {
 					  	$user_type = $rows->user_type;
 				}
 			}
-			
+
 			$userData  = array(
 					"user_master_id" => $user_master_id,
 					"full_name" => $full_name,
@@ -331,8 +331,8 @@ class Apispersonmodel extends CI_Model {
 		$subject = "SKILEX - Verification Email";
 		$email_message = 'Please Click the Verification link. <a href="'. base_url().'home/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
 		$this->sendMail($email_id,$subject,$email_message);
-		
-		
+
+
 		$response = array("status" => "success", "msg" => "Email Verification Sent");
 		return $response;
 	}
@@ -345,7 +345,7 @@ class Apispersonmodel extends CI_Model {
 	{
 		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',edu_qualification='$edu_qualification',language_known='$language_known',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
-			
+
 		$response = array("status" => "success", "msg" => "Profile Updated");
 		return $response;
 	}
@@ -435,7 +435,8 @@ class Apispersonmodel extends CI_Model {
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id
+           AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -454,7 +455,7 @@ class Apispersonmodel extends CI_Model {
 	{
             $update_sql = "UPDATE service_orders SET status = 'Initiated', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Initiated',NOW(),'". $user_master_id . "')";
 			$ins_query = $this->db->query($sQuery);
 
@@ -481,15 +482,15 @@ class Apispersonmodel extends CI_Model {
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
-				
+
+
 		//$title = "Service Request Initiated";
 		$message_details = "SKILEX - Service Request Initiated";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
-	
+
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-		
+
 			$response = array("status" => "success", "msg" => "Service Order Initiated");
 			return $response;
 	}
@@ -618,7 +619,8 @@ class Apispersonmodel extends CI_Model {
 					service_timeslot E,
 					service_provider_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id
+           AND A.serv_prov_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -639,34 +641,34 @@ class Apispersonmodel extends CI_Model {
 	{
 		$sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."'";
 		$user_result = $this->db->query($sql);
-		
+
 		if($user_result->num_rows()>0)
 		{
 			foreach ($user_result->result() as $rows)
 			{
 				   $contact_person_number = $rows->contact_person_number;
 			}
-			
+
 			$digits = 6;
 			$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 			$update_sql = "UPDATE service_orders SET service_otp = '".$OTP."', updated_at=NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$update_sql = "UPDATE service_orders SET status = 'Started', start_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Started',NOW(),'". $user_master_id . "')";
 			$ins_query = $this->db->query($sQuery);
-				
+
 			 $message_details = "Dear Customer - Service OTP :".$OTP;
 			$this->sendSMS($contact_person_number,$message_details);
-			
+
 			$response = array("status" => "success", "msg" => "OTP send");
 		} else {
 			$response = array("status" => "error", "msg" => "Something Wrong");
 		}
-		
+
 		return $response;
 	}
 //#################### Request otp End ####################//
@@ -678,15 +680,15 @@ class Apispersonmodel extends CI_Model {
 	{
 		$sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."' AND service_otp = '".$service_otp."'";
 		$user_result = $this->db->query($sql);
-		
+
 		if($user_result->num_rows()>0)
 		{
 			$update_sql = "UPDATE service_orders SET status = 'Ongoing', start_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
-			
+
 			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
 			$ins_query = $this->db->query($sQuery);
-						
+
 			$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 			$user_result = $this->db->query($sQuery);
 			if($user_result->num_rows()>0)
@@ -709,20 +711,20 @@ class Apispersonmodel extends CI_Model {
 						$customer_mobile_type = $rows->mobile_type;
 					}
 			}
-			
-					
+
+
 			//$title = "Service Request Ongoing";
 			$message_details = "SKILEX - Service Request Ongoing";
-			
+
 			$this->sendSMS($contact_person_number,$message_details);
-		
+
 			//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-	
+
 			$response = array("status" => "success", "msg" => "Service Started");
 		} else {
 			$response = array("status" => "error", "msg" => "Something Wrong");
 		}
-		
+
 		return $response;
 	}
 //#################### Start services End ####################//
@@ -763,7 +765,8 @@ class Apispersonmodel extends CI_Model {
 					service_timeslot E,
 					service_provider_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -795,8 +798,8 @@ class Apispersonmodel extends CI_Model {
 					main_category B,
 				WHERE
 					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.status = 'Active'";
-		$ser_result = $this->db->query($sQuery); 
-		
+		$ser_result = $this->db->query($sQuery);
+
 		$category_result = $ser_result->result();
 		$category_count = $ser_result->num_rows();
 
@@ -806,7 +809,7 @@ class Apispersonmodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -818,7 +821,7 @@ class Apispersonmodel extends CI_Model {
 	{
 		$sQuery = "SELECT * FROM sub_category WHERE main_cat_id = '$category_id' AND status='Active'";
 		$cat_result = $this->db->query($sQuery);
-		
+
 		$category_result = $cat_result->result();
 		$category_count = $cat_result->num_rows();
 
@@ -828,7 +831,7 @@ class Apispersonmodel extends CI_Model {
 		} else {
 			$response = array("status" => "error", "msg" => "Category Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -855,8 +858,8 @@ public function Services_list($category_id,$sub_category_id)
 					sub_category C
 				WHERE
 					A.main_cat_id = '$category_id' AND A.sub_cat_id = '$sub_category_id' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.status = 'Active'";
-		$ser_result = $this->db->query($sQuery); 
-		
+		$ser_result = $this->db->query($sQuery);
+
 		$services_result = $ser_result->result();
 		$services_count = $ser_result->num_rows();
 
@@ -866,10 +869,10 @@ public function Services_list($category_id,$sub_category_id)
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
-	
+
 	/* public function Services_list($user_master_id)
 	{
 		$sQuery = "SELECT
@@ -891,8 +894,8 @@ public function Services_list($category_id,$sub_category_id)
 					services D
 				WHERE
 					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.`service_id` = D.id AND A.status = 'Active'";
-		$ser_result = $this->db->query($sQuery); 
-		
+		$ser_result = $this->db->query($sQuery);
+
 		$services_result = $ser_result->result();
 		$services_count = $ser_result->num_rows();
 
@@ -902,7 +905,7 @@ public function Services_list($category_id,$sub_category_id)
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	} */
 
@@ -914,13 +917,13 @@ public function Services_list($category_id,$sub_category_id)
 	{
 		$sQuery = "INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status,created_at,created_by) VALUES ('". $service_order_id . "','". $service_id . "','". $ad_service_rate_card . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		if($ins_query){
 				$response=array("status" => "success","msg" => "Services Added Sucessfully!..");
            }else{
 				$response=array("status" => "error","msg" => "Something Wrong");
            }
-		   
+
 		return $response;
 	}
 
@@ -948,7 +951,7 @@ public function Services_list($category_id,$sub_category_id)
 					WHERE
 						A.service_order_id = '".$service_order_id."' AND A.service_id = B.id AND B.main_cat_id = C.id AND B.sub_cat_id = D.id";
 		$serv_result = $this->db->query($sQuery);
-		
+
 		$service_result = $serv_result->result();
 		$service_count = $serv_result->num_rows();
 
@@ -958,7 +961,7 @@ public function Services_list($category_id,$sub_category_id)
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -977,7 +980,7 @@ public function Services_list($category_id,$sub_category_id)
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}
-		
+
 		return $response;
 	}
 
@@ -1004,18 +1007,18 @@ public function Services_list($category_id,$sub_category_id)
 	public function List_service_bills($user_master_id,$service_order_id)
 	{
 		 $bill_url = base_url().'assets/bills/';
-		
+
 		$sQuery = "SELECT * FROM service_order_bills WHERE service_order_id = '".$service_order_id."' AND serv_pers_id ='".$user_master_id."'";
 		$doc_result = $this->db->query($sQuery);
-		
-		
+
+
 		if($doc_result->num_rows()!=0)
 		{
 				foreach ($doc_result->result() as $rows)
 				{
 					 $id = $rows->id;
 					 $bill_copy = $rows->file_name;
-					
+
 					$data[]  = array(
 						"id" => $id,
 						"bill_copy" => $bill_copy,
@@ -1027,7 +1030,7 @@ public function Services_list($category_id,$sub_category_id)
 			$response = array("status" => "error", "msg" => "Bills Not Found");
 		}
 		return $response;
-		
+
 	}
 
 //#################### Service bills list End ####################//
@@ -1046,7 +1049,7 @@ public function Services_list($category_id,$sub_category_id)
 		} else {
 			$response = array("status" => "error", "msg" => "Something Wrong");
 		}
-		
+
 		return $response;
 	}
 
@@ -1061,7 +1064,7 @@ public function Services_list($category_id,$sub_category_id)
 		$res_result = $this->db->query($sQuery);
 		$reason_result = $res_result->result();
 
-		
+
 		if($res_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Cancel Service Reasons", "list_reasons"=>$reason_result);
 		} else {
@@ -1082,11 +1085,11 @@ public function Services_list($category_id,$sub_category_id)
 
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
+
 		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
-		
+
+
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1109,21 +1112,21 @@ public function Services_list($category_id,$sub_category_id)
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
-				
+
+
 		//$title = "Service Request Canceled";
 		$message_details = "SKILEX - Service Request Canceled";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
-	
+
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-		
+
 		if($update_result){
 				$response=array("status" => "success","msg" => "Cancel Services");
            }else{
 				$response=array("status" => "error");
            }
-		   
+
 		return $response;
 	}
 
@@ -1189,7 +1192,7 @@ public function Services_list($category_id,$sub_category_id)
 					D.service_ta_name,
 					E.from_time,
 					E.to_time
-					
+
 				FROM
 					service_orders A,
 					main_category B,
@@ -1220,7 +1223,7 @@ public function Services_list($category_id,$sub_category_id)
 					 $cancel_user_id = $rows->cancel_user_id;
 				}
 			}
-			
+
 		if ($role_id == '3'){
 			$usrQuery = "SELECT owner_full_name AS name FROM service_provider_details WHERE user_master_id = '".$cancel_user_id."' LIMIT 1";
 		} else if ($role_id == '4'){
@@ -1231,7 +1234,7 @@ public function Services_list($category_id,$sub_category_id)
 		}
 			$usr_ress = $this->db->query($usrQuery);
 			$usr_result = $usr_ress->result();
-		
+
 		if($serv_result->num_rows()>0) {
 			$response = array("status" => "success", "msg" => "Service Order Details", "detail_services_order"=>$service_result, "cancel_reason"=>$reason_result, "canceld_by"=>$usr_result);
 		} else {
@@ -1275,26 +1278,26 @@ public function Services_list($category_id,$sub_category_id)
 			}
 
 		$total_amount  = $service_rate_card+$add_service_amount;
-		
+
 		$sQuery = "SELECT * FROM service_payments WHERE service_order_id = '".$service_order_id."'";
 		$query_res = $this->db->query($sQuery);
 			if($query_res->num_rows()>0) {
 				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', net_service_amount = '". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
-				$update_result = $this->db->query($sQuery); 
-					
+				$update_result = $this->db->query($sQuery);
+
 			} else {
-				
+
 				$sQuery = "INSERT INTO service_payments (service_order_id,service_amount,ad_service_amount,total_service_amount,status,created_at,created_by) VALUES ('". $service_order_id . "','". $service_rate_card . "','". $add_service_amount . "','". $total_amount . "','Pending',NOW(),'". $user_master_id . "')";
 				$ins_query = $this->db->query($sQuery);
 			}
-		
+
 		$sQuery = "UPDATE service_orders SET status = 'Completed', finish_datetime =NOW(), updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($sQuery);
-		
+
 		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Completed',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
-		
-		
+
+
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 		$user_result = $this->db->query($sQuery);
 		if($user_result->num_rows()>0)
@@ -1317,21 +1320,21 @@ public function Services_list($category_id,$sub_category_id)
 					$customer_mobile_type = $rows->mobile_type;
 				}
 		}
-		
-				
+
+
 		$title = "Service Request Completed";
 		$message_details = "SKILEX - Service Request Completed";
-		
+
 		$this->sendSMS($contact_person_number,$message_details);
-	
+
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
-	
-		
+
+
 			$response=array("status" => "success","msg" => "Completed Services");
 	   }else{
 			$response=array("status" => "error","msg" => "Something Wrong");
 	   }
-		   
+
 		return $response;
 	}
 

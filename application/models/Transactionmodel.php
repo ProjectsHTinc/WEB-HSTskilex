@@ -41,6 +41,12 @@ Class Transactionmodel extends CI_Model
 
         }
 
+        function day_wise_transaction(){
+       $check="SELECT service_date,sum(total_service_per_day) as service_per_day,sum(serv_total_amount) as total_amt  FROM daily_payment_transaction GROUP by service_date order by service_date desc";
+          $result=$this->db->query($check);
+          return $result->result();
+
+          }
 
 
 

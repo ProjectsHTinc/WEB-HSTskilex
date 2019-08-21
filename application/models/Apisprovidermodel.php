@@ -407,7 +407,7 @@ class Apisprovidermodel extends CI_Model {
 						}
             $documet_list=array("status"=>"success","msg"=>"Document found","documents_list"=>$doc_list);
 				}else{
-          $documet_list=array("status"=>"error","msg"=>"No data");
+          $documet_list=array("status"=>"error","msg"=>"No Document found");
         }
 
 				$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='".$user_master_id."'";

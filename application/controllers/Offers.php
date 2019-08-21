@@ -42,10 +42,13 @@ class Offers extends CI_Controller {
 				$status=$this->db->escape_str($this->input->post('status'));
 				$data['res']=$this->offersmodel->create_offers($offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id);
 				if($data['res']['status']=="success"){
-					$this->session->set_flashdata('msg','Successfully Added' );
+					//$this->session->set_flashdata('msg','Successfully Added' );
+					$messge = array('message' => 'Successfully Added','class' => 'alert alert-success fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('offers/#list' );
 				}else{
-					$this->session->set_flashdata('msg',$data['res']['status']);
+					$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+					$this->session->set_flashdata('msg', $messge);
 					redirect('offers/#list');
 				}
 
@@ -118,10 +121,12 @@ class Offers extends CI_Controller {
 			 $offer_id=$this->db->escape_str($this->input->post('offer_id'));
 			 $data['res']=$this->offersmodel->update_offers($offer_id,$offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id);
 			 if($data['res']['status']=="success"){
-				 $this->session->set_flashdata('msg','Successfully Updated' );
+				 $messge = array('message' => 'Successfully Updated','class' => 'alert alert-success fade in');
+				 $this->session->set_flashdata('msg', $messge);
 				 redirect('offers/#list' );
 			 }else{
-				 $this->session->set_flashdata('msg',$data['res']['status']);
+				 $messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+				 $this->session->set_flashdata('msg', $messge);
 				 redirect('offers/#list');
 			 }
 		 }

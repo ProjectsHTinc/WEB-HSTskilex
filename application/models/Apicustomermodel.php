@@ -910,7 +910,7 @@ class Apicustomermodel extends CI_Model {
               if($res_sph){
                 $response = array("status" => "success", "msg" => "Advance paid Successfully","msg_en"=>"","msg_ta"=>"");
               }else{
-                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
+                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
               }
             }else{
               $result_sp=$res_sp->result();
@@ -929,11 +929,11 @@ class Apicustomermodel extends CI_Model {
               if($res_sph){
                 $response = array("status" => "success", "msg" => "Advance paid Successfully","msg_en"=>"","msg_ta"=>"");
               }else{
-                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
+                $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
               }
             }
       }else{
-           $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
+           $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
       }
        return $response;
 
@@ -954,7 +954,7 @@ class Apicustomermodel extends CI_Model {
           $order_status=$rows->status;
           $response = array("status" => "success", "msg" => "Service status","order_status"=>$order_status,"msg_en"=>"","msg_ta"=>"");
       }else{
-        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
+        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
 
       }
       return $response;
@@ -1040,7 +1040,7 @@ class Apicustomermodel extends CI_Model {
         }
            return $response;
       }else{
-        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"","msg_ta"=>"");
+        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
       }
        return $response;
 

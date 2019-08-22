@@ -363,7 +363,7 @@ class Apicustomermodel extends CI_Model {
 		$update_sql = "UPDATE customer_details SET full_name ='$full_name', gender ='$gender' WHERE user_master_id ='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 
-		$response = array("status" => "success", "msg" => "Profile Updated");
+		$response = array("status" => "success", "msg" => "Profile Updated","msg_en"=>"","msg_ta"=>"");
 		return $response;
 	}
 

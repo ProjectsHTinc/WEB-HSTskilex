@@ -321,9 +321,11 @@ Class Loginmodel extends CI_Model
        }
 
        function get_all_person_list(){
-         $query="SELECT lu.id,spd.full_name,vs.online_status,lu.status,lu.updated_at from vendor_status as vs
-        left join service_person_details as spd on spd.user_master_id=vs.serv_pro_id
-        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=4 order by lu.id desc";
+         $query="SELECT lu.id,lu.status,spd.full_name,vs.online_status,lu.updated_at
+         from login_users as lu
+         left join service_person_details as spd on spd.user_master_id=lu.id
+         left join vendor_status as vs on vs.serv_pro_id=lu.id
+         where lu.user_type=4 and spd.serv_pers_verify_status='Approved' ORDER BY lu.id DESC";
          $resultset=$this->db->query($query);
          return $resultset->result();
 
@@ -331,9 +333,11 @@ Class Loginmodel extends CI_Model
 
        function get_all_prov_person_list($pro_id){
           $id=base64_decode($pro_id)/98765;
-         $query="SELECT lu.id,spd.full_name,vs.online_status,lu.status,lu.updated_at from vendor_status as vs
-        left join service_person_details as spd on spd.user_master_id=vs.serv_pro_id
-        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=4 and service_provider_id='$id' order by lu.id desc";
+        $query="SELECT lu.id,lu.status,spd.full_name,vs.online_status,lu.updated_at
+        from login_users as lu
+        left join service_person_details as spd on spd.user_master_id=lu.id
+        left join vendor_status as vs on vs.serv_pro_id=lu.id
+        where lu.user_type=4 and spd.serv_pers_verify_status='Approved' and service_provider_id='$id' ORDER BY lu.id DESC";
          $resultset=$this->db->query($query);
          return $resultset->result();
 

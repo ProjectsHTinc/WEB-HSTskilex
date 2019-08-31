@@ -212,7 +212,14 @@ class Home extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 			if($user_type== 1){
-				$data['res']=$this->loginmodel->get_all_person_list();
+				$pro_id=$this->uri->segment(3);
+				if(empty($pro_id)){
+						$data['res']=$this->loginmodel->get_all_person_list();
+				}else{
+						$data['res']=$this->loginmodel->get_all_prov_person_list($pro_id);
+				}
+
+
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/providers/view_persons',$data);
 				$this->load->view('admin/admin_footer');
@@ -287,7 +294,7 @@ class Home extends CI_Controller {
 		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
-	
+
 		$data['res']=$this->loginmodel->update_profile($email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
 		echo json_encode($data['res']);
 		}else{

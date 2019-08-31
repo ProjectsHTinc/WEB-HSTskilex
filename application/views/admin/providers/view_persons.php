@@ -10,7 +10,7 @@
           </nav>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">View Service Experts list</h4>
+              <h4 class="card-title">View Service Experts list <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">

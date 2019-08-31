@@ -34,7 +34,7 @@
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $rows->owner_full_name; ?> <br><br> <?php echo $rows->phone_no; ?><br><br> <?php echo $rows->email; ?></td>
-                <td><?php echo $rows->document_verify; ?></td>
+                <td><?php echo $rows->serv_prov_verify_status; ?></td>
                 <td><?php echo $rows->profile_pic; ?></td>
                 <td><?php echo $rows->company_status; ?></td>
                 <td><?php echo $rows->no_of_service_person; ?></td>

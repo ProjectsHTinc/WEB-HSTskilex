@@ -14,7 +14,7 @@ Class Verificationmodel extends CI_Model
 
 
   function get_all_vendors(){
-    $select="SELECT lu.id as user_master_id,lu.status as login_status,lu.*,spd.* FROM login_users as lu left join service_provider_details as spd on spd.user_master_id=lu.id where lu.user_type='3' and document_verify='N' ORDER BY lu.id DESC";
+    $select="SELECT lu.id as user_master_id,lu.status as login_status,lu.*,spd.* FROM login_users as lu left join service_provider_details as spd on spd.user_master_id=lu.id where lu.user_type='3' and (spd.serv_prov_verify_status='Rejected' OR spd.serv_prov_verify_status='Pending') ORDER BY lu.id DESC";
     $result=$this->db->query($select);
     return $result->result();
   }
@@ -42,6 +42,10 @@ Class Verificationmodel extends CI_Model
 
   function update_serv_verify_status($status,$id){
     $pro_id=base64_decode($id)/98765;
+    if($status=='Approved'){
+      $update_lu="UPDATE login_users SET document_verify='Y' WHERE id='$pro_id'";
+      $result_lu=$this->db->query($update_lu);
+    }
     $update="UPDATE service_provider_details SET serv_prov_verify_status='$status' WHERE user_master_id='$pro_id'";
     $result=$this->db->query($update);
     if($result){
@@ -150,6 +154,11 @@ Class Verificationmodel extends CI_Model
 
   function update_serv_person_verify_status($status,$id){
     $pro_id=base64_decode($id)/98765;
+    if($status=='Approved'){
+      $update_lu="UPDATE login_users SET document_verify='Y' WHERE id='$pro_id'";
+      $result_lu=$this->db->query($update_lu);
+    }
+
     $update="UPDATE service_person_details SET serv_pers_verify_status='$status' WHERE user_master_id='$pro_id'";
     $result=$this->db->query($update);
     if($result){

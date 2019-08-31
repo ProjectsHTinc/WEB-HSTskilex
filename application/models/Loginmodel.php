@@ -312,7 +312,7 @@ Class Loginmodel extends CI_Model
        function get_all_provider_list(){
          $query="SELECT lu.id,spd.owner_full_name,vs.online_status,lu.status,spd.company_status,lu.updated_at from vendor_status as vs
         left join service_provider_details as spd on spd.user_master_id=vs.serv_pro_id
-        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=3 order by lu.id desc";
+        left join login_users as lu on lu.id=vs.serv_pro_id where lu.user_type=3 and spd.serv_prov_verify_status='Approved' order by lu.id desc";
          $resultset=$this->db->query($query);
          return $resultset->result();
 

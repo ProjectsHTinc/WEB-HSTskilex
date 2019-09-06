@@ -1007,7 +1007,7 @@ class Apicustomermodel extends CI_Model {
               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.id , '$next_id') GROUP BY spps.user_master_id HAVING
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
               distance < 50 ORDER BY distance LIMIT 0 , 50";
               $ex_next_id=$this->db->query($get_sp_id);
               if($ex_next_id->num_rows()==0){

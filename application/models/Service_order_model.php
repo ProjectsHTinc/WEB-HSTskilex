@@ -99,8 +99,14 @@ Class service_order_model extends CI_Model
 
   function get_service_provider($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-    $query="SELECT spd.owner_full_name,soh.* FROM service_order_history AS soh left join service_provider_details as spd on spd.user_master_id=soh.serv_prov_id
-    WHERE  service_order_id='$id' order by created_at desc";
+    // $query="SELECT spd.owner_full_name,soh.* FROM service_order_history AS soh left join service_provider_details as spd on spd.user_master_id=soh.serv_prov_id
+    // WHERE  service_order_id='$id' order by created_at desc";
+    $query="SELECT soh.id,soh.serv_prov_id,IFNULL(spd.owner_full_name, sppd.full_name) AS name,lu.user_type,ur.role_name,soh.status,soh.created_at from service_order_history as soh
+    left join service_provider_details as spd on spd.user_master_id=soh.serv_prov_id
+    left join  service_person_details as sppd on sppd.user_master_id=soh.serv_prov_id
+    left join login_users as lu on lu.id=soh.serv_prov_id
+    left join user_role as ur on ur.id=lu.user_type
+    where service_order_id='$id' ORDER by soh.id desc";
     $result=$this->db->query($query);
     return $result->result();
   }

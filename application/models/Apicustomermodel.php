@@ -999,11 +999,12 @@ class Apicustomermodel extends CI_Model {
               left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-              GROUP by spps.user_master_id LIMIT 1";
+              GROUP by spps.user_master_id order by spps.id asc LIMIT 1";
               $ex_next_id=$this->db->query($first_id);
               $res_next_ip=$ex_next_id->result();
               foreach($res_next_ip as $rows_id_next){}
-              $Phoneno=$rows_id_next->phone_no;
+               $Phoneno=$rows_id_next->phone_no;
+
               $full_name=$rows_id_next->owner_full_name;
               $sp_user_master_id=$rows_id_next->user_master_id;
               $title="Order";
@@ -1760,7 +1761,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         foreach($result as $rows){}
         $update="UPDATE service_orders SET status='Paid' WHERE id='$service_id'";
         $res_update = $this->db->query($update);
-        $update_pay="UPDATE service_payments SET status='Paid',online_amount=online_amount+'$amount' WHERE id='$payment_id'";
+        $update_pay="UPDATE service_payments SET status='Paid',offline_amount=offline_amount+'$amount' WHERE id='$payment_id'";
         $res_pay = $this->db->query($update_pay);
         $insert="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Offline','Netamount','Success',NOW(),'$user_master_id')";
         $res_ins = $this->db->query($insert);

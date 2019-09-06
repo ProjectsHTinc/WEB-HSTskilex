@@ -218,12 +218,13 @@ padding: 15px;
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Associates request sent </h4>
+                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Associate</a></span></h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
-                          <th>Associates name</th>
+                          <th>Name</th>
+                          <th>Role</th>
                           <th>Requested on</th>
                           <th>status</th>
                         </tr>
@@ -236,7 +237,8 @@ padding: 15px;
                         foreach($res_prov as $rows_prov){ ?>
                         <tr>
                         <td><?php echo $i; ?></td>
-                        <td><?php echo $rows_prov->owner_full_name; ?>  </td>
+                        <td><?php echo $rows_prov->name; ?>  </td>
+                        <td><?php echo $rows_prov->role_name; ?>  </td>
                         <td><?php echo $rows_prov->created_at; ?>  </td>
                         <td>
                           <?php $stats=$rows_prov->status;
@@ -255,6 +257,7 @@ padding: 15px;
                         <?php   } ?>
                     </tbody>
                   </table>
+                  
                   <br>
                   <h4 class="card-title">Service Review</h4>
                   <table id="example" class="table table-striped table-bordered ">

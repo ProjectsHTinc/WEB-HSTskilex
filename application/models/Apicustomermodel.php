@@ -987,7 +987,7 @@ class Apicustomermodel extends CI_Model {
               $response = array("status" => "error", "msg" => "Service Advance not Paid","msg_en"=>"","msg_ta"=>"");
           }else{
 
-            $get_last_service_provider_id="SELECT * FROM service_orders where serv_prov_id!=0 ORDER BY id,serv_prov_id LIMIT 1";
+            $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0 and spd.serv_prov_verify_status='Approved' ORDER BY so.id,so.serv_prov_id LIMIT 1";
             $result_last_sp_id=$this->db->query($get_last_service_provider_id);
             $res_sp_id=$result_last_sp_id->result();
             if(empty($res_sp_id)){
@@ -1006,7 +1006,7 @@ class Apicustomermodel extends CI_Model {
               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.id , '$next_id') GROUP BY spps.user_master_id HAVING
               distance < 25 ORDER BY distance LIMIT 0 , 50";
               $ex_next_id=$this->db->query($get_sp_id);
               if($ex_next_id->num_rows()==0){

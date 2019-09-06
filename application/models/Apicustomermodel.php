@@ -996,7 +996,8 @@ class Apicustomermodel extends CI_Model {
             }else{
               foreach($res_sp_id as $rows_last_sp_id){}
               $last_sp_id=$rows_last_sp_id->serv_prov_id;
-              $next_id=$last_sp_id+$display_minute;
+            echo   $next_id=$last_sp_id+$display_minute;
+              exit;
 
               $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *

@@ -992,23 +992,68 @@ class Apicustomermodel extends CI_Model {
             $result_last_sp_id=$this->db->query($get_last_service_provider_id);
             $res_sp_id=$result_last_sp_id->result();
             if(empty($res_sp_id)){
-              $response = array("status" => "error", "msg" => "No Service Provider found","msg_en"=>"Service associate not found!","msg_ta"=>"சேவை வழங்குநர் கிடைக்கவில்லை!");
+
+              $first_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no FROM serv_prov_pers_skills as spps
+              left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
+              left join login_users as lu on lu.id=spd.user_master_id
+              left join vendor_status as vs on vs.serv_pro_id=lu.id
+              LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
+              GROUP by spps.user_master_id LIMIT 1";
+              $ex_next_id=$this->db->query($first_id);
+              $res_next_ip=$ex_next_id->result();
+              foreach($res_next_ip as $rows_id_next){}
+              $Phoneno=$rows_id_next->phone_no;
+              $full_name=$rows_id_next->owner_full_name;
+              $sp_user_master_id=$rows_id_next->user_master_id;
+              $title="Order";
+              $gcm_key=$rows_id_next->mobile_key;
+              $mobiletype=$rows_id_next->mobile_type;
+              $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+              //$this->smsmodel->send_sms($phone,$notes);
+              $this->sendSMS($Phoneno,$Message);
+              ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+              $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
+              $res_expried=$this->db->query($update_exper);
+
+              $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
+              $res_quest=$this->db->query($request_insert_query);
+              if($res_quest){
+                $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
+              }else{
+                $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+              }
+
+
+              // $response = array("status" => "error", "msg" => "No Service Provider found","msg_en"=>"Service associate not found!","msg_ta"=>"சேவை வழங்குநர் கிடைக்கவில்லை!");
 
             }else{
               foreach($res_sp_id as $rows_last_sp_id){}
               $last_sp_id=$rows_last_sp_id->last_id;
-             $next_id=$last_sp_id+$display_minute;
+            // $next_id=$last_sp_id+$display_minute;
+              $next_id=$display_minute-$last_sp_id;
 
 
-              $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              // $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              // COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+              // SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
+              // LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
+              // LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
+              // LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+              // LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+              // WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
+              // distance < 50 ORDER BY distance LIMIT 0 , 50";
+
+               $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-              SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
-              LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
-              LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
-              LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+              SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills as spps
+              left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
+              left join login_users as lu on lu.id=spd.user_master_id
+              left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
-              distance < 50 ORDER BY distance LIMIT 0 , 50";
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
+              GROUP by spps.user_master_id LIMIT 1 OFFSET $next_id";
+
               $ex_next_id=$this->db->query($get_sp_id);
               if($ex_next_id->num_rows()==0){
                 $response = array("status" => "error", "msg" => "Hitback","msg_en"=>"","msg_ta"=>"");

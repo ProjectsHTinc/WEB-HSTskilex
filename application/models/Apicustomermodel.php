@@ -979,6 +979,7 @@ class Apicustomermodel extends CI_Model {
           $selected_main_cat_id=$rows->main_cat_id;
           $service_latlon=$rows->service_latlon;
           $contact_person_name=$rows->contact_person_name;
+          $contact_person_number=$rows->contact_person_number;
           $result = explode(",", $service_latlon);
           $lat=$result[0];
           $long= $result[1];
@@ -1020,7 +1021,7 @@ class Apicustomermodel extends CI_Model {
                 $title="Order";
                 $gcm_key=$rows_id_next->mobile_key;
                 $mobiletype=$rows_id_next->mobile_type;
-                $Message="Hi $full_name You Received order from Customer $contact_person_name: $Phoneno";
+                $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
                 //$this->smsmodel->send_sms($phone,$notes);
                 $this->sendSMS($Phoneno,$Message);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);

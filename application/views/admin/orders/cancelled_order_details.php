@@ -220,7 +220,7 @@
                     <tbody>
                     <?php $i=1;
                         if(empty($res_prov)){ ?>
-                        <td colspan="4" style="width:100%">No Record Found</td>
+                        <td colspan="5" style="width:100%">No Record Found</td>
                         <?php  }else{
                         foreach($res_prov as $rows_prov){ ?>
                         <tr>

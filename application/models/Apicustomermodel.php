@@ -1071,7 +1071,7 @@ class Apicustomermodel extends CI_Model {
                 //$this->smsmodel->send_sms($phone,$notes);
                 $this->sendSMS($Phoneno,$Message);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
-                $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
+                $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
 
                 $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";

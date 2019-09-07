@@ -1370,7 +1370,7 @@ public function Services_list($category_id,$sub_category_id)
 					service_provider_details F,
 					service_payments G
 				WHERE
-					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Completed' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
+					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Completed' OR A.Status = 'Paid' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1420,7 +1420,7 @@ public function Services_list($category_id,$sub_category_id)
 					service_person_details F,
 					service_provider_details H
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Completed' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = H.user_master_id AND A.serv_pers_id = F.user_master_id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Completed' OR A.status= 'Paid' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = H.user_master_id AND A.serv_pers_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 

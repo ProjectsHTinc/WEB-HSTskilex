@@ -66,7 +66,7 @@ class Apisperson extends CI_Controller {
 			echo json_encode($res);
 			return;
 		}
-		
+
 		$user_master_id  = '';
 		$user_master_id  = $this->input->post("user_master_id");
 
@@ -163,7 +163,7 @@ class Apisperson extends CI_Controller {
 		$dec_user_master_id = base64_decode($user_master_id);
 
 		$data['result']=$this->apispersonmodel->Email_verfication($dec_user_master_id);
-		
+
 		if($data['result']['status']=='success'){
 				echo "Success";
 			}else{
@@ -235,7 +235,7 @@ class Apisperson extends CI_Controller {
 		$city = '';
 		$state = '';
 		$zip = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$full_name = $this->input->post("full_name");
 		$gender  = $this->input->post("gender");
@@ -260,10 +260,10 @@ class Apisperson extends CI_Controller {
 	  	$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		$user_master_id = $this->uri->segment(3);
-		
+
 		$profile = $_FILES["profile_pic"]["name"];
 		$extension  = end((explode(".", $document)));
-		
+
 		$profileFileName = $user_master_id.'-'.time().'.'.$extension ;
 		$uploadPicdir = './assets/persons/';
 		$profilepic = $uploadPicdir.$profileFileName;
@@ -299,7 +299,7 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apispersonmodel->List_assigned_services($user_master_id);
@@ -332,7 +332,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -367,7 +367,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -401,7 +401,7 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apispersonmodel->List_ongoing_services($user_master_id);
@@ -435,7 +435,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -470,7 +470,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -505,7 +505,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -541,7 +541,7 @@ class Apisperson extends CI_Controller {
 		$user_master_id = '';
 		$service_order_id  ='';
 		$service_otp = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$service_otp = $this->input->post("service_otp");
@@ -578,7 +578,7 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$service_order_id  ='';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -644,9 +644,9 @@ class Apisperson extends CI_Controller {
 		}
 
 		$category_id  = '';
-		
+
 		$category_id  = $this->input->post("category_id");
-		
+
 		$data['result']=$this->apispersonmodel->Sub_category_list($category_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -678,7 +678,7 @@ class Apisperson extends CI_Controller {
 
 		$category_id  = '';
 		$sub_category_id  = '';
-		
+
 		$category_id  = $this->input->post("category_id");
 		$sub_category_id  = $this->input->post("sub_category_id");
 
@@ -713,7 +713,7 @@ class Apisperson extends CI_Controller {
 
 		$data['result']=$this->apispersonmodel->Services_list($user_master_id);
 		$response = $data['result'];
-		echo json_encode($response); 
+		echo json_encode($response);
 	}*/
 
 //-----------------------------------------------//
@@ -745,7 +745,7 @@ class Apisperson extends CI_Controller {
 		$service_order_id  = '';
 		$service_id  = '';
 		$ad_service_rate_card  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$service_id  = $this->input->post("service_id");
@@ -783,10 +783,10 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id  = '';
 		$service_order_id  = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-		
+
 		$data['result']=$this->apispersonmodel->List_addtional_services($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -819,10 +819,10 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id  = '';
 		$order_additional_id  = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$order_additional_id  = $this->input->post("order_additional_id");
-		
+
 		$data['result']=$this->apispersonmodel->Remove_addtional_services($user_master_id,$order_additional_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -838,14 +838,14 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id = $this->uri->segment(3);
 		$service_order_id = $this->uri->segment(4);
-		
+
 		$document = $_FILES["bill_copy"]["name"];
 		$extension  = end((explode(".", $document)));
 		$documentFileName = $service_order_id.'-'.time().'.'.$extension ;
 		$uploaddir = './assets/bills/';
 		$documentFile = $uploaddir.$documentFileName;
 		move_uploaded_file($_FILES['bill_copy']['tmp_name'], $documentFile);
-		
+
 		$data['result']=$this->apispersonmodel->Upload_service_bills($user_master_id,$service_order_id,$documentFileName);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -877,10 +877,10 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id  = '';
 		$service_order_id  = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-		
+
 		$data['result']=$this->apispersonmodel->List_service_bills($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -913,11 +913,11 @@ class Apisperson extends CI_Controller {
 		$user_master_id  = '';
 		$service_order_id  = '';
 		$material_notes ='';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$material_notes  = $this->input->post("material_notes");
-		
+
 		$data['result']=$this->apispersonmodel->Update_ongoing_services($user_master_id,$service_order_id,$material_notes);
 		$response = $data['result'];
 		echo json_encode($response);
@@ -983,7 +983,7 @@ class Apisperson extends CI_Controller {
 		$service_order_id = '';
 		$cancel_master_id = '';
 		$comments = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 		$cancel_master_id  = $this->input->post("cancel_master_id");
@@ -1019,7 +1019,7 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apispersonmodel->List_canceled_services($user_master_id);
@@ -1051,8 +1051,8 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-		$service_order_id = '';	
-		
+		$service_order_id = '';
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1086,8 +1086,8 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-		$service_order_id = '';	
-		
+		$service_order_id = '';
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1120,7 +1120,7 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-				
+
 		$user_master_id  = $this->input->post("user_master_id");
 
 		$data['result']=$this->apispersonmodel->List_completed_services($user_master_id);
@@ -1152,8 +1152,8 @@ class Apisperson extends CI_Controller {
 			return;
 		}
 		$user_master_id = '';
-		$service_order_id = '';	
-		
+		$service_order_id = '';
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
@@ -1187,14 +1187,14 @@ class Apisperson extends CI_Controller {
 		}
 		$user_master_id = '';
 		$lat_1 = '';
-		$lon_1 = '';	
-		$lat_1 = '';	
-		$location = '';	
-		$lat_2 = '';	
-		$lon_2 = '';	
+		$lon_1 = '';
+		$lat_1 = '';
+		$location = '';
+		$lat_2 = '';
+		$lon_2 = '';
 		$miles_distance_bw = '';
 		$service_order_id  = '';
-		
+
 		$user_master_id  = $this->input->post("user_master_id");
 		$lat_1  = $this->input->post("lat_1");
 		$lon_1  = $this->input->post("lon_1");

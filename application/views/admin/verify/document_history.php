@@ -16,7 +16,7 @@ th{
           </nav>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Document  uploaded history <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>  
+              <h4 class="card-title">Document  uploaded history <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
 
               <div class="container">
                   <div class="col-md-12">
@@ -62,5 +62,9 @@ th{
     </div>
 
 <script>
-      $('#example').DataTable({});
+// $('#example').DataTable();
+var table = $('#example').DataTable();
+new $.fn.dataTable.Responsive( table, {
+    details: false
+} );
 </script>

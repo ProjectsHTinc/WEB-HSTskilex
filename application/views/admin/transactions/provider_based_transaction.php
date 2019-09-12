@@ -92,5 +92,9 @@ table.dataTable thead th, table.dataTable thead td {
 }
     </style>
 <script>
-  $('#example').DataTable();
+  // $('#example').DataTable();
+var table = $('#example').DataTable();
+new $.fn.dataTable.Responsive( table, {
+    details: false
+} );
 </script>

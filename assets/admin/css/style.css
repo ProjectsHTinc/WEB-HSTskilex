@@ -14731,8 +14731,9 @@ h6 {
   font-weight: 600; }
 
 p {
-  font-weight: 400;
-  font-size: 0.8rem; }
+  font-weight: 600;
+    font-size: 14px;
+}
 
 .h1,
 h1 {
@@ -17743,7 +17744,9 @@ select.typeahead {
   padding: 0.4375rem 0.75rem; }
 
 .form-group label {
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1;
   vertical-align: top; }
 
@@ -22605,7 +22608,7 @@ div.tagsinput {
         color: #424546; }
       .navbar.horizontal-layout .navbar-brand-wrapper .navbar-brand img {
         max-width: 100%;
-        height: 28px;
+        height: auto;
         margin: auto;
         vertical-align: middle; }
     .navbar.horizontal-layout .navbar-brand-wrapper .brand-logo-mini {

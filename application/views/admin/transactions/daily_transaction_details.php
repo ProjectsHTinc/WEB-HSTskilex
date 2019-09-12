@@ -299,15 +299,12 @@ function update_status(msg){
   $(".modal-body #daily_id").val( daily_id );
 }
 
-    $(document).ready(function() {
-      var table = $('#example').DataTable( {
-          rowReorder: {
-              selector: 'td:nth-child(2)'
-          },
-          responsive: true
-      } );
-  } );
 
+  // $('#example').DataTable();
+  var table = $('#example').DataTable();
+  new $.fn.dataTable.Responsive( table, {
+      details: false
+  } );
 
 
 

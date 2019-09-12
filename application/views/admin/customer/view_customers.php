@@ -13,7 +13,7 @@
               <h4 class="card-title">View Customer Details</h4>
               <div class="row">
                   <div class="col-md-12">
-                <table id="example" class="table table-striped table-bordered">
+                <table id="example" class="table table-striped table-bordered" width="100%">
         <thead>
             <tr>
                 <th>S.no</th>
@@ -67,5 +67,13 @@
 
     </div>
     <script>
-      $('#example').DataTable();
+      // // $('#example').DataTable();
+var table = $('#example').DataTable();
+new $.fn.dataTable.Responsive( table, {
+    details: false
+} );
+      var table = $('#example').DataTable();
+      new $.fn.dataTable.Responsive( table, {
+          details: false
+      } );
     </script>

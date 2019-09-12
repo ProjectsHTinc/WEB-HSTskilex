@@ -75,13 +75,10 @@ table.dataTable thead th, table.dataTable thead td {
     </style>
     <script>
 
-    $(document).ready(function() {
-      var table = $('#example').DataTable( {
-          rowReorder: {
-              selector: 'td:nth-child(2)'
-          },
-          responsive: true
-      } );
-  } );
+    // $('#example').DataTable();
+    var table = $('#example').DataTable();
+    new $.fn.dataTable.Responsive( table, {
+        details: false
+    } );
 
     </script>

@@ -7,7 +7,7 @@ th{
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
-          
+
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Document  list <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
@@ -148,7 +148,11 @@ th{
 
 
     <script>
-      $('#example').DataTable({});
+    // $('#example').DataTable();
+    var table = $('#example').DataTable();
+    new $.fn.dataTable.Responsive( table, {
+        details: false
+    } );
 
       $('#exampleModal-4').on('shown.bs.modal', function() {
 

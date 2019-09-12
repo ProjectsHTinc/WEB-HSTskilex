@@ -989,7 +989,7 @@ class Apicustomermodel extends CI_Model {
           }else{
 
             // $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0 and spd.serv_prov_verify_status='Approved' ORDER BY so.id,so.serv_prov_id LIMIT 1";
-              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0 and spd.serv_prov_verify_status='Approved' and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
+              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
 
 
 

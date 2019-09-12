@@ -811,7 +811,7 @@ class Apicustomer extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$order_id = $this->input->post("order_id");
 		$result = explode("-", $order_id);
-		$service_id= $result[2];
+	 	$service_id= $result[2];
 		$display_minute = $this->input->post("display_minute");
 		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id,$display_minute);
 		$response = $data['result'];

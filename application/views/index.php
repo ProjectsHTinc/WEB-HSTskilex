@@ -164,6 +164,16 @@ From people that are capable</h2>
                 </div>
             </div>
             <div class="row">
+
+              <div class="col-xs-12 col-md-3">
+                  <div class="service-box wow fadeInRight" data-wow-delay="0.3s" >
+                      <div class="box-icon">
+                          <img src="<?php echo base_url(); ?>assets/images/service_16.png">
+                      </div>
+                      <h3 class="title">Computer Services</h3>
+                   <p class="ser_desc">From software and router installations to hardware repairs and services</p>
+                  </div>
+              </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="0.3s" >
                         <div class="box-icon">
@@ -245,7 +255,7 @@ From people that are capable</h2>
                       <p class="ser_desc">From mowing and blowing to patio designing</p>
                     </div>
                 </div>
-                <div class="clearfix"></div>
+
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
@@ -285,7 +295,7 @@ From people that are capable</h2>
                       <p class="ser_desc">From pedicure and manicure to party and bridal makeup</p>
                     </div>
                 </div>
-                <div class="clearfix"></div>
+
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
@@ -314,7 +324,7 @@ From people that are capable</h2>
                       <p class="ser_desc">Both interior and exterior</p>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-3">
+                <!-- <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_16.png">
@@ -322,7 +332,7 @@ From people that are capable</h2>
                          <h3 class="title">Computer Services</h3>
                       <p class="ser_desc">From software and router installations to hardware repairs and services</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="clearfix"></div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
@@ -387,12 +397,8 @@ From people that are capable</h2>
                 <div class="col-xs-12 col-md-6 wow fadeInRight">
                     <div class="title-box left">
                         <h2 class="title">Who are we?</h2>
-                        <p class="title">SkilEx is an online platform</p>
-                        <p class="desc">To get the best professionals to sort all your home needs.
-                        <br>  <br>
-                        With the help of SkilEx App, you can book various household services at time and place of your own choice. <br>  <br>
-                          We simplify your everyday living with a variety of   <br> at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service.<br>  <br>
-                          These services are given by the professionals who are qualified to do the job in an accurate way possible.
+                        <p class="title">Skilex is an online platform to avail various home services at your door step.</p>
+                        <p class="desc" style="text-align:justify;">SkilEx is an online platform to get the best professionals to sort all your home needs. With the help of SkilEx App, you can book various household services at time and place of your own choice, we simplify your everyday living with a variety of at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible.
                       </p>
 
                     </div>

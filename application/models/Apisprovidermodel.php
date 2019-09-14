@@ -547,6 +547,35 @@ class Apisprovidermodel extends CI_Model
     //#################### Profile Pic Update End ####################//
 
 
+    public function Provider_status($user_master_id, $lat, $lon)
+{
+$sql = "select * from vendor_status where serv_pro_id='".$user_master_id."'";
+$sql_result = $this->db->query($sql);
+
+if($sql_result->num_rows()>0)
+{
+$update_sql = "update vendor_status set online_status='Online', serv_lat = '".$lat."', serv_lon='".$lon."', status='Active', created_at=now(), created_by='".$user_master_id."' WHERE serv_pro_id='$user_master_id'";
+$update_result = $this->db->query($update_sql);
+
+$response = array("status" => "success", "msg" => "Vendor status updated");
+return $response;
+}
+else if($sql_result->num_rows()==0)
+{
+$insQuery = "insert into verdor_status(user_master_id, online_status, serv_lat, serv_lon, status, created_by, created_at) values ('".$user_master_id."','Online', '".$lat."', '".$lon."', 'Active','".$user_master_id."',NOW())";
+$insert_status = $this->db->query($insQuery);
+
+$response = array("status" => "success", "msg" => "Vendor status added");
+return $response;
+}
+else
+{
+$response = array("status" => "error", "msg" => "Something went wrong");
+return $response;
+}
+}
+
+
     //#################### Category list ####################//
 
 

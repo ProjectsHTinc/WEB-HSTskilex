@@ -305,6 +305,40 @@ class Apisprovider extends CI_Controller
 
     //-----------------------------------------------//
 
+    public function provider_status()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Vendor Status";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $user_master_id = '';
+        $company_status = '';
+
+        $user_master_id = $this->input->post("user_master_id");
+        $sp_lat = $this->input->post("lat");
+        $sp_lon = $this->input->post("lon");
+
+        $data['result'] = $this->apisprovidermodel->Provider_status($user_master_id, $sp_lat, $sp_lon);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+
+    //-----------------------------------------------//
+
     public function category_list()
     {
         $_POST = json_decode(file_get_contents("php://input"), TRUE);

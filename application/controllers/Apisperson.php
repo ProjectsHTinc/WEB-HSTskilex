@@ -231,22 +231,25 @@ class Apisperson extends CI_Controller {
 		$user_master_id = '';
 		$full_name = '';
 		$gender = '';
-		$address = '';
-		$city = '';
-		$state = '';
-		$zip = '';
+// 		$address = '';
+		$email = '';
+// 		$city = '';
+// 		$state = '';
+// 		$zip = '';
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$full_name = $this->input->post("full_name");
 		$gender  = $this->input->post("gender");
-		$address  = $this->input->post("address");
-		$city  = $this->input->post("city");
-		$state  = $this->input->post("state");
-		$zip  = $this->input->post("zip");
-		$edu_qualification  = $this->input->post("edu_qualification");
-		$language_known  = $this->input->post("language_known");
+		$email  = $this->input->post("email");
+// 		$address  = $this->input->post("address");
+// 		$city  = $this->input->post("city");
+// 		$state  = $this->input->post("state");
+// 		$zip  = $this->input->post("zip");
+// 		$edu_qualification  = $this->input->post("edu_qualification");
+// 		$language_known  = $this->input->post("language_known");
 
-		$data['result']=$this->apispersonmodel->Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip,$edu_qualification,$language_known);
+// 		$data['result']=$this->apispersonmodel->Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip,$edu_qualification,$language_known);
+		$data['result']=$this->apispersonmodel->Profile_update($user_master_id,$full_name,$gender,$email);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -262,14 +265,46 @@ class Apisperson extends CI_Controller {
 		$user_master_id = $this->uri->segment(3);
 
 		$profile = $_FILES["profile_pic"]["name"];
-		$extension  = end((explode(".", $document)));
+		$temp = pathinfo($profile, PATHINFO_EXTENSION);
 
-		$profileFileName = $user_master_id.'-'.time().'.'.$extension ;
+		$profileFileName = time().'.'.$temp;
 		$uploadPicdir = './assets/persons/';
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
 
-		$data['result']=$this->apisprovidermodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$data['result']=$this->apispersonmodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function user_info()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Customer Profile Update";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$data['result']=$this->apispersonmodel->user_info($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1068,7 +1103,7 @@ class Apisperson extends CI_Controller {
 
 	public function complete_services()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{

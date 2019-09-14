@@ -71,7 +71,7 @@
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Verify Associates</p>
+                    <p class="category-heading">Associates and Experts</p>
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Associate list </a></li>
 
@@ -79,7 +79,7 @@
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Service Associate</p>
+                    <p class="category-heading">Verified Associate</p>
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">List of Associate </a></li>
 
@@ -87,7 +87,7 @@
                     </ul>
                   </div>
                   <div class="col-group col-md-2">
-                    <p class="category-heading">Service Expert</p>
+                    <p class="category-heading">Verified Expert</p>
                     <ul class="submenu-item">
                       <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">List of Expert </a></li>
 

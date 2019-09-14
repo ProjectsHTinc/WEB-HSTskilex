@@ -341,14 +341,24 @@ class Apispersonmodel extends CI_Model {
 
 //#################### Profile Update ####################//
 
-	public function Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip,$edu_qualification,$language_known)
+	public function Profile_update($user_master_id,$full_name,$gender,$email)
 	{
-		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',edu_qualification='$edu_qualification',language_known='$language_known',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender', updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 
 		$response = array("status" => "success", "msg" => "Profile Updated");
 		return $response;
 	}
+
+
+// public function Profile_update($user_master_id,$full_name,$gender,$address,$city,$state,$zip,$edu_qualification,$language_known)
+// 	{
+// 		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',edu_qualification='$edu_qualification',language_known='$language_known',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+// 		$update_result = $this->db->query($update_sql);
+
+// 		$response = array("status" => "success", "msg" => "Profile Updated");
+// 		return $response;
+// 	}
 
 //#################### Profile Update End ####################//
 
@@ -363,6 +373,33 @@ class Apispersonmodel extends CI_Model {
 			return $response;
 	}
 //#################### Profile Pic Update End ####################//
+
+
+function user_info($user_master_id){
+    $select="SELECT * FROM login_users as lu LEFT JOIN service_person_details as cd ON lu.id=cd.user_master_id WHERE lu.id='$user_master_id'";
+    $res = $this->db->query($select);
+    if($res->num_rows()==1){
+      foreach($res->result()  as $rows){}
+        $profile=$rows->profile_pic;
+        if(empty($profile)){
+          $pic="";
+        }else{
+            $pic=base_url().'assets/persons/'.$profile;
+        }
+        $user_info=array(
+          "phone_no"=>$rows->phone_no,
+          "email"=>$rows->email,
+          "full_name"=>$rows->full_name,
+          "gender"=>$rows->gender,
+          "profile_pic"=>$pic,
+        );
+        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info,"msg"=>"","msg_ta"=>"");
+
+    }else{
+        $response=array("status"=>"error","msg"=>"No User information found","msg"=>"User details not found!","msg_ta"=>"பயனர் விபரங்கள் கிடைக்கவில்லை!");
+    }
+    return $response;
+  }
 
 
 //#################### List Aassigned services ####################//
@@ -1253,7 +1290,8 @@ public function Services_list($category_id,$sub_category_id)
 	public function Complete_services($user_master_id,$service_order_id)
 	{
 
-		$sQuery = "SELECT * FROM service_orders WHERE id = '".$service_order_id."'";
+	$sQuery = "SELECT * FROM service_orders WHERE id = '".$service_order_id."'";
+
 		$query_res = $this->db->query($sQuery);
 
 		if($query_res->num_rows()>0)
@@ -1277,12 +1315,14 @@ public function Services_list($category_id,$sub_category_id)
 					$add_service_amount = '0.00';
 			}
 
-		$total_amount  = $service_rate_card+$add_service_amount;
+		 $total_amount  = $service_rate_card+$add_service_amount;
+
 
 		$sQuery = "SELECT * FROM service_payments WHERE service_order_id = '".$service_order_id."'";
 		$query_res = $this->db->query($sQuery);
 			if($query_res->num_rows()>0) {
-				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', net_service_amount = '". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+				$sQuery = "UPDATE service_payments SET service_amount ='". $service_rate_card . "', ad_service_amount='". $add_service_amount . "',total_service_amount  ='". $total_amount . "', net_service_amount = '". $total_amount . "', status = 'Pending',  updated_by  = '".$user_master_id."', updated_at =NOW() WHERE service_order_id ='".$service_order_id."'";
+
 				$update_result = $this->db->query($sQuery);
 
 			} else {
@@ -1325,7 +1365,7 @@ public function Services_list($category_id,$sub_category_id)
 		$title = "Service Request Completed";
 		$message_details = "SKILEX - Service Request Completed";
 
-		$this->sendSMS($contact_person_number,$message_details);
+	$this->sendSMS($contact_person_number,$message_details);
 
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 

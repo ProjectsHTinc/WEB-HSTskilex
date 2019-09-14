@@ -1013,9 +1013,10 @@ class Apicustomermodel extends CI_Model {
               $full_name=$rows_id_next->owner_full_name;
               $sp_user_master_id=$rows_id_next->user_master_id;
 
-              $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
+             $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
               $res_order_history=$this->db->query($check_order_history);
-              if($res_order_history->num_rows==0){
+
+              if($res_order_history->num_rows()==0){
                 $title="Order";
                 $gcm_key=$rows_id_next->mobile_key;
                 $mobiletype=$rows_id_next->mobile_type;

@@ -86,7 +86,7 @@ padding: 15px;
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Advance status :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php  if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Paid"; }else{ echo "Advance Unpaid";} ?>">
+                                <input type="text" class="form-control" readonly value="<?php  if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Unpaid"; }else{ echo "Advance Paid";} ?>">
                             </div>
                         </div>
                       </div>

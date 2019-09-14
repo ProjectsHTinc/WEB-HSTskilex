@@ -56,7 +56,7 @@ th{
                   <?php  echo date("g:i ", strtotime($rows->from_time)); ?> - <?php    echo date("g:i", strtotime($rows->to_time));?>
                  </td>
                   <td><?php echo $rows->service_rate_card; ?></td>
-                    <td><?php echo $rows->advance_amount_paid; ?><br> <?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Paid"; }else{ echo "Advance Unpaid";} ?>   </td>
+                    <td><?php echo $rows->advance_amount_paid; ?><br> <?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Unpaid"; }else{ echo "Advance Paid";} ?>   </td>
                 <td>
                   <?php if($rows->status=='Paid'){
                     $btn_color="btn-info";

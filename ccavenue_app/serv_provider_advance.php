@@ -83,7 +83,8 @@ for($i = 0; $i < $dataSize; $i++)
 
     	if($order_status=="Success")
     	{
-            $query = "UPDATE service_provider_details SET status='Success', refundable_order_id = '$orderid', ccavenue_track_id ='$track_id', refundable_deposit = '$amount' WHERE user_master_id = '$user_id'";
+
+            $query = "UPDATE service_provider_details SET deposit_status='Paid', status='Success', refundable_order_id = '$orderid', ccavenue_track_id ='$track_id', refundable_deposit = '$amount' WHERE user_master_id = '$user_id'";
 			$objRs  = mysql_query($query) or die("Could not select Query ");
 
 			$response["status"] = "Success";

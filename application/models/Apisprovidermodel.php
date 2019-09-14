@@ -1088,7 +1088,7 @@ return $response;
             );
 
         } else {
-            $insert_sql     = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status) VALUES ('4','" . $mobile . "','N','" . $email . "','N','N','N','Active')";
+            $insert_sql     = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status) VALUES ('4','" . $mobile . "','N','" . $email . "','N','N','N','Inactive')";
             $insert_result  = $this->db->query($insert_sql);
             $serv_person_id = $this->db->insert_id();
 

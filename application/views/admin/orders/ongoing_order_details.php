@@ -150,7 +150,7 @@ padding: 15px;
                             <?php if(empty($rows->profile_pic)){ ?>
                             <img src="<?php echo base_url(); ?>assets/profile/dummy.jpg" style="width:100px;" class="img-circle">
                             <?php }else{ ?>
-                            <img src="<?php echo base_url(); ?>assets/person/<?php echo $rows->profile_pic; ?>" style="width:100px;" class="img-circle">
+                            <img src="<?php echo base_url(); ?>assets/persons/<?php echo $rows->profile_pic; ?>" style="width:100px;" class="img-circle">
                           <?php  }  ?>
 
                           </div>

@@ -513,7 +513,7 @@ From people who are capable</h2>
                             <ul class="contact-info">
                                 <li class="wow fadeInUp" data-wow-delay="0.9s" ><span class="icon">
                                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                </span>Virtual Automation Services Private Ltd ("SkilEx") <br>30/6, New Damu nagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
+                                </span>Skilex Multiservices Private Limited<br>30/6, New Damu Nagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
                                 <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>dhanasekar@virtualgroup.net.in</li>
                                 <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i>
 </span>+91 984 321 8272</li>

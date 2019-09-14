@@ -18,8 +18,8 @@
             <tr>
                 <th >S.no</th>
                 <th>Name <br> Phone No <br> Email</th>
-                <th>Doc Verify status</th>
-                <th>profile_pic</th>
+                <th>Document Verify status</th>
+                <!-- <th>profile_pic</th> -->
                 <th>Company status</th>
                 <th>Service Person Count</th>
                 <th>Deposit status</th>
@@ -35,7 +35,7 @@
                 <td><?php echo $i; ?></td>
                 <td><?php echo $rows->owner_full_name; ?> <br><br> <?php echo $rows->phone_no; ?><br><br> <?php echo $rows->email; ?></td>
                 <td><?php echo $rows->serv_prov_verify_status; ?></td>
-                <td><?php echo $rows->profile_pic; ?></td>
+                <!-- <td><?php echo $rows->profile_pic; ?></td> -->
                 <td><?php echo $rows->company_status; ?></td>
                 <td><?php echo $rows->no_of_service_person; ?></td>
                 <td>
@@ -81,7 +81,7 @@
 
     </div>
     <script>
-  
+
       // $('#example').DataTable();
       var table = $('#example').DataTable();
       new $.fn.dataTable.Responsive( table, {

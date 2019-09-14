@@ -13,8 +13,8 @@ padding: 15px;
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list"> orders </a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span> Service orders details</span></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Orders </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span> Service Orders Details</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -86,7 +86,7 @@ padding: 15px;
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Advance status :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->advance_payment_status; ?>">
+                                <input type="text" class="form-control" readonly value="<?php  if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Need to Pay Advance"; }else{ echo "NO Advance Needed";} ?>">
                             </div>
                         </div>
                       </div>

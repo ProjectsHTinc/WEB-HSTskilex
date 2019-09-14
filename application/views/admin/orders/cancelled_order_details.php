@@ -83,7 +83,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Advance status :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->advance_payment_status; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Need to Pay Advance"; }else{ echo "NO Advance Needed";}; ?>">
                             </div>
                         </div>
                       </div>

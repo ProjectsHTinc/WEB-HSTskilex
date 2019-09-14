@@ -195,7 +195,7 @@ class Apisprovidermodel extends CI_Model
         $finished_count_res    = $this->db->query($finished_count);
         $finished_orders_count = $finished_count_res->num_rows();
 
-        $canceled_count        = "SELECT * FROM service_orders WHERE serv_prov_id = '" . $user_master_id . "' AND status = 'Canceled'";
+        $canceled_count        = "SELECT * FROM service_orders WHERE serv_prov_id = '" . $user_master_id . "' AND status = 'Cancelled'";
         $canceled_count_res    = $this->db->query($canceled_count);
         $canceled_orders_count = $canceled_count_res->num_rows();
 
@@ -1838,7 +1838,8 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND (A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND (A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -2059,10 +2060,10 @@ return $response;
 
     public function Cancel_services($user_master_id, $service_order_id, $cancel_master_id, $comments)
     {
-        $update_sql    = "UPDATE service_orders SET status = 'Canceled', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
+        $update_sql    = "UPDATE service_orders SET status = 'Cancelled', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 
-        $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Canceled',NOW(),'" . $user_master_id . "')";
+        $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Cancelled',NOW(),'" . $user_master_id . "')";
         $ins_query = $this->db->query($sQuery);
 
         $sQuery    = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('" . $cancel_master_id . "','" . $user_master_id . "','" . $service_order_id . "','" . $comments . "',NOW(),'" . $user_master_id . "')";
@@ -2089,8 +2090,8 @@ return $response;
         }
 
 
-        $title           = "Service Request Canceled";
-        $message_details = "SKILEX - Service Request Canceled";
+        $title           = "Service Request Cancelled";
+        $message_details = "SKILEX - Service Request Cancelled";
 
         $this->sendSMS($contact_person_number, $message_details);
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
@@ -2137,7 +2138,7 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Canceled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -2184,7 +2185,7 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Canceled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 

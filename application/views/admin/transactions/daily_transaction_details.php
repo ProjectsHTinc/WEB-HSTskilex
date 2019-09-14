@@ -102,7 +102,7 @@ table.dataTable thead th, table.dataTable thead td{
                       <p class="paid_text">Unpaid</p>
                 <?php  }else{ ?>
                   <?php  if($rows->serv_prov_closing_status=="Notreceived"){ ?>
-                    <p class="paid_text">No Received</p>
+                    <p class="paid_text">Not Received</p>
                 <?php  }else{ ?>
                     <p class="paid_text"><?php echo $rows->serv_prov_closing_status; ?></p>
                 <?php  } ?>

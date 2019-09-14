@@ -5,12 +5,12 @@
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <!-- <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Provider list </a></li> -->
-              <li class="breadcrumb-item active" aria-current="page"><span>Service Provider</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Service Associate</span></li>
             </ol>
           </nav>
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Vendor verify list <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+              <h4 class="card-title">Associate verify list <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
               <div class="container">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered  "  >

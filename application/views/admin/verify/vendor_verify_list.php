@@ -21,7 +21,7 @@
                 <th>Document Verify status</th>
                 <!-- <th>profile_pic</th> -->
                 <th>Company status</th>
-                <th>Service Person Count</th>
+                <th>Service Expert Count</th>
                 <th>Deposit status</th>
                 <th>Login Status</th>
                 <th>Actions</th>

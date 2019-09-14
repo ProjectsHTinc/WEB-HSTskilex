@@ -5,8 +5,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Provider  </a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span> Service Person details</span></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Associate  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span> Service Expert details</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -14,7 +14,7 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">View Service Person details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+                  <h4 class="card-title">View Service Expert details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php  foreach($res as $rows){}  ?>
                   <div class="row">
                       <div class="col-md-4">
@@ -107,7 +107,7 @@
                                 <div class="form-check form-check-flat">
                               <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" disabled=""<?php if($rows->also_service_provider === 'Y') echo 'checked="checked"';?>>
-                              Aslo Service Person
+                              Aslo Service Associate
                               <i class="input-helper"></i></label>
                             </div>
                             </div>
@@ -122,7 +122,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Person verify :</label>
+                        <label class="col-sm-4 col-form-label">Expert verify :</label>
                         <div class="col-sm-8">
                           <select class="form-control form-control-sm border-info" id="serv_pers_verify_status" name="serv_pers_verify_status">
                             <option value="Pending">Pending</option>

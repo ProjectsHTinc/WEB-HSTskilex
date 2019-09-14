@@ -47,7 +47,7 @@
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
                           <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
                           <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
-                          <li><a href="#feature-area">FAQ</a></li>>
+                          <li><a href="#feature-area">FAQ</a></li>
                           <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
                             <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                         </ul>
@@ -106,8 +106,7 @@ SkilEx does not knowingly collect any Personal Identifiable Information from chi
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                          <p><a href="https://happysanztech.com/" target="_blank">Designed and developed by Happy Sanz Tech.</a></p>
-
+                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

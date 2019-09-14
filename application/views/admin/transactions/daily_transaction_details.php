@@ -41,8 +41,8 @@ table.dataTable thead th, table.dataTable thead td{
               <th >Service date</th>
               <!-- <th>Total Service per day</th> -->
               <th>Total Amount</th>
-              <th>Associate Comm Amt</th>
-              <th>Skilex Com Amt</th>
+              <th>Associate Commission Amount</th>
+              <th>Skilex Commission Amount</th>
               <!-- <th>Online Amt</th>
               <th>Offline Amt</th>
               <th>Online Skilex comm Amt</th>

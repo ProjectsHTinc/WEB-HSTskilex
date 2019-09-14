@@ -1012,23 +1012,32 @@ class Apicustomermodel extends CI_Model {
 
               $full_name=$rows_id_next->owner_full_name;
               $sp_user_master_id=$rows_id_next->user_master_id;
-              $title="Order";
-              $gcm_key=$rows_id_next->mobile_key;
-              $mobiletype=$rows_id_next->mobile_type;
-              $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
-              //$this->smsmodel->send_sms($phone,$notes);
-              $this->sendSMS($Phoneno,$Message);
-              ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
-              $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
-              $res_expried=$this->db->query($update_exper);
 
-              $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
-              $res_quest=$this->db->query($request_insert_query);
-              if($res_quest){
-                $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
+              $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
+              $res_order_history=$this->db->query($check_order_history);
+              if($res_order_history->num_rows==0){
+                $title="Order";
+                $gcm_key=$rows_id_next->mobile_key;
+                $mobiletype=$rows_id_next->mobile_type;
+                $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                //$this->smsmodel->send_sms($phone,$notes);
+                $this->sendSMS($Phoneno,$Message);
+                ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+                $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
+                $res_expried=$this->db->query($update_exper);
+
+                $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
+                $res_quest=$this->db->query($request_insert_query);
+                if($res_quest){
+                  $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
+                }else{
+                  $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                }
               }else{
-                $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                  $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
               }
+
+
 
 
             }else{

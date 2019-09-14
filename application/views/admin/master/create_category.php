@@ -65,7 +65,7 @@
           <tr>
               <th>S.no</th>
               <th>Category name</th>
-              <th>Category Pciture</th>
+              <th>Category Picture</th>
               <th>Status</th>
               <th>Actions</th>
           </tr>

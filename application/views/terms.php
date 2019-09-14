@@ -134,8 +134,7 @@
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                          <p><a href="https://happysanztech.com/" target="_blank">Designed and developed by Happy Sanz Tech.</a></p>
-
+                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

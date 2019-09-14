@@ -119,7 +119,7 @@
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
                         <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable <br>
-From people that are capable</h2>
+From people who are capable</h2>
 
 
                     </div>
@@ -396,8 +396,8 @@ From people that are capable</h2>
                 </div>
                 <div class="col-xs-12 col-md-6 wow fadeInRight">
                     <div class="title-box left">
-                        <h2 class="title">Who are we?</h2>
-                        <p class="title">Skilex is an online platform to avail various home services at your door step.</p>
+                        <h2 class="title">About SkilEx</h2>
+                        <p class="title">Skilex is an online platform to avail various home services at your door step </p>
                         <p class="desc" style="text-align:justify;">SkilEx is an online platform to get the best professionals to sort all your home needs. With the help of SkilEx App, you can book various household services at time and place of your own choice, we simplify your everyday living with a variety of at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible.
                       </p>
 
@@ -430,7 +430,7 @@ From people that are capable</h2>
                         <h3 class="title">1.Why SkilEx?</h3>
                         <p><ul>
                           <li>One stop solution for all your Home Service requirements.</li>
-                          <li>Top quality service which a local vendor will not provide.</li>
+                          <li>Top quality service will be provided.</li>
                           <li>Efficient feedback and complaint redressal system.</li>
                         </ul></p>
                     </div>
@@ -438,8 +438,8 @@ From people that are capable</h2>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
 
-                        <h3 class="title">2.What are the services you provide?</h3>
-                        <p>We provide all services related to maintenance of your home and upkeep of your premises so that you can focus on your business. Services include plumbing, electrical, carpentry, cleaning, pest control, painting, appliance repair and maintenance and more.</p>
+                        <h3 class="title">2.What are the Services You Provide?</h3>
+                        <p>We provide all services related to maintenance of your home and upkeep of your premises so that you can focus on your business. Services include plumbing, electrical, carpentry, cleaning, pest control, painting, appliance repair and maintenance and much more.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
@@ -451,13 +451,13 @@ From people that are capable</h2>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
                         <h3 class="title">4.How does it work?</h3>
-                        <p>Once you reach out to us, our SkilEx partner will meet you to get a clear understanding of your requirements. Our experts will visit your premises for an inspection to get a clear scope of work. Post this we will share the custom estimate with detailed scope of work and the requested service will be performed.</p>
+                        <p>Once you reach out to us, our SkilEx Expert will meet you to get a clear understanding of your requirements. Our experts will visit your premises for an inspection to get a clear scope of work. Post this we will share the custom estimate with detailed scope of work and the requested service will be performed.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >
                     <div class="feature-box">
                         <h3 class="title">5.What are the rates?</h3>
-                        <p>Our rates depend on the scope of work after inspection and your actual requirements. There are no hidden costs and the rate card will be provided for each Service.</p>
+                        <p>Our rates depend on the scope of work and your actual requirements. There are no hidden costs and the rate card will be provided for each Service.</p>
                     </div>
                 </div>
 
@@ -513,7 +513,7 @@ From people that are capable</h2>
                             <ul class="contact-info">
                                 <li class="wow fadeInUp" data-wow-delay="0.9s" ><span class="icon">
                                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                </span>Virtual Automation Services Private Ltd ("SkilEx") <br>30/6, New Damunagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
+                                </span>Virtual Automation Services Private Ltd ("SkilEx") <br>30/6, New Damu nagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
                                 <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>dhanasekar@virtualgroup.net.in</li>
                                 <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i>
 </span>+91 984 321 8272</li>
@@ -565,7 +565,7 @@ From people that are capable</h2>
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                            <p><a href="https://happysanztech.com/" target="_blank">Developed by Happy Sanz Tech.</a></p>
+                            <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

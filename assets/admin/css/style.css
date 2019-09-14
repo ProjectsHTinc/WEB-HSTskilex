@@ -14955,7 +14955,7 @@ pre {
   font-size: calc(0.8rem - 0.05rem);
   font-family: "Open Sans", sans-serif; }
   .footer a {
-    color: #4CCEAC;
+    color: #000;
     font-size: inherit; }
   @media (max-width: 991px) {
     .footer {
@@ -17745,6 +17745,7 @@ select.typeahead {
 
 .form-group label {
   /* font-size: 0.8rem; */
+  text-transform: capitalize;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -19290,7 +19291,8 @@ ul {
   .table td, .jsgrid .jsgrid-table td,
   .table th, .jsgrid .jsgrid-table th {
     vertical-align: middle;
-    font-size: 0.8rem;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 1;
     padding: 23px 30px; }
     .table td img, .jsgrid .jsgrid-table td img,

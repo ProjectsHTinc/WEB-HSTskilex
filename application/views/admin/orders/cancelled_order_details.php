@@ -152,7 +152,7 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Service iniate Time</label>
+                          <label class="col-sm-5 col-form-label">Service Initiate Time</label>
                           <div class="col-sm-7">
                                 <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
                                   <input type="text" class="form-control" readonly value="<?php echo $rows->iniate_datetime; ?>">

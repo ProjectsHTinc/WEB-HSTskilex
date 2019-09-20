@@ -12,6 +12,9 @@
 
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/template.js"></script> -->
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/data-table.js"></script> -->
+<script>
+$(".dataTables_filter input").css("background-image", "url('<i class='fa fa-search'></i>')");
 
+</script>
 </body>
 </html>

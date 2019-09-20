@@ -155,8 +155,29 @@ class Home extends CI_Controller {
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
 		$status=$this->db->escape_str($this->input->post('status'));
-		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id);
-		echo json_encode($data['res']);
+		$file = $_FILES['profile_pic']['name'];
+		if(empty($file)){
+		$pic='';
+	}else{
+		$temp = pathinfo($file, PATHINFO_EXTENSION);
+		$pic = round(microtime(true)) . '.' . $temp;
+		$uploaddir = 'assets/profile/';
+		$file_attach = $uploaddir.$pic;
+		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $file_attach);
+	}
+
+		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic);
+		//echo json_encode($data['res']);
+		if($data['res']['status']=="success"){
+			$messge = array('message' => 'New staff has been created','class' => 'alert alert-success fade in');
+			$this->session->set_flashdata('msg', $messge);
+			redirect('home/get_all_staff');
+		}else{
+			$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+			$this->session->set_flashdata('msg', $messge);
+			redirect('home/create_staff');
+		}
+
 		}else{
 			redirect('/');
 		}
@@ -282,6 +303,21 @@ class Home extends CI_Controller {
 		}
 
 
+		public function view_contact_form(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type== 1){
+				$data['res']=$this->loginmodel->get_contacted_list();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/view_contacted_list',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+		}
+
+
 	public function update_profile(){
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
@@ -294,9 +330,9 @@ class Home extends CI_Controller {
 		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
-
 		$data['res']=$this->loginmodel->update_profile($email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
 		echo json_encode($data['res']);
+
 		}else{
 
 		}
@@ -389,10 +425,33 @@ class Home extends CI_Controller {
 		$city=$this->db->escape_str($this->input->post('city'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
+		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$id=$this->db->escape_str($this->input->post('id'));
 		$status=$this->db->escape_str($this->input->post('status'));
-		$data['res']=$this->loginmodel->update_staff_profile($email,$phone,$name,$city,$address,$gender,$user_id,$id,$status);
-		echo json_encode($data['res']);
+		$status=$this->db->escape_str($this->input->post('status'));
+		$id=$this->db->escape_str($this->input->post('id'));
+		$old_profile_pic=$this->db->escape_str($this->input->post('old_profile_pic'));
+		$file = $_FILES['profile_pic']['name'];
+		if(empty($file)){
+		$pic=$old_profile_pic;
+	}else{
+		$temp = pathinfo($file, PATHINFO_EXTENSION);
+		$pic = round(microtime(true)) . '.' . $temp;
+		$uploaddir = 'assets/profile/';
+		$file_attach = $uploaddir.$pic;
+		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $file_attach);
+	}
+		$data['res']=$this->loginmodel->update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
+		// echo json_encode($data['res']);
+		if($data['res']['status']=="success"){
+			$messge = array('message' => 'Changes made are saved','class' => 'alert alert-success fade in');
+			$this->session->set_flashdata('msg', $messge);
+			redirect('home/get_all_staff');
+		}else{
+			$messge = array('message' => 'Something Went Wrong','class' => 'alert alert-danger fade in');
+			$this->session->set_flashdata('msg', $messge);
+			redirect('home/create_staff');
+		}
 		}else{
 
 		}

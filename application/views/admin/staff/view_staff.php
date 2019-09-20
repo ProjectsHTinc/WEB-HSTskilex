@@ -2,6 +2,12 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="card">
+            <?php if($this->session->flashdata('msg')) {
+            $message = $this->session->flashdata('msg');?>
+            <div class="<?php echo $message['class'] ?>">
+              <?php echo $message['message']; ?>
+            </div>
+          <?php  }  ?>
             <div class="card-body">
               <h4 class="card-title">Staff list</h4>
               <div class="row">
@@ -12,8 +18,9 @@
                 <th>S.no</th>
                 <th>Name</th>
                 <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>Email <br>Phone </th>
+
+                <th>Profile Picture</th>
                 <th>Gender</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -27,13 +34,15 @@
                   <td><?php echo $i; ?></td>
                 <td><?php echo $rows->name; ?></td>
                 <td><?php echo $rows->username; ?></td>
-                <td><?php echo $rows->email; ?></td>
-                <td><?php echo $rows->phone; ?></td>
+                <td><?php echo $rows->email; ?><br>
+                <?php echo $rows->phone; ?></td>
+
+                  <td><img src="<?php echo base_url(); ?>assets/profile/<?php echo $rows->profile_pic; ?>" style="width:100px;"></td>
                 <td><?php echo $rows->gender; ?></td>
                 <td><?php if($rows->status=='Inactive'){ ?>
-                  <button type="button" class="btn btn-danger btn-fw">Inactive</button>
+                  <button type="button" class="badge badge-danger">Inactive</button>
               <?php   }else{ ?>
-                <button type="button" class="btn btn-success btn-fw">Active</button>
+                <button type="button" class="badge badge-success">Active</button>
               <?php   }
                  ?></td>
                 <td><a title="Edit " href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;

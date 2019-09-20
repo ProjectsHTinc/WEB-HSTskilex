@@ -161,7 +161,7 @@ Class Loginmodel extends CI_Model
        }
 
 
-      function get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id){
+      function get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic){
         $digits = 8;
         $OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         $password=md5($OTP);
@@ -197,7 +197,7 @@ Class Loginmodel extends CI_Model
         // Additional headers
         $headers .= 'From: skilex<info@skilex.com>' . "\r\n";
         $sent= mail($to,$subject,$htmlContent,$headers);
-          $insert="INSERT INTO login_admin (admin_type,name,password,email,phone,username,city,qualification,address,gender,status,created_by,created_at) VALUES ('2','$name','$password','$email','$phone','$username','$city','$qualification','$address','$gender','$status','$user_id',NOW())";
+          $insert="INSERT INTO login_admin (profile_pic,admin_type,name,password,email,phone,username,city,qualification,address,gender,status,created_by,created_at) VALUES ('$pic','2','$name','$password','$email','$phone','$username','$city','$qualification','$address','$gender','$status','$user_id',NOW())";
             $resultset=$this->db->query($insert);
             if($resultset){
               $data = array("status" => "success");
@@ -226,9 +226,9 @@ Class Loginmodel extends CI_Model
        }
 
 
- 	   function update_staff_profile($email,$phone,$name,$city,$address,$gender,$user_id,$id,$status){
-       $staff_id=base64_decode($id)/98765;
- 			  $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status' WHERE id='$staff_id'";
+ 	   function update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id){
+       $staff_id=$id;
+ 			  $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status',qualification='$qualification',profile_pic='$pic' WHERE id='$staff_id'";
  		$result = $this->db->query($select);
  				if($result){
  					$data = array("status" => "success");
@@ -393,6 +393,14 @@ Class Loginmodel extends CI_Model
 
 
          return $data;
+       }
+
+
+       function get_contacted_list(){
+         $select="SELECT * FROM tb_contact_form order by id desc";
+         $res=$this->db->query($select);
+         return $res->result();
+
        }
 
 }

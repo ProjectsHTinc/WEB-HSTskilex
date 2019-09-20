@@ -210,7 +210,7 @@
           <tr>
               <th>S.no</th>
               <th>Service</th>
-              <th>Service Pciture</th>
+              <th>Service Picture</th>
               <th>Advance Amt</th>
               <th>Rate</th>
               <th>Status</th>

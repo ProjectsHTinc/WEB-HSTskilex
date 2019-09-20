@@ -188,53 +188,17 @@ From people who are capable</h2>
                         <div class="box-icon">
                           <img src="<?php echo base_url(); ?>assets/images/service_2.png">
                         </div>
-                        <h3 class="title">Plumbing</h3>
+                        <h3 class="title">Plumbing Services</h3>
                       <p class="ser_desc">From repairs and fixes to accessories</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="0.7s" >
-                        <div class="box-icon">
-                            <img src="<?php echo base_url(); ?>assets/images/service_3.png">
-                        </div>
-                        <h3 class="title">Carpentry</h3>
-                      <p class="ser_desc">From woodworks to wood carving</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_13.png">
                         </div>
-                        <h3 class="title">Clinical Services(Nurse)</h3>
-                      <p class="ser_desc">Dressings and injections</p>
-                    </div>
-                </div>
-                <!-- <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="0.9s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_4.png">
-                        </div>
-                        <h3 class="title">Cleaning Toilet</h3>
-                      <p></p>
-                    </div>
-                </div> -->
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.1s" >
-                        <div class="box-icon">
-                            <img src="<?php echo base_url(); ?>assets/images/service_5.png">
-                        </div>
-                        <h3 class="title">Janitorial Services</h3>
-                      <p class="ser_desc">From cleaning and sanitation to overall maintenance of buildings</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_6.png">
-                        </div>
-                        <h3 class="title">Home Cleaning </h3>
-                      <p class="ser_desc">From kitchen and living room to full home deep cleaning</p>
+                        <h3 class="title">Appliance Services</h3>
+                      <p class="ser_desc">From kitchen appliances to home automation</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -249,61 +213,28 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                            <img src="<?php echo base_url(); ?>assets/images/service_8.png">
-                        </div>
-                        <h3 class="title">Gardening</h3>
-                      <p class="ser_desc">From mowing and blowing to patio designing</p>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_9.png">
-                        </div>
-                        <h3 class="title">Driving Services</h3>
-                      <p class="ser_desc">From local to out-of-town trips on hourly and daily basis</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_10.png">
-                        </div>
-
-                          <h3 class="title">Cooking</h3>
-                      <p class="ser_desc">From local cuisines to continental</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_11.png">
                         </div>
                           <h3 class="title">Ups Services</h3>
-
                       <p class="ser_desc">From repairs and fixes to installation and maintenance</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_12.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_6.png">
                         </div>
-                          <h3 class="title">Personal Care </h3>
-
-                      <p class="ser_desc">From pedicure and manicure to party and bridal makeup</p>
+                        <h3 class="title">Home Cleaning </h3>
+                      <p class="ser_desc">From kitchen and living room to full home deep cleaning</p>
                     </div>
                 </div>
-
                 <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.1s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_13.png">
+                            <img src="<?php echo base_url(); ?>assets/images/service_5.png">
                         </div>
-                        <h3 class="title">Home Appliance Services</h3>
-
-                      <p class="ser_desc">From kitchen appliances to home automation</p>
+                        <h3 class="title">Janitorial Services</h3>
+                      <p class="ser_desc">From cleaning and sanitation to overall maintenance of buildings</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
@@ -318,52 +249,68 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_15.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_12.png">
                         </div>
-                      <h3 class="title">Painting Services</h3>
-                      <p class="ser_desc">Both interior and exterior</p>
+                          <h3 class="title">Beautician</h3>
+                      <p class="ser_desc">From pedicure and manicure to party and bridal makeup</p>
                     </div>
                 </div>
-                <!-- <div class="col-xs-12 col-md-3">
-                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
-                        <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_16.png">
-                        </div>
-                         <h3 class="title">Computer Services</h3>
-                      <p class="ser_desc">From software and router installations to hardware repairs and services</p>
-                    </div>
-                </div> -->
-                <div class="clearfix"></div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_17.png">
                         </div>
-                        <h3 class="title">  Tutor-Home Tuition</h3>
-
+                        <h3 class="title">Home Tutor</h3>
                       <p class="ser_desc">From Classes 1 to 12  of all boards and Engineering Mathematics</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_18.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_10.png">
                         </div>
-                          <h3 class="title">Physiotheraphy</h3>
-
-                      <p class="ser_desc">From sports injuries to surgical rehabilitation</p>
+                          <h3 class="title">Cook</h3>
+                      <p class="ser_desc">From local cuisines to continental</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="0.7s" >
+                        <div class="box-icon">
+                            <img src="<?php echo base_url(); ?>assets/images/service_3.png">
+                        </div>
+                        <h3 class="title">Carpentry Services</h3>
+                      <p class="ser_desc">From woodworks to wood carving</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_19.png">
+                              <img src="<?php echo base_url(); ?>assets/images/service_15.png">
                         </div>
-                          <h3 class="title">Car Wash</h3>
-
-                      <p class="ser_desc">Interior, exterior, puncture services,and maintenance</p>
+                      <h3 class="title">Painting Services</h3>
+                      <p class="ser_desc">Both interior and exterior</p>
                     </div>
-                </div>  <div class="col-xs-12 col-md-3">
+                </div>
+
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_9.png">
+                        </div>
+                        <h3 class="title">Driver</h3>
+                      <p class="ser_desc">From local to out-of-town trips on hourly and daily basis</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                            <img src="<?php echo base_url(); ?>assets/images/service_8.png">
+                        </div>
+                        <h3 class="title">Gardening Services</h3>
+                      <p class="ser_desc">From mowing and blowing to patio designing</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
                       <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                           <div class="box-icon">
                                 <img src="<?php echo base_url(); ?>assets/images/service_21.png">
@@ -372,21 +319,39 @@ From people who are capable</h2>
                         <p class="ser_desc">From fitness training to dietary classes</p>
                       </div>
                   </div>
-
-
-
-
-
-
-
-
-
+                  <div class="col-xs-12 col-md-3">
+                      <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                          <div class="box-icon">
+                                <img src="<?php echo base_url(); ?>assets/images/service_18.png">
+                          </div>
+                            <h3 class="title">Physiotheraphy</h3>
+                        <p class="ser_desc">From sports injuries to surgical rehabilitation</p>
+                      </div>
+                  </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                        </div>
+                        <h3 class="title">Clinical Services(Nurse)</h3>
+                      <p class="ser_desc">Dressings and injections</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_19.png">
+                        </div>
+                          <h3 class="title">Car Cleaning</h3>
+                      <p class="ser_desc">Interior, exterior, puncture services,and maintenance</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     <!-- Service-area / -->
     <!-- About-area -->
-    <section class="about-area section-padding section-bg" id="about-area">
+    <section class="about-area section-padding section-bg" id="about-area" style="padding-top:130px;">
         <div class="container">
             <div class="row row-flex">
                 <div class="col-xs-12 col-md-6 hidden-xs hidden-sm text-center">
@@ -483,7 +448,7 @@ From people who are capable</h2>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="contact-area">
                 <div class="col-xs-12 col-md-8 col-md-offset-2">
                     <div class="subscribe">
                         <form id="newletter_form" method="post" action="">
@@ -498,7 +463,7 @@ From people who are capable</h2>
     <!-- Subscribe-area / -->
 
     <!-- Contact-Area -->
-    <section class="contact-area section-padding" id="contact-area">
+    <section class="contact-area section-padding" >
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-5">
@@ -514,9 +479,9 @@ From people who are capable</h2>
                                 <li class="wow fadeInUp" data-wow-delay="0.9s" ><span class="icon">
                                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 </span>Skilex Multiservices Private Limited<br>30/6, New Damu Nagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
-                                <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>dhanasekar@virtualgroup.net.in</li>
+                                <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span><a href="mailto:info@skilex.in">info@skilex.in</a></li>
                                 <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i>
-</span>+91 984 321 8272</li>
+</span>+91 936 170 9665</li>
                                 <!-- <li class="wow fadeInUp" data-wow-delay="1.5s" ><span class="icon"><i class="icofont-globe"></i></span>www.skilex.com</li> -->
                             </ul>
                         </div>
@@ -565,18 +530,18 @@ From people who are capable</h2>
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                            <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
+                            <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">
                         <div class="space-10 hidden visible-xs"></div>
                         <div class="widget footer-widget">
                             <div class="social-menu">
-                                <!-- <a href="#"><i class="icofont-facebook"></i></a>
+                                <a href="#"><i class="icofont-facebook"></i></a>
                                 <a href="#"><i class="icofont-twitter"></i></a>
-                                <a href="#"><i class="icofont-linkedin"></i></a>
-                                <a href="#"><i class="icofont-instagram"></i></a>
-                                <a href="#"><i class="icofont-dribbble"></i></a> -->
+                                <a href="#"><i class="icofont-pinterest"></i></a>
+                                <a href="https://www.instagram.com/skilex_bulletin123/" target="_blank"><i class="icofont-instagram"></i></a>
+
                             </div>
                         </div>
                         <ul class="content_links">

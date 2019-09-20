@@ -27,7 +27,7 @@
             <div class="auto-form-wrapper">
 
               <form action="#" method="post" id="login_form">
-                  <center> <img src="<?php echo base_url(); ?>assets/logo.png"> </center>
+                  <center> <img src="<?php echo base_url(); ?>assets/logo.png" style="width:270px;"> </center>
                   <br>
                 <div class="form-group">
                         <label for="username">Username</label>

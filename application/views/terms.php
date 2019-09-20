@@ -70,7 +70,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
 					<p class="content_heading">Terms of use</p>
-					<p class="content_text">Skilex Multiservices Private Limited primarily operates, controls and manages the Services (as defined below) provided by it from its corporate office at 30/6, New Damunagar, Pappanaickenpalayam, Coimbatore-641037</p>
+					<p class="content_text">Skilex Multiservices Private Limited primarily operates, controls and manages the Services (as defined below) provided by it from its corporate office at 30/6, New Damu Nagar, Pappanaickenpalayam, Coimbatore-641037</p>
 					<p class="content_heading">Acceptance of Terms</p>
 					<p class="content_text">PLEASE READ THE TERMS OF USE THOROUGHLY AND CAREFULLY. The terms and conditions set forth below ("Terms of Use") and the Privacy Policy (as defined below) constitute a legally-binding agreement between SkilEx and you. These Terms of Use contain provisions that define your limits, legal rights and obligations with respect to your use of and participation in (i)the SkilEx mobile application, all content and SkilEx services available through www.Skilex.in (collectively referred to herein as the "Application"), and (ii) the online transactions between those users of the mobile application who are offering services ("SkilEx Expert") and those users of the mobile Application who are obtaining services (“Customer") through the app. The Terms of Use described below incorporate the Privacy Policy and apply to all users of the app.</p>
 					<p class="content_heading">The SkilEx App is owned and operated by Skilex Multiservices Private Limited.</p>
@@ -117,7 +117,7 @@
 					<p class="content_heading">Force Majeure</p>
 					<p class="content_text">Without limiting the foregoing, under no circumstances shall SkilEx be held liable for any damage or loss due to deficiency in performance of the SkilEx Service resulting directly or indirectly from acts of nature, forces or causes beyond its reasonable control, including without limitation, Internet failures, computer equipment failures, telecommunication equipment failures, other equipment failures, electrical power failures.</p>
 					<br>
-					<p><b>If you have any complaint or grievance to report, please write to the Grievance Officer at dhanasekar@virtualgroup.net.in</b></p>
+					<p><b>If you have any complaint or grievance to report, please write to the Grievance Officer at <a href="mailto:info@skilex.in">info@skilex.in</a></b></p>
 					<p class="content_heading"></p>
 					<p class="content_text"></p>
 					<p class="content_heading"></p>
@@ -134,7 +134,7 @@
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
+                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img  class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

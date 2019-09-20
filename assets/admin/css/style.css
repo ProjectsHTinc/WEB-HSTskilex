@@ -22964,3 +22964,6 @@ a:focus, input:focus {
 .amt{
   text-align: right;
 }
+.form-control{
+  border-radius: 8px;
+}

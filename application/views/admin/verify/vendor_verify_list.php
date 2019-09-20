@@ -53,11 +53,11 @@
                 <button type="button" class="badge badge-success ">Active</button>
               <?php   }
                  ?></td>
-                <td><a title="Edit" href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                  <a title="View Documents " href="<?php echo base_url(); ?>verifyprocess/get_vendor_doc_status/<?php echo $rows->company_status; ?>/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
-                  &nbsp;
-                    <a  title="View Experts list" href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-users" aria-hidden="true"></i></a>
-                    &nbsp;
+                <td>
+                  <a title="Edit" href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;
+                  <a title="View Documents " href="<?php echo base_url(); ?>verifyprocess/get_vendor_doc_status/<?php echo $rows->company_status; ?>/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>&nbsp;
+                                  <a  title="View Experts list" href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-users" aria-hidden="true"></i></a>&nbsp;
+
                       <a  title="Category list" href="<?php echo base_url(); ?>verifyprocess/get_skills_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
 
 

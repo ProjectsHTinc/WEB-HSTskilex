@@ -69,8 +69,8 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
 					<p class="content_heading">Privacy Policy for SkilEx</p>
-					<p class="content_text">At www.skilex.in, accessible from http://www.skilex.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by www.skilex.in and how we use it.</p>
-					<p class="content_text"><b>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at dhanasekar@virtualgroup.net.in</b></p>
+					<p class="content_text">At www.skilex.in, accessible from https://www.skilex.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by www.skilex.in and how we use it.</p>
+					<p class="content_text"><b>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at <a href="mailto:info@skilex.in">info@skilex.in</a></b></p>
 					<p class="content_heading">Log Files</p>
 					<p class="content_text">SkilEx follows a standard procedure of using log files. These files log visitors when they visit website/Mobile App. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the Mobile App/Website, and gathering demographic information.</p>
 					<p class="content_heading">Privacy Policies</p>
@@ -106,7 +106,7 @@ SkilEx does not knowingly collect any Personal Identifiable Information from chi
                 <div class="row row-flex">
                     <div class="col-xs-12 col-sm-6">
                         <div class="widget footer-widget">
-                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
+                          <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 text-right">

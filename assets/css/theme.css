@@ -217,7 +217,7 @@
 }
 
 .mainmenu-area.transparent.affix {
-    position: absolute;
+    position: fixed;
     background-color:#3e6cb4;
 }
 

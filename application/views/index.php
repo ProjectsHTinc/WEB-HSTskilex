@@ -41,20 +41,7 @@
                     <div class="site-brand">
                         <a href="<?php echo base_url(); ?>" class="logo"><img src="<?php echo base_url(); ?>assets/images/logo-light.png" alt=""></a>
                     </div>
-                    <!-- <button class="burger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </button>
-                    <div class="mainmenu">
-                      <ul class="nav">
-                          <li><a href="index.html">Home</a></li>
-                          <li><a href="#service-area">Service</a></li>
-                          <li><a href="#about-area">About</a></li>
-                          <li><a href="#team-area">Team</a></li>
-                          <li><a href="#contact-area">Contact</a></li>
-                      </ul>
-                    </div> -->
+                
                     <button type="button" class="navbar-toggle burger" data-toggle="collapse" data-target="#navigationbar">
                        <span class="sr-only">Toggle navigation</span>
                        <span class="bar"></span>

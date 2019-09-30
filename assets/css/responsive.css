@@ -24,7 +24,14 @@
     }
 }
 
-
+@media (min-width: 768px){
+.navbar-nav > li {
+    float: none;
+}
+.navbar-collapse.collapse {
+  
+}
+}
 
 /* Without mobile device. */
 @media only screen and (min-width: 768px) {

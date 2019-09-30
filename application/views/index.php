@@ -527,7 +527,7 @@ From people who are capable</h2>
         <!-- Footer-Bottom-Content-->
         <div class="footer-bottom">
             <div class="container">
-                <div class="row row-flex">
+                <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="widget footer-widget">
                             <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>

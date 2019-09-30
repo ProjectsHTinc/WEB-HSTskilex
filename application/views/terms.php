@@ -172,25 +172,17 @@
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
     <script>
-    $(window).scroll(function() {
-        var currentScroll = $(this).scrollTop();
-        console.log(currentScroll + " and " + previousScroll + " and " + headerOrgOffset);
-        if(currentScroll > headerOrgOffset) {
-            if (currentScroll > previousScroll) {
-                $('#header').animate({
-                     top: '-60px'      //Change to Height of navbar
-                }, 250);               //Mess with animate time
-            } else {
-                $('#header').animate({
-                     top: '0px'
-                },250);
-                $('#header').addClass('fixed');
-            }
-        } else {
-             $('#header').removeClass('fixed');
-        }
-        previousScroll = currentScroll;
-    });
+    $(window).scroll(function(e) {
+
+    // add/remove class to navbar when scrolling to hide/show
+    var scroll = $(window).scrollTop();
+    if (scroll >= 150) {
+        $('.mainmenu').addClass("navbar-hide");
+    } else {
+        $('.mainmenu').removeClass("navbar-hide");
+    }
+
+});
     </script>
 </body>
 

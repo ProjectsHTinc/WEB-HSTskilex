@@ -174,7 +174,22 @@
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
     <script>
+    $(document).ready(function() {
+      var banner_height = $("#navscroll").height();
+      var lastScrollTop = 0;
+      $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        var currScrollTop = $(this).scrollTop();
+        if (scroll >= banner_height && currScrollTop > lastScrollTop) {
+          $("#header-wrap").hide();
+        } else {
+          $("#header-wrap").show();
+        }
+        lastScrollTop = currScrollTop;
 
+      });
+
+    });
     </script>
 </body>
 

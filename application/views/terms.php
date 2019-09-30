@@ -10,7 +10,9 @@
     <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/favicon.png">
     <link rel="shortcut icon" type="image/ico" href="<?php echo base_url(); ?>assets/images/favicon.png" />
     <!-- Plugin-CSS -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-min.css">
+    <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/normalize.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slick.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slick-theme.css">
@@ -174,29 +176,29 @@
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
     <script>
-    $(document).ready(function() {
-      var banner_height = $("#navscroll").height();
-      var lastScrollTop = 0;
-      $(window).scroll(function() {
-        var scroll = $(window).scrollTop();
-        var currScrollTop = $(this).scrollTop();
-        if (scroll >= banner_height && currScrollTop > lastScrollTop) {
-          //$("#header-wrap").hide();
-        } else {
-        //  $("#header-wrap").show();
-        }
-        lastScrollTop = currScrollTop;
-
-      });
-
-    });
+    // $(document).ready(function() {
+    //   var banner_height = $("#navscroll").height();
+    //   var lastScrollTop = 0;
+    //   $(window).scroll(function() {
+    //     var scroll = $(window).scrollTop();
+    //     var currScrollTop = $(this).scrollTop();
+    //     if (scroll >= banner_height && currScrollTop > lastScrollTop) {
+    //       //$("#header-wrap").hide();
+    //     } else {
+    //     //  $("#header-wrap").show();
+    //     }
+    //     lastScrollTop = currScrollTop;
+    //
+    //   });
+    //
+    // });
     </script>
     <style>
-    @media (min-width: 768px) and (max-width: 992px) {
+    /* @media (min-width: 768px) and (max-width: 992px) {
    .collapse {
        display: none !important;
    }
-}
+} */
     </style>
 </body>
 

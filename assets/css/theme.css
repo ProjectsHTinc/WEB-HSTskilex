@@ -5,7 +5,7 @@
 .mainmenu-area {
     position: relative;
     width: 100%;
-    z-index: 999;
+    z-index: 9999;
     background-color: #ffffff;
     padding: 15px 0;
 }

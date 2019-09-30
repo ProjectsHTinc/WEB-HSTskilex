@@ -31,15 +31,11 @@ class Home extends CI_Controller {
 		$data['res_onging_count']=$this->dashboardmodel->get_number_ongoing_orders();
 		$data['res_total_trans_count']=$this->dashboardmodel->get_total_transaction();
 
-		if($user_type=='1'){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/dashboard',$data);
 			$this->load->view('admin/admin_footer');
-		}else if ($user_type=='2'){
-			$this->load->view('admin/admin_header');
-				$this->load->view('admin/dashboard',$data);
-			$this->load->view('admin/admin_footer');
-		} else {
+		}else {
 			 redirect('/login');
 		}
 
@@ -49,7 +45,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 		  $data['res']=$this->loginmodel->get_user_info($user_id);
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/profile',$data);
@@ -64,7 +60,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/change_password',$data);
 			$this->load->view('admin/admin_footer');
@@ -117,6 +113,7 @@ class Home extends CI_Controller {
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
 		if($user_type== 1 || $user_type==2){
+			$data['res']=$this->loginmodel->get_all_user_role();
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/staff/create',$data);
 			$this->load->view('admin/admin_footer');
@@ -132,6 +129,7 @@ class Home extends CI_Controller {
 		$user_type=$this->session->userdata('user_role');
 		if($user_type== 1){
 			$data['res']=$this->loginmodel->get_all_staff();
+
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/staff/view_staff',$data);
 			$this->load->view('admin/admin_footer');
@@ -152,6 +150,7 @@ class Home extends CI_Controller {
 		$username=$this->db->escape_str($this->input->post('username'));
 		$city=$this->db->escape_str($this->input->post('city'));
 		$qualification=$this->db->escape_str($this->input->post('qualification'));
+		$role_id=$this->db->escape_str($this->input->post('role_id'));
 		$address=$this->db->escape_str($this->input->post('address'));
 		$gender=$this->db->escape_str($this->input->post('gender'));
 		$status=$this->db->escape_str($this->input->post('status'));
@@ -166,7 +165,7 @@ class Home extends CI_Controller {
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $file_attach);
 	}
 
-		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic);
+		$data['res']=$this->loginmodel->get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic,$role_id);
 		//echo json_encode($data['res']);
 		if($data['res']['status']=="success"){
 			$messge = array('message' => 'New staff has been created','class' => 'alert alert-success fade in');
@@ -190,6 +189,7 @@ class Home extends CI_Controller {
 			if($user_type== 1){
 				$staff_id=$this->uri->segment(3);
 				$data['res']=$this->loginmodel->get_staff_details($staff_id);
+				$data['res_role']=$this->loginmodel->get_all_user_role();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/staff/edit_staff',$data);
 				$this->load->view('admin/admin_footer');
@@ -204,7 +204,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$data['res']=$this->loginmodel->get_all_customer_details();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/customer/view_customers',$data);
@@ -218,7 +218,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$data['res']=$this->loginmodel->get_all_provider_list();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/providers/view_providers',$data);
@@ -232,7 +232,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$pro_id=$this->uri->segment(3);
 				if(empty($pro_id)){
 						$data['res']=$this->loginmodel->get_all_person_list();
@@ -255,7 +255,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$p_id=$this->uri->segment(3);
 				$data['res']=$this->loginmodel->get_provider_orders($p_id);
 				$this->load->view('admin/admin_header');
@@ -272,7 +272,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$c_id=$this->uri->segment(3);
 				$data['res']=$this->loginmodel->get_customer_orders($c_id);
 				$this->load->view('admin/admin_header');
@@ -290,7 +290,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$cust_id=$this->uri->segment(3);
 				$data['res']=$this->loginmodel->get_customer_details($cust_id);
 				// print_r($data['res']);exit;
@@ -307,7 +307,7 @@ class Home extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+	  	if($user_type=='1'||$user_type=='2'){
 				$data['res']=$this->loginmodel->get_contacted_list();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/view_contacted_list',$data);
@@ -322,7 +322,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 		$email=$this->db->escape_str($this->input->post('email'));
 		$phone=$this->db->escape_str($this->input->post('phone'));
 		$name=$this->db->escape_str($this->input->post('name'));
@@ -342,7 +342,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 		$current_password=$this->db->escape_str($this->input->post('current_password'));
 		$new_password=$this->db->escape_str($this->input->post('new_password'));
 		$confrim_password=$this->db->escape_str($this->input->post('confrim_password'));
@@ -372,7 +372,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+	 if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 			$email=$this->input->post('email');
 			$data=$this->loginmodel->check_email_exist($email,$user_id);
 		}
@@ -382,7 +382,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+		if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 			$phone=$this->input->post('phone');
 			$data=$this->loginmodel->check_phone_exist($phone,$user_id);
 		}
@@ -395,7 +395,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+	 if($user_type=='1'||$user_type=='2'){
 			$id=$this->uri->segment(3);
 			$email=$this->input->post('email');
 			$data=$this->loginmodel->check_staff_email_exist($email,$id);
@@ -407,7 +407,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+		if($user_type=='1'||$user_type=='2'){
 			$phone=$this->input->post('phone');
 			$id=$this->uri->segment(3);
 			$data=$this->loginmodel->check_staff_phone_exist($phone,$id);
@@ -418,7 +418,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+		if($user_type=='1'||$user_type=='2'){
 		$email=$this->db->escape_str($this->input->post('email'));
 		$phone=$this->db->escape_str($this->input->post('phone'));
 		$name=$this->db->escape_str($this->input->post('name'));
@@ -428,7 +428,7 @@ class Home extends CI_Controller {
 		$qualification=$this->db->escape_str($this->input->post('qualification'));
 		$id=$this->db->escape_str($this->input->post('id'));
 		$status=$this->db->escape_str($this->input->post('status'));
-		$status=$this->db->escape_str($this->input->post('status'));
+		$role_id=$this->db->escape_str($this->input->post('role_id'));
 		$id=$this->db->escape_str($this->input->post('id'));
 		$old_profile_pic=$this->db->escape_str($this->input->post('old_profile_pic'));
 		$file = $_FILES['profile_pic']['name'];
@@ -441,7 +441,7 @@ class Home extends CI_Controller {
 		$file_attach = $uploaddir.$pic;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $file_attach);
 	}
-		$data['res']=$this->loginmodel->update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id);
+		$data['res']=$this->loginmodel->update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id,$role_id);
 		// echo json_encode($data['res']);
 		if($data['res']['status']=="success"){
 			$messge = array('message' => 'Changes made are saved','class' => 'alert alert-success fade in');
@@ -461,7 +461,7 @@ class Home extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1 || $user_type==2){
+			if($user_type=='1' || $user_type=='2' || $user_type=='6' || $user_type=='7'){
 		$current_password=md5($this->input->post('current_password'));
 		$data=$this->loginmodel->check_current_password($current_password,$user_id);
 		}else{

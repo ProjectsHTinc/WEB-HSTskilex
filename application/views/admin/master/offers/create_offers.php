@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -13,7 +14,7 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Create Offer </h4>
+                  <h4 class="card-title">Create Offer</h4>
 
                   <form class="forms-sample" id="create_offer" method="post" action="<?php echo base_url(); ?>offers/create_offers" enctype="multipart/form-data">
                     <div class="row">
@@ -42,10 +43,16 @@
                           <input type="text" class="form-control" id="offer_percent" name="offer_percent" placeholder="offer percentage">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
-                            <label for="username">Max Amount</label>
+                            <label for="username">Maximium Discount Amount</label>
                             <input type="text" class="form-control" id="max_offer_amount" name="max_offer_amount">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="username">Minimum Purchase Amount</label>
+                            <input type="text" class="form-control" id="minimum_purchase_amt" name="minimum_purchase_amt">
                         </div>
                       </div>
                     </div>
@@ -95,7 +102,9 @@
               <th>Percentage</th>
               <th>Max amt</th>
               <th>Status</th>
-              <th>Actions</th>
+              <?php if($role=='6'){
+
+              }else{ ?><th>Actions</th><?php } ?>
           </tr>
       </thead>
       <tbody>
@@ -114,9 +123,14 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              <td><a href="<?php echo base_url(); ?>offers/get_offer_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
-              </td>
+               <?php if($role=='6'){
+
+               }else{ ?>
+                 <td>
+                   <a href="<?php echo base_url(); ?>offers/get_offer_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                 </td>
+              <?php  } ?>
+
           </tr>
         <?php  $i++;  }  ?>
 
@@ -137,11 +151,7 @@
       </div>
     </div>
     <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
+
       $('#create_offer').validate({
       rules: {
 
@@ -159,6 +169,7 @@ new $.fn.dataTable.Responsive( table, {
               },
           offer_percent:{required:true,digits: true},
           max_offer_amount: {required:true,digits: true },
+          minimum_purchase_amt:{required:true,digits: true },
           offer_description:{required:true},
           status: { required: true}
       },
@@ -173,6 +184,7 @@ new $.fn.dataTable.Responsive( table, {
      							 },
           offer_percent:{required:"enter the percentage"},
           max_offer_amount: {required: "enter the max amount." },
+          minimum_purchase_amt: {required: "enter the Minimum Pruchase amount." },
           offer_description:{required:"enter the description"},
           status: {required: "select status." },
 

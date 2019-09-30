@@ -289,11 +289,6 @@ function update_status(msg){
   $(".modal-body #daily_id").val( daily_id );
 }
 
-// $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
 
 
 

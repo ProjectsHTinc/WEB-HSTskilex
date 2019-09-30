@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -13,7 +14,7 @@
             <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Create Category </h4>
+                  <h4 class="card-title">Create Category   </h4>
 
                   <form class="forms-sample" id="create_category" method="post" action="<?php echo base_url(); ?>masters/category_creation" enctype="multipart/form-data">
 
@@ -85,7 +86,12 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              <td><a href="<?php echo base_url(); ?>masters/get_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+              <td>
+                <?php if($role=='6'){ ?>
+
+                <?php }else{ ?>
+ <a href="<?php echo base_url(); ?>masters/get_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+              <?php  } ?>
                 <a title="Add Sub-Category" href="<?php echo base_url(); ?>masters/create_sub_category/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->main_cat_name; ?>/<?php echo $rows->main_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
               </td>
           </tr>
@@ -103,10 +109,3 @@
         </div>
       </div>
     </div>
-    <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-    </script>

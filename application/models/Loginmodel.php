@@ -6,6 +6,7 @@ Class Loginmodel extends CI_Model
   public function __construct()
   {
       parent::__construct();
+      $this->load->model('mailmodel');
 
 
   }
@@ -71,7 +72,7 @@ Class Loginmodel extends CI_Model
        }
 
        function get_all_staff(){
-         $query="SELECT * From login_admin  WHERE admin_type='2' ORDER BY id DESC";
+         $query="SELECT ur.role_name,la.* FROM login_admin as la left join user_role as ur on ur.id=la.admin_type order by la.id desc";
          $resultset=$this->db->query($query);
          return $resultset->result();
        }
@@ -160,8 +161,13 @@ Class Loginmodel extends CI_Model
            }
        }
 
+      function get_all_user_role(){
+        $select="SELECT * FROM user_role where id IN (6,7,2)";
+        $result=$this->db->query($select);
+        return $result->result();
+      }
 
-      function get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic){
+      function get_register_staff($name,$email,$phone,$username,$city,$qualification,$address,$gender,$status,$user_id,$pic,$role_id){
         $digits = 8;
         $OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
         $password=md5($OTP);
@@ -169,15 +175,14 @@ Class Loginmodel extends CI_Model
         $result=$this->db->query($select);
         if($result->num_rows()==0){
           $to=$email;
-          $subject = '"Account Created"';
-          $htmlContent = '
+          $notes = '
             <html>
             <head>  <title></title>
             </head>
             <body>
             <p>Hi  '.$name.'</p>
-            <center><p>Hi..Please Use Below Username & Password to login</p></center>
-              <table cellspacing="0" style="border:2px solid #000;width:300px;">
+            <p>Hi..Please Use Below Username & Password to login</p>
+              <table cellspacing="0" style="border:2px solid #000;width:300px;margin: 40px;    padding: 15px;">
                     <tr>
                         <th>Username:</th><td>'.$username.'</td>
                     </tr>
@@ -190,14 +195,8 @@ Class Loginmodel extends CI_Model
                 </table>
             </body>
             </html>';
-
-        // Set content-type header for sending HTML email
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        // Additional headers
-        $headers .= 'From: skilex<info@skilex.com>' . "\r\n";
-        $sent= mail($to,$subject,$htmlContent,$headers);
-          $insert="INSERT INTO login_admin (profile_pic,admin_type,name,password,email,phone,username,city,qualification,address,gender,status,created_by,created_at) VALUES ('$pic','2','$name','$password','$email','$phone','$username','$city','$qualification','$address','$gender','$status','$user_id',NOW())";
+          $this->mailmodel->send_mail($email,$notes);
+          $insert="INSERT INTO login_admin (admin_type,profile_pic,name,password,email,phone,username,city,qualification,address,gender,status,created_by,created_at) VALUES ('$role_id','$pic','$name','$password','$email','$phone','$username','$city','$qualification','$address','$gender','$status','$user_id',NOW())";
             $resultset=$this->db->query($insert);
             if($resultset){
               $data = array("status" => "success");
@@ -226,9 +225,9 @@ Class Loginmodel extends CI_Model
        }
 
 
- 	   function update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id){
+ 	   function update_staff_profile($status,$id,$pic,$email,$phone,$name,$city,$qualification,$address,$gender,$user_id,$role_id){
        $staff_id=$id;
- 			  $select = "UPDATE login_admin SET name='$name',phone='$phone',city='$city',address='$address',gender='$gender',email='$email',status='$status',qualification='$qualification',profile_pic='$pic' WHERE id='$staff_id'";
+ 			  $select = "UPDATE login_admin SET name='$name',phone='$phone',admin_type='$role_id',city='$city',address='$address',gender='$gender',email='$email',status='$status',qualification='$qualification',profile_pic='$pic' WHERE id='$staff_id'";
  		$result = $this->db->query($select);
  				if($result){
  					$data = array("status" => "success");

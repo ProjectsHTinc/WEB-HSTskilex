@@ -158,6 +158,21 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Notification End -------------------//
 
+    function get_all_tax_commission(){
+      $select="SELECT * FROM tax_commission WHERE id='1'";
+      $result = $this->db->query($select);
+  		$res = $result->result();
+      foreach($res as $rows){
+        $sgst=$rows->sgst;
+        $cgst=$rows->cgst;
+        $internal_commission=$rows->internal_commission;
+        $external_commission=$rows->external_commission;
+
+      }
+    }
+
+
+
 //-------------------- Mobile Check -------------------//
 
 	 function Mobile_check($phone_no)
@@ -186,7 +201,7 @@ class Apicustomermodel extends CI_Model {
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
-		$message_details = "Dear Customer your OTP :".$OTP;
+    $message_details = "Your SkilEx Verification code is: ".$OTP." \n\n\n 0q8GrbcslWk";
 		$this->sendSMS($phone_no,$message_details);
 		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 		return $response;
@@ -1415,9 +1430,11 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "person_name"=>$rows_service->full_name,
             "person_number"=>$rows_service->phone_no,
             "service_start_time"=>$rows_service->start_datetime,
+            "onhold_datetime"=>$rows_service->onhold_datetime,
             "service_end_time"=>$rows_service->finish_datetime,
             "additional_service"=>$rows_service->count_add,
             "material_notes"=>$rows_service->material_notes,
+            "comments"=>$rows_service->comments,
             "paid_advance_amt"=>$rows_service->paid_advance_amount,
             "service_amount"=>$rows_service->service_amount,
             "additional_service_amt"=>$rows_service->ad_service_amount,
@@ -1714,11 +1731,22 @@ function proceed_for_payment($user_master_id,$service_order_id){
                   $net_service_amount= $rows_service->net_service_amount;
                 }
 
+
+                $select_tax="SELECT * FROM tax_commission WHERE id='1'";
+                $result_tax = $this->db->query($select_tax);
+            		$res_tax = $result_tax->result();
+                foreach($res_tax as $rows_tax){  }
+                  $sgst=$rows_tax->sgst/100;
+                  $cgst=$rows_tax->cgst/100;
+                  $total_gst=$sgst+$cgst;
+                  $internal_commission=$rows_tax->internal_commission/100;
+                  $external_commission=$rows_tax->external_commission/100;
+
                 // echo $net_service_amount;exit;
-                $providrt_amt=0.8* $net_service_amount;
-                $skilex_amount=0.2*$net_service_amount;
-                $gst=0.18*$skilex_amount;
-                $gst_amount=0.18*$skilex_amount/2;
+                $providrt_amt=$external_commission* $net_service_amount;
+                $skilex_amount=$internal_commission*$net_service_amount;
+                $gst=$total_gst*$skilex_amount;
+                $gst_amount=$total_gst*$skilex_amount/2;
                 $skile_net_amount=$skilex_amount-$gst;
                 $payable=$net_service_amount-$advance;
                 $update="UPDATE service_payments SET net_service_amount='$net_service_amount',payable_amount='$payable',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";

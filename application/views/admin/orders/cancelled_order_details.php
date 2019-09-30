@@ -111,6 +111,28 @@
                         </div>
                       </div>
                     </div>
+                    <?php if($rows->onhold_datetime='0000-00-00 00:00:00'){
+                      $on_hold_datetime='';
+                    }else{
+                      $on_hold_datetime=$rows->onhold_datetime;
+                    } ?>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Onhold Date :</label>
+                        <div class="col-sm-8">
+                              <input type="text" class="form-control" readonly value="<?php echo $on_hold_datetime; ?>">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Comments:</label>
+                      <div class="col-sm-10">
+                            <textarea type="text" class="form-control" rows="4" readonly><?php echo $rows->comments; ?></textarea>
+                          </div>
+                  </div>
+                </div>
+
                       <div class="col-md-12">
                         <div class="form-group row">
                           <label class="col-sm-2 col-form-label">Material Used :</label>

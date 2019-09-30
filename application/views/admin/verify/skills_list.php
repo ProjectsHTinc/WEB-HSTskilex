@@ -58,11 +58,3 @@
       </div>
 
     </div>
-
-<script>
-// $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-</script>

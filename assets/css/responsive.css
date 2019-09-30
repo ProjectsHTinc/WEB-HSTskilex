@@ -3,7 +3,16 @@
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {}
 
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .bttn-1{
+    padding: 10px;
+    margin-right: 0px;
+  }
+  .service-box{
+    height: 320px;
+  }
+
+}
 
 
 /* Tablet Layout: 768px. */
@@ -21,7 +30,7 @@
 @media only screen and (min-width: 768px) {
 
     /*---------------------
-    Sub-Menu-Style 
+    Sub-Menu-Style
     ---------------------*/
 
     .mainmenu .sub-menu {
@@ -94,6 +103,7 @@
         padding: 30px;
         border-radius: 5px;
         display: none;
+        height: auto !important;
     }
 
     .mainmenu ul {
@@ -254,4 +264,7 @@
 }
 /* Wide Mobile Layout: 480px. */
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+
+}

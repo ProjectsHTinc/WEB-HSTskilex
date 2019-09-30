@@ -4,6 +4,10 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+.welcome_text{
+  text-align: center;
+  font-size: 20px;
+}
 </style>
 
 <div class="container-fluid page-body-wrapper">
@@ -11,6 +15,15 @@
     <div class="content-wrapper">
       <div class="row">
         <div class="col-12 grid-margin" style="margin-top:60px;">
+          <?php   $role=$this->session->userdata('user_role'); ?>
+          <?php if($role=='7'|| $role=='6'){ ?>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center welcome_text">Welcome to SkilEx</p>
+                  </div>
+
+                </div>
+            <?php  }else{ ?>
           <div class="card card-statistics">
 
             <div class="row">
@@ -154,7 +167,9 @@
                   </div>
               </div>
             </div>
+
           </div>
+            <?php } ?>
         </div>
       </div>
 

@@ -38,6 +38,14 @@
                         <option value="Female">Female</option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect3">Role Permission</label>
+                      <select class="form-control form-control-sm" id="role_id" name="role_id">
+                        <?php foreach($res as $rows_role){ ?>
+                          <option value="<?php echo $rows_role->id; ?>"><?php echo $rows_role->role_name; ?></option>
+                      <?php  } ?>
+                      </select>
+                    </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
@@ -50,7 +58,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputCity1">Qualification</label>
-                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Qualification" name="qualification">
+                      <input type="text" class="form-control" id="qualification" placeholder="Qualification" name="qualification">
                     </div>
 
                     <div class="form-group">
@@ -65,6 +73,7 @@
 
                       </select>
                     </div>
+                    <br>
                     <button type="submit" class="btn btn-primary mr-2">Create</button>
                   </div>
                 </div>
@@ -114,7 +123,7 @@
           required :"Please enter city"
         },
         qualification:{
-          required :"Please enter city"
+          required :"Please enter qualification"
         },
         address:{
           required :"Please enter address"

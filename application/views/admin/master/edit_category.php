@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -33,7 +34,9 @@
                       <input type="file" class="form-control" id="cat_pic" name="cat_pic" placeholder="">
                     </div>
 
+                    <?php if($role=='7'){ ?>
 
+                  <?php  }else{ ?>
                     <div class="form-group">
                       <label for="exampleFormControlSelect3">Status</label>
                       <select class="form-control form-control-sm" id="status" name="status">
@@ -43,6 +46,8 @@
                       </select>
                       <script>$('#status').val('<?php echo $rows->status; ?>');</script>
                     </div>
+                  <?php  } ?>
+
                     <button type="submit" class="btn btn-primary mr-2">Update Category</button>
 
                   </form>

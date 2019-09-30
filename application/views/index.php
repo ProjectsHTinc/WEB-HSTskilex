@@ -115,7 +115,7 @@
         <!-- Header-Content -->
         <div class="container">
             <div class="row ">
-                <div class="col-xs-12 col-md-8">
+                <div class="col-xs-12 col-md-7 col-lg-8">
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
                         <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable <br>
@@ -129,18 +129,18 @@ From people who are capable</h2>
 </a>
                     <a href="#" class="bttn-1 wow fadeInRight" data-wow-delay="1s"><i class="fa fa-download" aria-hidden="true"></i>  Download on Play Store </a>
                 </div>
-                <div class="col-xs-12 col-md-4 hidden-xs hidden-sm">
+                <div class="col-xs-12 col-md-5 col-lg-4 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->
                     <figure class="single-image-slide">
                         <div>
                             <img src="<?php echo base_url(); ?>assets/images/screen-1.png" alt="">
                         </div>
-                        <div>
+                        <!-- <div>
                             <img src="<?php echo base_url(); ?>assets/images/screen-2.png" alt="">
                         </div>
                         <div>
                             <img src="<?php echo base_url(); ?>assets/images/screen-3.png" alt="">
-                        </div>
+                        </div> -->
 
                     </figure>
                     <!-- Single-Screen-Image / -->
@@ -351,15 +351,15 @@ From people who are capable</h2>
     </section>
     <!-- Service-area / -->
     <!-- About-area -->
-    <section class="about-area section-padding section-bg" id="about-area" style="padding-top:130px;">
+    <section class="about-area section-padding section-bg" id="about-area" >
         <div class="container">
-            <div class="row row-flex">
-                <div class="col-xs-12 col-md-6 hidden-xs hidden-sm text-center">
+            <div class="row" style="padding-top:130px;">
+                <div class="col-xs-12 col-md-6 col-lg-6 hidden-xs hidden-sm text-center">
                     <figure class="single-image wow fadeInDown" data-wow-delay="0.5s" >
                         <img src="<?php echo base_url(); ?>/assets/images/screen-1.png" alt="" style="height:500px;">
                     </figure>
                 </div>
-                <div class="col-xs-12 col-md-6 wow fadeInRight">
+                <div class="col-xs-12 col-md-6 col-lg-6 wow fadeInRight">
                     <div class="title-box left">
                         <h2 class="title">About SkilEx</h2>
                         <p class="title">Skilex is an online platform to avail various home services at your door step </p>
@@ -528,19 +528,19 @@ From people who are capable</h2>
         <div class="footer-bottom">
             <div class="container">
                 <div class="row row-flex">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="widget footer-widget">
                             <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 text-right">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
                         <div class="space-10 hidden visible-xs"></div>
                         <div class="widget footer-widget">
                             <div class="social-menu">
-                                <a href="#"><i class="icofont-facebook"></i></a>
-                                <a href="#"><i class="icofont-twitter"></i></a>
-                                <a href="#"><i class="icofont-pinterest"></i></a>
-                                <a href="https://www.instagram.com/skilex_bulletin123/" target="_blank"><i class="icofont-instagram"></i></a>
+                                <a href="https://www.facebook.com/Skilex-blog-101337694543194/?modal=admin_todo_tour" target="_blank"><i class="icofont-facebook"></i></a>
+                                <a href="https://twitter.com/Skilex9" target="_blank"><i class="icofont-twitter"></i></a>
+                                <a href="https://in.pinterest.com/dhanasekarskilex/pins/" target="_blank"><i class="icofont-pinterest"></i></a>
+                                <a href="https://www.instagram.com/skilex_bulletin123/?hl=en" target="_blank"><i class="icofont-instagram"></i></a>
 
                             </div>
                         </div>

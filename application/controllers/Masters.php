@@ -114,6 +114,53 @@ class Masters extends CI_Controller {
 
 
 
+	 	// Tax & Commission
+
+		public function tax_commission(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				 $data['res']=$this->mastermodel->get_all_tax_commission();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/master/tax_commission',$data);
+				$this->load->view('admin/admin_footer');
+			 }else{
+				 	redirect('/login');
+			 }
+		}
+
+
+		public function update_tax_percentage(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				 $sgst=$this->db->escape_str($this->input->post('sgst'));
+				 $cgst=$this->db->escape_str($this->input->post('cgst'));
+				 $data['res']=$this->mastermodel->update_tax_percentage($sgst,$cgst,$user_id);
+				 echo json_encode($data['res']);
+			 }else{
+					redirect('/login');
+			 }
+		}
+
+		public function update_commission_percentage(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				 $internal_commission=$this->db->escape_str($this->input->post('internal_commission'));
+				 $external_commission=$this->db->escape_str($this->input->post('external_commission'));
+				 $data['res']=$this->mastermodel->update_commission_percentage($internal_commission,$external_commission,$user_id);
+				 echo json_encode($data['res']);
+			 }else{
+					redirect('/login');
+			 }
+		}
+
+
+
 	 		// Category section
 
 
@@ -123,7 +170,7 @@ class Masters extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 			 $data['res']=$this->mastermodel->get_all_category();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/master/create_category',$data);
@@ -140,7 +187,7 @@ class Masters extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 			 $main_cat_name=$this->db->escape_str($this->input->post('main_cat_name'));
 			 $main_cat_ta_name=$this->db->escape_str($this->input->post('main_cat_ta_name'));
 			 $status=$this->db->escape_str($this->input->post('status'));
@@ -186,7 +233,7 @@ class Masters extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$cat_id=$this->uri->segment(3);
 			 $data['res']=$this->mastermodel->get_category_edit($cat_id);
 		 $this->load->view('admin/admin_header');
@@ -202,7 +249,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$main_cat_name=$this->db->escape_str($this->input->post('main_cat_name'));
 				$main_cat_ta_name=$this->db->escape_str($this->input->post('main_cat_ta_name'));
 				$status=$this->db->escape_str($this->input->post('status'));
@@ -239,7 +286,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$main_cat_name=$this->input->post('main_cat_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkcategoryexist($main_cat_name,$id);
@@ -250,7 +297,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$main_cat_ta_name=$this->input->post('main_cat_ta_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkcategorytamilexist($main_cat_ta_name,$id);
@@ -266,7 +313,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$id=$this->uri->segment(3);
 				$data['res']=$this->mastermodel->get_all_sub_category($id);
 				$this->load->view('admin/admin_header');
@@ -280,7 +327,7 @@ class Masters extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		  if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $cat_id=$this->uri->segment(3);
 			$data['res']=$this->mastermodel->get_sub_category_edit($cat_id);
 			$this->load->view('admin/admin_header');
@@ -297,7 +344,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
 				$main_cat_id=base64_decode($this->db->escape_str($this->input->post('main_cat_id')))/98765;
 				$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
@@ -343,7 +390,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type=='1'){
+			 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
 				$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
 				$status=$this->db->escape_str($this->input->post('status'));
@@ -381,7 +428,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$sub_cat_name=$this->input->post('sub_cat_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checksubcategoryexist($sub_cat_name,$id);
@@ -392,7 +439,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$sub_cat_ta_name=$this->input->post('sub_cat_ta_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checksubcategorytamilexist($sub_cat_ta_name,$id);
@@ -408,7 +455,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$id=$this->uri->segment(3);
 				$data['res']=$this->mastermodel->get_all_service($id);
 				$this->load->view('admin/admin_header');
@@ -423,7 +470,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$service_name=$this->db->escape_str($this->input->post('service_name'));
 				$sub_cat_id=base64_decode($this->db->escape_str($this->input->post('sub_cat_id')))/98765;
 				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
@@ -482,7 +529,7 @@ class Masters extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $cat_id=$this->uri->segment(3);
 			$data['res']=$this->mastermodel->get_service_edit($cat_id);
 			$this->load->view('admin/admin_header');
@@ -497,7 +544,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$service_name=$this->db->escape_str($this->input->post('service_name'));
 				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
 				$status=$this->db->escape_str($this->input->post('status'));
@@ -551,7 +598,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$service_name=$this->input->post('service_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkserviceexist($service_name,$id);
@@ -562,7 +609,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$service_ta_name=$this->input->post('service_ta_name');
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkservicetamilexist($service_ta_name,$id);
@@ -579,7 +626,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+			 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$data['res']=$this->mastermodel->get_banner();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/master/banner/create',$data);
@@ -593,7 +640,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 				$banner_title=$this->db->escape_str($this->input->post('banner_title'));
 				$status=$this->db->escape_str($this->input->post('status'));
 				$profilepic = $_FILES['banner_img']['name'];
@@ -627,7 +674,7 @@ class Masters extends CI_Controller {
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
-			if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 			 $ban_id=$this->uri->segment(3);
 			 $data['res']=$this->mastermodel->get_banner_edit($ban_id);
 			 $this->load->view('admin/admin_header');
@@ -644,7 +691,7 @@ class Masters extends CI_Controller {
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
 		$user_type=$this->session->userdata('user_role');
-		if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='6'||$user_type=='7'){
 			$banner_title=$this->db->escape_str($this->input->post('banner_title'));
 			$ban_id=$this->db->escape_str($this->input->post('ban_id'));
 			$banner_old_img=$this->db->escape_str($this->input->post('banner_old_img'));

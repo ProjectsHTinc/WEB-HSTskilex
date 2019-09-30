@@ -16,7 +16,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 	if($user_type=='1'||$user_type=='2'){
 			 $data['res']=$this->transactionmodel->get_daily_transaction();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/daily_transaction_details',$data);
@@ -31,7 +31,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'){
 			 $from_date=$this->input->post('from_date');
 			 $to_date=$this->input->post('to_date');
 			 $data['res']=$this->transactionmodel->from_date_to_date($from_date,$to_date);
@@ -48,7 +48,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'){
 			 $data['res']=$this->transactionmodel->provider_based_transaction();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/provider_based_transaction',$data);
@@ -64,7 +64,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'){
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/datewise_transactions',$data);
 			 $this->load->view('admin/admin_footer');
@@ -79,7 +79,7 @@ class Transaction extends CI_Controller {
 		 		 $data=$this->session->userdata();
 		 		 $user_id=$this->session->userdata('user_id');
 		 		 $user_type=$this->session->userdata('user_role');
-		 		 if($user_type=='1'){
+		 		 if($user_type=='1'||$user_type=='2'){
 					 $data['res']=$this->transactionmodel->online_payment_history();
 		 			 $this->load->view('admin/admin_header');
 		 			 $this->load->view('admin/transactions/online_payment_history',$data);
@@ -94,7 +94,7 @@ class Transaction extends CI_Controller {
 				 $data=$this->session->userdata();
 				 $user_id=$this->session->userdata('user_id');
 				 $user_type=$this->session->userdata('user_role');
-				 if($user_type=='1'){
+				 if($user_type=='1'||$user_type=='2'){
 					 $data['res']=$this->transactionmodel->day_wise_transaction();
 					 $this->load->view('admin/admin_header');
 					 $this->load->view('admin/transactions/day_wise_transaction',$data);
@@ -108,7 +108,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'){
 			 $online_id=$this->uri->segment(3);
 			 $data['res']=$this->transactionmodel->online_payment_details($online_id);
 			 $this->load->view('admin/admin_header');
@@ -124,7 +124,7 @@ class Transaction extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type== 1){
+		 if($user_type=='1'||$user_type=='2'){
 			 $status=$this->input->post('status');
 			 $id=$this->input->post('daily_id');
 			 $transaction_notes=$this->input->post('transaction_notes');

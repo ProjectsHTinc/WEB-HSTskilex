@@ -28,9 +28,11 @@
   color: #125ba1;
 }
 </style>
+
 </head>
 
 <body>
+  <?php  $role=$this->session->userdata('user_role'); ?>
   <div class="container-scroller">
     <!-- partial:partials/_horizontal-navbar.html -->
     <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">
@@ -47,12 +49,13 @@
             <li class="nav-item">
               <a href="<?php echo base_url(); ?>dashboard" class="nav-link"><i class="fa fa-desktop" aria-hidden="true"></i> &nbsp; <span class="menu-title">DASHBOARD</span></a>
             </li>
-
+              <?php  if($role=='1' || $role=='2' || $role=='7'){ ?>
             <li class="nav-item mega-menu">
               <a href="#" class="nav-link"><i class="fa fa-bars" aria-hidden="true"></i></i>&nbsp;
                 <span class="menu-title">Main Menu</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <div class="col-group-wrapper row">
+
                    <div class="col-group col-md-2 col-md-offset-1">
                      <p class="category-heading">Masters</p>
                      <ul class="submenu-item">
@@ -60,32 +63,61 @@
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/banner_list">Banners </a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>offers">Offers </a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/tax_commission">Tax & Commission </a></li>
+                        <?php if($role=='7' ||$role=='6' ||$role=='2'){ ?>
+                        <?php  }else{ ?>
+                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create staff</a></li>
+                       <?php  } ?>
+
+
 
                      </ul>
                    </div>
-                  <div class="col-group col-md-2">
-                    <p class="category-heading">List</p>
-                    <ul class="submenu-item">
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff</a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">Associate </a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">Expert </a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">Customers </a></li>
-                  </ul>
-                  </div>
-                  <div class="col-group col-md-3">
-                    <p class="category-heading">Recent Associates and Experts</p>
-                    <ul class="submenu-item">
-                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Associate list </a></li>
-                    </ul>
-                  </div>
+
+                     <div class="col-group col-md-2">
+                       <p class="category-heading">List</p>
+                       <ul class="submenu-item">
+                         <?php if($role=='7' ||$role=='6' ||$role=='2'){ ?>
+                         <?php  }else{ ?>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff</a></li>
+                        <?php  } ?>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">Associate </a></li>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">Expert </a></li>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">Customers </a></li>
+                     </ul>
+                     </div>
+                     <div class="col-group col-md-3">
+                       <p class="category-heading">Recent Associates and Experts</p>
+                       <ul class="submenu-item">
+                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Associate list </a></li>
+                       </ul>
+                     </div>
+
+
+
+
 
                 </div>
               </div>
             </li>
+            <?php   }else{ }?>
+            <?php  if($role=='6'){ ?>
+            <li class="nav-item">
+              <a href="#" class="nav-link"><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
+                <span class="menu-title">Masters</span><i class="menu-arrow"></i></a>
+              <div class="submenu">
+                <ul class="submenu-item">
 
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/banner_list">Banners </a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>offers">Offers </a></li>
 
+                </ul>
+              </div>
+            </li>
+            <?php  }else{} ?>
 
+            <?php  if($role=='1' || $role=='2' || $role=='7'){ ?>
             <li class="nav-item">
               <a href="#" class="nav-link"><i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
                 <span class="menu-title">Service Orders</span><i class="menu-arrow"></i></a>
@@ -100,7 +132,8 @@
                 </ul>
               </div>
             </li>
-
+            <?php  }else{} ?>
+            <?php  if($role=='1' || $role=='2'){ ?>
             <li class="nav-item">
               <a href="#" class="nav-link"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<span class="menu-title">Transaction</span><i class="menu-arrow"></i></a>
               <div class="submenu">
@@ -114,8 +147,11 @@
 
                 </li>
 
+
                 </ul>
               </div>
+                </li>
+                <?php  }else{} ?>
 
 
 
@@ -123,7 +159,9 @@
               <a href="#" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span class="menu-title">Settings</span><i class="menu-arrow"></i></a>
               <div class="submenu">
                 <ul class="submenu-item">
+                  <?php  if($role=='1' || $role=='2'){ ?>
                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/view_contact_form">Contact Box</a></li>
+                  <?php }else{}?>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>profile">Profile</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>change_password">Password</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>logout">Logout</a></li>

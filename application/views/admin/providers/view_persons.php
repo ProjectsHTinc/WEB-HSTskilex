@@ -45,7 +45,7 @@
                 <button type="button" class="badge badge-danger">Active</button>
               <?php   }
                  ?></td>
-              
+
                 <td><?php echo $rows->updated_at; ?></td>
 
                 <td><a href="<?php echo base_url(); ?>home/get_provider_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
@@ -68,10 +68,3 @@
       </div>
 
     </div>
-    <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-    </script>

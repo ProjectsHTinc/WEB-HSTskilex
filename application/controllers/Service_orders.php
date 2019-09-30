@@ -16,7 +16,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $data['res']=$this->service_order_model->get_pending_orders();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/orders/pending_orders',$data);
@@ -32,7 +32,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $data['res']=$this->service_order_model->get_ongoing_orders();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/orders/ongoing_orders',$data);
@@ -48,7 +48,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $data['res']=$this->service_order_model->completed_orders();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/orders/completed_orders',$data);
@@ -64,7 +64,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $data['res']=$this->service_order_model->cancelled_orders();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/orders/cancelled_orders',$data);
@@ -80,7 +80,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $service_order_id=$this->uri->segment(3);
 			 $data['res']=$this->service_order_model->get_cost_details($service_order_id);
 			 $this->load->view('admin/admin_header');
@@ -96,7 +96,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$service_order_id=$this->uri->segment(3);
 			$data['res']=$this->service_order_model->get_order_details($service_order_id);
 			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
@@ -117,7 +117,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$service_order_id=$this->uri->segment(3);
 			$data['res']=$this->service_order_model->get_ongoing_order_details($service_order_id);
 			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
@@ -140,7 +140,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type=='1'){
+		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$service_order_id=$this->uri->segment(3);
 			$data['res']=$this->service_order_model->get_ongoing_order_details($service_order_id);
 			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
@@ -161,7 +161,7 @@ class Service_orders extends CI_Controller {
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
-		 if($user_type== 1){
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $prov_id=$this->input->post('prov_id');
 			 $id=$this->input->post('id');
 			 $data['res']=$this->service_order_model->assign_orders($prov_id,$id);

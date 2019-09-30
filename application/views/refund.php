@@ -48,7 +48,7 @@
                         <li><a href="<?php echo base_url(); ?>">Home</a></li>
                         <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
                         <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
-                        <li><a href="#feature-area">FAQ</a></li>
+                          <li><a href="<?php echo base_url(); ?>#feature-area">FAQ</a></li>
                         <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
                           <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                       </ul>
@@ -99,18 +99,20 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="row row-flex">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="widget footer-widget">
                           <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 text-right">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
                         <div class="space-10 hidden visible-xs"></div>
                         <div class="widget footer-widget">
                             <div class="social-menu">
-                                <!-- <a href="#"><i class="icofont-facebook"></i></a>
-                                <a href="#"><i class="icofont-twitter"></i></a>
-                                <a href="#"><i class="icofont-instagram"></i></a> -->
+                              <a href="https://www.facebook.com/Skilex-blog-101337694543194/?modal=admin_todo_tour" target="_blank"><i class="icofont-facebook"></i></a>
+                              <a href="https://twitter.com/Skilex9" target="_blank"><i class="icofont-twitter"></i></a>
+                              <a href="https://in.pinterest.com/dhanasekarskilex/pins/" target="_blank"><i class="icofont-pinterest"></i></a>
+                              <a href="https://www.instagram.com/skilex_bulletin123/?hl=en" target="_blank"><i class="icofont-instagram"></i></a>
+
 
                             </div>
                         </div>

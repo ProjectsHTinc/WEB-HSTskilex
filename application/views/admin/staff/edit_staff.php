@@ -37,6 +37,15 @@
                         </select>
                           <script>$('#gender').val('<?php echo $rows->gender; ?>');</script>
                       </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect3">Role Permission</label>
+                        <select class="form-control form-control-sm" id="role_id" name="role_id">
+                          <?php foreach($res_role as $rows_role){ ?>
+                            <option value="<?php echo $rows_role->id; ?>"><?php echo $rows_role->role_name; ?></option>
+                        <?php  } ?>
+                        </select>
+                        <script>$('#role_id').val('<?php echo $rows->admin_type; ?>');</script>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">

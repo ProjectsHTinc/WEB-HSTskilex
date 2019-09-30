@@ -19,9 +19,10 @@
                 <th>Name</th>
                 <th>Username</th>
                 <th>Email <br>Phone </th>
+                <th>Permission</th>
 
                 <th>Profile Picture</th>
-                <th>Gender</th>
+
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -34,11 +35,12 @@
                   <td><?php echo $i; ?></td>
                 <td><?php echo $rows->name; ?></td>
                 <td><?php echo $rows->username; ?></td>
-                <td><?php echo $rows->email; ?><br>
+                <td><?php echo $rows->email; ?><br><br>
                 <?php echo $rows->phone; ?></td>
+                <td><?php echo $rows->role_name; ?></td>
 
                   <td><img src="<?php echo base_url(); ?>assets/profile/<?php echo $rows->profile_pic; ?>" style="width:100px;"></td>
-                <td><?php echo $rows->gender; ?></td>
+                
                 <td><?php if($rows->status=='Inactive'){ ?>
                   <button type="button" class="badge badge-danger">Inactive</button>
               <?php   }else{ ?>
@@ -65,10 +67,3 @@
       </div>
 
     </div>
-    <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-    </script>

@@ -1,3 +1,5 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
+
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -214,7 +216,9 @@
               <th>Advance Amt</th>
               <th>Rate</th>
               <th>Status</th>
-              <th>Actions</th>
+              <?php if($role=='6'){
+
+              }else{ ?><th>Actions</th><?php } ?>
           </tr>
       </thead>
       <tbody>
@@ -235,9 +239,16 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              <td><a href="<?php echo base_url(); ?>masters/get_service_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+
+                <?php if($role=='6'){
+
+                }else{ ?>
+                    <td>
+                  <a href="<?php echo base_url(); ?>masters/get_service_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                    </td>
+              <?php  } ?>
                 <!-- <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-plus-square"></i></a> -->
-              </td>
+
           </tr>
         <?php  $i++;  }  ?>
 
@@ -267,11 +278,6 @@
 
 
 
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
       $('#create_service').validate({
       rules: {
 

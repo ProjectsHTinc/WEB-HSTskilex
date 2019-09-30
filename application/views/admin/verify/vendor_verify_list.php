@@ -56,7 +56,7 @@
                 <td>
                   <a title="Edit" href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;
                   <a title="View Documents " href="<?php echo base_url(); ?>verifyprocess/get_vendor_doc_status/<?php echo $rows->company_status; ?>/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>&nbsp;
-                                  <a  title="View Experts list" href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-users" aria-hidden="true"></i></a>&nbsp;
+                                  <a  title="View Experts list" href="<?php echo base_url(); ?>verifyprocess/service_person_list/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-user" aria-hidden="true"></i></a>&nbsp;
 
                       <a  title="Category list" href="<?php echo base_url(); ?>verifyprocess/get_skills_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
 
@@ -80,11 +80,8 @@
       </div>
 
     </div>
-    <script>
-
-      // $('#example').DataTable();
-      var table = $('#example').DataTable();
-      new $.fn.dataTable.Responsive( table, {
-          details: false
-      } );
-    </script>
+    <style>
+    .fa{
+      color:  #0b205dad;
+    }
+    </style>

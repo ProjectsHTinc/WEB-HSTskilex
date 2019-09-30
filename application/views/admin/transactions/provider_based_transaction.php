@@ -91,10 +91,3 @@ table.dataTable thead th, table.dataTable thead td {
     text-align: center;
 }
     </style>
-<script>
-  // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-</script>

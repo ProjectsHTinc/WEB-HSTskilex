@@ -300,12 +300,6 @@ function update_status(msg){
 }
 
 
-  // $('#example').DataTable();
-  var table = $('#example').DataTable();
-  new $.fn.dataTable.Responsive( table, {
-      details: false
-  } );
-
 
 
   $(document).on("click", ".open-AddBookDialog", function () {

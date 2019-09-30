@@ -135,7 +135,7 @@
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Associate</a></span></h4>
+                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Associate</a></span></h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
@@ -306,7 +306,10 @@
     font-weight: 600;
 
 }
-
+.assign_btn{
+  background-color: #105ea4;
+  color: #fff !important;
+}
 </style>
 <script>
 

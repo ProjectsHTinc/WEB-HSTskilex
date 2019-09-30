@@ -8,6 +8,7 @@ class Apisprovidermodel extends CI_Model
     function __construct()
     {
         parent::__construct();
+        $this->load->model('mailmodel');
     }
 
 
@@ -250,12 +251,12 @@ class Apisprovidermodel extends CI_Model
 
             $enc_user_master_id = base64_encode($user_master_id);
 
-            $message_details = "Service Provider - OTP :" . $OTP;
+            $message_details = "OTP :" . $OTP;
             $this->sendSMS($mobile,$message_details);
 
-            //$subject = "SKILEX - Verification Email";
-            //$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
-            //$this->sendMail($email,$subject,$email_message);
+            $subject = "SKILEX - New User Registered";
+            $notes = '<p>Name:<span>'.$name.'</span></p><p>Email ID:<span>'.$email.'</span></p><p>Phone:<span>'.$mobile.'</span></p>';
+            $this->mailmodel->send_mail_to_skilex($subject,$notes);
 
             //$this->sendNotification($gcm_key,$title,$message,$mobiletype)
 
@@ -516,9 +517,9 @@ class Apisprovidermodel extends CI_Model
 
 
     //#################### Profile Update ####################//
-    public function Profile_update($user_master_id, $full_name, $gender, $address, $city, $state, $zip)
+    public function Profile_update($user_master_id, $full_name, $gender, $email)
     {
-        $update_sql    = "UPDATE service_provider_details SET owner_full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+        $update_sql    = "UPDATE service_provider_details SET owner_full_name='$full_name',gender='$gender',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
         $update_result = $this->db->query($update_sql);
 
         $response = array(
@@ -526,6 +527,15 @@ class Apisprovidermodel extends CI_Model
             "msg" => "Profile Updated"
         );
         return $response;
+
+        // $update_sql    = "UPDATE service_provider_details SET owner_full_name='$full_name',gender='$gender',address='$address',city='$city',state='$state',zip='$zip',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+        // $update_result = $this->db->query($update_sql);
+
+        // $response = array(
+        //     "status" => "success",
+        //     "msg" => "Profile Updated"
+        // );
+        // return $response;
     }
     //#################### Profile Update End ####################//
 
@@ -545,6 +555,33 @@ class Apisprovidermodel extends CI_Model
         return $response;
     }
     //#################### Profile Pic Update End ####################//
+
+
+function user_info($user_master_id){
+    $select="SELECT * FROM login_users as lu LEFT JOIN service_provider_details as cd ON lu.id=cd.user_master_id WHERE lu.id='$user_master_id'";
+    $res = $this->db->query($select);
+    if($res->num_rows()==1){
+      foreach($res->result()  as $rows){}
+        $profile=$rows->profile_pic;
+        if(empty($profile)){
+          $pic="";
+        }else{
+            $pic=base_url().'assets/providers/'.$profile;
+        }
+        $user_info=array(
+          "phone_no"=>$rows->phone_no,
+          "email"=>$rows->email,
+          "full_name"=>$rows->owner_full_name,
+          "gender"=>$rows->gender,
+          "profile_pic"=>$pic,
+        );
+        $response=array("status"=>"success","msg"=>"User information","user_details"=>$user_info,"msg"=>"","msg_ta"=>"");
+
+    }else{
+        $response=array("status"=>"error","msg"=>"No User information found","msg"=>"User details not found!","msg_ta"=>"பயனர் விபரங்கள் கிடைக்கவில்லை!");
+    }
+    return $response;
+  }
 
 
     public function Provider_status($user_master_id, $lat, $lon)
@@ -939,6 +976,17 @@ return $response;
         $last_insert_id = $this->db->insert_id();
         $document_url   = base_url() . 'assets/providers/documents/' . $documentFileName;
 
+
+        $get_user_details="SELECT * FROM service_provider_details where user_master_id='$user_master_id'";
+        $ex_get_user_details= $this->db->query($get_user_details);
+        $ex_get_user_details_result = $ex_get_user_details->result();
+        foreach($ex_get_user_details_result  as $rows_user_details){}
+        $get_user_name=$rows_user_details->owner_full_name;
+
+        $subject = "SKILEX - $get_user_name Uploaded new document";
+        $notes = '<p>Document:<span><a href="'.$document_url.'"'.$doc_proof_number.'</a></span></p>';
+        $this->mailmodel->send_mail_to_skilex($subject,$notes);
+
         $sQuery    = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('" . $user_master_id . "','" . $last_insert_id . "','Uploaded','Active',NOW(),'" . $user_master_id . "')";
         $ins_query = $this->db->query($sQuery);
 
@@ -1105,6 +1153,10 @@ return $response;
             //$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
             //$this->sendMail($email,$subject,$email_message);
 
+            $subject = "SKILEX - New Expert Created";
+            $notes = '<p>Name:<span>'.$name.'</span></p><p>Email ID:<span>'.$email.'</span></p><p>Phone:<span>'.$mobile.'</span></p>';
+            $this->mailmodel->send_mail_to_skilex($subject,$notes);
+
             //$this->sendNotification($gcm_key,$title,$message,$mobiletype)
 
             $response = array(
@@ -1221,6 +1273,16 @@ return $response;
         $ins_query      = $this->db->query($sQuery);
         $last_insert_id = $this->db->insert_id();
         $document_url   = base_url() . 'assets/persons/documents/' . $documentFileName;
+
+        $get_user_details="SELECT * FROM service_provider_details where user_master_id='$user_master_id'";
+        $ex_get_user_details= $this->db->query($get_user_details);
+        $ex_get_user_details_result = $ex_get_user_details->result();
+        foreach($ex_get_user_details_result  as $rows_user_details){}
+        $get_user_name=$rows_user_details->owner_full_name;
+
+        $subject = "SKILEX - $get_user_name Uploaded Expert document";
+        $notes = '<p>Document:<span><a href="'.$document_url.'"'.$doc_proof_number.'</a></span></p>';
+        $this->mailmodel->send_mail_to_skilex($subject,$notes);
 
         $sQuery    = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('" . $serv_person_id . "','" . $last_insert_id . "','Uploaded','Active',NOW(),'" . $user_master_id . "')";
         $ins_query = $this->db->query($sQuery);

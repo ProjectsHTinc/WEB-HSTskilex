@@ -148,11 +148,6 @@ th{
 
 
     <script>
-    // $('#example').DataTable();
-    var table = $('#example').DataTable();
-    new $.fn.dataTable.Responsive( table, {
-        details: false
-    } );
 
       $('#exampleModal-4').on('shown.bs.modal', function() {
 

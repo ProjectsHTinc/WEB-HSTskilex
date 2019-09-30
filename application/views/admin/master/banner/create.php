@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -59,7 +60,7 @@
               <th>Title</th>
               <th>Image</th>
               <th>Status</th>
-              <th>Actions</th>
+              <?php if($role=='6'){}else{ ?><th>Actions</th><?php } ?>
           </tr>
       </thead>
       <tbody>
@@ -76,9 +77,14 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              <td><a href="<?php echo base_url(); ?>masters/get_banner_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-                <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
-              </td>
+               <?php if($role=='6'){
+
+               }else{ ?>
+                 <td><a href="<?php echo base_url(); ?>masters/get_banner_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+
+                 </td>
+              <?php } ?>
+
           </tr>
         <?php  $i++;  }  ?>
 
@@ -99,11 +105,7 @@
       </div>
     </div>
     <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
+
       $('#create_banner').validate({
       rules: {
 

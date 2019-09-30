@@ -59,7 +59,7 @@ th{
                     <td><?php echo $rows->advance_amount_paid; ?> <br> <?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Unpaid"; }else{ echo "Advance Paid";} ?>  </td>
                 <td>
                   <?php if($rows->status=='Ongoing'){
-                    $btn_color="btn-info";
+                    $btn_color="btn-ongoing";
                   }else{
                     $btn_color="btn-warning";
                   } ?>
@@ -88,12 +88,3 @@ th{
         </div>
       </div>
     </div>
-    <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-
-
-    </script>

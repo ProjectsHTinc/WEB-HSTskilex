@@ -12,12 +12,12 @@ Class Offersmodel extends CI_Model
 
 
 
-  function create_offers($offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id){
+  function create_offers($offer_title,$offer_code,$offer_percent,$max_offer_amount,$minimum_purchase_amt,$offer_description,$status,$user_id){
     $check="SELECT * FROM offer_master WHERE offer_code='$offer_code'";
     $result=$this->db->query($check);
     if($result->num_rows()==0){
 
-            $insert="INSERT INTO offer_master(offer_title,offer_code,offer_percent,max_offer_amount,offer_description,status,created_at,created_by) VALUES('$offer_title','$offer_code','$offer_percent','$max_offer_amount','$offer_description','$status',NOW(),'$user_id')";
+            $insert="INSERT INTO offer_master(offer_title,offer_code,offer_percent,max_offer_amount,minimum_purchase_amt,offer_description,status,created_at,created_by) VALUES('$offer_title','$offer_code','$offer_percent','$max_offer_amount','$minimum_purchase_amt','$offer_description','$status',NOW(),'$user_id')";
             $result=$this->db->query($insert);
             if($result){
                 $data = array("status" => "success");
@@ -93,9 +93,9 @@ Class Offersmodel extends CI_Model
       }
     }
 
-    function update_offers($offer_id,$offer_title,$offer_code,$offer_percent,$max_offer_amount,$offer_description,$status,$user_id){
+    function update_offers($offer_id,$offer_title,$offer_code,$offer_percent,$max_offer_amount,$minimum_purchase_amt,$offer_description,$status,$user_id){
       $id=base64_decode($offer_id)/98765;
-       $update="UPDATE offer_master SET offer_title='$offer_title',offer_code='$offer_code',offer_percent='$offer_percent',max_offer_amount='$max_offer_amount',offer_description='$offer_description',status='$status',created_by='$user_id',updated_at=NOW() WHERE id='$id'";
+       $update="UPDATE offer_master SET offer_title='$offer_title',offer_code='$offer_code',offer_percent='$offer_percent',max_offer_amount='$max_offer_amount',minimum_purchase_amt='$minimum_purchase_amt',offer_description='$offer_description',status='$status',created_by='$user_id',updated_at=NOW() WHERE id='$id'";
       $result=$this->db->query($update);
       if($result){
           $data = array("status" => "success");

@@ -686,7 +686,7 @@ function user_info($user_master_id){
 				   $contact_person_number = $rows->contact_person_number;
 			}
 
-			$digits = 6;
+			$digits = 4;
 			$OTP = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
 
 			$update_sql = "UPDATE service_orders SET service_otp = '".$OTP."', updated_at=NOW() WHERE id ='".$service_order_id."'";

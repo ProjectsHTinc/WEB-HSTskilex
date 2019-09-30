@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -34,8 +35,9 @@
                       <label for="latitude">Sub Category New images</label>
                       <input type="file" class="form-control" id="sub_cat_pic" name="sub_cat_pic" placeholder="">
                     </div>
+                    <?php if($role=='7'){ ?>
 
-
+                  <?php  }else{ ?>
                     <div class="form-group">
                       <label for="exampleFormControlSelect3">Status</label>
                       <select class="form-control form-control-sm" id="status" name="status">
@@ -45,6 +47,10 @@
                       </select>
                       <script>$('#status').val('<?php echo $rows->status; ?>');</script>
                     </div>
+
+                  <?php  } ?>
+
+
                     <button type="submit" class="btn btn-primary mr-2">Update Sub Category</button>
 
                   </form>

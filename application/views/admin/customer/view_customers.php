@@ -17,8 +17,8 @@
         <thead>
             <tr>
                 <th>S.no</th>
-                <th>Name</th>
-                <th>Username</th>
+                <th>Name/Username</th>
+                
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Gender</th>
@@ -32,8 +32,8 @@
 
             <tr>
                   <td><?php echo $i; ?></td>
-                <td><?php echo $rows->full_name; ?></td>
-                <td><?php echo $rows->username; ?></td>
+                <td><?php echo $rows->full_name; ?><br> <?php echo $rows->username; ?></td>
+
                 <td><?php echo $rows->email; ?></td>
                 <td><?php echo $rows->phone_no; ?></td>
                 <td><?php echo $rows->gender; ?></td>
@@ -67,13 +67,6 @@
 
     </div>
     <script>
-      // // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
-      var table = $('#example').DataTable();
-      new $.fn.dataTable.Responsive( table, {
-          details: false
-      } );
+
+
     </script>

@@ -1,3 +1,4 @@
+<?php  $role=$this->session->userdata('user_role'); ?>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -86,7 +87,13 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              <td><a href="<?php echo base_url(); ?>masters/get_sub_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+              <td>
+              
+                  <?php if($role=='6'){ ?>
+
+                  <?php }else{ ?>
+                    <a href="<?php echo base_url(); ?>masters/get_sub_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                  <?php } ?>
                 <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->sub_cat_name; ?>/<?php echo $rows->sub_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
               </td>
           </tr>
@@ -105,11 +112,7 @@
       </div>
     </div>
     <script>
-      // $('#example').DataTable();
-var table = $('#example').DataTable();
-new $.fn.dataTable.Responsive( table, {
-    details: false
-} );
+
       $('#create_sub_category').validate({
       rules: {
 

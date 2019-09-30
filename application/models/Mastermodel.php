@@ -110,6 +110,43 @@ Class Mastermodel extends CI_Model
 
 
 
+    // Tax
+
+    function get_all_tax_commission(){
+      $select="SELECT * FROM tax_commission";
+      $result=$this->db->query($select);
+      return $result->result();
+    }
+
+
+    function update_tax_percentage($sgst,$cgst,$user_id){
+     $update="UPDATE tax_commission SET sgst='$sgst',cgst='$cgst',updated_by='$user_id',updated_at=NOW() WHERE id='1'";
+     $result=$this->db->query($update);
+     if($result){
+         $data = array("status" => "success");
+           return $data;
+     }else{
+       $data = array("status" => "failed");
+         return $data;
+     }
+    }
+
+
+    // Commission
+
+    function update_commission_percentage($internal_commission,$external_commission,$user_id){
+      $update="UPDATE tax_commission SET internal_commission='$internal_commission',external_commission='$external_commission',updated_by='$user_id',updated_at=NOW() WHERE id='1'";
+      $result=$this->db->query($update);
+      if($result){
+          $data = array("status" => "success");
+            return $data;
+      }else{
+        $data = array("status" => "failed");
+          return $data;
+      }
+    }
+
+
 
     // Category section
 

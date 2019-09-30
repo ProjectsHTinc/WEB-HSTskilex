@@ -31,6 +31,9 @@
            <div class="loader"></div>
        </div>
    </div>
+
+
+
         <div class="mainmenu-area transparent" data-spy="affix" data-offset-top="197">
         <div class="container">
             <div class="row">
@@ -50,8 +53,7 @@
                           <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
                             <li><a href="<?php echo base_url(); ?>#feature-area">FAQ</a></li>
                           <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
-                            <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
-                      </ul>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -172,17 +174,7 @@
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
     <script>
-    $(window).scroll(function(e) {
 
-    // add/remove class to navbar when scrolling to hide/show
-    var scroll = $(window).scrollTop();
-    if (scroll >= 150) {
-        $('.mainmenu').addClass("navbar-hide");
-    } else {
-        $('.mainmenu').removeClass("navbar-hide");
-    }
-
-});
     </script>
 </body>
 

@@ -34,7 +34,7 @@
         <div class="mainmenu-area transparent" data-spy="affix" data-offset-top="197">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 row-flex">
+                <div class="col-xs-12 row-flex" id="header-wrap">
                     <div class="site-brand">
                         <a href="<?php echo base_url(); ?>" class="logo"><img src="<?php echo base_url(); ?>/assets/images/logo-light.png" alt=""></a>
                     </div>
@@ -43,7 +43,7 @@
                         <span class="bar"></span>
                         <span class="bar"></span>
                     </button>
-                    <div class="mainmenu">
+                    <div class="mainmenu" id="header">
                       <ul class="nav">
                           <li><a href="<?php echo base_url(); ?>">Home</a></li>
                           <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
@@ -171,6 +171,26 @@
     <script src="<?php echo base_url(); ?>assets/js/wow-min.js"></script>
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+    <script>
+    var previousScroll = 0,
+    headerOrgOffset = $('#header').height();
+
+$('#header-wrap').height($('#header').height());
+
+$(window).scroll(function () {
+    var currentScroll = $(this).scrollTop();
+    if (currentScroll > headerOrgOffset) {
+        if (currentScroll > previousScroll) {
+            $('#header-wrap').slideUp();
+        } else {
+            $('#header-wrap').slideDown();
+        }
+    } else {
+            $('#header-wrap').slideDown();
+    }
+    previousScroll = currentScroll;
+});
+    </script>
 </body>
 
 </html>

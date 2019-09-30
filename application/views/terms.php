@@ -181,9 +181,9 @@
         var scroll = $(window).scrollTop();
         var currScrollTop = $(this).scrollTop();
         if (scroll >= banner_height && currScrollTop > lastScrollTop) {
-          $("#header-wrap").hide();
+          //$("#header-wrap").hide();
         } else {
-          $("#header-wrap").show();
+        //  $("#header-wrap").show();
         }
         lastScrollTop = currScrollTop;
 

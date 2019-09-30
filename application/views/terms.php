@@ -191,6 +191,13 @@
 
     });
     </script>
+    <style>
+    @media (min-width: 768px) and (max-width: 992px) {
+   .collapse {
+       display: none !important;
+   }
+}
+    </style>
 </body>
 
 </html>

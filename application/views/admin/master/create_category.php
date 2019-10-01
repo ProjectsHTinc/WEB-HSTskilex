@@ -81,9 +81,9 @@
               </td>
               <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
                 <td><?php if($rows->status=='Inactive'){ ?>
-                <button type="button" class="btn btn-danger btn-fw">Inactive</button>
+                <button type="button" class="badge badge-danger">Inactive</button>
             <?php   }else{ ?>
-              <button type="button" class="btn btn-success btn-fw">Active</button>
+              <button type="button" class="badge badge-success">Active</button>
             <?php   }
                ?></td>
               <td>

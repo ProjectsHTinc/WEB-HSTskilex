@@ -234,9 +234,9 @@
                 <td><?php echo $rows->advance_amount; ?></td>
                 <td><?php echo $rows->rate_card; ?></td>
                   <td><?php if($rows->status=='Inactive'){ ?>
-                <button type="button" class="btn btn-danger btn-fw">Inactive</button>
+                <button type="button" class="badge badge-danger">Inactive</button>
             <?php   }else{ ?>
-              <button type="button" class="btn btn-success btn-fw">Active</button>
+              <button type="button" class="badge badge-success">Active</button>
             <?php   }
                ?></td>
 

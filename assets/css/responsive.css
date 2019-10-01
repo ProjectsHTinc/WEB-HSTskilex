@@ -11,6 +11,9 @@
   .service-box{
     height: 320px;
   }
+  .mainmenu-area.transparent.affix{
+    position: absolute;
+  }
 
 }
 
@@ -29,7 +32,7 @@
     float: none;
 }
 .navbar-collapse.collapse {
-  
+
 }
 }
 

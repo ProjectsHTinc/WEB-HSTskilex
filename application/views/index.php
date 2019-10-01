@@ -321,7 +321,8 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-3">
                       <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                           <div class="box-icon">
-                                <img src="<?php echo base_url(); ?>assets/images/service_21.png">
+
+                                <img src="<?php echo base_url(); ?>assets/images/service_20.png">
                           </div>
                         <h3 class="title">Personalized Fitness Tutor</h3>
                         <p class="ser_desc">From fitness training to dietary classes</p>
@@ -339,7 +340,7 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-3">
                     <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
                         <div class="box-icon">
-                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                                <img src="<?php echo base_url(); ?>assets/images/service_21.png">
                         </div>
                         <h3 class="title">Clinical Services(Nurse)</h3>
                       <p class="ser_desc">Dressings and injections</p>

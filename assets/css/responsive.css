@@ -31,6 +31,9 @@
 .navbar-nav > li {
     float: none;
 }
+.mainmenu-area.transparent.affix{
+  position: absolute;
+}
 .navbar-collapse.collapse {
 
 }

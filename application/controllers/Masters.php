@@ -220,12 +220,12 @@ class Masters extends CI_Controller {
 
 
 	 public function checkcategory(){
-		 $main_cat_name=$this->input->post('main_cat_name');
+		 $main_cat_name=$this->db->escape_str($this->input->post('main_cat_name'));
 		 $data=$this->mastermodel->checkcategory($main_cat_name);
 	 }
 
 	 public function checkcategorytamil(){
-		 $main_cat_ta_name=$this->input->post('main_cat_ta_name');
+		 $main_cat_ta_name=$this->db->escape_str($this->input->post('main_cat_ta_name'));
 		 $data=$this->mastermodel->checkcategorytamil($main_cat_ta_name);
 	 }
 
@@ -287,7 +287,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 			 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$main_cat_name=$this->input->post('main_cat_name');
+				$main_cat_name=$this->db->escape_str($this->input->post('main_cat_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkcategoryexist($main_cat_name,$id);
 			}
@@ -298,7 +298,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$main_cat_ta_name=$this->input->post('main_cat_ta_name');
+				$main_cat_ta_name=$this->db->escape_str($this->input->post('main_cat_ta_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkcategorytamilexist($main_cat_ta_name,$id);
 			}
@@ -376,12 +376,12 @@ class Masters extends CI_Controller {
 
 
 		public function checksubcategory(){
-			$sub_cat_name=$this->input->post('sub_cat_name');
+			$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
 			$data=$this->mastermodel->checksubcategory($sub_cat_name);
 		}
 
 		public function checksubcategorytamil(){
-			$sub_cat_ta_name=$this->input->post('sub_cat_ta_name');
+			$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
 			$data=$this->mastermodel->checksubcategorytamil($sub_cat_ta_name);
 		}
 
@@ -429,7 +429,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 			 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$sub_cat_name=$this->input->post('sub_cat_name');
+				$sub_cat_name=$this->db->escape_str($this->input->post('sub_cat_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checksubcategoryexist($sub_cat_name,$id);
 			}
@@ -440,7 +440,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$sub_cat_ta_name=$this->input->post('sub_cat_ta_name');
+				$sub_cat_ta_name=$this->db->escape_str($this->input->post('sub_cat_ta_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checksubcategorytamilexist($sub_cat_ta_name,$id);
 			}
@@ -515,12 +515,12 @@ class Masters extends CI_Controller {
 
 
 		public function checkservice(){
-			$service_name=$this->input->post('service_name');
+			$service_name=$this->db->escape_str($this->input->post('service_name'));
 			$data=$this->mastermodel->checkservice($service_name);
 		}
 
 		public function checkservicetamil(){
-			$service_ta_name=$this->input->post('service_ta_name');
+			$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
 			$data=$this->mastermodel->checkservicetamil($service_ta_name);
 		}
 
@@ -599,7 +599,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$service_name=$this->input->post('service_name');
+				$service_name=$this->db->escape_str($this->input->post('service_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkserviceexist($service_name,$id);
 			}
@@ -610,7 +610,7 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$service_ta_name=$this->input->post('service_ta_name');
+				$service_ta_name=$this->db->escape_str($this->input->post('service_ta_name'));
 				$id=$this->uri->segment(3);
 				$data=$this->mastermodel->checkservicetamilexist($service_ta_name,$id);
 			}

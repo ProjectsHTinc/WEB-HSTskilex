@@ -41,7 +41,7 @@
                     <div class="site-brand">
                         <a href="<?php echo base_url(); ?>" class="logo"><img src="<?php echo base_url(); ?>assets/images/logo-light.png" alt=""></a>
                     </div>
-                
+
                     <button type="button" class="navbar-toggle burger" data-toggle="collapse" data-target="#navigationbar">
                        <span class="sr-only">Toggle navigation</span>
                        <span class="bar"></span>
@@ -421,6 +421,110 @@ From people who are capable</h2>
         </div>
     </section>
     <!-- Feature-area / -->
+
+    <section id="why_choose_us" class="why_choose_us">
+      <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="col-lg-4 hidden-sm">
+                  <img src="<?php echo base_url(); ?>assets/images/why.png" class="img-responsive why_img">
+              </div>
+              <div class="col-lg-8">
+                <p class="why_text d-flex align-items-center justify-content-center">Why <br>Choose Us?</p>
+              </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <p>
+                <ul>
+                  <li>100% satisfaction guaranteed or free re-work</li>
+                  <li>Trained and Certified Professionals</li>
+                  <li>Background verified staff</li>
+                  <li>Guaranteed quality of service</li>
+                  <li>Insurance against damages</li>
+                </ul>
+            </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="why_choose_us" class="work_section">
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+              <p class="text-center"><img src="<?php echo base_url(); ?>assets/images/customer.png" class="img-responsive img_work "></p>
+              <p class="work_assured_text">Trusted <br> Professionals</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+              <p><img src="<?php echo base_url(); ?>assets/images/care.png" class="img-responsive img_work"></p>
+              <p class="work_assured_text">Professional<br>Support </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+              <p><img src="<?php echo base_url(); ?>assets/images/verified.png" class="img-responsive img_work"></p>
+              <p class="work_assured_text">Re-Work <br>Assurance</p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <div class="row justify-content-center">
+            <p class="text-center testimonials_text">Testimonials</p>
+            <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+              <p class=""></p>
+
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <p class=""></p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <p class=""></p>
+            </div> -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Carousel indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- Wrapper for carousel items -->
+    <div class="carousel-inner">
+      <div class="item carousel-item active">
+        <div class="img-box"><img src="/examples/images/clients/1.jpg" alt=""></div>
+        <p class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
+        <p class="overview"><b>Paula Wilson</b>, Media Analyst</p>
+      </div>
+      <div class="item carousel-item">
+        <div class="img-box"><img src="/examples/images/clients/2.jpg" alt=""></div>
+        <p class="testimonial">Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Utmtc tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio.</p>
+        <p class="overview"><b>Antonio Moreno</b>, Web Developer</p>
+      </div>
+      <div class="item carousel-item">
+        <div class="img-box"><img src="/examples/images/clients/3.jpg" alt=""></div>
+        <p class="testimonial">Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum.</p>
+        <p class="overview"><b>Michael Holz</b>, Seo Analyst</p>
+      </div>
+    </div>
+    <!-- Carousel controls -->
+    <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+      <i class="fa fa-angle-left"></i>
+    </a>
+    <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+      <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+        </div>
+      </div>
+    </section>
+
 
 
     <!-- Subscribe-area -->

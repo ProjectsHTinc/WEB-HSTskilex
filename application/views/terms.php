@@ -10,8 +10,8 @@
     <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/favicon.png">
     <link rel="shortcut icon" type="image/ico" href="<?php echo base_url(); ?>assets/images/favicon.png" />
     <!-- Plugin-CSS -->
-    <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-min.css"> -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/normalize.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slick.css">

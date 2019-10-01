@@ -45,8 +45,22 @@
 
 }
 .img_work{
-  width: 150px;
+  width: 120px;
   margin: 0 auto;
+}
+.img_smile{
+  width: 50px;
+  margin: 0 auto;
+}
+.happy_clients{
+  background-color: #f9fafc;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.label_text{
+  font-size: 30px;
+  font-weight: 600;
+  color: #3e6cb4;
 }
 .work_assured_text{
   font-size: 18px;
@@ -132,4 +146,13 @@
 .carousel-indicators li.active {
 	background: #555;
 	box-shadow: inset 0 2px 1px rgba(0,0,0,0.2);
+}
+.happy_sanz_link{
+  color: #3e6cb4;
+  font-size: 16px;
+  font-weight: 600;
+}
+.happy_sanz_link:hover{
+  color: #3e6cb4;
+  
 }

@@ -425,16 +425,16 @@ From people who are capable</h2>
     <section id="why_choose_us" class="why_choose_us">
       <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="col-lg-4 hidden-sm">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="col-lg-4 hidden-sm hidden-xs">
                   <img src="<?php echo base_url(); ?>assets/images/why.png" class="img-responsive why_img">
               </div>
-              <div class="col-lg-8">
+              <div class="col-lg-8 col-md-6 col-sm-12 ">
                 <p class="why_text d-flex align-items-center justify-content-center">Why <br>Choose Us?</p>
               </div>
 
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
               <p>
                 <ul>
                   <li>100% satisfaction guaranteed or free re-work</li>
@@ -453,15 +453,15 @@ From people who are capable</h2>
     <section id="why_choose_us" class="work_section">
       <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
               <p class="text-center"><img src="<?php echo base_url(); ?>assets/images/customer.png" class="img-responsive img_work "></p>
               <p class="work_assured_text">Trusted <br> Professionals</p>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
               <p><img src="<?php echo base_url(); ?>assets/images/care.png" class="img-responsive img_work"></p>
               <p class="work_assured_text">Professional<br>Support </p>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
               <p><img src="<?php echo base_url(); ?>assets/images/verified.png" class="img-responsive img_work"></p>
               <p class="work_assured_text">Re-Work <br>Assurance</p>
             </div>
@@ -478,24 +478,13 @@ From people who are capable</h2>
       <div class="container">
         <div class="row justify-content-center">
             <p class="text-center testimonials_text">Testimonials</p>
-            <!-- <div class="col-lg-4 col-md-4 col-sm-12">
-              <p class=""></p>
 
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <p class=""></p>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <p class=""></p>
-            </div> -->
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Carousel indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
-    <!-- Wrapper for carousel items -->
     <div class="carousel-inner">
       <div class="item carousel-item active">
         <div class="img-box"><img src="/examples/images/clients/1.jpg" alt=""></div>
@@ -513,7 +502,7 @@ From people who are capable</h2>
         <p class="overview"><b>Michael Holz</b>, Seo Analyst</p>
       </div>
     </div>
-    <!-- Carousel controls -->
+
     <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
       <i class="fa fa-angle-left"></i>
     </a>
@@ -521,6 +510,26 @@ From people who are capable</h2>
       <i class="fa fa-angle-right"></i>
     </a>
   </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="happy_clients" class="happy_clients">
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="text-center"><img src="<?php echo base_url(); ?>assets/images/smile.png" class="img-responsive img_smile"></p>
+              <p class="work_assured_text">Happiness Guarantee</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="label_text">1000+</p>
+              <p class="work_assured_text">Satisifed Customers </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="label_text">10000+</p>
+              <p class="work_assured_text">Verified Experts</p>
+            </div>
         </div>
       </div>
     </section>
@@ -613,27 +622,24 @@ From people who are capable</h2>
 
     <!-- Footer-Area -->
     <footer class="footer-area gray-bg">
-
-        <!-- Footer-Top-Content -->
-        <!-- Footer-Bottom-Content-->
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="widget footer-widget">
-                            <p><a href="https://happysanztech.com/" target="_blank">Developed by <img class="happy_logo" src="<?php echo base_url(); ?>assets/happy_logo.png"></a></p>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
-                        <div class="space-10 hidden visible-xs"></div>
-                        <div class="widget footer-widget">
+
                             <div class="social-menu">
                                 <a href="https://www.facebook.com/Skilex-blog-101337694543194/?modal=admin_todo_tour" target="_blank"><i class="icofont-facebook"></i></a>
                                 <a href="https://twitter.com/Skilex9" target="_blank"><i class="icofont-twitter"></i></a>
                                 <a href="https://in.pinterest.com/dhanasekarskilex/pins/" target="_blank"><i class="icofont-pinterest"></i></a>
                                 <a href="https://www.instagram.com/skilex_bulletin123/?hl=en" target="_blank"><i class="icofont-instagram"></i></a>
-
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
+                        <div class="space-10 hidden visible-xs"></div>
+                        <div class="widget footer-widget">
+
                         </div>
                         <ul class="content_links">
                           <li><a href="<?php echo base_url(); ?>terms">Terms & Conditions </a></li> &nbsp;
@@ -641,10 +647,12 @@ From people who are capable</h2>
                           <li><a href="<?php echo base_url(); ?>refund">Refund Policy </a></li>
                        </ul>
                     </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                      <p>Developed by<a href="https://happysanztech.com/" target="_blank" class="happy_sanz_link"> Happy Sanz Tech</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Footer-Bottom-Content /-->
     </footer>
     <!-- Footer-Area / -->
     <!--Vendor JS-->

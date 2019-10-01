@@ -31,13 +31,13 @@
 .navbar-nav > li {
     /* float: none; */
     padding-top: 20px;
-  
+
 }
 .mainmenu-area.transparent.affix{
   position: absolute;
 }
 .navbar-collapse.collapse {
-
+    margin-bottom: 15px;
 }
 }
 
@@ -277,10 +277,36 @@
     .xs-full {
         width: 100%;
     }
+    .navbar-default{
+      height: 85px;
+
+    }
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form{
+      background-color: #3e6cb4;
+      margin-top: 30px;
+      border: none;
+
+    }
+    .navbar-default .navbar-toggle {
+    border-color: #ddd;
+    background-color: #ddd;
+}
 }
 /* Wide Mobile Layout: 480px. */
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
+  .navbar-default{
+    height: 90px;
 
+  }
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form{
+    background-color: #3e6cb4;
+    margin-top: 30px;
+    border: none;
+  }
+  .navbar-default .navbar-toggle {
+  border-color: #ddd;
+  background-color: #ddd;
+}
 }

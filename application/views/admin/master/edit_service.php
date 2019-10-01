@@ -257,17 +257,18 @@
     $('#update_category').validate({
     rules: {
 
-        service_name: { required: true,
-                  remote: {
-                         url: "<?php echo base_url(); ?>masters/checkserviceexist/<?php echo $rows->id; ?>",
-                         type: "post"
-                      }
+        service_name: { required: true
+
+                  // remote: {
+                  //        url: "<?php echo base_url(); ?>masters/checkserviceexist/<?php echo $rows->id; ?>",
+                  //        type: "post"
+                  //     }
             },
-        service_ta_name: { required: true,
-                  remote: {
-                         url: "<?php echo base_url(); ?>masters/checkservicetamilexist/<?php echo $rows->id; ?>",
-                         type: "post"
-                      }
+        service_ta_name: { required: true
+                  // remote: {
+                  //        url: "<?php echo base_url(); ?>masters/checkservicetamilexist/<?php echo $rows->id; ?>",
+                  //        type: "post"
+                  //     }
          },
          is_advance_payment:{required:true},
          advance_amount:{required:true,number:true},

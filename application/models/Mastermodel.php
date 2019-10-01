@@ -347,9 +347,9 @@ Class Mastermodel extends CI_Model
 
         function service_creation($service_name,$service_ta_name,$status,$cat_pic,$user_id,$sub_cat_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
 
-          $check="SELECT * FROM services WHERE service_name='$service_name'";
-          $result=$this->db->query($check);
-          if($result->num_rows()==0){
+          // $check="SELECT * FROM services WHERE service_name='$service_name'";
+          // $result=$this->db->query($check);
+          // if($result->num_rows()==0){
 
                   $get_main_cat_id="SELECT * FROM sub_category WHERE id='$sub_cat_id'";
                   $result_main=$this->db->query($get_main_cat_id);
@@ -365,11 +365,11 @@ Class Mastermodel extends CI_Model
                       return $data;
                   }
 
-            }else{
-
-              $data = array("status" => "Already exist");
-                return $data;
-          }
+          //   }else{
+          //
+          //     $data = array("status" => "Already exist");
+          //       return $data;
+          // }
 
         }
 

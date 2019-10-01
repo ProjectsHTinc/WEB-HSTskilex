@@ -277,22 +277,23 @@
 
 
 
-
+      // $('#create_service').rules('remove', 'remote');
       $('#create_service').validate({
+
       rules: {
 
-          service_name: { required: true,
-                    remote: {
-                           url: "<?php echo base_url(); ?>masters/checkservice",
-                           type: "post"
-                        }
+          service_name: { required: true
+                    // remote: {
+                    //        url: "<?php echo base_url(); ?>masters/checkservice",
+                    //        type: "post"
+                    //     }
               },
 
-          service_ta_name: { required: true,
-                    remote: {
-                           url: "<?php echo base_url(); ?>masters/checkservicetamil",
-                           type: "post"
-                        }
+          service_ta_name: { required: true
+                    // remote: {
+                    //        url: "<?php echo base_url(); ?>masters/checkservicetamil",
+                    //        type: "post"
+                    //     }
            },
           is_advance_payment:{required:true},
           advance_amount:{required:true,number:true},
@@ -336,5 +337,6 @@
                      },
 
       }
+
       });
     </script>

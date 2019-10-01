@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/images/favicon.png">
     <link rel="shortcut icon" type="image/ico" href="<?php echo base_url(); ?>assets/images/favicon.png" />
     <!-- Plugin-CSS -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/normalize.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slick.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slick-theme.css">
@@ -30,7 +30,29 @@
            <div class="loader"></div>
        </div>
    </div>
-        <div class="mainmenu-area transparent" data-spy="affix" data-offset-top="197">
+   <nav class="navbar navbar-default navbar-fixed-top">
+     <div class="container">
+       <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+           <a href="<?php echo base_url(); ?>" class="logo navbar-brand"><img src="<?php echo base_url(); ?>/assets/images/logo-light.png" alt=""></a>
+       </div>
+       <div id="navbar" class="navbar-collapse collapse">
+         <ul class="nav navbar-nav navbar-right">
+           <li><a href="<?php echo base_url(); ?>">Home</a></li>
+           <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
+           <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
+             <li><a href="<?php echo base_url(); ?>#feature-area">FAQ</a></li>
+           <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+        <!-- <div class="mainmenu-area transparent" data-spy="affix" data-offset-top="197">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 row-flex">
@@ -49,22 +71,17 @@
                           <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
                           <li><a href="<?php echo base_url(); ?>#feature-area">FAQ</a></li>
                           <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
-                            <!-- <li><a href="http://happysanz.net/skilex_vendor/">Vendor Registration</a></li> -->
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Mainmenu-Area / -->
     <!-- Site-Header -->
-<header class="header-area" id="home-area" style="padding: 50px 0;">
 
 
-
-          </header>
-
-    <section class="blog-area section-padding">
+    <section class="blog-area padding_top_bottom">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-12">

@@ -159,7 +159,15 @@
 .navbar-default{
   background-color: #3e6cb4;
   height: auto;
+  border: none;
 }
 .navbar-default .navbar-nav>li>a{
   color: #fff;
+}
+.navbar-default .navbar-nav>li>a:hover{
+  color: #fff;
+}
+.padding_top_bottom{
+  padding-top: 90px;
+  padding-bottom: 85px;
 }

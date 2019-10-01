@@ -29,7 +29,9 @@
 
 @media (min-width: 768px){
 .navbar-nav > li {
-    float: none;
+    /* float: none; */
+    padding-top: 20px;
+  
 }
 .mainmenu-area.transparent.affix{
   position: absolute;
@@ -109,6 +111,7 @@
     .mainmenu-area.transparent a {
         color: #606060;
     }
+
 
     .mainmenu {
         width: 100%;

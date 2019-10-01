@@ -154,5 +154,12 @@
 }
 .happy_sanz_link:hover{
   color: #3e6cb4;
-  
+
+}
+.navbar-default{
+  background-color: #3e6cb4;
+  height: 85px;
+}
+.navbar-default .navbar-nav>li>a{
+  color: #fff;
 }

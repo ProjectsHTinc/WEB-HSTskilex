@@ -6,7 +6,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category </a></li>
+              <li class="breadcrumb-item"><a href="#">Category </a></li>
                     <li class="breadcrumb-item"><a href="#">Service </a></li>
               <li class="breadcrumb-item active" aria-current="page"><span>Update Service</span></li>
             </ol>
@@ -16,7 +16,7 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Update Service </h4>
+                  <h4 class="card-title">Update Service <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
                   <form class="forms-sample" id="update_category" method="post" action="<?php echo base_url(); ?>masters/service_update" enctype="multipart/form-data">
 

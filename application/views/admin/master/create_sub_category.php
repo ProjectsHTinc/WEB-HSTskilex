@@ -6,7 +6,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category</a></li>
+              <li class="breadcrumb-item"><a href="#">Category</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Sub Category</span></li>
             </ol>
           </nav>
@@ -16,7 +16,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Create  Sub Category  <br> <?php  $string =$this->uri->segment(4);
-                  echo preg_replace("/[^a-zA-Z]/", " ", $string) ?> </h4>
+                  echo preg_replace("/[^a-zA-Z]/", " ", $string) ?>  </h4>
 
                   <form class="forms-sample" id="create_sub_category" method="post" action="<?php echo base_url(); ?>masters/sub_category_creation" enctype="multipart/form-data">
 
@@ -61,13 +61,13 @@
               <?php  }  ?>
 
                 <div class="card-body">
-                  <h4 class="card-title">List of Sub Category </h4>
+                  <h4 class="card-title">List of Sub Category <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
               <table id="example" class="table table-striped table-bordered">
       <thead>
           <tr>
               <th>S.no</th>
               <th>Category name</th>
-              <th>Category Pciture</th>
+              <th>Category Picture</th>
               <th>Status</th>
               <th>Actions</th>
           </tr>

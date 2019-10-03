@@ -14,7 +14,7 @@
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Update  Category </h4>
+                  <h4 class="card-title">Update  Category <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
                   <form class="forms-sample" id="update_category" method="post" action="<?php echo base_url(); ?>masters/category_update" enctype="multipart/form-data">
 

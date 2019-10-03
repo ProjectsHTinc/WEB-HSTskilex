@@ -7,7 +7,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category</a></li>
+              <li class="breadcrumb-item"><a href="#">Category</a></li>
               <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Services</span></li>
             </ol>
@@ -18,7 +18,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Create  Service   <br> <?php  $string =$this->uri->segment(4);
-                  echo preg_replace("/[^a-zA-Z]/", " ", $string) ?> </h4>
+                  echo preg_replace("/[^a-zA-Z]/", " ", $string) ?> <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4><br>
 
                   <form class="forms-sample" id="create_service" method="post" action="<?php echo base_url(); ?>masters/service_creation" enctype="multipart/form-data">
                     <div class="row">
@@ -206,7 +206,7 @@
                 </div>
               <?php  }  ?>
                 <div class="card-body">
-                  <h4 class="card-title">List of Service </h4>
+                  <h4 class="card-title">List of Service <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
               <table id="example" class="table table-striped table-bordered">
       <thead>
           <tr>

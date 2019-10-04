@@ -51,9 +51,10 @@ table.dataTable thead th, table.dataTable thead td{
               <th>Offline Skilex Provider Amt</th>
               <th>Taxable Amount</th> -->
               <th>Balance</th>
+              <th>Closing status</th>
 
-              <th>Skilex Closing </th>
-              <th>Associate Closing </th>
+              <!-- <th>Skilex Closing </th>
+              <th>Associate Closing </th> -->
               <th>Actions</th>
           </tr>
       </thead>
@@ -81,24 +82,37 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $rows->offline_serv_prov_commission; ?></td>
                 <td><?php echo $rows->taxable_amount; ?></td> -->
                 <td class="amt"><?php echo $rows->pay_to_serv_prov; ?></td>
-                <td><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
+                <td class=""><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
+                  <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
+                  <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex')" data-toggle="modal" data-target="#exampleModal-5"
+                    >Need to Pay </a>
+                <?php }else{
+                    if($rows->serv_prov_closing_status=='Unpaid'){
+                      echo "Associate Need to Pay";
+                    }else if($rows->serv_prov_closing_status=='Paid'){
+                      echo "Associate Paid";
+                    }else{
+                      echo "Skilex Paid";
+                    }
+
+              }
+                 ?></td>
+                <!-- <td><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
                   <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
                   <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex')" data-toggle="modal" data-target="#exampleModal-5"
                     >Unpaid</a>
               <?php  }else{ ?>
-                <!-- <p class="paid_text"><?php echo $rows->skilex_closing_status; ?></p> -->
+
                 <?php  if($rows->skilex_closing_status=="Notreceived"){ ?>
                   <p class="paid_text">Not Received</p>
               <?php  }else{ ?>
                   <p class="paid_text"><?php echo $rows->skilex_closing_status; ?></p>
               <?php  } ?>
 
-                <?php } ?></td>
-                <td>
+                <?php } ?></td> -->
+                <!-- <td>
                   <?php if($rows->serv_prov_closing_status=='Unpaid'){
                    ?>
-                    <!-- <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('provider')" data-toggle="modal" data-target="#exampleModal-5"
-                      >Unpaid</a> -->
                       <p class="paid_text">Unpaid</p>
                 <?php  }else{ ?>
                   <?php  if($rows->serv_prov_closing_status=="Notreceived"){ ?>
@@ -108,7 +122,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <?php  } ?>
 
 
-                  <?php } ?></td>
+                  <?php } ?></td> -->
 
                 <td><a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4"
                   data-id="<?php echo $rows->id; ?>"

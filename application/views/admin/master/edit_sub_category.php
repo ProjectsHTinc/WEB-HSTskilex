@@ -75,17 +75,17 @@
     $('#update_category').validate({
     rules: {
 
-        sub_cat_name: { required: true,
-                  remote: {
-                         url: "<?php echo base_url(); ?>masters/checksubcategoryexist/<?php echo $rows->id; ?>",
-                         type: "post"
-                      }
+        sub_cat_name: { required: true
+                  // remote: {
+                  //        url: "<?php echo base_url(); ?>masters/checksubcategoryexist/<?php echo $rows->id; ?>",
+                  //        type: "post"
+                  //     }
             },
-        sub_cat_ta_name: { required: true,
-                  remote: {
-                         url: "<?php echo base_url(); ?>masters/checksubcategorytamilexist/<?php echo $rows->id; ?>",
-                         type: "post"
-                      }
+        sub_cat_ta_name: { required: true
+                  // remote: {
+                  //        url: "<?php echo base_url(); ?>masters/checksubcategorytamilexist/<?php echo $rows->id; ?>",
+                  //        type: "post"
+                  //     }
          },
         cat_pic: {required: false,extension: "jpg,jpeg,png" }
     },

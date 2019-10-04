@@ -109,3 +109,39 @@
         </div>
       </div>
     </div>
+<script>
+
+
+$('#create_category').validate({
+rules: {
+
+    main_cat_name: { required: true
+              // remote: {
+              //        url: "checkcategory",
+              //        type: "post"
+              //     }
+        },
+    main_cat_ta_name: { required: true
+              // remote: {
+              //        url: "checkcategorytamil",
+              //        type: "post"
+              //     }
+     },
+    cat_pic: {required: true,extension: "jpg,jpeg,png" }
+},
+messages: {
+    cat_pic:{
+        required :"Please Select Category Picture",extension:"File must be JPG OR PNG"
+    },
+    main_cat_name: {
+					 required: "Please Enter Category Name.",
+					 remote: "Category Name  already in Exist!"
+							 },
+     main_cat_ta_name: {
+           required: "Please Enter Category Tamil Name.",
+           remote: "Category Tamil Name  Already in Exist!"
+               },
+
+}
+});
+</script>

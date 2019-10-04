@@ -152,9 +152,9 @@ Class Mastermodel extends CI_Model
 
 
     function category_creation($main_cat_name,$main_cat_ta_name,$status,$cat_pic,$user_id){
-      $check="SELECT * FROM main_category WHERE main_cat_name='$main_cat_name'";
-      $result=$this->db->query($check);
-      if($result->num_rows()==0){
+      // $check="SELECT * FROM main_category WHERE main_cat_name='$main_cat_name'";
+      // $result=$this->db->query($check);
+      // if($result->num_rows()==0){
 
               $insert="INSERT INTO main_category(main_cat_name,main_cat_ta_name,cat_pic,status,created_at,created_by) VALUES('$main_cat_name','$main_cat_ta_name','$cat_pic','$status',NOW(),'$user_id')";
               $result=$this->db->query($insert);
@@ -166,11 +166,11 @@ Class Mastermodel extends CI_Model
                   return $data;
               }
 
-        }else{
-
-          $data = array("status" => "Already exist");
-            return $data;
-      }
+      //   }else{
+      //
+      //     $data = array("status" => "Already exist");
+      //       return $data;
+      // }
     }
 
 
@@ -248,9 +248,9 @@ Class Mastermodel extends CI_Model
 
 
     function sub_category_creation($sub_cat_name,$sub_cat_ta_name,$status,$cat_pic,$user_id,$main_cat_id){
-      $check="SELECT * FROM sub_category WHERE sub_cat_name='$sub_cat_name'";
-      $result=$this->db->query($check);
-      if($result->num_rows()==0){
+      // $check="SELECT * FROM sub_category WHERE sub_cat_name='$sub_cat_name'";
+      // $result=$this->db->query($check);
+      // if($result->num_rows()==0){
 
               $insert="INSERT INTO sub_category(main_cat_id,sub_cat_name,sub_cat_ta_name,status,sub_cat_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_name','$sub_cat_ta_name','$status','$cat_pic',NOW(),'$user_id')";
               $result=$this->db->query($insert);
@@ -262,11 +262,11 @@ Class Mastermodel extends CI_Model
                   return $data;
               }
 
-        }else{
-
-          $data = array("status" => "Already exist");
-            return $data;
-      }
+      //   }else{
+      //
+      //     $data = array("status" => "Already exist");
+      //       return $data;
+      // }
     }
 
 

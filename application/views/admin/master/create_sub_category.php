@@ -116,17 +116,17 @@
       $('#create_sub_category').validate({
       rules: {
 
-          sub_cat_name: { required: true,
-                    remote: {
-                           url: "<?php echo base_url(); ?>masters/checksubcategory",
-                           type: "post"
-                        }
+          sub_cat_name: { required: true
+                    // remote: {
+                    //        url: "<?php echo base_url(); ?>masters/checksubcategory",
+                    //        type: "post"
+                    //     }
               },
-          sub_cat_ta_name: { required: true,
-                    remote: {
-                           url: "<?php echo base_url(); ?>masters/checksubcategorytamil",
-                           type: "post"
-                        }
+          sub_cat_ta_name: { required: true
+                    // remote: {
+                    //        url: "<?php echo base_url(); ?>masters/checksubcategorytamil",
+                    //        type: "post"
+                    //     }
            },
           sub_cat_pic: {required: true,extension: "jpg,jpeg,png" }
       },

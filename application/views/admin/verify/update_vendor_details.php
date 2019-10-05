@@ -5,8 +5,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Associate list </a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>View  Service Provider details</span></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Commando list </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>View Commando details</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -14,7 +14,7 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">View Service Associate details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
+                  <h4 class="card-title">View Commando details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
                   <div class="row">
                       <div class="col-md-4">
@@ -182,7 +182,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Associate verify :</label>
+                        <label class="col-sm-4 col-form-label">Commando verify :</label>
                         <div class="col-sm-8">
                           <select class="form-control form-control-sm border-info" id="serv_prov_verify_status" name="serv_prov_verify_status">
                             <option value="Pending">Pending</option>

@@ -15,7 +15,7 @@ table.dataTable thead th, table.dataTable thead td{
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="#">Transactions</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Provider based  transactions</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Online Payment history</span></li>
             </ol>
           </nav>
           <div class="row">

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
     <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/icheck/skins/all.css"> -->
    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+   
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
   <script   src="<?php echo base_url(); ?>assets/admin/js/jquery.js"></script>
   <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
@@ -22,6 +23,8 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap-min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/tether.js"></script>
+  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <style>
 .fa{
@@ -81,15 +84,15 @@
                          <?php  }else{ ?>
                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_staff">Staff</a></li>
                         <?php  } ?>
-                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">Associate </a></li>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_provider_list">Commando </a></li>
                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_person_list">Expert </a></li>
                      <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/get_all_customer_details">Customers </a></li>
                      </ul>
                      </div>
                      <div class="col-group col-md-3">
-                       <p class="category-heading">Recent Associates and Experts</p>
+                       <p class="category-heading">Recent Commandos and Experts</p>
                        <ul class="submenu-item">
-                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Associate list </a></li>
+                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Commando list </a></li>
                        </ul>
                      </div>
 
@@ -142,7 +145,7 @@
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/daily_transaction">Daily transaction</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/day_wise_transaction">Date wise transaction</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_and_to_date_transactions">From & To date </a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Associate transactions</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Commando transactions</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/online_payment_history">Online Payment History</a></li>
 
                 </li>

@@ -54,7 +54,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Service Date :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->order_date; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y',strtotime($rows->order_date)) ?>">
                             </div>
                         </div>
                       </div>
@@ -156,7 +156,7 @@
                         <td><?php echo $i; ?></td>
                         <td><?php echo $rows_prov->name; ?>  </td>
                         <td><?php echo $rows_prov->role_name; ?>  </td>
-                        <td><?php echo $rows_prov->created_at; ?>  </td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_prov->created_at)) ?></td>
                         <td>
                           <?php $stats=$rows_prov->status;
                            if($stats=="Requested"){
@@ -238,7 +238,7 @@
                         <td><?php echo $rows_history->ccavenue_track_id; ?>  </td>
                         <td><?php echo $rows_history->notes; ?></td>
                         <td><?php echo $rows_history->status; ?></td>
-                        <td><?php echo $rows_history->created_at; ?></td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_history->created_at)) ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>

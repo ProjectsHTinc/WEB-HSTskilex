@@ -46,7 +46,7 @@
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                            <label for="username">Max Amount</label>
+                            <label for="username">Maximum Amount</label>
                             <input type="text" class="form-control" id="max_offer_amount" name="max_offer_amount" value="<?php echo $rows->max_offer_amount; ?>">
                         </div>
                       </div>

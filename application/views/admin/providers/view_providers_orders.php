@@ -34,7 +34,7 @@
                   <td><?php echo $rows->order_date; ?></td>
                   <td><?php echo $rows->service_name; ?></td>
                 <td><?php echo $rows->full_name; ?></td>
-                <td><?php echo $rows->iniate_datetime; ?></td>
+                <td><?php echo  date('d-m-Y H:i:s',strtotime($rows->iniate_datetime)) ?></td>
                 <td>
                   <button type="button" class="badge badge-info "><?php echo $rows->status; ?></button>
               </td>

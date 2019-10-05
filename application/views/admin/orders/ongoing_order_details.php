@@ -62,7 +62,7 @@ padding: 15px;
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Service Date :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->order_date; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y',strtotime($rows->order_date)) ?>">
                             </div>
                         </div>
                       </div>
@@ -117,7 +117,7 @@ padding: 15px;
                     <?php if($rows->onhold_datetime='0000-00-00 00:00:00'){
                       $on_hold_datetime='';
                     }else{
-                      $on_hold_datetime=$rows->onhold_datetime;
+                      $on_hold_datetime= date('d-m-Y',strtotime($rows->onhold_datetime));
                     } ?>
                     <div class="col-md-6">
                       <div class="form-group row">
@@ -156,11 +156,11 @@ padding: 15px;
                       </div>
                     </div>
                     <br>
-                    <h5 class="card-title">Assigned Associate and  Person details</h5>
+                    <h5 class="card-title">Assigned Commando and  Person details</h5>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Associate</label>
+                          <label class="col-sm-4 col-form-label">Service Commando</label>
                           <div class="col-sm-8">
                                 <p class="val_label"><?php echo $rows->owner_full_name; ?></p>
                           </div>
@@ -190,7 +190,7 @@ padding: 15px;
                           <label class="col-sm-5 col-form-label">Service Initiate Time</label>
                           <div class="col-sm-7">
                                 <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo $rows->iniate_datetime; ?>">
+                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->iniate_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -199,7 +199,7 @@ padding: 15px;
                           <label class="col-sm-5 col-form-label">Service Start Time</label>
                           <div class="col-sm-7">
                                 <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo $rows->start_datetime; ?>">
+                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->start_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -208,7 +208,7 @@ padding: 15px;
                           <label class="col-sm-5 col-form-label">Service End Time</label>
                           <div class="col-sm-7">
                                   <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
-                            <input type="text" class="form-control" readonly value="<?php echo $rows->finish_datetime; ?>">
+                            <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->finish_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -264,7 +264,7 @@ padding: 15px;
                         <td><?php echo $i; ?></td>
                         <td><?php echo $rows_prov->name; ?>  </td>
                         <td><?php echo $rows_prov->role_name; ?>  </td>
-                        <td><?php echo $rows_prov->created_at; ?>  </td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_prov->created_at)) ?></td>
                         <td>
                           <?php $stats=$rows_prov->status;
                            if($stats=="Requested"){
@@ -307,7 +307,7 @@ padding: 15px;
                           <td><?php echo $rows_reviews->rating; ?>  </td>
                           <td><?php echo $rows_reviews->review; ?>  </td>
                             <td><?php echo $rows_reviews->status; ?>  </td>
-                          <td><?php echo $rows_reviews->created_at; ?>  </td>
+                          <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_reviews->created_at)) ?></td>
 
                         </tr>
                         <?php  $i++;  }  ?>
@@ -327,7 +327,7 @@ padding: 15px;
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
                           <th>Skilex commission amt</th>
-                          <th>Associate commission amt</th>
+                          <th>Commando commission amt</th>
                           <th>Payable amount</th>
                         </tr>
                       </thead>
@@ -380,7 +380,7 @@ padding: 15px;
                         <td><?php echo $rows_history->ccavenue_track_id; ?>  </td>
                         <td><?php echo $rows_history->notes; ?></td>
                         <td><?php echo $rows_history->status; ?></td>
-                        <td><?php echo $rows_history->created_at; ?></td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_history->created_at)) ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>
@@ -401,7 +401,7 @@ padding: 15px;
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Associate</h5>
+                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Commando</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -409,7 +409,7 @@ padding: 15px;
               <div class="modal-body">
                     <form action="" method="post" id="doc_status_form">
                         <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Select Associate</label>
+                        <label for="recipient-name" class="col-form-label">Select Commando</label>
                             <select class="form-control form-control-sm" id="provider_list" name="provider_id">
                               <option value="">--Select--</option>
                           <?php foreach($res_provider_list as $rows_p_list){ ?>
@@ -479,7 +479,7 @@ $('#provider_list').change(function(){
                  success: function(response) {
                     var stats=response.status;
                      if (stats=="success") {
-                       swal('Associate assigned successfully')
+                       swal('Commando assigned successfully')
                        setTimeout(function() {
                            location.reload();
                        }, 1000);

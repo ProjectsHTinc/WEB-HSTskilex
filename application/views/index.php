@@ -205,7 +205,7 @@ From people who are capable</h2>
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_13.png">
                         </div>
-                        <h3 class="title">Appliance Services</h3>
+                        <h3 class="title">Appliance Repair</h3>
                       <p class="ser_desc">From kitchen appliances to home automation</p>
                     </div>
                 </div>
@@ -214,7 +214,7 @@ From people who are capable</h2>
                         <div class="box-icon">
                               <img src="<?php echo base_url(); ?>assets/images/service_7.png">
                         </div>
-                        <h3 class="title">AC Services</h3>
+                        <h3 class="title">A/C Services</h3>
                       <p class="ser_desc">From dry and wet services to overall  maintenance</p>
                     </div>
                 </div>
@@ -509,19 +509,19 @@ From people who are capable</h2>
     </ol>
     <div class="carousel-inner">
       <div class="item carousel-item active">
-        <div class="img-box"><img src="/examples/images/clients/1.jpg" alt=""></div>
-        <p class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
-        <p class="overview"><b>Paula Wilson</b>, Media Analyst</p>
+       <!-- <div class="img-box"><img src="/examples/images/clients/1.jpg" alt=""></div> -->
+        <p class="testimonial">Thank you Skilex for your Wonderful  Service . I recently used your plumbing service in my home, the plumber did a grea job.. Very Professional</p>
+        <p class="overview"><b>Swapna</b>, G.V Residency</p>
       </div>
       <div class="item carousel-item">
-        <div class="img-box"><img src="/examples/images/clients/2.jpg" alt=""></div>
-        <p class="testimonial">Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Utmtc tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio.</p>
-        <p class="overview"><b>Antonio Moreno</b>, Web Developer</p>
+        <!--<div class="img-box"><img src="/examples/images/clients/2.jpg" alt=""></div>-->
+        <p class="testimonial">Availed Deep Cleaning Service last week - Very much Satisfied :-)</p>
+        <p class="overview"><b>Manikandan</b>, IOB Colony</p>
       </div>
       <div class="item carousel-item">
-        <div class="img-box"><img src="/examples/images/clients/3.jpg" alt=""></div>
-        <p class="testimonial">Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum.</p>
-        <p class="overview"><b>Michael Holz</b>, Seo Analyst</p>
+        <!--<div class="img-box"><img src="/examples/images/clients/3.jpg" alt=""></div>-->
+        <p class="testimonial">I was in desperate need for a skilled electrician to do complete wiring for my newly built house.I am convinced, the team over skilex nailed the job</p>
+        <p class="overview"><b>Vishal</b>, Bharathi colony, Ganapathy.</p>
       </div>
     </div>
 
@@ -546,7 +546,7 @@ From people who are capable</h2>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 text-center">
               <p class="label_text">1000+</p>
-              <p class="work_assured_text">Satisifed Customers </p>
+              <p class="work_assured_text">Satisfied Customers </p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 text-center">
               <p class="label_text">10000+</p>

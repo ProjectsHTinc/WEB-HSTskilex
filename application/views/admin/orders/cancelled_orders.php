@@ -52,7 +52,7 @@ th{
                 <td><?php echo $rows->service_name; ?> (<?php echo $rows->number_of_orders; ?>)</td>
                   <td><?php echo $rows->contact_person_name; ?> <br><br><?php echo $rows->contact_person_number; ?>
                   </td>
-                  <td><?php echo $rows->order_date; ?> <br><br>
+                  <td><?php echo  date('d-m-Y',strtotime($rows->order_date)) ?> <br><br>
                   <?php  echo date("g:i ", strtotime($rows->from_time)); ?> - <?php    echo date("g:i", strtotime($rows->to_time));?>
                  </td>
                   <td><?php echo $rows->service_rate_card; ?></td>

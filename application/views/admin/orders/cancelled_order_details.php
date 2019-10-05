@@ -59,7 +59,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Service Date :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->order_date; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y',strtotime($rows->order_date)) ?>">
                             </div>
                         </div>
                       </div>
@@ -114,7 +114,7 @@
                     <?php if($rows->onhold_datetime='0000-00-00 00:00:00'){
                       $on_hold_datetime='';
                     }else{
-                      $on_hold_datetime=$rows->onhold_datetime;
+                     $on_hold_datetime= date('d-m-Y',strtotime($rows->onhold_datetime));
                     } ?>
                     <div class="col-md-6">
                       <div class="form-group row">
@@ -177,7 +177,7 @@
                           <label class="col-sm-5 col-form-label">Service Initiate Time</label>
                           <div class="col-sm-7">
                                 <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo $rows->iniate_datetime; ?>">
+                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->iniate_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -186,7 +186,7 @@
                           <label class="col-sm-5 col-form-label">Service Start Time</label>
                           <div class="col-sm-7">
                                 <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo $rows->start_datetime; ?>">
+                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->start_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -195,7 +195,7 @@
                           <label class="col-sm-5 col-form-label">Service End Time</label>
                           <div class="col-sm-7">
                                   <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
-                            <input type="text" class="form-control" readonly value="<?php echo $rows->finish_datetime; ?>">
+                            <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->finish_datetime)) ?>">
                           </div>
                         </div>
                       </div>
@@ -250,7 +250,7 @@
                         <td><?php echo $i; ?></td>
                         <td><?php echo $rows_prov->name; ?>  </td>
                         <td><?php echo $rows_prov->role_name; ?>  </td>
-                        <td><?php echo $rows_prov->created_at; ?>  </td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_prov->created_at)) ?> </td>
                         <td>
                           <?php $stats=$rows_prov->status;
                            if($stats=="Requested"){
@@ -294,7 +294,7 @@
                           <td><?php echo $rows_cancel_list->reasons; ?>  </td>
                           <td><?php echo $rows_cancel_list->status; ?>  </td>
                           <td><?php echo $rows_cancel_list->comments; ?></td>
-                          <td><?php echo $rows_cancel_list->created_at; ?></td>
+                          <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_cancel_list->created_at)) ?></td>
 
                         <?php  $i++;  }  ?>
                         <?php   } ?>
@@ -313,7 +313,7 @@
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
                           <th>Skilex commission amt</th>
-                          <th>Associate commission amt</th>
+                          <th>Commando commission amt</th>
                           <th>Payable amount</th>
                         </tr>
                       </thead>
@@ -365,7 +365,7 @@
                         <td><?php echo $rows_history->ccavenue_track_id; ?>  </td>
                         <td><?php echo $rows_history->notes; ?></td>
                         <td><?php echo $rows_history->status; ?></td>
-                        <td><?php echo $rows_history->created_at; ?></td>
+                        <td><?php echo  date('d-m-Y H:i:s',strtotime($rows_history->created_at)) ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>
@@ -432,7 +432,7 @@ $('#provider_list').change(function(){
                  success: function(response) {
                     var stats=response.status;
                      if (stats=="success") {
-                       swal('Associate assigned successfully')
+                       swal('Commando assigned successfully')
                        setTimeout(function() {
                            location.reload();
                        }, 1000);

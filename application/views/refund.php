@@ -99,7 +99,7 @@
 					4.	If the SkilEx Expert cancels the visit, then customer is not liable to pay cancellation charges.
 					</p>
 					<p class="content_heading">REFUND POLICY</p>
-					<p class="content_text">All commissions payable to SkilEx by SkilEx Associates or SkilEx Experts on consummated transactions, i.e. exchange of services for consideration, are final and non-refundable.</p>
+					<p class="content_text">All commissions payable to SkilEx by SkilEx Commandos or SkilEx Experts on consummated transactions, i.e. exchange of services for consideration, are final and non-refundable.</p>
 					<p class="content_text">1.	Every service offered by us takes different course of action to get accomplished from start to end thus refund policy differs from one service to other.<br>
 					2.	There is always a certain set of resources that are involved in achieving every milestone of a campaign. Thus, a refund would not be entertained for the work already completed.<br>
 					3.	No refund is possible for the fee paid in the form of installation charges.<br>

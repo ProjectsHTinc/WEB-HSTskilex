@@ -33,7 +33,7 @@
                           </div> -->
                           <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
-                              <p class="mb-0 mt-5">Order  Date : <?php echo $rows->order_date; ?></p>
+                              <p class="mb-0 mt-5">Order  Date : <?php echo  date('d-m-Y',strtotime($rows->order_date)) ?></p>
 
                             </div>
                           </div>

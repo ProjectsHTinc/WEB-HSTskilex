@@ -41,7 +41,7 @@ th{
                 <td><?php echo $rows->notes; ?></td>
                 <td><?php echo $rows->status; ?></td>
                 <td><?php echo $rows->name; ?></td>
-                <td><?php echo $rows->created_at; ?></td>
+                <td><?php echo  date('d-m-Y H:i:s',strtotime($rows->created_at)) ?></td>
 
             </tr>
           <?php  $i++;  }  ?>

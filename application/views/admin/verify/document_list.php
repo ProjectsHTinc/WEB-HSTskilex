@@ -77,7 +77,7 @@ th{
               </td>
 
 
-                <td><?php echo $rows->created_at; ?></td>
+                <td><?php echo  date('d-m-Y H:i:s',strtotime($rows->created_at)) ?></td>
                 <td><?php if($rows->id==""){
                   echo "-";
                 }else{ ?>

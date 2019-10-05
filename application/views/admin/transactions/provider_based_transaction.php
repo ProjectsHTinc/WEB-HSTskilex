@@ -15,7 +15,7 @@ table.dataTable thead th, table.dataTable thead td{
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="#">Transactions</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><span>Provider based  transactions</span></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Commando based transactions</span></li>
             </ol>
           </nav>
           <div class="row">
@@ -31,16 +31,16 @@ table.dataTable thead th, table.dataTable thead td{
               <?php } ?>
 
                 <div class="card-body"  >
-                  <h4 class="card-title">Provider based  transactions</h4>
+                  <h4 class="card-title">Commando based transactions</h4>
 
               <table id="example" class="table table-striped table-bordered">
       <thead >
           <tr style="height:90px;">
               <th>S.no</th>
-              <th>Provider Name</th>
+              <th>Commando Name</th>
               <th>Total Service</th>
               <th>Total Amount</th>
-              <th>Provider Comm Amt</th>
+              <th>Commando Comm Amt</th>
               <th>Skilex Com Amt</th>
 
           </tr>

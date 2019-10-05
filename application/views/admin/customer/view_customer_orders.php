@@ -31,7 +31,7 @@
 
             <tr>
                   <td><?php echo $i; ?></td>
-                  <td><?php echo $rows->order_date; ?></td>
+                  <td><?php echo  date('d-m-Y',strtotime($rows->order_date)) ?></td>
                   <td><?php echo $rows->service_name; ?></td>
                 <td><?php echo $rows->full_name; ?></td>
 

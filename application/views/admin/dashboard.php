@@ -32,7 +32,7 @@
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
                       <img src="<?php echo base_url(); ?>assets/admin/images/total_providers.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
-                          <a href="<?php echo base_url(); ?>home/get_all_provider_list"><p class="card-text mb-0">Total Associates</p></a>
+                          <a href="<?php echo base_url(); ?>home/get_all_provider_list"><p class="card-text mb-0">Total Commandos</p></a>
                         <div class="fluid-container">
                           <?php if(empty($res_provider_count)){
                           }else{

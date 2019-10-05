@@ -37,11 +37,11 @@ table.dataTable thead th, table.dataTable thead td{
       <thead >
           <tr style="height:90px;">
               <th>S.no</th>
-              <th>Associate Name</th>
+              <th>Commando Name</th>
               <th >Service date</th>
               <!-- <th>Total Service per day</th> -->
               <th>Total Amount</th>
-              <th>Associate Comm Amt</th>
+              <th>Commando Comm Amt</th>
               <th>Skilex Com Amt</th>
               <!-- <th>Online Amt</th>
               <th>Offline Amt</th>
@@ -88,9 +88,9 @@ table.dataTable thead th, table.dataTable thead td{
                     >Need to Pay </a>
                 <?php }else{
                     if($rows->serv_prov_closing_status=='Unpaid'){
-                      echo "Associate Need to Pay";
+                      echo "Commando Need to Pay";
                     }else if($rows->serv_prov_closing_status=='Paid'){
-                      echo "Associate Paid";
+                      echo "Commando Paid";
                     }else{
                       echo "Skilex Paid";
                     }
@@ -209,12 +209,12 @@ table.dataTable thead th, table.dataTable thead td{
                     </div>
                   <div class="modal-body">
                     <div class="row">
-                      <div class="col-md-3 bor">Associate name</div><div class="col-md-3 bor"><p id="owner_full_name"></p></div>
+                      <div class="col-md-3 bor">Commando name</div><div class="col-md-3 bor"><p id="owner_full_name"></p></div>
 
                       <div class="col-md-3 bor">Service Date</div><div class="col-md-3 bor"><p id="service_date"></p></div>
                       <div class="col-md-3 bor">Service Per Day</div><div class="col-md-3 bor"><p id="total_service_per_day"></p></div>
                       <div class="col-md-3 bor">Service Total Amount</div><div class="col-md-3 bor"><p id="serv_total_amount"></p></div>
-                      <div class="col-md-3 bor">Associate Commission Amount</div><div class="col-md-3 bor"><p id="serv_prov_commission_amt"></p></div>
+                      <div class="col-md-3 bor">Commando Commission Amount</div><div class="col-md-3 bor"><p id="serv_prov_commission_amt"></p></div>
                       <div class="col-md-3 bor">Skilex Commission amount</div><div class="col-md-3 bor"><p id="skilex_commission_amt"></p></div>
 
                       <table id="example" class="table table-striped table-bordered ">
@@ -224,8 +224,8 @@ table.dataTable thead th, table.dataTable thead td{
                               <th>Offline amount</th>
                               <th>Online Skilex commission</th>
                               <th>Offline skilex commission</th>
-                              <th>Online Associate commission</th>
-                              <th>Offline Associate Commission</th>
+                              <th>Online Commando commission</th>
+                              <th>Offline Commando Commission</th>
                               <th>Taxable amount</th>
                             </tr>
                           </thead>
@@ -255,7 +255,7 @@ table.dataTable thead th, table.dataTable thead td{
                     <div class="row" style="margin-top:0px;">
                       <div class="col-md-2 bor">Amount</div><div class="col-md-2 bor"><p id="amt_from_provider"></p></div>
                       <div class="col-md-2 bor">Skilex closing status</div><div class="col-md-2 bor"><p id="skilex_closing_status"></p></div>
-                      <div class="col-md-2 bor">Associate Closing status</div><div class="col-md-2 bor"><p id="serv_prov_closing_status"></p></div>
+                      <div class="col-md-2 bor">Commando Closing status</div><div class="col-md-2 bor"><p id="serv_prov_closing_status"></p></div>
                       <div class="col-md-2 bor">Transaction notes</div><div class="col-md-2 bor"><p id="transaction_notes"></p></div>
                       <div class="col-md-2 bor">Order id</div><div class="col-md-2 bor"><p id="order_id"></p></div>
                       <div class="col-md-2 bor">Payment Track</div><div class="col-md-2 bor"><p id="ccavenue_track_id"></p></div>

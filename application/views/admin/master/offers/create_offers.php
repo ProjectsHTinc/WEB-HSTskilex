@@ -45,7 +45,7 @@
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                            <label for="username">Maximium Discount Amount</label>
+                            <label for="username">Maximum Discount Amount</label>
                             <input type="text" class="form-control" id="max_offer_amount" name="max_offer_amount">
                         </div>
                       </div>

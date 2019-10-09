@@ -39,24 +39,24 @@ $('#example').DataTable();
 
 }else{ ?>
   <script>
-  // $(document).ready(function() {
-  //
-  //     $(document)[0].oncontextmenu = function() { return false; }
-  //
-  //     $(document).mousedown(function(e) {
-  //         if( e.button == 2 ) {
-  //             alert('Sorry, this functionality is disabled!');
-  //             return false;
-  //         } else {
-  //             return true;
-  //         }
-  //     });
-  // });
-  // $(document).ready(function () {
-  //    $('body').bind('cut copy paste', function (e) {
-  //       e.preventDefault();
-  //    });
-  // });
+  $(document).ready(function() {
+
+      $(document)[0].oncontextmenu = function() { return false; }
+
+      $(document).mousedown(function(e) {
+          if( e.button == 2 ) {
+              alert('Sorry, this functionality is disabled!');
+              return false;
+          } else {
+              return true;
+          }
+      });
+  });
+  $(document).ready(function () {
+     $('body').bind('cut copy paste', function (e) {
+        e.preventDefault();
+     });
+  });
   </script>
 <?php } ?>
 

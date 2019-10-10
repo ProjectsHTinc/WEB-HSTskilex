@@ -53,7 +53,7 @@ $('#example').DataTable();
       });
   });
   $(document).ready(function () {
-     $('body').bind('cut copy paste', function (e) {
+     $('body').bind('cut copy', function (e) {
         e.preventDefault();
      });
   });

@@ -36,6 +36,7 @@
 
                     <?php if($role=='7'){ ?>
 
+                      <input type="hidden" class="form-control" id="status" name="status" value="<?php echo $rows->status; ?>">
                   <?php  }else{ ?>
                     <div class="form-group">
                       <label for="exampleFormControlSelect3">Status</label>

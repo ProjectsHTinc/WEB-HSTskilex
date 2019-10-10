@@ -29,7 +29,7 @@ Class Smsmodel extends CI_Model
                  "country": "91",
                  "sms": [
                  {
-                   "message": "'.$notes.'",
+                   "message": "'.urlencode($notes).'",
                    "to": [
                    "'.$phone.'"
                    ]

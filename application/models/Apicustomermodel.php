@@ -43,7 +43,7 @@ class Apicustomermodel extends CI_Model {
                   "country": "91",
                   "sms": [
                   {
-                    "message": "'.$Message.'",
+                    "message": "'.urlencode($Message).'",
                     "to": [
                     "'.$Phoneno.'"
                     ]

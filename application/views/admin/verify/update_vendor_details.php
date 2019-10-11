@@ -203,7 +203,7 @@
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
                               </select>
-                                <script>$('#serv_prov_display_status').val('<?php echo $rows->status; ?>');</script>
+                                <script>$('#serv_prov_display_status').val('<?php echo $rows->login_status; ?>');</script>
                           </div>
                       </div>
                     </div>

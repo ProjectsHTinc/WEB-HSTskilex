@@ -19,7 +19,7 @@
                 <th>S.no</th>
                 <th>Order date</th>
                 <th>Service</th>
-                <th>Service men</th>
+                <th>Service Expert</th>
                 <th>Order Iniated</th>
                 <th>Order status</th>
 

@@ -40,15 +40,15 @@
               <?php   }
                  ?></td>
                 <td><?php if($rows->status=='Inactive'){ ?>
-                  <button type="button" class="badge badge-success ">Inactive</button>
+                  <button type="button" class="badge badge-danger ">Inactive</button>
               <?php   }else{ ?>
-                <button type="button" class="badge badge-danger">Active</button>
+                <button type="button" class="badge badge-success">Active</button>
               <?php   }
                  ?></td>
 
                 <td><?php echo  date('d-m-Y H:i:s',strtotime($rows->updated_at)) ?></td>
 
-                <td><a href="<?php echo base_url(); ?>home/get_provider_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                <td><a href="<?php echo base_url(); ?>home/get_provider_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
                   <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
                 </td>
             </tr>

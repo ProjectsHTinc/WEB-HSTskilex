@@ -40,9 +40,9 @@
               <?php   }
                  ?></td>
                 <td><?php if($rows->status=='Inactive'){ ?>
-                  <button type="button" class="badge badge-success ">Inactive</button>
+                  <button type="button" class="badge badge-danger ">Inactive</button>
               <?php   }else{ ?>
-                <button type="button" class="badge badge-danger">Active</button>
+                <button type="button" class="badge badge-success">Active</button>
               <?php   }
                  ?></td>
                 <td><?php echo $rows->company_status; ?></td>
@@ -70,4 +70,3 @@
       </div>
 
     </div>
-  

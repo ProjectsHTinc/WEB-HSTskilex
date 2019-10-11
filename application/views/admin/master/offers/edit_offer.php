@@ -65,7 +65,7 @@
                         </div>
                       </div>
                       <?php if($role=='7'||$role=='6'){ ?>
-
+                          <input type="hidden" class="form-control" id="status" name="status" value="<?php echo $rows->status; ?>">
                    <?php  }else{ ?>
                      <div class="col-md-6">
                        <div class="form-group">

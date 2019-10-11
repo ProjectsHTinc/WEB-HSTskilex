@@ -31,7 +31,7 @@
                       <input type="file" class="form-control" id="banner_img" name="banner_img" placeholder="City Tamil Name" >
                     </div>
                     <?php if($role=='7'|| $role=='6'){ ?>
-
+                        <input type="hidden" class="form-control" id="status" name="status" value="<?php echo $rows->status; ?>">
                   <?php  }else{ ?>
                     <div class="form-group">
                       <label for="exampleFormControlSelect3">Status</label>

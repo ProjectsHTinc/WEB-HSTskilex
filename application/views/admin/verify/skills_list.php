@@ -24,8 +24,8 @@
             <tr>
                 <th >S.no</th>
                 <th>Main Category</th>
-                <th>Sub Category</th>
-                <th>Service</th>
+                <!-- <th>Sub Category</th>
+                <th>Service</th> -->
                 <th>Status</th>
 
             </tr>
@@ -37,8 +37,8 @@
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $rows->main_cat_name; ?></td>
-                <td><?php echo $rows->sub_cat_name; ?></td>
-                <td><?php echo $rows->service_name; ?></td>
+                <!-- <td><?php echo $rows->sub_cat_name; ?></td>
+                <td><?php echo $rows->service_name; ?></td> -->
                 <td><?php echo $rows->status; ?></td>
 
             </tr>

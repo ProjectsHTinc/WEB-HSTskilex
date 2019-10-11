@@ -268,6 +268,23 @@ class Home extends CI_Controller {
 		}
 
 
+		public function get_person_orders(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+				$p_id=$this->uri->segment(3);
+				$data['res']=$this->loginmodel->get_person_orders($p_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/providers/view_providers_orders',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+
+
 		public function get_customer_orders(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');

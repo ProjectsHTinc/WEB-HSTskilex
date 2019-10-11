@@ -48,7 +48,7 @@
 
                 <td><?php echo  date('d-m-Y H:i:s',strtotime($rows->updated_at)) ?></td>
 
-                <td><a href="<?php echo base_url(); ?>home/get_provider_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
+                <td><a href="<?php echo base_url(); ?>home/get_person_orders/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
                   <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
                 </td>
             </tr>

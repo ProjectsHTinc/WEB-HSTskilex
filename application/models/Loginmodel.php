@@ -353,6 +353,16 @@ Class Loginmodel extends CI_Model
           return $resultset->result();
        }
 
+       function get_person_orders($p_id){
+           $id=base64_decode($p_id)/98765;
+         $query="SELECT so.order_date,spd.full_name,so.status,s.service_name,so.id,so.iniate_datetime FROM service_orders AS so
+          LEFT JOIN services AS s ON s.id=so.service_id
+          LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+          WHERE so.serv_pers_id='$id' ORDER BY so.order_date desc";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+
        function get_customer_orders($c_id){
            $id=base64_decode($c_id)/98765;
           $query="SELECT so.order_date,cd.full_name,so.status,s.service_name,so.id FROM service_orders AS so

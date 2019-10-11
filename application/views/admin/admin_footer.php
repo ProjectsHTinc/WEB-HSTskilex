@@ -23,14 +23,14 @@ input[type="search"]:after{
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/template.js"></script> -->
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/data-table.js"></script> -->
 <script>
-$('#example').DataTable();
+// $('#example').DataTable();
 
-/* var table = $('#example').DataTable({
+var table = $('#example').DataTable({
   language: {
         searchPlaceholder: "Search",
         search: '<i class="fa fa-search"></i>'
     }
-}); */
+});
 	new $.fn.dataTable.Responsive( table, {
 	details: false
 } );

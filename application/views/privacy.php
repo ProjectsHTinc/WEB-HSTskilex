@@ -126,7 +126,7 @@ SkilEx does not knowingly collect any Personal Identifiable Information from chi
 
                             <div class="social-menu">
                                 <a href="https://www.facebook.com/Skilex-blog-101337694543194/?modal=admin_todo_tour" target="_blank"><i class="icofont-facebook"></i></a>
-                                <a href="https://twitter.com/Skilex9" target="_blank"><i class="icofont-twitter"></i></a>
+                                <a href="https://twitter.com/HomeSkilex" target="_blank"><i class="icofont-twitter"></i></a>
                                 <a href="https://in.pinterest.com/dhanasekarskilex/pins/" target="_blank"><i class="icofont-pinterest"></i></a>
                                 <a href="https://www.instagram.com/skilex_bulletin123/?hl=en" target="_blank"><i class="icofont-instagram"></i></a>
                             </div>

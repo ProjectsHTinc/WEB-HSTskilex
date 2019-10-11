@@ -72,7 +72,7 @@ Class Loginmodel extends CI_Model
        }
 
        function get_all_staff(){
-         $query="SELECT ur.role_name,la.* FROM login_admin as la left join user_role as ur on ur.id=la.admin_type order by la.id desc";
+         $query="SELECT ur.role_name,la.* FROM login_admin as la left join user_role as ur on ur.id=la.admin_type WHERE la.admin_type!='1'  order by la.id desc";
          $resultset=$this->db->query($query);
          return $resultset->result();
        }

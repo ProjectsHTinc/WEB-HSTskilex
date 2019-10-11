@@ -743,6 +743,7 @@ class Apisprovider extends CI_Controller
 
     public function upload_doc()
     {
+    
         $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
         $user_master_id   = $this->uri->segment(3);

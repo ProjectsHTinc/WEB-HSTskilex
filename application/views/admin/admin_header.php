@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/style.css">
     <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/icheck/skins/all.css"> -->
    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
-   
+
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/admin/images/favicon.png" />
   <script   src="<?php echo base_url(); ?>assets/admin/js/jquery.js"></script>
   <script src="<?php echo base_url();  ?>assets/admin/js/main.js" ></script>
@@ -23,7 +23,7 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap-min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/tether.js"></script>
-  
+
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <style>
@@ -66,8 +66,12 @@
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/create_category">Category </a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/banner_list">Banners </a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>offers">Offers </a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/tax_commission">Tax & Commission </a></li>
-                        <?php if($role=='7' ||$role=='6' ||$role=='2'){ ?>
+                        <?php if($role=='1'){ ?>
+                            <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/tax_commission">Tax & Commission </a></li>
+                      <?php  } ?>
+
+                        <?php if($role=='7' ||$role=='6'){ ?>
+
                         <?php  }else{ ?>
                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>home/create_staff">Create staff</a></li>
                        <?php  } ?>

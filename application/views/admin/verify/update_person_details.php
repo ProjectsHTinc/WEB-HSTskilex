@@ -107,7 +107,7 @@
                                 <div class="form-check form-check-flat">
                               <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" disabled=""<?php if($rows->also_service_provider === 'Y') echo 'checked="checked"';?>>
-                              Aslo Service Associate
+                              Also Service Associate
                               <i class="input-helper"></i></label>
                             </div>
                             </div>

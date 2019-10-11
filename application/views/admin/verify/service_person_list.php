@@ -34,7 +34,7 @@
                 <td><?php echo $rows->profile_pic; ?></td>
 
 
-                <td><?php if($rows->status=='Inactive'){ ?>
+                <td><?php if($rows->login_status=='Inactive'){ ?>
                   <button type="button" class="btn btn-danger ">Inactive</button>
               <?php   }else{ ?>
                 <button type="button" class="btn btn-success ">Active</button>

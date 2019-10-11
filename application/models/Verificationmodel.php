@@ -129,7 +129,7 @@ Class Verificationmodel extends CI_Model
 
   function service_person_list($ser_pro_id){
       $pro_id=base64_decode($ser_pro_id)/98765;
-      $select="SELECT lu.id as user_master_id,lu.*,spd.* FROM login_users as lu left join service_person_details as spd on spd.user_master_id=lu.id where lu.user_type='4'  and spd.service_provider_id='$pro_id' order by spd.id desc";
+      $select="SELECT lu.id as user_master_id,lu.status as login_status,lu.*,spd.* FROM login_users as lu left join service_person_details as spd on spd.user_master_id=lu.id where lu.user_type='4'  and spd.service_provider_id='$pro_id' order by spd.id desc";
       $result=$this->db->query($select);
       return $result->result();
   }

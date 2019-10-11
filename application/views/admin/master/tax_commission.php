@@ -22,7 +22,7 @@
                       <input type="text" class="form-control" id="internal_commission" name="internal_commission" value="<?php echo $rows->internal_commission; ?>" placeholder="Skilex Commission Percentage">
                     </div>
                     <div class="form-group">
-                      <label for="city_ta_name">Associate Commission Percentage</label>
+                      <label for="city_ta_name">Commando Commission Percentage</label>
                       <input type="text" class="form-control" id="external_commission" name="external_commission" value="<?php echo $rows->external_commission; ?>" placeholder="Associate Commission Percentage" >
                     </div>
                     <button type="submit" class="btn btn-success mr-2">Upate Commission</button>

@@ -587,7 +587,7 @@ return $response;
 }
 else if($sql_result->num_rows()==0)
 {
-$insQuery = "insert into vendor_status(user_master_id, online_status, serv_lat, serv_lon, status, created_by, created_at) values ('".$user_master_id."','Online', '".$lat."', '".$lon."', 'Active','".$user_master_id."',NOW())";
+$insQuery = "INSERT into vendor_status(serv_pro_id, online_status, serv_lat, serv_lon, status, created_by, created_at) values ('".$user_master_id."','Online', '".$lat."', '".$lon."', 'Active','".$user_master_id."',NOW())";
 $insert_status = $this->db->query($insQuery);
 
 $response = array("status" => "success", "msg" => "Vendor status added");

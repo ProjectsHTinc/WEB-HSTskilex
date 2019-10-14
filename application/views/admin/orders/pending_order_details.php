@@ -135,7 +135,7 @@
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Associate</a></span></h4>
+                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a></span></h4>
                   <table id="example" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
@@ -186,7 +186,7 @@
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
                           <th>Skilex commission amt</th>
-                          <th>Associate commission amt</th>
+                          <th>Commando commission amt</th>
                           <th>Payable amount</th>
                         </tr>
                       </thead>
@@ -259,7 +259,7 @@
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Associate</h5>
+                    <h5 class="modal-title" id="exampleModalLabel-4">Assign Commando</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -267,7 +267,7 @@
               <div class="modal-body">
                     <form action="" method="post" id="doc_status_form">
                         <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Select Associate</label>
+                        <label for="recipient-name" class="col-form-label">Select Commando</label>
                             <select class="form-control form-control-sm" id="provider_list" name="provider_id">
                               <option value="">--Select--</option>
                           <?php foreach($res_provider_list as $rows_p_list){ ?>

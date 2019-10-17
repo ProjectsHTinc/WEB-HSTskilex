@@ -213,7 +213,7 @@ class Apisprovidermodel extends CI_Model
 
     public function Register($name, $mobile, $email)
     {
-        $sql         = "SELECT * FROM login_users WHERE phone_no ='" . $mobile . "' AND email = '" . $email . "' AND user_type = '3' AND status='Active'";
+        $sql         = "SELECT * FROM login_users WHERE phone_no ='" . $mobile . "' AND user_type = '3' AND status='Active'";
         $user_result = $this->db->query($sql);
         $ress        = $user_result->result();
 
@@ -413,7 +413,7 @@ class Apisprovidermodel extends CI_Model
                 );
             } else {
                 $documet_list = array(
-                    "status" => "error",
+                    "status" => "norecord",
                     "msg" => "No Document found"
                 );
             }
@@ -430,7 +430,7 @@ class Apisprovidermodel extends CI_Model
             } else {
 
                 $company_data_result = array(
-                    "status" => "error",
+                    "status" => "norecord",
                     "msg" => "No Company data found"
                 );
             }
@@ -822,47 +822,60 @@ return $response;
         $sQuery        = "UPDATE service_provider_details SET no_of_service_person ='$no_of_service_person', also_service_person = '$also_service_person', updated_at=NOW() WHERE user_master_id='$user_master_id'";
         $uptdate_query = $this->db->query($sQuery);
 
-        /*$user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
-        $user_result = $this->db->query($user_sql);
-        if($user_result->num_rows()>0)
-        {
-        foreach ($user_result->result() as $rows)
-        {
-        $full_name = $rows->owner_full_name;
-        $mobile = $rows->phone_no;
-        $mobile_verify = $rows->mobile_verify;
-        $email = $rows->email;
-        $email_verify = $rows->email_verify;
-        $gender = $rows->gender;
-        $address = $rows->address;
-        $city  = $rows->city;
-        $state  = $rows->state;
-        $zip   = $rows->zip;
+        if($also_service_person=='N'){
+
+        }else{
+          $user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
+          $user_result = $this->db->query($user_sql);
+          if($user_result->num_rows()>0)
+          {
+          foreach ($user_result->result() as $rows)
+          {
+          $full_name = $rows->owner_full_name;
+          $mobile = $rows->phone_no;
+          $mobile_verify = $rows->mobile_verify;
+          $email = $rows->email;
+          $email_verify = $rows->email_verify;
+          $gender = $rows->gender;
+          $address = $rows->address;
+          $city  = $rows->city;
+          $state  = $rows->state;
+          $zip   = $rows->zip;
+          }
         }
-        }
-        */
-        // 		$insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status,created_at,created_by) VALUES ('4','". $mobile . "','N','". $email . "','N','N','N','Active',NOW(),'". $user_master_id . "')";
-        // 		$insert_result = $this->db->query($insert_sql);
-        // 		$sperson_master_id = $this->db->insert_id();
-
-        // 		$insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
-        // 		$insert_result = $this->db->query($insert_query);
+        $check="SELECT * FROM login_users WHERE phone_no='$mobile' and user_type='4'";
+        $check_sql = $this->db->query($check);
 
 
-        // 			$message_details = "Dear Customer your OTP :".$OTP;
-        // 			$this->sendSMS($phone_no,$message_details);
+          if($check_sql->num_rows()==0){
+            $insert_sql = "INSERT INTO login_users (user_type, phone_no, mobile_verify, email, email_verify, document_verify, welcome_status, status,created_at,created_by) VALUES ('4','". $mobile . "','N','". $email . "','N','N','N','Active',NOW(),'". $user_master_id . "')";
+            $insert_result = $this->db->query($insert_sql);
+            $sperson_master_id = $this->db->insert_id();
 
-        if ($uptdate_query) {
-            $response = array(
-                "status" => "success",
-                "msg" => "Individual updated"
-            );
-        } else {
+            $insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
+            $insert_result = $this->db->query($insert_query);
+            if ($uptdate_query) {
+                $response = array(
+                    "status" => "success",
+                    "msg" => "Individual updated"
+                );
+            } else {
+                $response = array(
+                    "status" => "error",
+                    "msg" => "Something Wrong"
+                );
+            }
+          }else{
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Mobile number already exists"
             );
+          }
+
+
         }
+
+
 
         return $response;
     }

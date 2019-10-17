@@ -603,7 +603,7 @@ From people who are capable</h2>
                                 </span>Skilex Multiservices Private Limited<br>30/6, New Damu Nagar,<br> Pappanaickenpalayam, <br>Coimbatore-641037.</li>
                                 <li class="wow fadeInUp" data-wow-delay="1.1s" ><span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span><a href="mailto:info@skilex.in">info@skilex.in</a></li>
                                 <li class="wow fadeInUp" data-wow-delay="1.3s" ><span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i>
-</span>+91 936 170 9665</li>
+</span>+91 984 325 4040</li>
                                 <!-- <li class="wow fadeInUp" data-wow-delay="1.5s" ><span class="icon"><i class="icofont-globe"></i></span>www.skilex.com</li> -->
                             </ul>
                         </div>

@@ -181,6 +181,28 @@ class Masters extends CI_Controller {
 
 	 }
 
+	 public function change_cat_position(){
+		  $position = $this->input->post('position');
+			$this->mastermodel->update_cat_position($position);
+
+	 }
+	 public function change_sub_cat_position(){
+			$position = $this->input->post('position');
+			$this->mastermodel->update_sub_cat_position($position);
+
+	 }
+	 public function change_service_position(){
+			$position = $this->input->post('position');		
+			$this->mastermodel->update_service_position($position);
+
+	 }
+
+
+
+
+
+
+
 
 	 public function category_creation(){
 

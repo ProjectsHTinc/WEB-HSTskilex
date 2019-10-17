@@ -1,4 +1,5 @@
 <?php  $role=$this->session->userdata('user_role'); ?>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
@@ -212,6 +213,7 @@
           <tr>
               <th>S.no</th>
               <th>Service</th>
+              <th>Order</th>
               <th>Service Picture</th>
               <th>Advance Amt</th>
               <th>Rate</th>
@@ -221,15 +223,15 @@
               }else{ ?><th>Actions</th><?php } ?>
           </tr>
       </thead>
-      <tbody>
+      <tbody class="row_position">
         <?php $i=1; foreach($res as $rows){ ?>
 
 
-          <tr>
+          <tr id="<?php echo $rows->id; ?>">
                 <td><?php echo $i; ?></td>
               <td><?php echo $rows->service_name; ?> <br><br><?php echo $rows->service_ta_name; ?>
               </td>
-
+              <td><?php echo $rows->service_position; ?></td>
               <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->service_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
                 <td><?php echo $rows->advance_amount; ?></td>
                 <td><?php echo $rows->rate_card; ?></td>
@@ -339,4 +341,23 @@
       }
 
       });
+      $( ".row_position" ).sortable({
+      stop: function() {
+      var selectedData = new Array();
+            $('.row_position>tr').each(function() {
+                selectedData.push($(this).attr("id"));
+            });
+            updateOrder(selectedData);
+        }
+    });
+    function updateOrder(data) {
+          $.ajax({
+              url:"<?php echo base_url(); ?>masters/change_service_position",
+              type:'post',
+              data:{position:data},
+              success:function(result){
+                window.location.reload();
+               }
+          })
+      }
     </script>

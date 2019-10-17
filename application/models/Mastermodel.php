@@ -155,8 +155,12 @@ Class Mastermodel extends CI_Model
       // $check="SELECT * FROM main_category WHERE main_cat_name='$main_cat_name'";
       // $result=$this->db->query($check);
       // if($result->num_rows()==0){
+              $get_cat_postion="SELECT * FROM main_category order by id desc limit 1";
+              $result_cat_postion=$this->db->query($get_cat_postion);
+              foreach($result_cat_postion->result() as $rows_cat_position){}
+              $cat_postion=$rows_cat_position->cat_position+1;
 
-              $insert="INSERT INTO main_category(main_cat_name,main_cat_ta_name,cat_pic,status,created_at,created_by) VALUES('$main_cat_name','$main_cat_ta_name','$cat_pic','$status',NOW(),'$user_id')";
+              $insert="INSERT INTO main_category(main_cat_name,main_cat_ta_name,cat_pic,status,cat_position,created_at,created_by) VALUES('$main_cat_name','$main_cat_ta_name','$cat_pic','$status','$cat_postion',NOW(),'$user_id')";
               $result=$this->db->query($insert);
               if($result){
                   $data = array("status" => "success");
@@ -174,8 +178,19 @@ Class Mastermodel extends CI_Model
     }
 
 
+
+    function update_cat_position($data = array()){
+      $i=1;
+      foreach ($data as $key => $value) {
+              $sql = "UPDATE main_category SET cat_position=".$i." WHERE id=".$value;
+            $query = $this->db->query($sql);
+      $i++;
+      }
+    }
+
+
     function get_all_category(){
-      $select="SELECT * FROM main_category ORDER BY id DESC";
+      $select="SELECT * FROM main_category ORDER BY cat_position asc";
       $result=$this->db->query($select);
       return $result->result();
     }
@@ -251,8 +266,13 @@ Class Mastermodel extends CI_Model
       // $check="SELECT * FROM sub_category WHERE sub_cat_name='$sub_cat_name'";
       // $result=$this->db->query($check);
       // if($result->num_rows()==0){
+      $get_cat_postion="SELECT * FROM sub_category where main_cat_id='$main_cat_id' order by id desc limit 1";
+      $result_cat_postion=$this->db->query($get_cat_postion);
+      foreach($result_cat_postion->result() as $rows_cat_position){}
+      $sub_cat_postion=$rows_cat_position->sub_cat_position+1;
 
-              $insert="INSERT INTO sub_category(main_cat_id,sub_cat_name,sub_cat_ta_name,status,sub_cat_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_name','$sub_cat_ta_name','$status','$cat_pic',NOW(),'$user_id')";
+
+              $insert="INSERT INTO sub_category(main_cat_id,sub_cat_name,sub_cat_ta_name,status,sub_cat_position,sub_cat_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_name','$sub_cat_ta_name','$status','$sub_cat_postion','$cat_pic',NOW(),'$user_id')";
               $result=$this->db->query($insert);
               if($result){
                   $data = array("status" => "success");
@@ -270,9 +290,24 @@ Class Mastermodel extends CI_Model
     }
 
 
+          function update_sub_cat_position($data = array()){
+            $i=1;
+            foreach ($data as $key => $value) {
+                    $select="SELECT * FROM sub_category where id='$value'";
+                    $result=$this->db->query($select);
+                    foreach($result->result() as $rows_sub){}
+                      $main_cat_id=$rows_sub->main_cat_id;
+                    $sql = "UPDATE sub_category SET sub_cat_position='$i' WHERE id='$value' AND main_cat_id='$main_cat_id'";
+                  $query = $this->db->query($sql);
+            $i++;
+            }
+          }
+
+
+
         function get_all_sub_category($id){
             $main_cat_id=base64_decode($id)/98765;
-          $select="SELECT * FROM sub_category WHERE main_cat_id='$main_cat_id' ORDER BY id DESC";
+          $select="SELECT * FROM sub_category WHERE main_cat_id='$main_cat_id' ORDER BY sub_cat_position asc";
           $result=$this->db->query($select);
           return $result->result();
         }
@@ -350,12 +385,17 @@ Class Mastermodel extends CI_Model
           // $check="SELECT * FROM services WHERE service_name='$service_name'";
           // $result=$this->db->query($check);
           // if($result->num_rows()==0){
+          $get_cat_postion="SELECT * FROM services  where sub_cat_id='$sub_cat_id' order by id desc limit 1";
+          $result_cat_postion=$this->db->query($get_cat_postion);
+          foreach($result_cat_postion->result() as $rows_cat_position){}
+          $service_postion=$rows_cat_position->service_position+1;
+
 
                   $get_main_cat_id="SELECT * FROM sub_category WHERE id='$sub_cat_id'";
                   $result_main=$this->db->query($get_main_cat_id);
                   $res=$result_main->result();
                   foreach($res as $rows){} $main_cat_id=$rows->main_cat_id;
-                  $insert="INSERT INTO services(main_cat_id,sub_cat_id,service_name,service_ta_name,is_advance_payment,advance_amount,rate_card,rate_card_details,rate_card_details_ta,inclusions,inclusions_ta,exclusions,exclusions_ta,service_procedure,service_procedure_ta,others,others_ta,status,service_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_id','$service_name','$service_ta_name','$is_advance_payment','$advance_amount','$rate_card','$rate_card_details','$rate_card_details_ta','$inclusions','$inclusions_ta','$exclusion','$exclusions_ta','$service_procedure','$service_procedure_ta','$others','$others_ta','$status','$cat_pic',NOW(),'$user_id')";
+                  $insert="INSERT INTO services(service_position,main_cat_id,sub_cat_id,service_name,service_ta_name,is_advance_payment,advance_amount,rate_card,rate_card_details,rate_card_details_ta,inclusions,inclusions_ta,exclusions,exclusions_ta,service_procedure,service_procedure_ta,others,others_ta,status,service_pic,created_at,created_by) VALUES('$service_postion','$main_cat_id','$sub_cat_id','$service_name','$service_ta_name','$is_advance_payment','$advance_amount','$rate_card','$rate_card_details','$rate_card_details_ta','$inclusions','$inclusions_ta','$exclusion','$exclusions_ta','$service_procedure','$service_procedure_ta','$others','$others_ta','$status','$cat_pic',NOW(),'$user_id')";
                   $result=$this->db->query($insert);
                   if($result){
                       $data = array("status" => "success");
@@ -373,10 +413,22 @@ Class Mastermodel extends CI_Model
 
         }
 
+        function update_service_position($data = array()){
+          $i=1;
+          foreach ($data as $key => $value) {
+                  $select="SELECT * FROM services where id='$value'";
+                  $result=$this->db->query($select);
+                  foreach($result->result() as $rows_sub){}
+                    $sub_cat_id=$rows_sub->sub_cat_id;
+                  $sql = "UPDATE services SET service_position='$i' WHERE id='$value' AND sub_cat_id='$sub_cat_id'";
+                 $query = $this->db->query($sql);
+          $i++;
+          }
+        }
 
         function get_all_service($id){
             $sub_cat_id=base64_decode($id)/98765;
-          $select="SELECT * FROM services WHERE sub_cat_id='$sub_cat_id' ORDER BY id DESC";
+          $select="SELECT * FROM services WHERE sub_cat_id='$sub_cat_id' ORDER BY service_position asc";
           $result=$this->db->query($select);
           return $result->result();
         }

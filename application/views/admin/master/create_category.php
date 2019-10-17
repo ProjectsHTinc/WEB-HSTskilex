@@ -1,4 +1,6 @@
 <?php  $role=$this->session->userdata('user_role'); ?>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -66,19 +68,20 @@
           <tr>
               <th>S.no</th>
               <th>Category name</th>
+              <th>Order</th>
               <th>Category Picture</th>
               <th>Status</th>
               <th>Actions</th>
           </tr>
       </thead>
-      <tbody>
+      <tbody class="row_position">
         <?php $i=1; foreach($res as $rows){ ?>
 
 
-          <tr>
-                <td><?php echo $i; ?></td>
-              <td><?php echo $rows->main_cat_name; ?> <br><br><?php echo $rows->main_cat_ta_name; ?>
-              </td>
+          <tr id="<?php echo $rows->id; ?>">
+                <td> <?php echo $i; ?></td>
+              <td class="indexInput"><?php echo $rows->main_cat_name; ?> <br><br><?php echo $rows->main_cat_ta_name; ?>              </td>
+              <td><?php echo $rows->cat_position; ?></td>
               <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
                 <td><?php if($rows->status=='Inactive'){ ?>
                 <button type="button" class="badge badge-danger">Inactive</button>
@@ -94,6 +97,7 @@
               <?php  } ?>
                 <a title="Add Sub-Category" href="<?php echo base_url(); ?>masters/create_sub_category/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->main_cat_name; ?>/<?php echo $rows->main_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
               </td>
+
           </tr>
         <?php  $i++;  }  ?>
 
@@ -109,6 +113,10 @@
         </div>
       </div>
     </div>
+<style>
+
+</style>
+
 <script>
 
 
@@ -144,4 +152,30 @@ messages: {
 
 }
 });
-</script>
+
+
+
+
+
+
+  $( ".row_position" ).sortable({
+  stop: function() {
+  var selectedData = new Array();
+        $('.row_position>tr').each(function() {
+            selectedData.push($(this).attr("id"));
+        });
+        updateOrder(selectedData);
+    }
+});
+function updateOrder(data) {
+      $.ajax({
+          url:"<?php echo base_url(); ?>masters/change_cat_position",
+          type:'post',
+          data:{position:data},
+          success:function(result){
+            window.location.reload();
+           }
+      })
+  }
+
+    </script>

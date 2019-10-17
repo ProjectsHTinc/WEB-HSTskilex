@@ -1,4 +1,6 @@
 <?php  $role=$this->session->userdata('user_role'); ?>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
@@ -67,19 +69,20 @@
           <tr>
               <th>S.no</th>
               <th>Category name</th>
+                <th>Order</th>
               <th>Category Picture</th>
               <th>Status</th>
               <th>Actions</th>
           </tr>
       </thead>
-      <tbody>
+      <tbody class="row_position">
         <?php $i=1; foreach($res as $rows){ ?>
 
 
-          <tr>
+            <tr id="<?php echo $rows->id; ?>">
                 <td><?php echo $i; ?></td>
-              <td><?php echo $rows->sub_cat_name; ?> <br><br><?php echo $rows->sub_cat_ta_name; ?>
-              </td>
+              <td><?php echo $rows->sub_cat_name; ?> <br><br><?php echo $rows->sub_cat_ta_name; ?></td>
+              <td><?php echo $rows->sub_cat_position; ?></td>
               <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->sub_cat_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
                 <td><?php if($rows->status=='Inactive'){ ?>
                 <button type="button" class="badge badge-danger">Inactive</button>
@@ -145,4 +148,24 @@
 
       }
       });
+
+      $( ".row_position" ).sortable({
+      stop: function() {
+      var selectedData = new Array();
+            $('.row_position>tr').each(function() {
+                selectedData.push($(this).attr("id"));
+            });
+            updateOrder(selectedData);
+        }
+    });
+    function updateOrder(data) {
+          $.ajax({
+              url:"<?php echo base_url(); ?>masters/change_sub_cat_position",
+              type:'post',
+              data:{position:data},
+              success:function(result){
+                window.location.reload();
+               }
+          })
+      }
     </script>

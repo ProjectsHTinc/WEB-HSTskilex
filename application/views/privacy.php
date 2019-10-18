@@ -143,9 +143,7 @@ SkilEx does not knowingly collect any Personal Identifiable Information from chi
                           <li><a href="<?php echo base_url(); ?>refund">Refund Policy </a></li>
                        </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                      <p>Designed and Developed by<a href="https://happysanztech.com/" target="_blank" class="happy_sanz_link"> Happy Sanz Tech</a></p>
-                    </div>
+                    
                 </div>
             </div>
         </div>

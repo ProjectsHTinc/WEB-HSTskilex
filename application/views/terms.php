@@ -181,9 +181,7 @@
                           <li><a href="<?php echo base_url(); ?>refund">Refund Policy </a></li>
                        </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                      <p>Designed and Developed by<a href="https://happysanztech.com/" target="_blank" class="happy_sanz_link"> Happy Sanz Tech</a></p>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -200,30 +198,9 @@
     <!--Active JS-->
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
     <script>
-    // $(document).ready(function() {
-    //   var banner_height = $("#navscroll").height();
-    //   var lastScrollTop = 0;
-    //   $(window).scroll(function() {
-    //     var scroll = $(window).scrollTop();
-    //     var currScrollTop = $(this).scrollTop();
-    //     if (scroll >= banner_height && currScrollTop > lastScrollTop) {
-    //       //$("#header-wrap").hide();
-    //     } else {
-    //     //  $("#header-wrap").show();
-    //     }
-    //     lastScrollTop = currScrollTop;
-    //
-    //   });
-    //
-    // });
+
     </script>
-    <style>
-    /* @media (min-width: 768px) and (max-width: 992px) {
-   .collapse {
-       display: none !important;
-   }
-} */
-    </style>
+
 </body>
 
 </html>

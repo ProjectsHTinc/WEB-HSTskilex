@@ -10,7 +10,7 @@
           </nav>
           <div class="row">
 
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <?php foreach($res as $rows){} ?>
@@ -25,12 +25,12 @@
                       <label for="city_ta_name">Commando Commission Percentage</label>
                       <input type="text" class="form-control" id="external_commission" name="external_commission" value="<?php echo $rows->external_commission; ?>" placeholder="Associate Commission Percentage" >
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Upate Commission</button>
+                    <button type="submit" class="btn btn-success mr-2">Update Commission</button>
                   </form>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Update Tax</h4>
@@ -44,7 +44,22 @@
                       <label for="city_ta_name">CGST Percentage</label>
                       <input type="text" class="form-control" id="sgst" name="sgst" placeholder="SGST" value="<?php echo $rows->sgst; ?>">
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Upate Tax</button>
+                    <button type="submit" class="btn btn-success mr-2">Update Tax</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Deposit Amount</h4>
+
+                  <form class="forms-sample" id="deposit_amt_form" method="post">
+                    <div class="form-group">
+                      <label for="username">Amount</label>
+                      <input type="text" class="form-control" id="deposit_amt" name="deposit_amt" placeholder="Deposit Amount" value="<?php echo $rows->deposit_amt; ?>">
+                    </div>
+                    <button type="submit" class="btn btn-success mr-2">Update</button>
                   </form>
                 </div>
               </div>
@@ -119,6 +134,38 @@
                   var stats=response.status;
                    if (stats=="success") {
                      swal('Commission Updated successfully')
+                     window.setTimeout(function () {
+                      location.href = "<?php echo base_url();  ?>masters/tax_commission";
+                  }, 1000);
+
+                 }else{
+                    swal(stats);
+                     }
+               }
+           });
+         }
+
+    });
+
+    $('#deposit_amt_form').validate({
+    rules: {
+        deposit_amt: {required: true,number:true }
+    },
+    messages: {
+        deposit_amt:{
+            required :"Enter the deposit amount"
+        }
+    },
+    submitHandler: function(form) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>masters/update_deposit_amt",
+               type: 'POST',
+               data: $('#deposit_amt_form').serialize(),
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     swal('Deposit amount Updated successfully')
                      window.setTimeout(function () {
                       location.href = "<?php echo base_url();  ?>masters/tax_commission";
                   }, 1000);

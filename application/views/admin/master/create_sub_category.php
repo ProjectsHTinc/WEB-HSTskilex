@@ -97,7 +97,7 @@
                   <?php }else{ ?>
                     <a href="<?php echo base_url(); ?>masters/get_sub_category_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
                   <?php } ?>
-                <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->sub_cat_name; ?>/<?php echo $rows->sub_cat_ta_name; ?>"><i class="fa fa-plus-square"></i></a>
+                <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>/<?php echo $rows->sub_cat_name; ?>/<?php echo $rows->sub_cat_ta_name; ?>/<?php echo $this->uri->segment(3); ?>"><i class="fa fa-plus-square"></i></a>
               </td>
           </tr>
         <?php  $i++;  }  ?>

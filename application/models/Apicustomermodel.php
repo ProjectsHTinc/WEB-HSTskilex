@@ -447,7 +447,7 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Main Category -------------------//
 	 function View_maincategory($user_master_id)
 	{
-			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active'";
+			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active' order by cat_position asc";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){
@@ -480,7 +480,7 @@ class Apicustomermodel extends CI_Model {
 //-------------------- Sub Category -------------------//
 	 function View_subcategory($main_cat_id)
 	{
-			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active'";
+			$query = "SELECT id,sub_cat_name,sub_cat_ta_name,sub_cat_pic from sub_category WHERE main_cat_id = '$main_cat_id' AND status = 'Active' order by sub_cat_position asc";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){
@@ -547,7 +547,7 @@ class Apicustomermodel extends CI_Model {
 	 function Services_list($main_cat_id,$sub_cat_id,$user_master_id)
 	{
 			// $query = "SELECT * from services WHERE main_cat_id = '$main_cat_id' AND sub_cat_id = '$sub_cat_id' AND status = 'Active'";
-      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active' GROUP by s.id";
+      $query="SELECT  IFNULL(oc.user_master_id,0) AS selected,s.* FROM services  as s  left join order_cart as oc on oc.service_id=s.id  and oc.user_master_id='$user_master_id' where s.main_cat_id='$main_cat_id' and s.sub_cat_id='$sub_cat_id' AND s.status = 'Active' GROUP by s.id order by service_position asc";
 			$res = $this->db->query($query);
 
 			 if($res->num_rows()>0){

@@ -155,12 +155,23 @@
 }
 
 .footer-bottom {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .footer-logo {
     font-size: 36px;
     font-weight: 700;
     margin-bottom: 15px;
+}
+.testimonial_cities{
+  color: #3e6cb4;
+  font-size: 15px;
+  font-weight: 600;
+}
+.testimonial{
+  font-size: 14px;
+}
+.social-menu{
+  font-size: 18px;
 }

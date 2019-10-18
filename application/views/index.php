@@ -496,42 +496,27 @@ From people who are capable</h2>
 
 
 
-    <section id="testimonials" class="testimonials">
+    <section  id="testimonials" class="testimonials">
       <div class="container">
         <div class="row justify-content-center">
             <p class="text-center testimonials_text">Testimonials</p>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="overview testimonial_name"><b>Swapna</b></p>
+              <p class="testimonial_cities"> G.V Residency</p>
+              <p class="testimonial">Thank you Skilex for your Wonderful  Service . I recently used your plumbing service in my home, the plumber did a grea job.. Very Professional</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="overview  testimonial_name"><b>Manikandan</b></p>
+              <p class="testimonial_cities"> IOB Colony</p>
+              <p class="testimonial">Availed Deep Cleaning Service last week - Very much Satisfied :-)</p>
 
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="item carousel-item active">
-       <!-- <div class="img-box"><img src="/examples/images/clients/1.jpg" alt=""></div> -->
-        <p class="testimonial">Thank you Skilex for your Wonderful  Service . I recently used your plumbing service in my home, the plumber did a grea job.. Very Professional</p>
-        <p class="overview"><b>Swapna</b>, G.V Residency</p>
-      </div>
-      <div class="item carousel-item">
-        <!--<div class="img-box"><img src="/examples/images/clients/2.jpg" alt=""></div>-->
-        <p class="testimonial">Availed Deep Cleaning Service last week - Very much Satisfied :-)</p>
-        <p class="overview"><b>Manikandan</b>, IOB Colony</p>
-      </div>
-      <div class="item carousel-item">
-        <!--<div class="img-box"><img src="/examples/images/clients/3.jpg" alt=""></div>-->
-        <p class="testimonial">I was in desperate need for a skilled electrician to do complete wiring for my newly built house.I am convinced, the team over skilex nailed the job</p>
-        <p class="overview"><b>Vishal</b>, Bharathi colony, Ganapathy.</p>
-      </div>
-    </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+              <p class="overview testimonial_name"><b>Vishal</b></p>
+              <p class="testimonial_cities"> Bharathi colony, Ganapathy.</p>
+              <p class="testimonial">I was in desperate need for a skilled electrician to do complete wiring for my newly built house.I am convinced, the team over skilex nailed the job</p>
 
-    <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
-      <i class="fa fa-angle-left"></i>
-    </a>
-    <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
-      <i class="fa fa-angle-right"></i>
-    </a>
-  </div>
+            </div>
         </div>
       </div>
     </section>
@@ -545,11 +530,11 @@ From people who are capable</h2>
               <p class="work_assured_text">Happiness Guarantee</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 text-center">
-              <p class="label_text">1000+</p>
+              <p class="text-center"><img src="<?php echo base_url(); ?>assets/images/satisfied.png" class="img-responsive img_smile"></p>
               <p class="work_assured_text">Satisfied Customers </p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 text-center">
-              <p class="label_text">10000+</p>
+            <p class="text-center"><img src="<?php echo base_url(); ?>assets/images/verified_experts.png" class="img-responsive img_smile"></p>
               <p class="work_assured_text">Verified Experts</p>
             </div>
         </div>
@@ -669,9 +654,7 @@ From people who are capable</h2>
                           <li><a href="<?php echo base_url(); ?>refund">Refund Policy </a></li>
                        </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                      <p>Designed and Developed by<a href="https://happysanztech.com/" target="_blank" class="happy_sanz_link"> Happy Sanz Tech</a></p>
-                    </div>
+                  
                 </div>
             </div>
         </div>

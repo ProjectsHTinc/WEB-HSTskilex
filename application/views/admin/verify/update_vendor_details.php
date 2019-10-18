@@ -126,7 +126,7 @@
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Branch Name :</label>
+                          <label class="col-sm-4 col-form-label">Branch Name:</label>
                           <div class="col-sm-8">
                                   <input type="text" class="form-control" readonly value="<?php echo $rows->bank_branch_name; ?>">
                           </div>

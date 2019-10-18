@@ -8,8 +8,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="#">Category</a></li>
-              <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category </a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_sub_category/<?php  echo $this->uri->segment(6); ?>">Sub Category</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Services</span></li>
             </ol>
           </nav>
@@ -246,7 +246,7 @@
 
                 }else{ ?>
                     <td>
-                  <a href="<?php echo base_url(); ?>masters/get_service_edit/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+                  <a href="<?php echo base_url(); ?>masters/get_service_edit/<?php echo base64_encode($rows->id*98765); ?>/<?php  echo $this->uri->segment(6); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
                     </td>
               <?php  } ?>
                 <!-- <a title="Add Service" href="<?php echo base_url(); ?>masters/create_service/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-plus-square"></i></a> -->

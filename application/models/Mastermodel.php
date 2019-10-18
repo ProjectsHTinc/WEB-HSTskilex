@@ -147,6 +147,19 @@ Class Mastermodel extends CI_Model
     }
 
 
+    function update_deposit_amt($deposit_amt,$user_id){
+      $update="UPDATE tax_commission SET deposit_amt='$deposit_amt',updated_by='$user_id',updated_at=NOW() WHERE id='1'";
+      $result=$this->db->query($update);
+      if($result){
+          $data = array("status" => "success");
+            return $data;
+      }else{
+        $data = array("status" => "failed");
+          return $data;
+      }
+    }
+
+
 
     // Category section
 

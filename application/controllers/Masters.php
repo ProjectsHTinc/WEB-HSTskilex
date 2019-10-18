@@ -160,6 +160,20 @@ class Masters extends CI_Controller {
 		}
 
 
+		public function update_deposit_amt(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				 $deposit_amt=$this->db->escape_str($this->input->post('deposit_amt'));
+				 $data['res']=$this->mastermodel->update_deposit_amt($deposit_amt,$user_id);
+				 echo json_encode($data['res']);
+			 }else{
+					redirect('/login');
+			 }
+		}
+
+
 
 	 		// Category section
 
@@ -192,7 +206,7 @@ class Masters extends CI_Controller {
 
 	 }
 	 public function change_service_position(){
-			$position = $this->input->post('position');		
+			$position = $this->input->post('position');
 			$this->mastermodel->update_service_position($position);
 
 	 }

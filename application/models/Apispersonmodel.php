@@ -1097,6 +1097,31 @@ public function Services_list($category_id,$sub_category_id)
     }
 //#################### Onhold service ####################//
 
+//-------------------- Time slot -------------------//
+
+  function view_time_slot($user_master_id){
+     $query="SELECT id,DATE_FORMAT(from_time, '%h:%i %p') as from_time,DATE_FORMAT(to_time, '%h:%i %p') as to_time  FROM service_timeslot  WHERE  status='Active'";
+     $res = $this->db->query($query);
+     if($res->num_rows()>0){
+       $order_list = $res->result();
+       foreach ($order_list as $rows) {
+         $time_slot=$rows->from_time.'-'.$rows->to_time;
+         $view_time_slot[]= array(
+           'timeslot_id' => $rows->id,
+           'time_range' =>$time_slot
+         );
+       }
+      $response = array("status" => "success", "msg" => "View Timeslot","service_time_slot"=>$view_time_slot,"msg_en"=>"","msg_ta"=>"");
+     } else {
+       $response = array("status" => "error", "msg" => "Service timeslot not found","msg_en"=>"Service time not found!","msg_ta"=>"சேவை நேரம் கிடைக்கவில்லை!");
+     }
+
+    return $response;
+  }
+
+
+  //-------------------- Time slot -------------------//
+
 
 //#################### Cancel service Resons ####################//
 

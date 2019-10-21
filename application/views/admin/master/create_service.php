@@ -232,7 +232,7 @@
               <td><?php echo $rows->service_name; ?> <br><br><?php echo $rows->service_ta_name; ?>
               </td>
               <td><?php echo $rows->service_position; ?></td>
-              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->service_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
+              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->service_pic; ?>" class="img-responsive" style="width:50px;    height: auto;"> </td>
                 <td><?php echo $rows->advance_amount; ?></td>
                 <td><?php echo $rows->rate_card; ?></td>
                   <td><?php if($rows->status=='Inactive'){ ?>

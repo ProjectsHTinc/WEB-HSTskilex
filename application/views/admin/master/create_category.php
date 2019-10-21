@@ -82,7 +82,7 @@
                 <td> <?php echo $i; ?></td>
               <td class="indexInput"><?php echo $rows->main_cat_name; ?> <br><br><?php echo $rows->main_cat_ta_name; ?>              </td>
               <td><?php echo $rows->cat_position; ?></td>
-              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:100px;    height: auto;"> </td>
+              <td><img src="<?php echo base_url(); ?>assets/category/<?php echo $rows->cat_pic; ?>" class="img-responsive" style="width:50px;    height: auto;"> </td>
                 <td><?php if($rows->status=='Inactive'){ ?>
                 <button type="button" class="badge badge-danger">Inactive</button>
             <?php   }else{ ?>

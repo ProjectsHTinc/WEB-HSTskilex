@@ -14,7 +14,7 @@
           </nav>
           <div class="row">
 
-            <div class="col-md-4 grid-margin stretch-card">
+            <div class="col-md-3 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Create  Sub Category  <br> <?php  $string =$this->uri->segment(4);
@@ -52,7 +52,7 @@
               </div>
             </div>
 
-            <div class="col-md-8 grid-margin stretch-card">
+            <div class="col-md-9 grid-margin stretch-card">
               <div class="card">
 
                 <?php if($this->session->flashdata('msg')) {

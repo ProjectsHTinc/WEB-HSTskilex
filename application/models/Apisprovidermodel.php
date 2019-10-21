@@ -353,6 +353,7 @@ class Apisprovidermodel extends CI_Model
                     $also_service_person      = $rows->also_service_person;
                     $status                   = $rows->status;
                     $user_type                = $rows->user_type;
+                    $bank_name                =$rows->bank_name;
                 }
             }
 
@@ -374,6 +375,7 @@ class Apisprovidermodel extends CI_Model
                 "company_status" => $company_status,
                 "also_service_person" => $also_service_person,
                 "status" => $status,
+                "bank_name" => $bank_name,
                 "user_type" => $user_type
             );
 

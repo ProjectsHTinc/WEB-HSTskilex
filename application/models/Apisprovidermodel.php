@@ -732,6 +732,8 @@ return $response;
     public function Serv_prov_category_add($user_master_id, $category_id)
     {
 
+        $delete="DELETE FROM  serv_prov_pers_skills WHERE user_master_id='$user_master_id'";
+        $delete_query = $this->db->query($delete);
         $result = explode(",", $category_id);
         $cnt    = count($result);
         for ($i = 0; $i < $cnt; $i++) {
@@ -1378,6 +1380,8 @@ return $response;
 
     public function Serv_pers_category_add($user_master_id, $serv_person_id, $category_id)
     {
+          $delete="DELETE FROM  serv_prov_pers_skills WHERE user_master_id='$user_master_id'";
+          $delete_query = $this->db->query($delete);
         $result = explode(",", $category_id);
         $cnt    = count($result);
         for ($i = 0; $i < $cnt; $i++) {

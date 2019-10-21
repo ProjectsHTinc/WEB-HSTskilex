@@ -95,6 +95,16 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Any Police Case:</label>
+                          <div class="col-sm-8">
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->any_police_case; ?>">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <div class="row">
 

@@ -1079,6 +1079,23 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Additional service remove End ####################//
 
+//#################### Onhold service ####################//
+
+    function onhold_services($user_master_id,$service_order_id,$onhold_datetime,$status){
+      $update_sql = "UPDATE service_orders SET status = '$status',onhold_datetime='$onhold_datetime', updated_by  = '$user_master_id', updated_at =NOW() WHERE id ='$service_order_id'";
+      $update_result = $this->db->query($update_sql);
+
+      if($update_result)
+      {
+        $response = array("status" => "success", "msg" => "Service Order Status Updated");
+      } else {
+        $response = array("status" => "error", "msg" => "Something Wrong");
+      }
+
+      return $response;
+    }
+//#################### Onhold service ####################//
+
 
 //#################### Cancel service Resons ####################//
 

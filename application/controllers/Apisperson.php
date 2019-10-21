@@ -963,6 +963,43 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function onhold_services()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Detail Completed services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+		$user_master_id = '';
+		$service_order_id = '';
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+		$onhold_datetime  = $this->input->post("onhold_datetime");
+		$status  = $this->input->post("status");
+
+		$data['result']=$this->apispersonmodel->onhold_services($user_master_id,$service_order_id,$onhold_datetime,$status);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function cancel_service_reasons()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -1198,6 +1235,8 @@ class Apisperson extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+
 
 //-----------------------------------------------//
 

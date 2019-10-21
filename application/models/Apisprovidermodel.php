@@ -1044,9 +1044,9 @@ return $response;
 
     //################### Update provider bank detail ##################//
 
-    public function Update_provider_bank_detail($user_master_id, $bank_name, $branch_name, $acc_no, $ifsc_code)
+    public function Update_provider_bank_detail($user_master_id, $bank_name, $branch_name, $acc_no, $ifsc_code,$any_police_case)
     {
-        $update_sql    = "UPDATE service_provider_details SET bank_name='$bank_name',bank_branch_name='$branch_name',bank_acc_no='$acc_no',bank_ifsc_code='$ifsc_code',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+        $update_sql    = "UPDATE service_provider_details SET bank_name='$bank_name',any_police_case='$any_police_case',bank_branch_name='$branch_name',bank_acc_no='$acc_no',bank_ifsc_code='$ifsc_code',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
         $update_result = $this->db->query($update_sql);
 
         $response = array(
@@ -1190,9 +1190,9 @@ return $response;
 
     //#################### Service persons details update ####################//
 
-    public function Update_serv_person_details($user_master_id, $serv_person_id, $full_name, $gender, $address, $city, $pincode, $state, $language_known, $edu_qualification)
+    public function Update_serv_person_details($user_master_id, $serv_person_id, $full_name, $gender, $address, $city, $pincode, $state, $language_known, $edu_qualification,$any_police_case)
     {
-        $sQuery      = "UPDATE service_person_details SET full_name ='" . $full_name . "',gender='" . $gender . "',address='" . $address . "',city='" . $city . "',state='" . $state . "',zip='" . $pincode . "',edu_qualification='" . $edu_qualification . "',language_known='" . $language_known . "',updated_at=NOW(),updated_by='" . $user_master_id . "' WHERE user_master_id = '" . $serv_person_id . "' AND service_provider_id ='" . $user_master_id . "'";
+        $sQuery      = "UPDATE service_person_details SET full_name ='" . $full_name . "',any_police_case='$any_police_case',gender='" . $gender . "',address='" . $address . "',city='" . $city . "',state='" . $state . "',zip='" . $pincode . "',edu_qualification='" . $edu_qualification . "',language_known='" . $language_known . "',updated_at=NOW(),updated_by='" . $user_master_id . "' WHERE user_master_id = '" . $serv_person_id . "' AND service_provider_id ='" . $user_master_id . "'";
         $usr_result  = $this->db->query($sQuery);
 
         if ($usr_result) {

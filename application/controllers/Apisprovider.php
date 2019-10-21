@@ -829,8 +829,9 @@ class Apisprovider extends CI_Controller
         $branch_name    = $this->input->post("branch_name");
         $acc_no         = $this->input->post("acc_no");
         $ifsc_code      = $this->input->post("ifsc_code");
+        $any_police_case      = $this->input->post("any_police_case");
 
-        $data['result'] = $this->apisprovidermodel->Update_provider_bank_detail($user_master_id, $bank_name, $branch_name, $acc_no, $ifsc_code);
+        $data['result'] = $this->apisprovidermodel->Update_provider_bank_detail($user_master_id, $bank_name, $branch_name, $acc_no, $ifsc_code,$any_police_case);
         $response       = $data['result'];
         echo json_encode($response);
     }
@@ -973,9 +974,10 @@ class Apisprovider extends CI_Controller
         $state             = $this->input->post("state");
         $language_known    = $this->input->post("language_known");
         $edu_qualification = $this->input->post("edu_qualification");
+        $any_police_case = $this->input->post("any_police_case");
 
 
-        $data['result'] = $this->apisprovidermodel->Update_serv_person_details($user_master_id, $serv_person_id, $full_name, $gender, $address, $city, $pincode, $state, $language_known, $edu_qualification);
+        $data['result'] = $this->apisprovidermodel->Update_serv_person_details($user_master_id, $serv_person_id, $full_name, $gender, $address, $city, $pincode, $state, $language_known, $edu_qualification,$any_police_case);
         $response       = $data['result'];
         echo json_encode($response);
     }

@@ -827,7 +827,10 @@ return $response;
         $uptdate_query = $this->db->query($sQuery);
 
         if($also_service_person=='N'){
-
+          $response = array(
+              "status" => "success",
+              "msg" => "Individual updated"
+          );
         }else{
           $user_sql = "SELECT A.id as user_master_id, A.phone_no, A.mobile_verify, A.email, A.email_verify, A.document_verify, A.welcome_status, B.* FROM login_users A, service_provider_details B WHERE A.id = B.user_master_id AND A.id = '".$user_master_id."'";
           $user_result = $this->db->query($user_sql);

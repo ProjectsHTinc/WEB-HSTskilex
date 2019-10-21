@@ -965,7 +965,7 @@ class Apisperson extends CI_Controller {
 
 	public function onhold_services()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	   //$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{
@@ -987,10 +987,11 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-		$onhold_datetime  = $this->input->post("onhold_datetime");
+		$onhold_date  = $this->input->post("onhold_date");
+		$onhold_time  = $this->input->post("onhold_time");
 		$status  = $this->input->post("status");
 
-		$data['result']=$this->apispersonmodel->onhold_services($user_master_id,$service_order_id,$onhold_datetime,$status);
+		$data['result']=$this->apispersonmodel->onhold_services($user_master_id,$service_order_id,$onhold_date,$onhold_time,$status);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

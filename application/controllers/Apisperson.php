@@ -987,11 +987,11 @@ class Apisperson extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-		$onhold_date  = $this->input->post("onhold_date");
-		$onhold_time  = $this->input->post("onhold_time");
+		$resume_date  = $this->input->post("resume_date");
+		$resume_timeslot  = $this->input->post("resume_timeslot");
 		$status  = $this->input->post("status");
 
-		$data['result']=$this->apispersonmodel->onhold_services($user_master_id,$service_order_id,$onhold_date,$onhold_time,$status);
+		$data['result']=$this->apispersonmodel->onhold_services($user_master_id,$service_order_id,$resume_date,$resume_timeslot,$status);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

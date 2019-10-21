@@ -23,26 +23,28 @@ Class service_order_model extends CI_Model
     }
 
     function get_ongoing_orders(){
-       $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
-      FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
-      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status!='Pending' AND so.status!='Paid' AND so.status!='Cancelled' AND so.status!='Completed' AND so.status!='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
+       $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,stt.from_time as r_from_time,
+       stt.to_time as r_to_time,so.* FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+      LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_timeslot as stt on stt.id=so.resume_timeslot
+      LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status!='Pending' AND so.status!='Paid' AND so.status!='Cancelled' AND so.status!='Completed' AND so.status!='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
       $result=$this->db->query($check);
       return $result->result();
 
       }
 
       function completed_orders(){
-     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
-       FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
-       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Paid' OR so.status='Completed' GROUP BY so.id ORDER BY so.created_at DESC";
+     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,stt.from_time as r_from_time,
+     stt.to_time as r_to_time,so.* FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_timeslot as stt on stt.id=so.resume_timeslot
+        LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Paid' OR so.status='Completed' GROUP BY so.id ORDER BY so.created_at DESC";
        $result=$this->db->query($check);
        return $result->result();
       }
 
       function cancelled_orders(){
-     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
-       FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
-       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Cancelled' OR so.status='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
+     $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,stt.from_time as r_from_time,
+     stt.to_time as r_to_time,so.* FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+       LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_timeslot as stt on stt.id=so.resume_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE so.status='Cancelled' OR so.status='Rejected' GROUP BY so.id ORDER BY so.created_at DESC";
        $result=$this->db->query($check);
        return $result->result();
       }
@@ -58,20 +60,22 @@ Class service_order_model extends CI_Model
 
   function get_order_details($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-    $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
-    FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
-    LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE  so.id='$id'";
+    $check="SELECT lu.phone_no,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,stt.from_time as r_from_time,
+    stt.to_time as r_to_time,so.* FROM service_orders AS so LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
+    LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_timeslot as stt on stt.id=so.resume_timeslot LEFT JOIN services AS s ON s.id=so.service_id WHERE  so.id='$id'";
     $result=$this->db->query($check);
     return $result->result();
   }
 
   function get_ongoing_order_details($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-    $check="SELECT lu.phone_no,spd.owner_full_name,spp.full_name,spp.profile_pic,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
+    $check="SELECT stt.from_time as r_from_time,
+    stt.to_time as r_to_time,lu.phone_no,spd.owner_full_name,spp.full_name,spp.profile_pic,COUNT(soa.service_order_id) AS number_of_orders,st.from_time,st.to_time,s.service_name,so.*
     FROM service_orders AS so
     LEFT JOIN service_order_additional AS soa ON so.id = soa.service_order_id
     LEFT JOIN login_users AS  lu ON lu.id=so.customer_id
     LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+    LEFT JOIN service_timeslot as stt on stt.id=so.resume_timeslot
     LEFT JOIN service_provider_details as spd on spd.user_master_id=so.serv_prov_id
     LEFT JOIN service_person_details as spp on spp.user_master_id=so.serv_pers_id
     LEFT JOIN services AS s ON s.id=so.service_id WHERE  so.id='$id'";

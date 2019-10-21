@@ -111,19 +111,24 @@
                         </div>
                       </div>
                     </div>
-                    <?php if($rows->onhold_datetime='0000-00-00 00:00:00'){
-                      $on_hold_datetime='';
-                    }else{
-                     $on_hold_datetime= date('d-m-Y',strtotime($rows->onhold_datetime));
-                    } ?>
+
+                    <div class="col-md-6"></div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Onhold Date :</label>
+                        <label class="col-sm-4 col-form-label">Resume Date :</label>
                         <div class="col-sm-8">
-                              <input type="text" class="form-control" readonly value="<?php echo $on_hold_datetime; ?>">
+                              <input type="text" class="form-control" readonly value="<?php echo $rows->resume_date; ?>">
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Resume timeslot :</label>
+                      <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly value="<?php echo date("g:i ", strtotime($rows->r_from_time)); ?> - <?php    echo date("g:i", strtotime($rows->r_to_time)); ?>">
+                    </div>
+                  </div>
+                </div>
                   <div class="col-md-12">
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Comments:</label>

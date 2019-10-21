@@ -2428,6 +2428,32 @@ return $response;
 
     //#################### View Transaction Details End ####################//
 
+
+  //#################### GET deposit amount ####################//
+    function get_deposit_amt($user_master_id){
+      $sql       = "SELECT deposit_amt FROM tax_commission WHERE id=1";
+      $tran_ress = $this->db->query($sql);
+
+      if ($tran_ress->num_rows() > 0) {
+          $result = $tran_ress->result();
+
+          $response = array(
+              "status" => "success",
+              "msg" => "Deposit amount",
+              "desposit_amt" => $result
+          );
+      } else {
+          $response = array(
+              "status" => "error",
+              "msg" => "No Records Found"
+          );
+      }
+
+
+      return $response;
+    }
+  //#################### GET deposit amount ####################//
+
 }
 
 ?>

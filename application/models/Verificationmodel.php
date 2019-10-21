@@ -76,7 +76,7 @@ Class Verificationmodel extends CI_Model
     if($company_status=="Individual"){
       $query="SELECT dd.id,dd.doc_master_id,dm.doc_name,dm.company_doc_type,dd.user_master_id,dd.doc_proof_number,dd.file_name,dd.status,dd.created_at FROM document_master as dm left join document_details as dd on dm.id=dd.doc_master_id and dd.user_master_id='$pro_id' where dm.company_doc_type='$company_status' AND dm.status='Active'";
     }else{
-      $query="SELECT dd.id,dd.doc_master_id,dm.doc_name,dm.company_doc_type,dd.user_master_id,dd.doc_proof_number,dd.file_name,dd.status,dd.created_at FROM document_master as dm left join document_details as dd on dm.id=dd.doc_master_id and dd.user_master_id='$pro_id' where dm.status='Active'";
+      $query="SELECT dd.id,dd.doc_master_id,dm.doc_name,dm.company_doc_type,dd.user_master_id,dd.doc_proof_number,dd.file_name,dd.status,dd.created_at FROM document_master as dm left join document_details as dd on dm.id=dd.doc_master_id and dd.user_master_id='$pro_id' where dm.status='Active' and dd.user_master_id='$pro_id'";
 
     }
     $result=$this->db->query($query);

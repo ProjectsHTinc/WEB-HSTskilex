@@ -389,7 +389,7 @@ class Apisprovidermodel extends CI_Model
             }
 
             $doc_url    = base_url() . 'assets/providers/documents/';
-            $sQuery     = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='" . $user_master_id . "'";
+            $sQuery     = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.status FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='" . $user_master_id . "'";
             $doc_result = $this->db->query($sQuery);
             if ($doc_result->num_rows() != 0) {
                 foreach ($doc_result->result() as $rows) {
@@ -398,6 +398,7 @@ class Apisprovidermodel extends CI_Model
                     $doc_name         = $rows->doc_name;
                     $doc_proof_number = $rows->doc_proof_number;
                     $file_name        = $rows->file_name;
+                    $doc_status        = $rows->status;
 
                     $doc_list[] = array(
                         "id" => $id,
@@ -405,6 +406,7 @@ class Apisprovidermodel extends CI_Model
                         "doc_name" => $doc_name,
                         "doc_proof_number" => $doc_proof_number,
                         "file_name" => $file_name,
+                        "doc_status" => $doc_status,
                         "file_url" => $doc_url . $file_name
                     );
                 }

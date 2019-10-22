@@ -1101,7 +1101,7 @@ public function Services_list($category_id,$sub_category_id)
       $select_res = $this->db->query($select);
       foreach($select_res->result() as $sel_row){}
       $Phoneno=$sel_row->contact_person_number;
-      $Message="Service is in Hold";
+      $Message="Your Service is  hold now will resume on $resume_date";
       $this->sendSMS($Phoneno,$Message);
 
 

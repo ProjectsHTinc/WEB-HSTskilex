@@ -67,7 +67,7 @@
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/banner_list">Banners </a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>offers">Offers </a></li>
                         <?php if($role=='1'){ ?>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/tax_commission">Tax & Commission </a></li>
+                            <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/tax_commission">Rates </a></li>
                       <?php  } ?>
 
                         <?php if($role=='7' ||$role=='6'){ ?>

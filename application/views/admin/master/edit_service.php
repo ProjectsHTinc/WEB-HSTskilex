@@ -47,9 +47,9 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Rate Card</label>
+                          <label class="col-sm-5 col-form-label">Service Charge </label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="rate_card" name="rate_card" placeholder="Rate Card" value="<?php echo $rows->rate_card; ?>">
+                            <input type="text" class="form-control" id="rate_card" name="rate_card" placeholder="Service Charge " value="<?php echo $rows->rate_card; ?>">
                           </div>
                         </div>
                       </div>
@@ -88,17 +88,17 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Rate Card Details(English)</label>
+                          <label class="col-sm-5 col-form-label">Service Charge  Details(English)</label>
                           <div class="col-sm-7">
-                            <textarea rows="4" class="form-control" id="rate_card_details" name="rate_card_details" placeholder="Rate Card Details"><?php echo $rows->rate_card_details; ?></textarea>
+                            <textarea rows="4" class="form-control" id="rate_card_details" name="rate_card_details" placeholder="Service Charge  Details"><?php echo $rows->rate_card_details; ?></textarea>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Rate Card Details(Tamil)</label>
+                          <label class="col-sm-5 col-form-label">Service Charge Details(Tamil)</label>
                           <div class="col-sm-7">
-                              <textarea rows="4" class="form-control" class="form-control" id="rate_card_details_ta" name="rate_card_details_ta" placeholder="Rate Card Details" ><?php echo $rows->rate_card_details_ta; ?></textarea>
+                              <textarea rows="4" class="form-control" class="form-control" id="rate_card_details_ta" name="rate_card_details_ta" placeholder="Service Charge Details" ><?php echo $rows->rate_card_details_ta; ?></textarea>
                           </div>
                         </div>
                       </div>
@@ -291,9 +291,9 @@
         },
         is_advance_payment:{required:"Select Advance type"},
         advance_amount:{required:"Enter the amount",number:"Enter only numbers"},
-        rate_card:{required:"Enter rate card value",digits: true},
-        rate_card_details:{required:"Enter rate card details in english " },
-        rate_card_details_ta:{required:"Enter the rate card details in tamil" },
+        rate_card:{required:"Enter charge card value",digits: true},
+        rate_card_details:{required:"Enter service charge details in english " },
+        rate_card_details_ta:{required:"Enter the service charge details in tamil" },
         inclusions:{required:"Enter the inclusions"},
         inclusions_ta:{required:"Enter the inclusions in tamil" },
         exclusions:{required:"Enter the exclusion in english" },

@@ -547,7 +547,7 @@ function user_info($user_master_id){
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1085,6 +1085,25 @@ public function Services_list($category_id,$sub_category_id)
 
       $update_sql = "UPDATE service_orders SET status = '$status',resume_date='$resume_date',resume_timeslot='$resume_timeslot', updated_by  = '$user_master_id', updated_at =NOW() WHERE id ='$service_order_id'";
       $update_result = $this->db->query($update_sql);
+
+      $get_prov="SELECT sppd.id,lu.id,lu.phone_no from service_person_details as sppd
+      left join service_provider_details as spd on spd.id=sppd.service_provider_id
+      left join login_users as lu on lu.id=sppd.service_provider_id
+      where sppd.user_master_id='$user_master_id'";
+      $get_res = $this->db->query($get_prov);
+      foreach($get_res->result() as $row_res){}
+      $Phoneno=$row_res->phone_no;
+      $Message="Service is in Hold";
+      $this->sendSMS($Phoneno,$Message);
+
+
+      $select="SELECT * FROM service_orders where id='$service_order_id'";
+      $select_res = $this->db->query($select);
+      foreach($select_res->result() as $sel_row){}
+      $Phoneno=$sel_row->contact_person_number;
+      $Message="Service is in Hold";
+      $this->sendSMS($Phoneno,$Message);
+
 
       if($update_result)
       {

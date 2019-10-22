@@ -1546,7 +1546,8 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					  AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND A.id = '" . $service_order_id . "' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					  AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND A.id = '" . $service_order_id . "' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+            AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1765,7 +1766,8 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id
+           AND A.serv_pers_id = F.user_master_id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1815,7 +1817,8 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.serv_prov_id = '" . $user_master_id . "' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 

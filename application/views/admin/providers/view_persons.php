@@ -18,7 +18,7 @@
             <tr>
                 <th>S.no</th>
                 <th>Name</th>
-                <th>Online status</th>
+                <!-- <th>Online status</th> -->
                 <th>Login status</th>
 
                 <!-- <th>Last login</th> -->
@@ -33,12 +33,12 @@
             <tr>
                   <td><?php echo $i; ?></td>
                 <td><?php echo $rows->full_name; ?></td>
-                <td><?php if($rows->online_status=='Online'){ ?>
+                <!-- <td><?php if($rows->online_status=='Online'){ ?>
                   <button type="button" class="badge badge-success ">Online</button>
               <?php   }else{ ?>
                 <button type="button" class="badge badge-danger">Offline</button>
               <?php   }
-                 ?></td>
+                 ?></td> -->
                 <td><?php if($rows->status=='Inactive'){ ?>
                   <button type="button" class="badge badge-danger ">Inactive</button>
               <?php   }else{ ?>

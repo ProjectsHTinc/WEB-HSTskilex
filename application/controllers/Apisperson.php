@@ -965,7 +965,7 @@ class Apisperson extends CI_Controller {
 
 	public function onhold_services()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	   //$_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{

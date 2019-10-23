@@ -2454,7 +2454,7 @@ return $response;
           $response = array(
               "status" => "success",
               "msg" => "Deposit amount",
-              "desposit_amt" => $result
+              "deposit_data" => $result
           );
       } else {
           $response = array(

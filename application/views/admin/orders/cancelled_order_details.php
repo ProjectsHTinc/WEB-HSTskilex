@@ -298,7 +298,7 @@
                   </table>
                   <br>
                   <h4 class="card-title">Cancel details</h4>
-                  <table id="example" class="table table-striped  ">
+                  <table id="" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
@@ -331,7 +331,7 @@
                   <br>
                   <br>
                   <h4 class="card-title">Service Payment</h4>
-                  <table id="example" class="table table-striped table-bordered ">
+                  <table id="" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
@@ -368,7 +368,7 @@
                   </table>
                   <br>
                   <h4 class="card-title">Payment history</h4>
-                  <table id="example" class="table table-striped table-bordered ">
+                  <table id="" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>

@@ -186,35 +186,48 @@
                       </div>
                     </div>
 <br>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Service Initiate Time</label>
-                          <div class="col-sm-7">
-                                <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->iniate_datetime)) ?>">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Service Start Time</label>
-                          <div class="col-sm-7">
-                                <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
-                                  <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->start_datetime)) ?>">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-5 col-form-label">Service End Time</label>
-                          <div class="col-sm-7">
-                                  <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
-                            <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->finish_datetime)) ?>">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group row">
+      <label class="col-sm-5 col-form-label">Service Initiate Time</label>
+      <div class="col-sm-7">
+            <!-- <p class="val_label"><?php echo $rows->iniate_datetime; ?></p> -->
+      <?php if($rows->iniate_datetime=='0000-00-00 00:00:00'){ ?>
+        <input type="text" class="form-control" readonly value="">
+    <?php  }else{ ?>
+      <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->iniate_datetime)) ?>">
+    <?php  } ?>  </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group row">
+      <label class="col-sm-5 col-form-label">Service Start Time</label>
+      <div class="col-sm-7">
+            <!-- <p class="val_label"><?php echo $rows->start_datetime; ?></p> -->
+              <!-- <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->start_datetime)) ?>"> -->
+              <?php if($rows->start_datetime=='0000-00-00 00:00:00'){ ?>
+                <input type="text" class="form-control" readonly value="">
+            <?php  }else{ ?>
+              <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->start_datetime)) ?>">
+            <?php  } ?>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group row">
+      <label class="col-sm-5 col-form-label">Service End Time</label>
+      <div class="col-sm-7">
+        <?php if($rows->finish_datetime=='0000-00-00 00:00:00'){ ?>
+          <input type="text" class="form-control" readonly value="">
+      <?php  }else{ ?>
+        <input type="text" class="form-control" readonly value="<?php echo  date('d-m-Y H:i:s',strtotime($rows->finish_datetime)) ?>">
+      <?php  } ?>
+              <!-- <p class="val_label"><?php echo $rows->finish_datetime; ?></p> -->
+
+      </div>
+    </div>
+  </div>
+</div>
 <br>
                   <h4 class="card-title">List of additional Services</h4>
                   <table id="example1" class="table table-striped table-bordered">

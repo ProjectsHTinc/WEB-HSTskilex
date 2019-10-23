@@ -1240,7 +1240,7 @@ class Apicustomermodel extends CI_Model {
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
             "resume_time_slot"=>$resume_time_slot,
-            "resume_date"=>$rows->resume_date,
+            "resume_date"=>$rows_service->resume_date,
             "order_status"=>$rows_service->order_status,
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");

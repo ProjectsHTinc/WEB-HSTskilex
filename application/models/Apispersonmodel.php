@@ -800,7 +800,7 @@ function user_info($user_master_id){
     LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
     LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
     LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
-    where so.serv_prov_id='$user_master_id' and so.id='$service_order_id' and (so.status='Hold' or so.status='Ongoing' Or so.status='Started' Or so.status='Initiate')";
+    where so.serv_pers_id='$user_master_id' and so.id='$service_order_id' and (so.status='Hold' or so.status='Ongoing' Or so.status='Started' Or so.status='Initiate')";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 

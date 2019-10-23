@@ -137,7 +137,7 @@ Class Verificationmodel extends CI_Model
   function person_doc_details($person_id){
       $id=base64_decode($person_id)/98765;
         $query="SELECT dd.id,dd.doc_master_id,dm.doc_name,dm.company_doc_type,dd.user_master_id,dd.doc_proof_number,dd.file_name,dd.status,dd.created_at
-        FROM document_master AS dm LEFT JOIN document_details AS dd ON dm.id=dd.doc_master_id AND dd.user_master_id='$id' WHERE dm.status='Active' AND dm.doc_type='IdAddressProof' AND dm.company_doc_type='Individual'";
+        FROM document_master AS dm LEFT JOIN document_details AS dd ON dm.id=dd.doc_master_id AND dd.user_master_id='$id' WHERE dm.status='Active' AND dm.doc_type='IdAddressProof' OR dm.company_doc_type='Individual'";
         $result=$this->db->query($query);
         return $result->result();
 

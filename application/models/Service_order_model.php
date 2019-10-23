@@ -135,7 +135,7 @@ Class service_order_model extends CI_Model
       LEFT JOIN service_provider_details AS spd ON spd.user_master_id=vs.serv_pro_id
       left join service_orders as so on so.id='$id'
       LEFT JOIN serv_prov_pers_skills AS spps ON spd.user_master_id=spps.user_master_id
-      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id) AND spd.serv_prov_display_status='Active'  and spps.main_cat_id=so.main_cat_id  GROUP by user_id";
+      LEFT JOIN login_users AS lu ON lu.id=vs.serv_pro_id WHERE NOT EXISTS( SELECT * FROM service_order_history AS soh WHERE soh.service_order_id='$id' AND soh.serv_prov_id = vs.serv_pro_id) AND lu.status='Active'  and spps.main_cat_id=so.main_cat_id  GROUP by user_id";
       $result=$this->db->query($query);
       return $result->result();
     }

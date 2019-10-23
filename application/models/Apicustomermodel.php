@@ -1211,12 +1211,13 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
-      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.* FROM service_orders  AS so
+      $service_query="SELECT so.status as order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE so.status!='Pending' AND so.status!='Completed' AND so.status!='Rejected' AND so.status!='Paid' AND so.status!='Cancelled' AND customer_id='$user_master_id'
+        LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+        WHERE so.status!='Pending' AND so.status!='Completed'  AND so.status!='Rejected' AND so.status!='Paid' AND so.status!='Cancelled' AND customer_id='$user_master_id'
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1225,6 +1226,7 @@ class Apicustomermodel extends CI_Model {
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+           $resume_time_slot=$rows_service->r_fr_time.'-'.$rows_service->r_to_time;
           $service_list[]=array(
             "service_order_id"=>$rows_service->id,
             "main_category"=>$rows_service->main_cat_name,
@@ -1237,6 +1239,8 @@ class Apicustomermodel extends CI_Model {
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
             "time_slot"=>$time_slot,
+            "resume_time_slot"=>$resume_time_slot,
+            "resume_date"=>$rows->resume_date,
             "order_status"=>$rows_service->order_status,
           );
             $response = array("status" => "success", "msg" => "Service found",'service_list'=>$service_list,"msg_en"=>"","msg_ta"=>"");
@@ -1338,6 +1342,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "contact_person_number"=>$rows_service->contact_person_number,
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
+              "resume_date"=>$rows_service->resume_date,
             "time_slot"=>$time_slot,
             "provider_name"=>$rows_service->owner_full_name,
             "person_name"=>$rows_service->full_name,

@@ -761,36 +761,46 @@ function user_info($user_master_id){
 
 	public function Detail_ongoing_services($user_master_id,$service_order_id)
 	{
-		$sQuery = "SELECT
-					A.id,
-					A.service_location,
-					DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
-					A.contact_person_name,
-					A.contact_person_number,
-					A.service_rate_card,
-					A.serv_pers_id,
-					F.owner_full_name AS service_provider,
-					B.main_cat_name,
-					B.main_cat_ta_name,
-					C.sub_cat_name,
-					C.sub_cat_ta_name,
-					D.service_name,
-					D.service_ta_name,
-					E.from_time,
-					E.to_time,
-					A.status,
-					A.start_datetime,
-					A.material_notes
-				FROM
-					service_orders A,
-					main_category B,
-					sub_category C,
-					services D,
-					service_timeslot E,
-					service_provider_details F
-				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Initiate'OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
-           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+		// $sQuery = "SELECT
+		// 			A.id,
+		// 			A.service_location,
+		// 			DATE_FORMAT(A.order_date, '%W %M %e %Y') as order_date,
+		// 			A.contact_person_name,
+		// 			A.contact_person_number,
+		// 			A.service_rate_card,
+		// 			A.serv_pers_id,
+		// 			F.owner_full_name AS service_provider,
+		// 			B.main_cat_name,
+		// 			B.main_cat_ta_name,
+		// 			C.sub_cat_name,
+		// 			C.sub_cat_ta_name,
+		// 			D.service_name,
+		// 			D.service_ta_name,
+		// 			E.from_time,
+		// 			E.to_time,
+		// 			A.status,
+		// 			A.start_datetime,
+		// 			A.material_notes
+		// 		FROM
+		// 			service_orders A,
+		// 			main_category B,
+		// 			sub_category C,
+		// 			services D,
+		// 			service_timeslot E,
+		// 			service_provider_details F
+		// 		WHERE
+		// 			 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Initiate'OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+    //        AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+    $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%W %M %e %Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,
+    so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,so.start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
+    from service_orders as so
+    LEFT JOIN services AS s ON s.id=so.service_id
+    LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+    LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+    LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+    LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+    LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+    where so.serv_prov_id='$user_master_id' and so.id='$service_order_id' and (so.status='Hold' or so.status='Ongoing' Or so.status='Started' Or so.status='Initiate')";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1085,6 +1095,9 @@ public function Services_list($category_id,$sub_category_id)
 
       $update_sql = "UPDATE service_orders SET status = '$status',resume_date='$resume_date',resume_timeslot='$resume_timeslot', updated_by  = '$user_master_id', updated_at =NOW() WHERE id ='$service_order_id'";
       $update_result = $this->db->query($update_sql);
+
+      $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_order_id','$user_master_id','$status',NOW(),'$user_master_id ')";
+  		$ins_query = $this->db->query($sQuery);
 
       $get_prov="SELECT sppd.id,lu.id,lu.phone_no from service_person_details as sppd
       left join service_provider_details as spd on spd.id=sppd.service_provider_id

@@ -57,9 +57,9 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $i; ?></td>
                 <td><?php echo $rows->owner_full_name; ?></td>
                 <td><?php echo $rows->total_service_per_day; ?></td>
-                <td><?php echo $rows->serv_total_amount; ?></td>
-                <td><?php echo $rows->serv_provider_total; ?></td>
-                <td><?php echo $rows->skilex_commission_amt; ?></td>
+                <td class="amt"><?php echo $rows->serv_total_amount; ?></td>
+                <td class="amt"><?php echo $rows->serv_provider_total; ?></td>
+                <td class="amt"><?php echo $rows->skilex_commission_amt; ?></td>
           </tr>
         <?php  $i++;  }  ?>
 

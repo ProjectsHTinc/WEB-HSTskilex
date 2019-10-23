@@ -49,7 +49,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $i; ?></td>
                 <td><?php echo date('d-m-Y', strtotime($rows->service_date));  ?></td>
                 <td><?php echo $rows->service_per_day; ?></td>
-                <td><?php echo $rows->total_amt; ?></td>
+                <td class="amt"><?php echo $rows->total_amt; ?></td>
           </tr>
         <?php  $i++;  }  ?>
       </tbody>

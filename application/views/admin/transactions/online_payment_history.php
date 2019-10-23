@@ -59,7 +59,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $rows->order_id; ?></td>
                 <td><?php echo $rows->track_id; ?></td>
                 <td><?php echo $rows->order_status; ?></td>
-                <td><?php echo $rows->amount; ?></td>
+                <td  class="amt"><?php echo $rows->amount; ?></td>
                 <td><?php echo $rows->trans_date; ?></td>
                 <td><a href="<?php echo base_url(); ?>transaction/online_payment_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-list-alt"></i></a></td>
           </tr>

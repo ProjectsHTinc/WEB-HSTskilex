@@ -2447,14 +2447,14 @@ return $response;
     function get_deposit_amt($user_master_id){
       $sql       = "SELECT deposit_amt FROM tax_commission WHERE id=1";
       $tran_ress = $this->db->query($sql);
-
+      $result = $tran_ress->result();
       if ($tran_ress->num_rows() > 0) {
-          $result = $tran_ress->result();
-
+        foreach($result  as $row_deposit){}
+        $deposit= $row_deposit->deposit_amt;
           $response = array(
               "status" => "success",
               "msg" => "Deposit amount",
-              "deposit_data" => $result
+              "deposit_data" => $deposit
           );
       } else {
           $response = array(

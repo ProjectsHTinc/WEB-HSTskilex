@@ -198,14 +198,14 @@
                         foreach($res_payments as $rows_pay){ ?>
                         <tr>
                         <td><?php echo $i; ?></td>
-                        <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
-                        <td><?php echo $rows_pay->service_amount; ?>  </td>
-                        <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
-                        <td><?php echo $rows_pay->discount_amt; ?></td>
-                        <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
-                        <td><?php echo $rows_pay->skilex_net_amount; ?></td>
-                        <td><?php echo $rows_pay->serv_pro_net_amount; ?></td>
-                        <td><?php echo $rows_pay->payable_amount; ?></td>
+                        <td class="amt"><?php echo $rows_pay->paid_advance_amount; ?>  </td>
+                        <td class="amt"><?php echo $rows_pay->service_amount; ?>  </td>
+                        <td class="amt"><?php echo $rows_pay->ad_service_amount; ?>  </td>
+                        <td class="amt"><?php echo $rows_pay->discount_amt; ?></td>
+                        <td class="amt"><?php echo $rows_pay->skilex_tax_amount; ?></td>
+                        <td class="amt"><?php echo $rows_pay->skilex_net_amount; ?></td>
+                        <td class="amt"><?php echo $rows_pay->serv_pro_net_amount; ?></td>
+                        <td class="amt"><?php echo $rows_pay->payable_amount; ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>

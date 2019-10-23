@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Kolkata');
 $current_time = date("h:i A", time());
-include("connection.php");
+// include("connection.php");
 
         $sQuery = "SELECT
 						so.serv_prov_id,

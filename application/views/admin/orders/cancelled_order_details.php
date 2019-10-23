@@ -83,13 +83,13 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Advance status :</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Advance Unpaid"; }else{ echo "Advance Paid";} ?>">
+                                <input type="text" class="form-control" readonly value="<?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo "Unpaid"; }else{ echo "Paid";} ?>">
                             </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Service Rate :</label>
+                          <label class="col-sm-4 col-form-label">Service Charge :</label>
                           <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly value="<?php echo $rows->service_rate_card; ?>">
                             </div>
@@ -117,12 +117,12 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Resume Date :</label>
                         <div class="col-sm-8">
-                          <?php if($rows->resume_date=='0000-00-00'){
+                          <?php  if($rows->resume_date=='0000-00-00'){
                             $r_date='';
                           }else{
-                            $r_date=$rows->resume_date;
+                            $r_date=date('d-m-Y',strtotime($rows->resume_date));
                           } ?>
-                              <input type="text" class="form-control" readonly value="<?php echo $r_date; ?>">
+                            <input type="text" class="form-control" readonly value=" <?php echo  $r_date; ?>">
                       </div>
                     </div>
                   </div>
@@ -235,7 +235,7 @@
                         <tr>
                           <th>S.no</th>
                           <th>Service name</th>
-                          <th>service Rate</th>
+                          <th>service Charge</th>
 
                         </tr>
                       </thead>
@@ -258,7 +258,7 @@
                   <br>
                   <h4 class="card-title">List of Service Order History
                     <!-- <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Associate</a></span></h4> -->
-                  <table id="example" class="table table-striped table-bordered ">
+                  <table id="" class="table table-striped table-bordered ">
                       <thead>
                         <tr>
                           <th>S.no</th>
@@ -353,14 +353,14 @@
                         foreach($res_payments as $rows_pay){ ?>
                         <tr>
                           <td><?php echo $i; ?></td>
-                          <td><?php echo $rows_pay->paid_advance_amount; ?>  </td>
-                          <td><?php echo $rows_pay->service_amount; ?>  </td>
-                          <td><?php echo $rows_pay->ad_service_amount; ?>  </td>
-                          <td><?php echo $rows_pay->discount_amt; ?></td>
-                          <td><?php echo $rows_pay->skilex_tax_amount; ?></td>
-                          <td><?php echo $rows_pay->skilex_net_amount; ?></td>
-                          <td><?php echo $rows_pay->serv_pro_net_amount; ?></td>
-                          <td><?php echo $rows_pay->payable_amount; ?></td>
+                          <td class="amt"><?php echo $rows_pay->paid_advance_amount; ?>  </td>
+                          <td class="amt"><?php echo $rows_pay->service_amount; ?>  </td>
+                          <td class="amt"><?php echo $rows_pay->ad_service_amount; ?>  </td>
+                          <td class="amt"><?php echo $rows_pay->discount_amt; ?></td>
+                          <td class="amt"><?php echo $rows_pay->skilex_tax_amount; ?></td>
+                          <td class="amt"><?php echo $rows_pay->skilex_net_amount; ?></td>
+                          <td class="amt"><?php echo $rows_pay->serv_pro_net_amount; ?></td>
+                          <td class="amt"><?php echo $rows_pay->payable_amount; ?></td>
                         </tr>
                         <?php  $i++;  }  ?>
                         <?php   } ?>

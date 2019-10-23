@@ -20,7 +20,7 @@
                 <th>Order date</th>
                 <th>Service</th>
                 <th>Service Expert</th>
-                <th>Order Iniated</th>
+                <th>Order Initiated</th>
                 <th>Order status</th>
 
             </tr>

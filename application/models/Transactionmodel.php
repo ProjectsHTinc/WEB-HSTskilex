@@ -13,6 +13,8 @@ Class Transactionmodel extends CI_Model
 
 
 
+
+
   function get_daily_transaction(){
     $check="SELECT spd.owner_full_name,dpt.* FROM daily_payment_transaction as dpt LEFT JOIN
     service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id ORDER BY dpt.service_date DESC";

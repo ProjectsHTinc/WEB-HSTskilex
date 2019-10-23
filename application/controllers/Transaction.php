@@ -17,6 +17,7 @@ class Transaction extends CI_Controller {
 		 $user_id=$this->session->userdata('user_id');
 		 $user_type=$this->session->userdata('user_role');
 		 	if($user_type=='1'||$user_type=='2'){
+			
 			 $data['res']=$this->transactionmodel->get_daily_transaction();
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/daily_transaction_details',$data);

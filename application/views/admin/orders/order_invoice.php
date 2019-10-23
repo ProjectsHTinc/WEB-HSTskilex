@@ -59,12 +59,12 @@
                                       <td><?php echo $rows->paid_advance_amount; ?></td>
                                     </tr>
                                     <tr class="text-right">
-                                      <td class="text-left">2</td>
+                                      <td class="text-left">3</td>
                                       <td class="text-left">Additional Service amount</td>
                                       <td><?php echo $rows->ad_service_amount; ?></td>
                                     </tr>
                                     <tr class="text-right">
-                                      <td class="text-left">2</td>
+                                      <td class="text-left">4</td>
                                       <td class="text-left">Discount amount &nbsp; <b>(<?php echo $rows->offer_code; ?>)</b></td>
                                       <td><?php echo $rows->discount_amt; ?></td>
                                     </tr>

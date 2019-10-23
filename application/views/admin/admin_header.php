@@ -30,6 +30,9 @@
 .fa{
   color: #125ba1;
 }
+th{
+  text-transform: capitalize;
+}
 </style>
 
 </head>

@@ -120,7 +120,12 @@ padding: 15px;
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Resume Date :</label>
                         <div class="col-sm-8">
-                              <input type="text" class="form-control" readonly value="<?php echo $rows->resume_date; ?>">
+                          <?php if($rows->resume_date=='0000-00-00'){
+                            $r_date='';
+                          }else{
+                            $r_date=$rows->resume_date;
+                          } ?>
+                              <input type="text" class="form-control" readonly value=" <?php echo  date('d-m-Y',strtotime($r_date)) ?>">
                       </div>
                     </div>
                   </div>
@@ -128,7 +133,12 @@ padding: 15px;
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">Resume timeslot :</label>
                       <div class="col-sm-8">
-                            <input type="text" class="form-control" readonly value="<?php echo date("g:i ", strtotime($rows->r_from_time)); ?> - <?php    echo date("g:i", strtotime($rows->r_to_time)); ?>">
+                        <?php if($rows->resume_timeslot=='0'){ ?>
+                                <input type="text" class="form-control" readonly value="">
+                      <?php  }else{ ?>
+              <input type="text" class="form-control" readonly value="<?php echo date("g:i ", strtotime($rows->r_from_time)); ?> - <?php    echo date("g:i", strtotime($rows->r_to_time)); ?>">
+                      <?php  } ?>
+
                     </div>
                   </div>
                 </div>

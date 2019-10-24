@@ -12,7 +12,10 @@ Class Transactionmodel extends CI_Model
   }
 
 
-
+  function daily_cron_job(){
+    $insert="INSERT INTO daily_payment_transaction(serv_prov_id,total_service_per_day) values('1','2')";
+    $result=$this->db->query($insert);
+  }
 
 
   function get_daily_transaction(){

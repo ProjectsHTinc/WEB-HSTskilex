@@ -18,7 +18,7 @@ Class Smsmodel extends CI_Model
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=191431AStibz285a4f14b4&route=4&sender=skilex&message=$notes&country=91",
+  CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=191431AStibz285a4f14b4&route=4&sender=SKILEX&message=$notes&country=91",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,

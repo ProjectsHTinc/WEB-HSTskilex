@@ -1536,11 +1536,11 @@ return $response;
         $update_sql    = "UPDATE service_orders SET serv_prov_id = '" . $user_master_id . "', status  = 'Accepted', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 
-        $check="SELECT * FROM service_order_history WHERE serv_prov_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
+        $check="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
         $che_query = $this->db->query($check);
         if($che_query->num_rows()==1){
           //$sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Accepted',NOW(),'" . $user_master_id . "')";
-          $sQuery="UPDATE service_order_history SET status='Accepted' WHERE serv_prov_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
+          $sQuery="UPDATE service_order_history SET status='Accepted' WHERE service_order_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
           $ins_query = $this->db->query($sQuery);
         }else{
           $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Accepted',NOW(),'" . $user_master_id . "')";

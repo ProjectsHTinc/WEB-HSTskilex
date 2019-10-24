@@ -1141,10 +1141,10 @@ public function Services_list($category_id,$sub_category_id)
 
 	public function Cancel_services($user_master_id,$service_order_id,$cancel_master_id,$comments)
 	{
-		$update_sql = "UPDATE service_orders SET status = 'Canceled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+		$update_sql = "UPDATE service_orders SET status = 'Cancelled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
 
-		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Canceled',NOW(),'". $user_master_id . "')";
+		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Cancelled',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
 
 		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
@@ -1176,7 +1176,7 @@ public function Services_list($category_id,$sub_category_id)
 
 
 		//$title = "Service Request Canceled";
-		$notes = "SKILEX - Service Request Canceled";
+		$notes = "SKILEX - Service Request Cancelled";
     $phone=$contact_person_number;
     $this->smsmodel->send_sms($phone,$notes);
 
@@ -1218,7 +1218,7 @@ public function Services_list($category_id,$sub_category_id)
 					services D,
 					service_timeslot E
 				WHERE
-					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Canceled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1261,7 +1261,7 @@ public function Services_list($category_id,$sub_category_id)
 					services D,
 					service_timeslot E
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Canceled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 

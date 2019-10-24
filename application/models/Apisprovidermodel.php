@@ -9,6 +9,7 @@ class Apisprovidermodel extends CI_Model
     {
         parent::__construct();
         $this->load->model('mailmodel');
+          $this->load->model('smsmodel');
     }
 
 
@@ -27,53 +28,6 @@ class Apisprovidermodel extends CI_Model
     //#################### Email End ####################//
 
 
-    //#################### SMS ####################//
-
-    public function sendSMS($Phoneno, $Message)
-    {
-      $curl = curl_init();
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => '{
-                    "sender": "SKILEX",
-                    "route": "4",
-                    "country": "91",
-                    "sms": [
-                    {
-                      "message": "'.urlencode($Message).'",
-                      "to": [
-                      "'.$Phoneno.'"
-                      ]
-                    }
-                    ]
-                  }',
-        CURLOPT_SSL_VERIFYHOST => 0,
-        CURLOPT_SSL_VERIFYPEER => 0,
-        CURLOPT_HTTPHEADER => array(
-          "authkey: 191431AStibz285a4f14b4",
-          "content-type: application/json"
-        ),
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-
-      curl_close($curl);
-
-      if ($err) {
-        echo "cURL Error #:" . $err;
-      } else {
-        // echo $response;
-      }
-    }
-
-    //#################### SMS End ####################//
 
 
     //#################### Notification ####################//
@@ -239,8 +193,9 @@ class Apisprovidermodel extends CI_Model
 
             $enc_user_master_id = base64_encode($user_master_id);
 
-            $message_details = "OTP :" . $OTP;
-            $this->sendSMS($mobile,$message_details);
+            $notes = "OTP :" . $OTP;
+            $phone=$mobile;
+            $this->smsmodel->send_sms($phone,$notes);
 
             $subject = "SKILEX - New User Registered";
             $notes = '<p>Name:<span>'.$name.'</span></p><p>Email ID:<span>'.$email.'</span></p><p>Phone:<span>'.$mobile.'</span></p>';
@@ -282,8 +237,10 @@ class Apisprovidermodel extends CI_Model
             $update_sql    = "UPDATE login_users SET otp = '" . $OTP . "', updated_at=NOW() WHERE id ='" . $user_master_id . "'";
             $update_result = $this->db->query($update_sql);
 
-            $message_details = "Your OTP :" . $OTP;
-            $this->sendSMS($phone_no,$message_details);
+            $notes = "Your OTP :" . $OTP;
+            $phone=$phone_no;
+            $this->smsmodel->send_sms($phone,$notes);
+
             $response        = array(
                 "status" => "success",
                 "msg" => "Mobile OTP",
@@ -1161,8 +1118,10 @@ return $response;
             $insert_query  = "INSERT INTO service_person_details (user_master_id, service_provider_id, full_name, serv_pers_display_status, serv_pers_verify_status, also_service_provider, status,created_at,created_by ) VALUES ('" . $serv_person_id . "','" . $user_master_id . "','" . $name . "','Inactive','Pending','N','Active',NOW(),'" . $user_master_id . "')";
             $insert_result = $this->db->query($insert_query);
 
-            $message_details = "SKILEX - Service Person Created";
-            $this->sendSMS($mobile, $message_details);
+            $notes = "SKILEX - Service Person Created";
+            $phone=$mobile;
+            $this->smsmodel->send_sms($phone,$notes);
+
 
             //$subject = "SKILEX - Verification Email";
             //$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
@@ -1601,9 +1560,10 @@ return $response;
         }
 
         $title           = "Service Request Accepted";
-        $message_details = "SKILEX - Service Request Accepted";
+        $notes = "SKILEX - Service Request Accepted";
 
-        $this->sendSMS($contact_person_number, $message_details);
+        $phone=$contact_person_number;
+        $this->smsmodel->send_sms($phone,$notes);
 
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
@@ -1663,10 +1623,11 @@ return $response;
         }
 
         $title           = "Service Request Assigned";
-        $message_details = "SKILEX - Service Request Assigned";
-
-        $this->sendSMS($contact_person_number, $message_details);
-        $this->sendSMS($sperson_mobile, $message_details);
+        $notes = "SKILEX - Service Request Assigned";
+        $phone=$contact_person_number;
+        $this->smsmodel->send_sms($phone,$notes);
+        $phone=$sperson_mobile;
+        $this->smsmodel->send_sms($phone,$notes);
 
 
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
@@ -2188,9 +2149,9 @@ return $response;
 
 
         $title           = "Service Request Cancelled";
-        $message_details = "SKILEX - Service Request Cancelled";
-
-        $this->sendSMS($contact_person_number, $message_details);
+        $notes = "SKILEX - Service Request Cancelled";
+        $phone=$contact_person_number;
+        $this->smsmodel->send_sms($phone,$notes);
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
         if ($update_result) {

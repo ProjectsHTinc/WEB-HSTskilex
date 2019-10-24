@@ -195,7 +195,7 @@ class Apispersonmodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 
-			$message_details = "Dear Customer your OTP :".$OTP;
+			$message_details = "Your OTP :".$OTP;
 			$this->sendSMS($phone_no,$message_details);
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 
@@ -685,7 +685,7 @@ function user_info($user_master_id){
 			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Started',NOW(),'". $user_master_id . "')";
 			$ins_query = $this->db->query($sQuery);
 
-			 $message_details = "Dear Customer - Service OTP :".$OTP;
+			 $message_details = "Your OTP :".$OTP;
 			$this->sendSMS($contact_person_number,$message_details);
 
 			$response = array("status" => "success", "msg" => "OTP send");

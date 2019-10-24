@@ -17,7 +17,7 @@ Class Transactionmodel extends CI_Model
         so.serv_prov_id,
         so.order_date,
         COUNT(so.serv_prov_id) AS service_per_day,
-        SUM(sp.net_service_amount) AS service_total_amt,
+        SUM(sp.payable_amount) AS service_total_amt,
         SUM(sp.serv_pro_net_amount) AS serv_prov_comm_amt,
         SUM(sp.skilex_net_amount) AS skilex_comm_amt,
         SUM(sp.skilex_tax_amount) AS tax_able_amt,

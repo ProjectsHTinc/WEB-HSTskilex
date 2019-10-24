@@ -1429,7 +1429,7 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					AA.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Requested' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1536,8 +1536,18 @@ return $response;
         $update_sql    = "UPDATE service_orders SET serv_prov_id = '" . $user_master_id . "', status  = 'Accepted', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 
-        $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Accepted',NOW(),'" . $user_master_id . "')";
-        $ins_query = $this->db->query($sQuery);
+        $check="SELECT * FROM service_order_history WHERE serv_prov_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
+        $che_query = $this->db->query($check);
+        if($che_query->num_rows()==1){
+          //$sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Accepted',NOW(),'" . $user_master_id . "')";
+          $sQuery="UPDATE service_order_history SET status='Accepted' WHERE serv_prov_id='$service_order_id' AND status='$user_master_id' AND status='Requested'";
+          $ins_query = $this->db->query($sQuery);
+        }else{
+          $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Accepted',NOW(),'" . $user_master_id . "')";
+          $ins_query = $this->db->query($sQuery);
+        }
+
+
 
 
         $sQuery      = "SELECT * FROM service_orders WHERE id ='" . $service_order_id . "'";

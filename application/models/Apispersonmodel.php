@@ -5,6 +5,7 @@ class Apispersonmodel extends CI_Model {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('smsmodel');
     }
 
 
@@ -510,8 +511,11 @@ function user_info($user_master_id){
 
 		//$title = "Service Request Initiated";
 		$message_details = "SKILEX - Service Request Initiated";
+    $notes=$message_details;
+    $phone=$contact_person_number;
+    $this->smsmodel->send_sms($phone,$notes);
 
-		$this->sendSMS($contact_person_number,$message_details);
+		//$this->sendSMS($contact_person_number,$message_details);
 
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
@@ -686,7 +690,11 @@ function user_info($user_master_id){
 			$ins_query = $this->db->query($sQuery);
 
 			 $message_details = "Your OTP :".$OTP;
-			$this->sendSMS($contact_person_number,$message_details);
+       $notes=$message_details;
+       $phone=$contact_person_number;
+       $this->smsmodel->send_sms($phone,$notes);
+
+			//$this->sendSMS($contact_person_number,$message_details);
 
 			$response = array("status" => "success", "msg" => "OTP send");
 		} else {
@@ -739,8 +747,11 @@ function user_info($user_master_id){
 
 			//$title = "Service Request Ongoing";
 			$message_details = "SKILEX - Service Request Ongoing";
+      $notes=$message_details;
+      $phone=$contact_person_number;
+      $this->smsmodel->send_sms($phone,$notes);
 
-			$this->sendSMS($contact_person_number,$message_details);
+			//$this->sendSMS($contact_person_number,$message_details);
 
 			//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
@@ -1106,16 +1117,20 @@ public function Services_list($category_id,$sub_category_id)
       $get_res = $this->db->query($get_prov);
       foreach($get_res->result() as $row_res){}
       $Phoneno=$row_res->phone_no;
-      $Message="Service is in Hold";
-      $this->sendSMS($Phoneno,$Message);
+      $notes="Service is in Hold";
+      $phone=$Phoneno;
+      $this->smsmodel->send_sms($phone,$notes);
+      //$this->sendSMS($Phoneno,$Message);
 
 
       $select="SELECT * FROM service_orders where id='$service_order_id'";
       $select_res = $this->db->query($select);
       foreach($select_res->result() as $sel_row){}
       $Phoneno=$sel_row->contact_person_number;
-      $Message="Your Service is  hold now will resume on ".$resume_date;
-      $this->sendSMS($Phoneno,$Message);
+      $notes="Your Service is  hold now will resume on ".$resume_date;
+      $phone=$Phoneno;
+      $this->smsmodel->send_sms($phone,$notes);
+      //$this->sendSMS($Phoneno,$Message);
 
 
       if($update_result)
@@ -1214,9 +1229,10 @@ public function Services_list($category_id,$sub_category_id)
 
 
 		//$title = "Service Request Canceled";
-		$message_details = "SKILEX - Service Request Canceled";
-
-		$this->sendSMS($contact_person_number,$message_details);
+		$notes = "SKILEX - Service Request Canceled";
+    $phone=$contact_person_number;
+    $this->smsmodel->send_sms($phone,$notes);
+		//$this->sendSMS($contact_person_number,$message_details);
 
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
@@ -1425,9 +1441,10 @@ public function Services_list($category_id,$sub_category_id)
 
 
 		$title = "Service Request Completed";
-		$message_details = "SKILEX - Service Request Completed";
-
-	$this->sendSMS($contact_person_number,$message_details);
+		$notes = "SKILEX - Service Request Completed";
+    $phone=$contact_person_number;
+    $this->smsmodel->send_sms($phone,$notes);
+	//$this->sendSMS($contact_person_number,$message_details);
 
 		//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 

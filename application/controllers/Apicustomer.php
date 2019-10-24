@@ -5,6 +5,7 @@ class Apicustomer extends CI_Controller {
 		function __construct() {
 			 parent::__construct();
 				$this->load->model('apicustomermodel');
+				$this->load->model('smsmodel');
 				$this->load->helper("url");
 				$this->load->library('session');
 	 }

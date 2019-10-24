@@ -188,8 +188,10 @@ class Apicustomermodel extends CI_Model {
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
-    $message_details = "Your SkilEx Verification code is: ".$OTP."  0q8GrbcslWk";
-		$this->sendSMS($phone_no,$message_details);
+    $notes = "Your SkilEx Verification code is: ".$OTP."  0q8GrbcslWk";
+    $phone=$phone_no;
+    $this->smsmodel->send_sms($phone,$notes);
+		//$this->sendSMS($phone_no,$message_details);
 		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 		return $response;
 	}
@@ -1022,9 +1024,10 @@ class Apicustomermodel extends CI_Model {
                 $title="Order";
                 $gcm_key=$rows_id_next->mobile_key;
                 $mobiletype=$rows_id_next->mobile_type;
-                $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
-                //$this->smsmodel->send_sms($phone,$notes);
-                $this->sendSMS($Phoneno,$Message);
+                $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                $phone=$Phoneno;
+                $this->smsmodel->send_sms($phone,$notes);
+                //$this->sendSMS($Phoneno,$Message);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
@@ -1092,9 +1095,10 @@ class Apicustomermodel extends CI_Model {
                 $title="Order";
                 $gcm_key=$rows_id_next->mobile_key;
                 $mobiletype=$rows_id_next->mobile_type;
-                $Message="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
-                //$this->smsmodel->send_sms($phone,$notes);
-                $this->sendSMS($Phoneno,$Message);
+                $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                $phone=$Phoneno;
+                $this->smsmodel->send_sms($phone,$notes);
+                //$this->sendSMS($Phoneno,$Message);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
@@ -1527,8 +1531,10 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
               foreach($offer_result as $rows_service){ }
                $id=$rows_service->id;
               $Phoneno=$rows_service->phone_no;
-              $Message="Thank you.Your order has been Cancelled";
-              $this->sendSMS($Phoneno,$Message);
+              $notes="Thank you.Your order has been Cancelled";
+              $phone=$Phoneno;
+              $this->smsmodel->send_sms($phone,$notes);
+            //  $this->sendSMS($Phoneno,$Message);
               $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
               $res_insert = $this->db->query($insert);
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";

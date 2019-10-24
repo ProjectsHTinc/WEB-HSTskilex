@@ -1447,7 +1447,7 @@ sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.s
     LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
     LEFT JOIN service_provider_details as sppd on so.serv_prov_id=sppd.user_master_id
     LEFT JOIN service_payments as sp on sp.service_order_id=so.id
-    where so.serv_pers_id='$user_master_id'  and (so.status='Completed' or so.status='Paid')";
+    where so.serv_pers_id='$user_master_id'  and (so.status='Completed' or so.status='Paid' or so.status='Cancelled')";
     $serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 

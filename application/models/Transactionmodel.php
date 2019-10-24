@@ -55,8 +55,10 @@ Class Transactionmodel extends CI_Model
         $pay_to_serv=$rows->pay_to_serv;
         if($pay_to_serv < 0){
           $skilex_closing_status='Notreceived';
-        }else{
           $serv_prov_closing_status='Unpaid';
+        }else{
+          $skilex_closing_status='Unpaid';
+          $serv_prov_closing_status='Notreceived';
         }
 
 

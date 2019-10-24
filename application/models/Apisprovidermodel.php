@@ -2024,11 +2024,11 @@ sp.status AS Payment_status,so.contact_person_name,so.contact_person_number,so.s
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
-        $addtional_serv       = "SELECT * FROM service_order_additional WHERE service_order_id = '" . $service_order_id . "' AND status = 'Active'";
+        $addtional_serv       = "SELECT * FROM service_order_additional WHERE service_order_id = '" . $service_order_id . "'";
         $addtional_serv_res   = $this->db->query($addtional_serv);
         $addtional_serv_count = $addtional_serv_res->num_rows();
 
-        $trans_query  = "SELECT * FROM service_payments WHERE service_order_id = '" . $service_order_id . "' AND status = 'Active'";
+        $trans_query  = "SELECT * FROM service_payments WHERE service_order_id = '$service_order_id'";
         $trans_res    = $this->db->query($trans_query);
         $trans_result = $trans_res->result();
 

@@ -59,7 +59,7 @@ Class Transactionmodel extends CI_Model
         if($result_check->num_rows()==0){
           $insQuery = "INSERT INTO daily_payment_transaction(serv_prov_id,total_service_per_day,service_date,serv_total_amount,serv_prov_commission_amt,
                   skilex_commission_amt,online_transaction_amt,offline_transaction_amt,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,taxable_amount,pay_to_serv_prov,skilex_closing_status,serv_prov_closing_status,created_at)
-                VALUES('$serv_prov_id','$service_per_day','$order_date','$service_total_amt','$serv_prov_comm_amt','$skilex_comm_amt','$online_trans_amt','$offline_trans_amt','$online_skile_com_amt','$online_skile_com_amt','$online_sp_com_amt','$online_sp_com_amt','$tax_able_amt','$pay_to_serv','Nopay','Unpaid',NOW())";
+                VALUES('$serv_prov_id','$service_per_day','$order_date','$service_total_amt','$serv_prov_comm_amt','$skilex_comm_amt','$online_trans_amt','$offline_trans_amt','$online_skile_com_amt','$offline_skile_com_amt','$online_sp_com_amt','$offline_sp_com_amt','$tax_able_amt','$pay_to_serv','Nopay','Unpaid',NOW())";
           $result_ins=$this->db->query($insQuery);
         }else{
 

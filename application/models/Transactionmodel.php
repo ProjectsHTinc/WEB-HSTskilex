@@ -32,7 +32,7 @@ Class Transactionmodel extends CI_Model
       service_orders AS so
       LEFT JOIN service_payments AS sp  ON so.id = sp.service_order_id
       LEFT JOIN service_payment_history AS sphh ON sphh.payment_order_id = sp.id
-      WHERE   sp.status = 'Paid'
+      WHERE  so.order_date!=CURRENT_DATE() and sp.status = 'Paid'
       GROUP BY  so.serv_prov_id";
     $result=$this->db->query($sQuery);
     if($result->num_rows()==0){

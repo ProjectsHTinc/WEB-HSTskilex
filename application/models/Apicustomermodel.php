@@ -1003,7 +1003,7 @@ class Apicustomermodel extends CI_Model {
              if($display_minute==1){
                $limit=1;
              }else if($display_minute==2){
-               $limit="1,1";
+                 $limit="1,1";
              }else if($display_minute==3){
                $limit="2,1";
              }else{
@@ -1029,8 +1029,9 @@ class Apicustomermodel extends CI_Model {
               left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-              and spd.user_master_id!='$last_sp_id' and spd.id BETWEEN $next_id and $next_id
-              GROUP by spps.user_master_id order by spd.id asc";
+              and spd.user_master_id!='$last_sp_id' and spd.id GROUP by spps.user_master_id order by spd.id asc $limit";
+             // BETWEEN $next_id and $next_id
+              
 
 
               $ex_next_id=$this->db->query($get_sp_id);

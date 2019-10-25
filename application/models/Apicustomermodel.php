@@ -1031,7 +1031,7 @@ class Apicustomermodel extends CI_Model {
               // LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               // WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
               // and spd.id!='$last_sp_id' and spd.id  GROUP by spps.user_master_id order by spd.id asc";
-               $get_sp_id="SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              $get_sp_id="SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
               SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills as spps
               left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
@@ -1039,7 +1039,8 @@ class Apicustomermodel extends CI_Model {
               left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-              and spd.id>'$last_sp_id'   GROUP by spps.user_master_id UNION SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              and spd.id>'$last_sp_id'   GROUP by spps.user_master_id limit $display_minute
+              UNION SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
               SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills as spps
               left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
@@ -1047,7 +1048,8 @@ class Apicustomermodel extends CI_Model {
               left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-              and spd.id<'$last_sp_id'   GROUP by spps.user_master_id";
+              and spd.id<'$last_sp_id'   GROUP by spps.user_master_id limit $display_minute";
+
 
 
 
@@ -1057,7 +1059,8 @@ class Apicustomermodel extends CI_Model {
                 $response = array("status" => "error", "msg" => "Hitback","msg_en"=>"","msg_ta"=>"");
               }else{
                 $res_next_ip=$ex_next_id->result();
-                foreach($res_next_ip as $rows_id_next){}
+                foreach($res_next_ip as $rows_id_next){
+                  if ($rows_id_next === reset($res_next_ip))
                 $Phoneno=$rows_id_next->phone_no;
                 $full_name=$rows_id_next->owner_full_name;
                 $sp_user_master_id=$rows_id_next->user_master_id;
@@ -1073,6 +1076,7 @@ class Apicustomermodel extends CI_Model {
 
                 $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
                 $res_quest=$this->db->query($request_insert_query);
+              }
                 if($res_quest){
                   $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
                 }else{

@@ -1686,7 +1686,7 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1788,8 +1788,8 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
-           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.serv_prov_id = '$user_master_id' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
+           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1993,7 +1993,7 @@ sp.status AS Payment_status,so.contact_person_name,so.contact_person_number,so.s
     LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
     LEFT JOIN service_provider_details AS sppd ON so.serv_prov_id=sppd.user_master_id
     LEFT JOIN service_payments AS sp ON sp.service_order_id=so.id
-    WHERE so.serv_prov_id='$user_master_id'  AND (so.status='Completed' OR so.status='Paid')";
+    WHERE so.serv_prov_id='$user_master_id'  AND (so.status='Completed' OR so.status='Paid') order by so.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 

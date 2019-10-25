@@ -660,7 +660,7 @@ function user_info($user_master_id){
 //#################### Start services ####################//
 	public function Start_services($user_master_id,$service_order_id,$service_otp)
 	{
-		$sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."' AND service_otp = '".$service_otp."'";
+		 $sql = "SELECT * FROM service_orders WHERE id ='".$service_order_id."' AND serv_pers_id = '".$user_master_id."' AND service_otp = '".$service_otp."'";
 		$user_result = $this->db->query($sql);
 
 		if($user_result->num_rows()>0)

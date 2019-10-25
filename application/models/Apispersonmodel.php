@@ -285,7 +285,7 @@ class Apispersonmodel extends CI_Model {
 
 	public function Profile_update($user_master_id,$full_name,$gender,$email)
 	{
-		$update_sql= "UPDATE service_person_details SET full_name='$full_name',gender='$gender', updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+		$update_sql= "UPDATE service_person_details SET full_name='$full_name',email='$email',gender='$gender', updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
 		$update_result = $this->db->query($update_sql);
 
 		$response = array("status" => "success", "msg" => "Profile Updated");

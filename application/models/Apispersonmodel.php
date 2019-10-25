@@ -289,7 +289,7 @@ class Apispersonmodel extends CI_Model {
 		$update_result = $this->db->query($update_sql);
 
     $update="UPDATE login_users SET email='$email' WHERE id='$user_master_id'";
-    $ex_$update = $this->db->query($update);
+    $ex_update = $this->db->query($update);
 
 		$response = array("status" => "success", "msg" => "Profile Updated");
 		return $response;

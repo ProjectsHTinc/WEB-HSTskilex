@@ -1264,10 +1264,20 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_order_details($service_order_id){
-      $service_query="SELECT so.status as order_status,IFNULL(so.serv_pers_id,'') as person_id,IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.profile_pic,'') as profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS
-       owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,
-(SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
-LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
+      $service_query="SELECT so.status AS order_status,IFNULL(so.serv_pers_id,'') AS person_id,IFNULL(lu.phone_no,'') AS phone_no,IFNULL(spp.profile_pic,'') AS
+profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS
+owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,
+sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,IFNULL(rs.from_time, '') AS r_fr_time,IFNULL(rs.to_time, '') AS r_to_time,
+(SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa
+WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so
+LEFT JOIN services AS s ON s.id=so.service_id
+LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
+LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
+LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
  WHERE so.id='$service_order_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
@@ -1276,6 +1286,7 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
         $service_result=$res_service->result();
         foreach($service_result as $rows_service){  }
            $time_slot=$rows_service->from_time.'-'.$rows_service->to_time;
+           $r_time_slot=$rows_service->r_fr_time.'-'.$rows_service->r_to_time;
            $profic=$rows_service->profile_pic;
            if(empty($profic)){
              $pic="";
@@ -1295,8 +1306,9 @@ LEFT JOIN services AS s ON s.id=so.service_id LEFT JOIN main_category AS mc ON s
             "contact_person_number"=>$rows_service->contact_person_number,
             "service_address"=>$rows_service->service_address,
             "order_date"=>$rows_service->order_date,
-              "resume_date"=>$rows_service->resume_date,
+            "resume_date"=>$rows_service->resume_date,
             "time_slot"=>$time_slot,
+            "r_time_slot"=>$r_time_slot,
             "provider_name"=>$rows_service->owner_full_name,
             "person_name"=>$rows_service->full_name,
             "person_id"=>$rows_service->person_id,

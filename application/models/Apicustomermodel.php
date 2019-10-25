@@ -944,7 +944,7 @@ class Apicustomermodel extends CI_Model {
           }else{
 
             // $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0 and spd.serv_prov_verify_status='Approved' ORDER BY so.id,so.serv_prov_id LIMIT 1";
-              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
+              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
 
 
 
@@ -998,16 +998,17 @@ class Apicustomermodel extends CI_Model {
 
             }else{
               foreach($res_sp_id as $rows_last_sp_id){}
-              $last_sp_id=$rows_last_sp_id->last_id;
+             $last_sp_id=$rows_last_sp_id->last_id;
+
              $next_id=$display_minute+$last_sp_id;
              if($display_minute==1){
-               $limit=1;
+               $limit="LIMIT 1";
              }else if($display_minute==2){
-                 $limit="1,1";
+                 $limit="LIMIT 1,1";
              }else if($display_minute==3){
-               $limit="2,1";
+               $limit="LIMIT 2,1";
              }else{
-               $limit=0;
+               $limit="LIMIT 0";
              }
 
               // $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
@@ -1021,7 +1022,7 @@ class Apicustomermodel extends CI_Model {
               // distance < 50 ORDER BY distance LIMIT 0 , 50";
 
 
-             $get_sp_id="SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              $get_sp_id="SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
               SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills as spps
               left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
@@ -1030,8 +1031,7 @@ class Apicustomermodel extends CI_Model {
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
               and spd.user_master_id!='$last_sp_id' and spd.id GROUP by spps.user_master_id order by spd.id asc $limit";
-             // BETWEEN $next_id and $next_id
-              
+
 
 
               $ex_next_id=$this->db->query($get_sp_id);

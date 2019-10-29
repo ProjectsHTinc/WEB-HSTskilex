@@ -56,5 +56,12 @@ class Welcome extends CI_Controller {
 	}
 
 
+	public function query()
+	{
+
+		$this->load->view('admin/forgot_password.php');
+
+	}
+
 
 }

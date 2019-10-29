@@ -528,4 +528,10 @@ class Home extends CI_Controller {
 	}
 
 
+	// public function query()	{
+	// 		$main_cat_id=1;
+	// 		$data=$this->loginmodel->query_update($main_cat_id);
+	// }
+
+
 }

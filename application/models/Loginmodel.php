@@ -412,5 +412,22 @@ Class Loginmodel extends CI_Model
 
        }
 
+
+       // function query_update($main_cat_id){
+       //   $select ="SELECT main_cat_id,sub_cat_id FROM `services` GROUP by sub_cat_id";
+       //   $result=$this->db->query($select);
+       //   foreach($result->result() as $rows_sub){
+       //
+       //      $sub=$rows_sub->sub_cat_id;
+       //      $get_count_set="SELECT @i:=0;";
+       //      $res=$this->db->query($get_count_set);
+       //      $get_count="UPDATE services SET service_position = @i:=@i+1 where sub_cat_id='$sub'";
+       //      $res=$this->db->query($get_count);
+       //   }
+
+
+
+       // }
+
 }
 ?>

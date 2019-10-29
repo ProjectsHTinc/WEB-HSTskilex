@@ -195,7 +195,8 @@ Class Mastermodel extends CI_Model
     function update_cat_position($data = array()){
       $i=1;
       foreach ($data as $key => $value) {
-              $sql = "UPDATE main_category SET cat_position=".$i." WHERE id=".$value;
+               $sql = "UPDATE main_category SET cat_position=".$i." WHERE id=".$value;
+
             $query = $this->db->query($sql);
       $i++;
       }

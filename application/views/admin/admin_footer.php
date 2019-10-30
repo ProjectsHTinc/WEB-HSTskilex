@@ -26,7 +26,7 @@ input[type="search"]:after{
 // $('#example').DataTable();
 
 var table = $('#example').DataTable({
-   paging: false,
+  "lengthMenu": [[25, 50, -1], [ 25, 50, "All"]],
   language: {
         searchPlaceholder: "Search",
         search: '<i class="fa fa-search"></i>'

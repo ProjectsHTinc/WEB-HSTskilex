@@ -1633,7 +1633,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 if($coupm_amt > $max_amt){
                   $final_total=$total-$max_amt;
                   $payable=$final_total-$advance;
-                  $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                  if($coupon_id=='0'){
+                      $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                  }else{
+                      $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                  }
+
 
                 }else{
                   $final_total=$total-$coupm_amt;

@@ -140,7 +140,7 @@ class Apicustomermodel extends CI_Model {
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
-    $notes = "Your SkilEx Verification code is: ".$OTP."  0q8GrbcslWk";
+    $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
     $phone=$phone_no;
     $this->smsmodel->send_sms($phone,$notes);
 		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
@@ -1144,7 +1144,7 @@ class Apicustomermodel extends CI_Model {
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE so.status='Pending' AND customer_id='$user_master_id'
+        WHERE so.status='Pending' AND customer_id='$user_master_id' AND (so.advance_payment_status='Y' OR so.advance_payment_status='NA')'
         ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){

@@ -149,7 +149,7 @@ class Apispersonmodel extends CI_Model {
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 
-		  $msg = "Your SkilEx Verification code is: ".$OTP."  cra5Wj7bKM/";
+		  $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
       $notes=urlencode($msg);
       $phone=$phone_no;
       $this->smsmodel->send_sms($phone,$notes);

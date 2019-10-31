@@ -1144,8 +1144,7 @@ class Apicustomermodel extends CI_Model {
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
         LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-        WHERE so.status='Pending' AND customer_id='$user_master_id' AND (so.advance_payment_status='Y' OR so.advance_payment_status='NA')'
-        ORDER BY so.id DESC";
+        WHERE so.status='Pending' AND customer_id='$user_master_id' AND so.advance_payment_status='Y' ORDER BY so.id DESC";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");

@@ -135,7 +135,13 @@
                     </tbody>
                   </table>
                   <br>
-                  <h4 class="card-title">List of Service Order History <span class="pull-right"><a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a></span></h4>
+                  <h4 class="card-title">List of Service Order History <span class="pull-right">
+                    <?php if($rows->advance_payment_status=='N'){
+
+                    }else{ ?>
+                        <a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a>
+                  <?php  } ?>
+                  </span></h4>
                   <table id="" class="table table-striped table-bordered ">
                       <thead>
                         <tr>

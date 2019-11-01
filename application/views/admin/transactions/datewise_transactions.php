@@ -78,9 +78,24 @@ table.dataTable thead th, table.dataTable thead td{
     </style>
     <script>
     $(function() {
-      $("#datepicker").datepicker();
-        $( "#datepicker_1" ).datepicker();
+      // $("#datepicker").datepicker({maxDate: '0'});
+      // $( "#datepicker_1" ).datepicker({maxDate: '0'});
+
+      $( "#datepicker" ).datepicker({
+        format: 'dd-mm-yyyy',
+          endDate: '-0d',
+          autoclose: true
+
+         });
+         $( "#datepicker_1" ).datepicker({
+           format: 'dd-mm-yyyy',
+             endDate: '-0d',
+             autoclose: true
+
+            });
     });
+
+
 
 
 

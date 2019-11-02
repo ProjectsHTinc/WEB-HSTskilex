@@ -1021,14 +1021,19 @@ class Apicustomermodel extends CI_Model {
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
               $res_chec_provider=$this->db->query($check_provider);
-              if($res_chec_provider->num_rows()==1){              
-              $get_sp_id="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
+              if($res_chec_provider->num_rows()==1){
+
+
+              $get_sp_id="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+              COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+              SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status
               FROM serv_prov_pers_skills AS spps
               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
               LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
+
               }else{
 
                               $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *

@@ -950,15 +950,17 @@ class Apicustomermodel extends CI_Model {
 
             $result_last_sp_id=$this->db->query($get_last_service_provider_id);
             $res_sp_id=$result_last_sp_id->result();
-            if(empty($res_sp_id)){
+            if($result_last_sp_id->num_rows()==0){
 
-               $first_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no FROM serv_prov_pers_skills as spps
+              $first_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no FROM serv_prov_pers_skills as spps
               left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
               left join login_users as lu on lu.id=spd.user_master_id
               left join vendor_status as vs on vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
               GROUP by spps.user_master_id order by spps.id asc LIMIT 1";
+
+
 
               $ex_next_id=$this->db->query($first_id);
               $res_next_ip=$ex_next_id->result();
@@ -977,7 +979,7 @@ class Apicustomermodel extends CI_Model {
                 $mobiletype=$rows_id_next->mobile_type;
                 $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
                 $phone=$Phoneno;
-                $this->smsmodel->send_sms($phone,$notes);
+                //$this->smsmodel->send_sms($phone,$notes);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
@@ -1011,50 +1013,46 @@ class Apicustomermodel extends CI_Model {
                $limit="LIMIT 0";
              }
 
-              // $get_sp_id="SELECT ns.mobile_key,ns.mobile_type,spd.owner_full_name,lu.phone_no,spps.user_master_id,vs.id, ( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-              // COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-              // SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills AS spps
-              // LEFT JOIN login_users AS lu ON lu.id=spps.user_master_id AND lu.user_type=3
-              // LEFT JOIN service_provider_details AS spd ON spd.user_master_id=lu.id
-              // LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-              // LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              // WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND FIND_IN_SET(spps.user_master_id , '$next_id') GROUP BY spps.user_master_id HAVING
-              // distance < 50 ORDER BY distance LIMIT 0 , 50";
-
-
-              // echo $get_sp_id="SELECT spd.id,ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-              // COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-              // SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status FROM serv_prov_pers_skills as spps
-              // left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
-              // left join login_users as lu on lu.id=spd.user_master_id
-              // left join vendor_status as vs on vs.serv_pro_id=lu.id
-              // LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              // WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-              // and spd.id!='$last_sp_id' and spd.id  GROUP by spps.user_master_id order by spd.id asc";
-              $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-              COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-              SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+              $check_provider="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
               FROM serv_prov_pers_skills AS spps
               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
               LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-              AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
-              UNION
-              SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-                            COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-                            SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
+              $res_chec_provider=$this->db->query($check_provider);
+              if($res_chec_provider->num_rows()==1){              
+              $get_sp_id="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
               FROM serv_prov_pers_skills AS spps
               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
               LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-              AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
+              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
+              }else{
 
-
-
+                              $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                              COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                              SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                              FROM serv_prov_pers_skills AS spps
+                              LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                              LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                              LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                              LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                              AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
+                              UNION
+                              SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                            COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                                            SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                              FROM serv_prov_pers_skills AS spps
+                              LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                              LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                              LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                              LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                              WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                              AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
+              }
 
 
               $ex_next_id=$this->db->query($get_sp_id);
@@ -1071,7 +1069,7 @@ class Apicustomermodel extends CI_Model {
                 $mobiletype=$rows_id_next->mobile_type;
                 $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
                 $phone=$Phoneno;
-                $this->smsmodel->send_sms($phone,$notes);
+                //$this->smsmodel->send_sms($phone,$notes);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);

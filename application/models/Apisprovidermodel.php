@@ -195,7 +195,7 @@ class Apisprovidermodel extends CI_Model
 
             // $notes = "OTP :" . $OTP;
             $msg = "Your SkilEx Verification code is: ".$OTP."  Y3XZqSQzX9V";
-            $notes=urlencode($msg);
+            $notes=$msg;
             $phone=$mobile;
             $this->smsmodel->send_sms($phone,$notes);
 
@@ -240,7 +240,7 @@ class Apisprovidermodel extends CI_Model
             $update_result = $this->db->query($update_sql);
 
             $msg = "Your SkilEx Verification code is: ".$OTP."  Y3XZqSQzX9V";
-            $notes=urlencode($msg);
+            $notes=$msg;
             $phone=$phone_no;
             $this->smsmodel->send_sms($phone,$notes);
 

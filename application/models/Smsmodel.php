@@ -14,72 +14,34 @@ Class Smsmodel extends CI_Model
  function send_sms($phone,$notes)
  {
 
+  $msg=urlencode($notes);
+  $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=SkilEx&text=$msg";
+  $curl = curl_init();
+      curl_setopt_array($curl, array(
+      // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
+      CURLOPT_URL => $url,
 
-$curl = curl_init();
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_SSL_VERIFYHOST => 0,
+      CURLOPT_SSL_VERIFYPEER => 0,
+    ));
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_SSL_VERIFYHOST => 0,
-  CURLOPT_SSL_VERIFYPEER => 0,
-));
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
+    curl_close($curl);
 
-curl_close($curl);
+    if ($err) {
+      echo "cURL Error #:" . $err;
+    } else {
+      // echo $response;
+    }
 
-if ($err) {
-  echo "cURL Error #:" . $err;
-} else {
-  // echo $response;
-}
-
-   // $curl = curl_init();
-   // curl_setopt_array($curl, array(
-   //   CURLOPT_URL => "https://api.msg91.com/api/v2/sendsms?country=91",
-   //   CURLOPT_RETURNTRANSFER => true,
-   //   CURLOPT_ENCODING => "",
-   //   CURLOPT_MAXREDIRS => 10,
-   //   CURLOPT_TIMEOUT => 30,
-   //   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-   //   CURLOPT_CUSTOMREQUEST => "POST",
-   //   CURLOPT_POSTFIELDS => '{
-   //               "sender": "SKILEX",
-   //               "route": "4",
-   //               "country": "91",
-   //               "sms": [
-   //               {
-   //                 "message": "'.urlencode($notes).'",
-   //                 "to": [
-   //                 "'.$phone.'"
-   //                 ]
-   //               }
-   //               ]
-   //             }',
-   //   CURLOPT_SSL_VERIFYHOST => 0,
-   //   CURLOPT_SSL_VERIFYPEER => 0,
-   //   CURLOPT_HTTPHEADER => array(
-   //     "authkey: 191431AStibz285a4f14b4",
-   //     "content-type: application/json"
-   //   ),
-   // ));
-   //
-   // $response = curl_exec($curl);
-   // $err = curl_error($curl);
-   //
-   // curl_close($curl);
-   //
-   // if ($err) {
-   //   echo "cURL Error #:" . $err;
-   // } else {
-   //   // echo $response;
-   // }
 
 
  }

@@ -495,8 +495,8 @@ function user_info($user_master_id){
 					C.sub_cat_ta_name,
 					D.service_name,
 					D.service_ta_name,
-					E.from_time,
-					E.to_time,
+					TIME_FORMAT(E.from_time,'%r') as from_time,
+          TIME_FORMAT(E.to_time,'%r') as to_time,
 					F.full_name AS service_person
 				FROM
 					service_orders A,
@@ -1445,7 +1445,8 @@ public function Services_list($category_id,$sub_category_id)
 		// 			 A.serv_pers_id = '".$user_master_id."'
     //        AND A.status = 'Completed' OR A.Status = 'Paid' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,sppd.owner_full_name as service_provider,
-sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
+sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,
+  TIME_FORMAT(st.to_time,'%r') as to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
     from service_orders as so
     LEFT JOIN services AS s ON s.id=so.service_id
     LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id

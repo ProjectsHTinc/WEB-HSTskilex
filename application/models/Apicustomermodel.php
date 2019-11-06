@@ -1191,7 +1191,8 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
-      $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
+      $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
+      so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
         LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id

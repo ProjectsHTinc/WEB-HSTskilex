@@ -1295,7 +1295,8 @@ class Apicustomermodel extends CI_Model {
     function service_order_details($service_order_id){
       $service_query="SELECT so.status AS order_status,IFNULL(so.serv_pers_id,'') AS person_id,IFNULL(lu.phone_no,'') AS phone_no,IFNULL(spp.profile_pic,'') AS
 profile_pic,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS
-owner_full_name,st.from_time,st.to_time,mc.main_cat_name,mc.main_cat_ta_name,
+owner_full_name,TIME_FORMAT(st.from_time,'%r') as from_time,
+  TIME_FORMAT(st.to_time,'%r') as to_time,mc.main_cat_name,mc.main_cat_ta_name,
 sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,IFNULL(rs.from_time, '') AS r_fr_time,IFNULL(rs.to_time, '') AS r_to_time,
 (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa
 WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,so.* FROM service_orders  AS so

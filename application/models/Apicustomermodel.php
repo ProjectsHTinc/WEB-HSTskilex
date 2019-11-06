@@ -1243,7 +1243,8 @@ class Apicustomermodel extends CI_Model {
 
     function service_history($user_master_id){
       $service_query="SELECT ifnull(srv.rating,'0') as rating,ifnull(srv.review,'-') as review,so.status AS order_status,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,
-      s.service_name,s.service_ta_name,st.from_time,st.to_time,so.*
+      s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,
+        TIME_FORMAT(st.to_time,'%r') as to_time,so.*
       FROM service_orders  AS so
       LEFT JOIN services AS s ON s.id=so.service_id
       LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id

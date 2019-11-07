@@ -1580,7 +1580,7 @@ return $response;
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
 
-        $this->smsmodel->send_notification($title,$notes,$gcm_key,$mobile_type)
+        $this->smsmodel->send_notification($title,$notes,$gcm_key,$mobile_type);
 
         if ($update_result) {
             $response = array(

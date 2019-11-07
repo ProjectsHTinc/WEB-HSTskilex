@@ -1569,8 +1569,8 @@ return $response;
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
-                $customer_mobile_key  = $rows->mobile_key;
-                $customer_mobile_type = $rows->mobile_type;
+                $gcm_key  = $rows->mobile_key;
+                $mobile_type = $rows->mobile_type;
             }
         }
 
@@ -1580,7 +1580,7 @@ return $response;
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
 
-        //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
+        $this->smsmodel->send_notification($title,$notes,$gcm_key,$mobile_type)
 
         if ($update_result) {
             $response = array(

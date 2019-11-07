@@ -927,6 +927,7 @@ class Apicustomermodel extends CI_Model {
       $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
       $result = $this->db->query($query);
       if($result->num_rows()==1){
+
           $res=$result->result();
           foreach($res as $rows){}
           $advance_check=$rows->advance_payment_status;
@@ -1191,6 +1192,7 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
+      $this->smsmodel->notification_test();
       $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
       so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id

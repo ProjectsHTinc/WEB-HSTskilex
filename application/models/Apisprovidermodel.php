@@ -1630,18 +1630,8 @@ return $response;
             }
         }
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $service_person_id . "'";
-        $user_result = $this->db->query($sQuery);
-        if ($user_result->num_rows() > 0) {
-            foreach ($user_result->result() as $rows) {
-                $gcm_key  = $rows->mobile_key;
-                $mobile_type = $rows->mobile_type;
-                $head='SKILEX';
-                $message='Service request assigned to you';
-                $user_type='4';
-                $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-            }
-        }
+
+
 
         $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $customer_id . "'";
         $user_result = $this->db->query($sQuery);

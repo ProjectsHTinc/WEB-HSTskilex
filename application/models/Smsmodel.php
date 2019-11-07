@@ -109,7 +109,7 @@ Class Smsmodel extends CI_Model
    $mobile_type=='1';
    $title="hi";
    $notes="testing";
-   $gcm_key='cJrKPS9mGN0:APA91bEpgHMbMq2_Qq3DLCL7HzzGjUpQZ354fJ1s4GdT8qqvO7IcWooas1e6zP95U-aHK2k_rBDOtjKzbbocElzqOdUo3BJNoFaJBXfIGDuG7iugJvOAQyzeFuu-psPAvgIkI6Ojh0HP';
+   $gcm_key='cuNM0W0oIGw:APA91bEtFnZ9j0ZLVbf5FuOjCFxYZD-4XQ4wA2pnzQZ7X9z5A2_awdEveKNDWzOFR4Ah-60FNLQQmpj7DaxFQ70Zi3N9AntY7ofef7gCGk9uaqZhj8H-qgKWQNGufcYCfiDSkxhOUe9_';
    require_once 'assets/notification/Firebase_customer.php';
 	 require_once 'assets/notification/Push.php';
 			$push = null;

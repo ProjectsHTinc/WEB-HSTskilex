@@ -15,11 +15,11 @@ Class Smsmodel extends CI_Model
  {
 
   $msg=urlencode($notes);
-  $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=SkilEx&text=$msg";
+  // $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=SkilEx&text=$msg";
   $curl = curl_init();
       curl_setopt_array($curl, array(
-      // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
-      CURLOPT_URL => $url,
+      CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
+      // CURLOPT_URL => $url,
 
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",

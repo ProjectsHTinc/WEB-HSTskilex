@@ -280,7 +280,7 @@ class Apisprovidermodel extends CI_Model
             $gcm_result = $this->db->query($gcmQuery);
             $gcm_ress   = $gcm_result->result();
             if ($gcm_result->num_rows() == 0) {
-                $sQuery     = "INSERT INTO notification_master (user_master_id,mobile_key,mobile_type) VALUES ('" . $user_master_id . "','" . $device_token . "','" . $mobiletype . "')";
+                $sQuery     = "INSERT INTO notification_master (user_master_id,mobile_key,mobile_type,created_at) VALUES ('" . $user_master_id . "','" . $device_token . "','" . $mobiletype . "',NOW())";
                 $update_gcm = $this->db->query($sQuery);
             }
 

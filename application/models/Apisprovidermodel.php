@@ -1569,19 +1569,20 @@ return $response;
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
-                $gcm_key  = $rows->mobile_key;
-                $mobile_type = $rows->mobile_type;
+              $gcm_key  = $rows->mobile_key;
+               $mobile_type = $rows->mobile_type;
+               $head='SKILEX';
+               $message='Service Request Accepted';
+               $user_type='5';
+               $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
         }
 
         $title           = "Service Request Accepted";
         $notes = "SKILEX - Service Request Accepted";
-        $head='SKILEX';
-        $message='Service Request Accepted';
+      
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
-        $user_type='5';
-        $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 
         if ($update_result) {
             $response = array(

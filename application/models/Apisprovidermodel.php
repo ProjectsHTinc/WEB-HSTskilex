@@ -1576,11 +1576,12 @@ return $response;
 
         $title           = "Service Request Accepted";
         $notes = "SKILEX - Service Request Accepted";
-
+        $head='SKILEX';
+        $message='Service Request Accepted';
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
-
-        $this->smsmodel->send_notification($title,$notes,$gcm_key,$mobile_type);
+        $user_type='5';
+        $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 
         if ($update_result) {
             $response = array(

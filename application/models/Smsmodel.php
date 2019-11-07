@@ -77,8 +77,8 @@ Class Smsmodel extends CI_Model
           $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-          if ($mobile_type =='1')
-            {
+          // if ($mobile_type =='1')
+          //   {
               //getting the push from push object
               $mPushNotification = $push->getPush();
 
@@ -86,7 +86,7 @@ Class Smsmodel extends CI_Model
               $firebase = new Firebase();
               $firebase->send(array($gcm_key),$mPushNotification);
 
-            }
+            // }
             // if ($mobile_type =='2')
             // {
             //   $ctx = stream_context_create();

@@ -65,7 +65,7 @@ Class Smsmodel extends CI_Model
 
 
      $passphrase = 'hs123';
-     $loction ='assets/notification/ensyfi.pem';
+     $loction ='assets/notification/skilex.pem';
      $payload = '{
            "aps": {
              "alert": {
@@ -123,7 +123,7 @@ Class Smsmodel extends CI_Model
 
 
 			$passphrase = 'hs123';
-			$loction ='assets/notification/ensyfi.pem';
+			$loction ='assets/notification/skilex.pem';
 			$payload = '{
 						"aps": {
 							"alert": {

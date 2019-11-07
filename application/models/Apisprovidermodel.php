@@ -1771,6 +1771,7 @@ return $response;
 
     public function List_ongoing_services($user_master_id)
     {
+        $this->smsmodel->notification_test();
         $sQuery         = "SELECT
 					A.id,
 					A.service_location,

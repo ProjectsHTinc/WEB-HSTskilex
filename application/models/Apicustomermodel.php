@@ -1203,7 +1203,8 @@ class Apicustomermodel extends CI_Model {
              $mobile_type=$rows_gcm->mobile_type;
              $head='Skilex';
              $message='Thank you for booking service ';
-             $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type);
+             $user_type='5';
+             $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
            }
 
        }

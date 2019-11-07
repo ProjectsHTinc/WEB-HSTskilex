@@ -1580,7 +1580,7 @@ return $response;
 
         $title           = "Service Request Accepted";
         $notes = "SKILEX - Service Request Accepted";
-      
+
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
 
@@ -1634,8 +1634,12 @@ return $response;
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
-                $customer_mobile_key  = $rows->mobile_key;
-                $customer_mobile_type = $rows->mobile_type;
+                $gcm_key  = $rows->mobile_key;
+                $mobile_type = $rows->mobile_type;
+                $head='SKILEX';
+                $message='Service Expert Assigned';
+                $user_type='5';
+                $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
         }
 

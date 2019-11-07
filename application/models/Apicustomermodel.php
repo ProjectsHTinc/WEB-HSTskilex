@@ -1193,15 +1193,16 @@ class Apicustomermodel extends CI_Model {
 
     function ongoing_services($user_master_id){
 
-      $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+     $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
       $res_gcm= $this->db->query($get_gcm);
       if($res_gcm->num_rows()==0){
 
       }else{
-          foreach($res_gcm as $rows_gcm){}
-          $gcmkey=$rows_gcm->mobile_key;
+        $gcm_result=$res_gcm->result();
+          foreach($gcm_result as $rows_gcm){}
+          $gcm_key=$rows_gcm->mobile_key;
           $mobiletype=$rows_gcm->mobile_type;
-          $this->smsmodel->notification_test($gcmkey,$mobiletype);
+          $this->smsmodel->notification_test($gcm_key,$mobiletype);
       }
 
 

@@ -927,6 +927,21 @@ class Apicustomermodel extends CI_Model {
       $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
       $result = $this->db->query($query);
       if($result->num_rows()==1){
+        $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+         $res_gcm= $this->db->query($get_gcm);
+         if($res_gcm->num_rows()==0){
+
+         }else{
+           $gcm_result=$res_gcm->result();
+             foreach($gcm_result as $rows_gcm){
+               $gcm_key=$rows_gcm->mobile_key;
+               $mobile_type=$rows_gcm->mobile_type;
+               $head='Skilex';
+               $message='Thank you for booking service ';
+               $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type);
+             }
+
+         }
 
           $res=$result->result();
           foreach($res as $rows){}
@@ -1192,21 +1207,6 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
-
-     $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
-      $res_gcm= $this->db->query($get_gcm);
-      if($res_gcm->num_rows()==0){
-
-      }else{
-        $gcm_result=$res_gcm->result();
-          foreach($gcm_result as $rows_gcm){
-            $gcm_key=$rows_gcm->mobile_key;
-            $mobiletype=$rows_gcm->mobile_type;
-            $this->smsmodel->notification_test($gcm_key,$mobiletype);
-          }
-
-      }
-
 
       $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
       so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so

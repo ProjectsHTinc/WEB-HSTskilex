@@ -47,7 +47,7 @@ Class Smsmodel extends CI_Model
  }
 
 
- function send_notification($title,$notes,$gcm_key,$mobile_type){
+ function send_notification($head,$message,$gcm_key,$mobile_type){
    // $mobile_type=='1';
    // $title="hi";
    // $notes="testing";
@@ -56,8 +56,8 @@ Class Smsmodel extends CI_Model
   require_once 'assets/notification/Push.php';
      $push = null;
      $push = new Push(
-         $title,
-         $notes,
+         $head,
+         $message,
          null
        );
 
@@ -67,8 +67,8 @@ Class Smsmodel extends CI_Model
      $payload = '{
            "aps": {
              "alert": {
-               "body": "'.$notes.'",
-               "title": "'.$title.'"
+               "body": "'.$message.'",
+               "title": "'.$head.'"
              }
            }
          }';

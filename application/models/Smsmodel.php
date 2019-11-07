@@ -49,14 +49,13 @@ Class Smsmodel extends CI_Model
 
 
  function notification_test(){
+   $mobile_type=='1';
    $title="hi";
    $notes="testing";
    $gcm_key='cJrKPS9mGN0:APA91bEpgHMbMq2_Qq3DLCL7HzzGjUpQZ354fJ1s4GdT8qqvO7IcWooas1e6zP95U-aHK2k_rBDOtjKzbbocElzqOdUo3BJNoFaJBXfIGDuG7iugJvOAQyzeFuu-psPAvgIkI6Ojh0HP';
    require_once 'assets/notification/Firebase.php';
 	 require_once 'assets/notification/Push.php';
-
 			$push = null;
-			 //first check if the push has an image with it
 			$push = new Push(
 					$title,
 					$notes,
@@ -77,8 +76,8 @@ Class Smsmodel extends CI_Model
           $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-          // if ($mobile_type =='1')
-          //   {
+          if ($mobile_type =='1')
+            {
               //getting the push from push object
               $mPushNotification = $push->getPush();
 
@@ -86,24 +85,24 @@ Class Smsmodel extends CI_Model
               $firebase = new Firebase();
               $firebase->send(array($gcm_key),$mPushNotification);
 
-            // }
-            // if ($mobile_type =='2')
-            // {
-            //   $ctx = stream_context_create();
-            //   stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-            //   stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-            //
-            //   // Open a connection to the APNS server
-            //   $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            //
-            //   if (!$fp)
-            //     exit("Failed to connect: $err $errstr" . PHP_EOL);
-            //
-            //     $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
-            //     echo $result = fwrite($fp, $msg, strlen($msg));
-            //     fclose($fp);
-            //
-            // }
+            }
+            if ($mobile_type =='2')
+            {
+              $ctx = stream_context_create();
+              stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+              stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+              // Open a connection to the APNS server
+              $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+              if (!$fp)
+                exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+                $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
+                echo $result = fwrite($fp, $msg, strlen($msg));
+                fclose($fp);
+
+            }
  }
 
 

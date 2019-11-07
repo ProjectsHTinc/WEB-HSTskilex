@@ -51,7 +51,7 @@ Class Smsmodel extends CI_Model
  function notification_test(){
    $title="hi";
    $notes="testing";
-   $gcm_key='AIzaSyBD4geNLV6VGV989A0x_CL-IOK_EtEixpA';
+   $gcm_key='cJrKPS9mGN0:APA91bEpgHMbMq2_Qq3DLCL7HzzGjUpQZ354fJ1s4GdT8qqvO7IcWooas1e6zP95U-aHK2k_rBDOtjKzbbocElzqOdUo3BJNoFaJBXfIGDuG7iugJvOAQyzeFuu-psPAvgIkI6Ojh0HP';
    require_once 'assets/notification/Firebase.php';
 	 require_once 'assets/notification/Push.php';
 

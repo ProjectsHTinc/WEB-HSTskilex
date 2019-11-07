@@ -1199,10 +1199,12 @@ class Apicustomermodel extends CI_Model {
 
       }else{
         $gcm_result=$res_gcm->result();
-          foreach($gcm_result as $rows_gcm){}
-          $gcm_key=$rows_gcm->mobile_key;
-          $mobiletype=$rows_gcm->mobile_type;
-          $this->smsmodel->notification_test($gcm_key,$mobiletype);
+          foreach($gcm_result as $rows_gcm){
+            $gcm_key=$rows_gcm->mobile_key;
+            $mobiletype=$rows_gcm->mobile_type;
+            $this->smsmodel->notification_test($gcm_key,$mobiletype);
+          }
+
       }
 
 

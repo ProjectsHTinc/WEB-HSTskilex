@@ -158,7 +158,7 @@ Class Smsmodel extends CI_Model
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
 
                 $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
-                echo $result = fwrite($fp, $msg, strlen($msg));
+                 $result = fwrite($fp, $msg, strlen($msg));
                 fclose($fp);
 
             }

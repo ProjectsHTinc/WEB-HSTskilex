@@ -107,11 +107,11 @@ Class Smsmodel extends CI_Model
  }
 
 
- function notification_test($gcm_key,$mobiletype){
-   // $mobile_type=='1';
+ function notification_test(){
+   $mobile_type=='2';
    $title="hi";
    $notes="testing";
-   // $gcm_key='cuNM0W0oIGw:APA91bEtFnZ9j0ZLVbf5FuOjCFxYZD-4XQ4wA2pnzQZ7X9z5A2_awdEveKNDWzOFR4Ah-60FNLQQmpj7DaxFQ70Zi3N9AntY7ofef7gCGk9uaqZhj8H-qgKWQNGufcYCfiDSkxhOUe9_';
+   $gcm_key='641548b3046401c5a2c6b51de7b36abbf3189e54ed179d5d92963f7b2fc0f082';
   require_once 'assets/notification/Firebase_customer.php';
 	 require_once 'assets/notification/Push.php';
 			$push = null;
@@ -163,6 +163,8 @@ Class Smsmodel extends CI_Model
 
             }
  }
+
+
 
 
 

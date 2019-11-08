@@ -97,11 +97,11 @@ Class Smsmodel extends CI_Model
               $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
               if (!$fp)
-                exit("Failed to connect: $err $errstr" . PHP_EOL);
+              exit("Failed to connect: $err $errstr" . PHP_EOL);
 
-                $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
-                echo $result = fwrite($fp, $msg, strlen($msg));
-                fclose($fp);
+              $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
+               $result = fwrite($fp, $msg, strlen($msg));
+              fclose($fp);
 
             }
  }

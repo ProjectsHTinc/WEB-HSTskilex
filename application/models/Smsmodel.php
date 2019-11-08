@@ -108,7 +108,7 @@ Class Smsmodel extends CI_Model
 
 
  function notification_test(){
-   $mobile_type=='2';
+   $mobile_type='2';
    $title="hi";
    $notes="testing";
    $gcm_key='641548b3046401c5a2c6b51de7b36abbf3189e54ed179d5d92963f7b2fc0f082';
@@ -135,7 +135,7 @@ Class Smsmodel extends CI_Model
           $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-          if ($mobiletype =='1')
+          if ($mobile_type =='1')
             {
               //getting the push from push object
               $mPushNotification = $push->getPush();
@@ -145,7 +145,7 @@ Class Smsmodel extends CI_Model
               $firebase->send(array($gcm_key),$mPushNotification);
 
             }
-            if ($mobiletype =='2')
+            if ($mobile_type =='2')
             {
               $ctx = stream_context_create();
               stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);

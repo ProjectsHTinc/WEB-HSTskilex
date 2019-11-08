@@ -1205,8 +1205,8 @@ class Apicustomermodel extends CI_Model {
 
 
     function ongoing_services($user_master_id){
-      $this->smsmodel->notification_test();
-      $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
+      // $this->smsmodel->notification_test();
+       $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
       so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id
         LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
@@ -1215,6 +1215,7 @@ class Apicustomermodel extends CI_Model {
         LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
         WHERE so.status!='Pending' AND so.status!='Completed'  AND so.status!='Rejected' AND so.status!='Paid' AND so.status!='Cancelled' AND customer_id='$user_master_id'
         ORDER BY so.id DESC";
+
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
         $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");

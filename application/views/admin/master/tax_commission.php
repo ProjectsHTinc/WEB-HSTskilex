@@ -19,11 +19,11 @@
                   <form class="forms-sample" id="update_commission" method="post">
                     <div class="form-group">
                       <label for="username">Skilex Commission Percentage</label>
-                      <input type="text" class="form-control" id="internal_commission" name="internal_commission" value="<?php echo $rows->internal_commission; ?>" placeholder="Skilex Commission Percentage">
+                      <input type="text" class="form-control" id="internal_commission" maxlength="2" name="internal_commission" value="<?php echo $rows->internal_commission; ?>" placeholder="Skilex Commission Percentage">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">Commando Commission Percentage</label>
-                      <input type="text" class="form-control" id="external_commission" name="external_commission" value="<?php echo $rows->external_commission; ?>" placeholder="Associate Commission Percentage" >
+                      <input type="text" class="form-control" id="external_commission" readonly name="external_commission" value="<?php echo $rows->external_commission; ?>" placeholder="Associate Commission Percentage" >
                     </div>
                     <button type="submit" class="btn btn-success mr-2">Update Commission</button>
                   </form>
@@ -38,11 +38,11 @@
                   <form class="forms-sample" id="update_tax" method="post">
                     <div class="form-group">
                       <label for="username">SGST Percentage</label>
-                      <input type="text" class="form-control" id="cgst" name="cgst" placeholder="CGST" value="<?php echo $rows->cgst; ?>">
+                      <input type="text" class="form-control" id="cgst" name="cgst" maxlength="2" placeholder="CGST" value="<?php echo $rows->cgst; ?>">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">CGST Percentage</label>
-                      <input type="text" class="form-control" id="sgst" name="sgst" placeholder="SGST" value="<?php echo $rows->sgst; ?>">
+                      <input type="text" class="form-control" id="sgst" name="sgst"  readonly placeholder="SGST" value="<?php echo $rows->sgst; ?>">
                     </div>
                     <button type="submit" class="btn btn-success mr-2">Update Tax</button>
                   </form>
@@ -75,6 +75,17 @@
       </div>
     </div>
     <script>
+    $("#internal_commission").change(function(){
+        var inter=$(this).val();
+        var external=inter-100;
+        $('#external_commission').val(Math.abs(external));
+      });
+
+      $("#cgst").change(function(){
+          var cgst=$(this).val();
+          var sgst=cgst;
+          $('#sgst').val(sgst);
+        });
 
     $('#update_tax').validate({
     rules: {

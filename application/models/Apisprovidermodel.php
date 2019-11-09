@@ -2147,10 +2147,15 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
-                $customer_mobile_key  = $rows->mobile_key;
-                $customer_mobile_type = $rows->mobile_type;
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Your service request is Cancelled.";
+              $user_type='5';
+              $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
         }
+
 
 
         $title           = "Service Request Cancelled";

@@ -452,19 +452,29 @@ function user_info($user_master_id){
 					$customer_id = $rows->customer_id;
 					$contact_person_name = $rows->contact_person_name;
 					$contact_person_number = $rows->contact_person_number;
+          $serv_prov_id=$rows->serv_prov_id;
 				}
 		}
 
-		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
-		$user_result = $this->db->query($sQuery);
-		if($user_result->num_rows()>0)
-		{
-				foreach ($user_result->result() as $rows)
-				{
-					$customer_mobile_key = $rows->mobile_key;
-					$customer_mobile_type = $rows->mobile_type;
-				}
-		}
+
+    		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+    		$user_result = $this->db->query($sQuery);
+    		if($user_result->num_rows()>0)
+    		{
+    				foreach ($user_result->result() as $rows)
+    				{
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Your service request is Initiated.";
+              $user_type='3';
+              $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+    				}
+    		}
+
+
+
+
 
 
 		//$title = "Service Request Initiated";
@@ -1208,20 +1218,7 @@ public function Services_list($category_id,$sub_category_id)
 				}
 		}
 
-    $sQuery_p = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
-		$user_result_p = $this->db->query($sQuery_p);
-		if($user_result_p->num_rows()>0)
-		{
-				foreach ($user_result_p->result() as $rows_p)
-				{
-          $gcm_key=$rows_p->mobile_key;
-          $mobile_type=$rows_p->mobile_type;
-          $head='Skilex';
-          $message="Service request is cancelled.";
-          $user_type='3';
-          $this->smsmodel->send_notification_two($head,$message,$gcm_key,$mobile_type,$user_type);
-				}
-		}
+
 
 		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
 		$user_result = $this->db->query($sQuery);

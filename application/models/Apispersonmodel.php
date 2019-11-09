@@ -1084,6 +1084,8 @@ public function Services_list($category_id,$sub_category_id)
       foreach($select_res->result() as $sel_row){}
       $Phoneno=$sel_row->contact_person_number;
       $customer_id=$sel_row->customer_id;
+      echo $resume=date("d-m-Y", strtotime($resume_date) );
+      exit;
       $notes="Your Service is  hold now will resume on ".$resume_date;
       $phone=$Phoneno;
       $this->smsmodel->send_sms($phone,$notes);

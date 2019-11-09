@@ -1083,9 +1083,25 @@ public function Services_list($category_id,$sub_category_id)
       $select_res = $this->db->query($select);
       foreach($select_res->result() as $sel_row){}
       $Phoneno=$sel_row->contact_person_number;
+      $customer_id=$sel_row->customer_id;
       $notes="Your Service is  hold now will resume on ".$resume_date;
       $phone=$Phoneno;
       $this->smsmodel->send_sms($phone,$notes);
+
+      $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$customer_id' order by id desc";
+       $res_gcm= $this->db->query($get_gcm);
+       if($res_gcm->num_rows()==0){
+       }else{
+         $gcm_result=$res_gcm->result();
+           foreach($gcm_result as $rows_gcm){
+             $gcm_key=$rows_gcm->mobile_key;
+             $mobile_type=$rows_gcm->mobile_type;
+             $head='Skilex';
+             $message="Your Service is  hold now will resume on ".$resume_date;
+             $user_type='5';
+             $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+           }
+       }
 
 
       if($update_result)

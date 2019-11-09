@@ -711,10 +711,15 @@ function user_info($user_master_id){
 			{
 					foreach ($user_result->result() as $rows)
 					{
-						$customer_mobile_key = $rows->mobile_key;
-						$customer_mobile_type = $rows->mobile_type;
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Service Request Ongoing";
+            $user_type='4';
+            $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 					}
 			}
+
 
 
 			//$title = "Service Request Ongoing";
@@ -1440,10 +1445,15 @@ public function Services_list($category_id,$sub_category_id)
 		{
 				foreach ($user_result->result() as $rows)
 				{
-					$customer_mobile_key = $rows->mobile_key;
-					$customer_mobile_type = $rows->mobile_type;
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Service Order Completed";
+          $user_type='4';
+          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 				}
 		}
+
 
 
 		$title = "Service Request Completed";

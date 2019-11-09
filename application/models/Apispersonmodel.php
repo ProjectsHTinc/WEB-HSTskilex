@@ -484,6 +484,20 @@ function user_info($user_master_id){
 
 	public function List_ongoing_services($user_master_id)
 	{
+    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
+    $user_result = $this->db->query($sQuery);
+    if($user_result->num_rows()>0)
+    {
+        foreach ($user_result->result() as $rows)
+        {
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Notification checking";
+          $user_type='4';
+          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+        }
+    }
 		$sQuery = "SELECT
 					A.id,
 					A.service_location,
@@ -1198,7 +1212,7 @@ public function Services_list($category_id,$sub_category_id)
           $gcm_key=$rows->mobile_key;
           $mobile_type=$rows->mobile_type;
           $head='Skilex';
-          $message="Your service request is cancelled.";
+          $message="Service request is cancelled.";
           $user_type='5';
           $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 				}

@@ -1219,7 +1219,7 @@ public function Services_list($category_id,$sub_category_id)
           $head='Skilex';
           $message="Service request is cancelled.";
           $user_type='3';
-          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+          $this->smsmodel->send_notification_two($head,$message,$gcm_key,$mobile_type,$user_type);
 				}
 		}
 

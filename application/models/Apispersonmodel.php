@@ -1218,7 +1218,7 @@ public function Services_list($category_id,$sub_category_id)
           $mobile_type=$rows_p->mobile_type;
           $head='Skilex';
           $message="Service request is cancelled.";
-          $user_type='5';
+          $user_type='3';
           $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 				}
 		}

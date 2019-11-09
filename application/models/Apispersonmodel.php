@@ -1084,9 +1084,8 @@ public function Services_list($category_id,$sub_category_id)
       foreach($select_res->result() as $sel_row){}
       $Phoneno=$sel_row->contact_person_number;
       $customer_id=$sel_row->customer_id;
-      echo $resume=date("d-m-Y", strtotime($resume_date) );
-      exit;
-      $notes="Your Service is  hold now will resume on ".$resume_date;
+      $resume=date("d-m-Y", strtotime($resume_date) );
+      $notes="Your Service is  hold now will resume on ".$resume;
       $phone=$Phoneno;
       $this->smsmodel->send_sms($phone,$notes);
 
@@ -1099,7 +1098,7 @@ public function Services_list($category_id,$sub_category_id)
              $gcm_key=$rows_gcm->mobile_key;
              $mobile_type=$rows_gcm->mobile_type;
              $head='Skilex';
-             $message="Your Service is  hold now will resume on ".$resume_date;
+             $message="Your Service is  hold now will resume on ".$resume;
              $user_type='5';
              $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
            }
@@ -1195,10 +1194,15 @@ public function Services_list($category_id,$sub_category_id)
 		{
 				foreach ($user_result->result() as $rows)
 				{
-					$customer_mobile_key = $rows->mobile_key;
-					$customer_mobile_type = $rows->mobile_type;
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Your service request is cancelled.";
+          $user_type='5';
+          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
 				}
 		}
+
 
 
 		//$title = "Service Request Canceled";

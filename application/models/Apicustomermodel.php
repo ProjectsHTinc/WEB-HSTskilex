@@ -1206,6 +1206,20 @@ class Apicustomermodel extends CI_Model {
 
     function ongoing_services($user_master_id){
       // $this->smsmodel->notification_test();
+      $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+       $res_gcm= $this->db->query($get_gcm);
+       if($res_gcm->num_rows()==0){
+       }else{
+         $gcm_result=$res_gcm->result();
+           foreach($gcm_result as $rows_gcm){
+             $gcm_key=$rows_gcm->mobile_key;
+             $mobile_type=$rows_gcm->mobile_type;
+             $head='Skilex';
+             $message='Ongoing checking';
+             $user_type='5';
+             $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+           }
+       }
        $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,
       so.*,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time FROM service_orders  AS so
         LEFT JOIN services AS s ON s.id=so.service_id

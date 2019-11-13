@@ -2014,21 +2014,7 @@ return $response;
 
     public function List_completed_services($user_master_id)
     {
-      // $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
-      // $user_result = $this->db->query($sQuery);
-      // if($user_result->num_rows()>0)
-      // {
-      //     foreach ($user_result->result() as $rows)
-      //     {
-      //       $gcm_key=$rows->mobile_key;
-      //       $mobile_type=$rows->mobile_type;
-      //       $head='Skilex';
-      //       $message="Notification checking";
-      //       $user_type='3';
-      //       //$this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-      //       $this->smsmodel->push_notification_checking($head,$message,$gcm_key,$mobile_type,$user_type);
-      //     }
-      // }
+
         $sQuery         = "SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') AS resume_date,sppd.owner_full_name AS service_provider,
 sp.status AS Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,so.start_datetime,so.material_notes,so.serv_prov_id,spd.full_name AS service_person,IFNULL(rs.from_time, '') AS r_fr_time,IFNULL(rs.to_time, '') AS r_to_time
     FROM service_orders AS so
@@ -2485,6 +2471,52 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
       return $response;
     }
   //#################### GET deposit amount ####################//
+
+
+    function payment_notification($user_master_id,$provider_id,$expert_id){
+
+      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $user_master_id . "'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Your service request is Cancelled Customer.";
+            $user_type='5';
+            $this->smsmodel->check_notify($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
+      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Your service request is Cancelled Provider.";
+            $user_type='3';
+            $this->smsmodel->check_notify($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
+      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$expert_id'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Your service request is Cancelled Expert.";
+            $user_type='4';
+            $this->smsmodel->check_notify($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
+
+    }
+
+
+
+
 
 }
 

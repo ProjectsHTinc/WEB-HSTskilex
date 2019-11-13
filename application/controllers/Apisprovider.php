@@ -1815,5 +1815,40 @@ class Apisprovider extends CI_Controller
     //-----------------------------------------------//
 
 
+    //-----------------------------------------------//
+
+    public function payment_notification()
+    {
+        //$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "View Transaction_details";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $user_master_id   = '';
+        $daily_payment_id = '';
+
+        $user_master_id   = $this->input->post("user_master_id");
+        $provider_id= $this->input->post("provider_id");
+        $expert_id= $this->input->post("expert_id");
+
+
+        $data['result'] = $this->apisprovidermodel->payment_notification($user_master_id,$provider_id,$expert_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+
 }
 ?>

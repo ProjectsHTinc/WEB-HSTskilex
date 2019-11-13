@@ -155,6 +155,34 @@ Class Smsmodel extends CI_Model
      print_r($result);
  }
 
+
+ function push_notification_checking($head,$message,$gcm_key,$mobile_type,$user_type){
+   $url = "https://fcm.googleapis.com/fcm/send";
+    $token = $gcm_key;
+    $serverKey = 'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+    $title = "Notification title";
+    $body = "Hello I am from Your php server";
+    $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
+    $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
+    $json = json_encode($arrayToSend);
+    $headers = array();
+    $headers[] = 'Content-Type: application/json';
+    $headers[] = 'Authorization: key='. $serverKey;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+    //Send the request
+    $response = curl_exec($ch);
+    //Close request
+    if ($response === FALSE) {
+    die('FCM Send Error: ' . curl_error($ch));
+    }
+    curl_close($ch);
+ }
+
+
  function notification_test($head,$message,$gcm_key,$mobile_type,$user_type){
 
       require_once 'assets/notification/Firebase_customer.php';

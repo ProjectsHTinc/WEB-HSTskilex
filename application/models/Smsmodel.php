@@ -152,13 +152,13 @@ Class Smsmodel extends CI_Model
          die('FCM Send Error: ' . curl_error($ch));
      }
      curl_close($ch);
-     
+
  }
 
 
  function push_notification_checking($head,$message,$gcm_key,$mobile_type,$user_type){
    $url = "https://fcm.googleapis.com/fcm/send";
-    $token = $gcm_key;
+     $token = $gcm_key;
     $serverKey = 'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
     $title = "Notification title";
     $body = "Hello I am from Your php server";

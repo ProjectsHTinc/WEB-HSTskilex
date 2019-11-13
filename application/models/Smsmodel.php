@@ -48,16 +48,21 @@ Class Smsmodel extends CI_Model
 
 
  function send_notification($head,$message,$gcm_key,$mobile_type,$user_type){
+
+
    if($user_type=='5'){
-     require_once 'assets/notification/Firebase_customer.php';
+     include_once  'assets/notification/Firebase_customer.php';
+     include_once 'assets/notification/Push.php';
    }else if($user_type=='4'){
-     require_once 'assets/notification/Firebase_person.php';
+     include_once  'assets/notification/Firebase_person.php';
+     include_once 'assets/notification/Push.php';
    }else if($user_type=='3'){
-     require_once 'assets/notification/Firebase_provider.php';
+     include_once  'assets/notification/Firebase_provider.php';
+     include_once 'assets/notification/Push.php';
    }else{
-     require_once 'assets/notification/Firebase_provider.php';
+
    }
-   require_once 'assets/notification/Push.php';
+
      $push = null;
      $push = new Push(
          $head,
@@ -86,7 +91,7 @@ Class Smsmodel extends CI_Model
 
               //creating firebase class object
               $firebase = new Firebase();
-              $firebase->send(array($gcm_key),$mPushNotification);
+              $firebase->send(array($gcm_key),$mPushNotification,$user_type);
 
             }
             if ($mobile_type =='2')
@@ -108,6 +113,47 @@ Class Smsmodel extends CI_Model
             }
  }
 
+
+ function push_notification_android($head,$message,$gcm_key,$mobile_type,$user_type){
+
+     //API URL of FCM
+     $url = 'https://fcm.googleapis.com/fcm/send';
+
+     /*api_key available in:
+     Firebase Console -> Project Settings -> CLOUD MESSAGING -> Server key*/
+     // $api_key = 'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+     $api_key='AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+
+     $fields = array (
+         'registration_ids' => array (
+                 $gcm_key
+         ),
+         'data' => array (
+                 "message" => $message
+         )
+     );
+
+     //header includes Content type and api key
+     $headers = array(
+         'Content-Type:application/json',
+         'Authorization:key='.$api_key
+     );
+
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $url);
+     curl_setopt($ch, CURLOPT_POST, true);
+     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+     $result = curl_exec($ch);
+     if ($result === FALSE) {
+         die('FCM Send Error: ' . curl_error($ch));
+     }
+     curl_close($ch);
+     print_r($result);
+ }
 
  function notification_test($head,$message,$gcm_key,$mobile_type,$user_type){
 

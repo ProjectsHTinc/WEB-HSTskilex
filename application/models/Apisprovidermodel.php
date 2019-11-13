@@ -1792,9 +1792,11 @@ return $response;
             $head='Skilex';
             $message="Notification checking";
             $user_type='3';
-            $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            //$this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            $this->smsmodel->push_notification_android($head,$message,$gcm_key,$mobile_type,$user_type);
           }
       }
+
 
         $sQuery         = "SELECT
 					A.id,
@@ -2140,21 +2142,26 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
                 $customer_id           = $rows->customer_id;
                 $contact_person_name   = $rows->contact_person_name;
                 $contact_person_number = $rows->contact_person_number;
+                $provider_id=$rows->serv_prov_id;
             }
         }
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $customer_id . "'";
+
+
+         $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $customer_id . "'";
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Your service request is Cancelled.";
+              $message="Your service request is Cancelled Customer.";
               $user_type='5';
-              $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+              $this->smsmodel->notification_test($head,$message,$gcm_key,$mobile_type,$user_type);
             }
         }
+
+
 
 
 
@@ -2169,6 +2176,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
                 "status" => "success",
                 "msg" => "Cancel Services"
             );
+
         } else {
             $response = array(
                 "status" => "error",

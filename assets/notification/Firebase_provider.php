@@ -8,9 +8,12 @@ class Firebase {
         $fields = array(
             'registration_ids' => $registration_ids,
             'data' => $messages,
+
         );
         return $this->sendPushNotification($fields);
     }
+
+
 
 /*
 * This function will make the actuall curl request to firebase server
@@ -19,7 +22,9 @@ class Firebase {
 
     private function sendPushNotification($fields) {
 
-        $server_key='AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+    $server_key='AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+
+
         //firebase server url to send the curl request
         $url = 'https://fcm.googleapis.com/fcm/send';
 
@@ -59,6 +64,7 @@ class Firebase {
         curl_close($ch);
 
         //and return the result
+        print_r($result);
         return $result;
     }
 }

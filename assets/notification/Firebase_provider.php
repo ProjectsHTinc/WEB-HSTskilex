@@ -64,7 +64,7 @@ class Firebase {
         curl_close($ch);
 
         //and return the result
-        print_r($result);
+      
         return $result;
     }
 }

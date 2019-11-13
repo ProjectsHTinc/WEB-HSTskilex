@@ -152,7 +152,7 @@ Class Smsmodel extends CI_Model
          die('FCM Send Error: ' . curl_error($ch));
      }
      curl_close($ch);
-     print_r($result);
+     
  }
 
 

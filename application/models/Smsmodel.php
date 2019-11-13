@@ -159,9 +159,17 @@ Class Smsmodel extends CI_Model
  function push_notification_checking($head,$message,$gcm_key,$mobile_type,$user_type){
    $url = "https://fcm.googleapis.com/fcm/send";
      $token = $gcm_key;
-    $serverKey = 'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+     if($user_type=='3'){
+         $serverKey = 'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
+     }
+     if($user_type=='5'){
+       $serverKey='AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc';
+
+
+     }
+
     $title = "Notification title";
-    $body = "Hello I am from Your php server";
+    $body = $message;
     $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
     $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
     $json = json_encode($arrayToSend);

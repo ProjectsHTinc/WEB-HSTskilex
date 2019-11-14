@@ -191,7 +191,7 @@ Class Smsmodel extends CI_Model
                  'priority' => 'high',
                 'notification' => array (
                         "body" => $message,
-                        "title" => "Skilex_new",
+                        "title" => "Skilex",
                         "icon" => "myicon"
                 )
         );

@@ -183,42 +183,84 @@ Class Smsmodel extends CI_Model
  }
 
     function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type){
-      $url = 'https://fcm.googleapis.com/fcm/send';
-      $fields = array (
-              'to' => $gcm_key,
-               'priority' => 'high',
-              'notification' => array (
-                      "body" => $message,
-                      "title" => "Skilex",
-                      "icon" => "myicon"
-              )
-      );
-      $fields = json_encode ( $fields );
-      if($user_type=='3'){
-        $headers = array (
-                'Authorization: key=' . "AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt",
-                'Content-Type: application/json'
-        );
-      }else if($user_type=='5'){
-        $headers = array (
-                'Authorization: key=' . "AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc",
-                'Content-Type: application/json'
-        );
+
+      if($mobile_type=='2'){
+         include_once 'assets/notification/Push.php';
+        $push = null;
+        $push = new Push(
+            $head,
+            $message,
+            null
+          );
+
+
+        $passphrase = 'hs123';
+        $loction ='assets/notification/skilex.pem';
+        $payload = '{
+              "aps": {
+                "alert": {
+                  "body": "'.$message.'",
+                  "title": "'.$head.'"
+                }
+              }
+            }';
+             $ctx = stream_context_create();
+           stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+           stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+           $ctx = stream_context_create();
+           stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+           stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+           // Open a connection to the APNS server
+           $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+           if (!$fp)
+           exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+           $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
+            $result = fwrite($fp, $msg, strlen($msg));
+           fclose($fp);
+
       }else{
-        $headers = array (
-                'Authorization: key=' . "AAAAhjEIRDs:APA91bHRuky-KETpCqjNytc4VKwQb73qCqJyahfoaMo-eY_CSqU0SUlOShqSncpWeU_-AvWaZrP5rMyjuLnRWGL_gZXUD9__HV0pEjcr346-TBCsIA8oPQBTco8b2sXWdD_Hj6uwhc73",
-                'Content-Type: application/json'
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $fields = array (
+                'to' => $gcm_key,
+                 'priority' => 'high',
+                'notification' => array (
+                        "body" => $message,
+                        "title" => "Skilex",
+                        "icon" => "myicon"
+                )
         );
+        $fields = json_encode ( $fields );
+        if($user_type=='3'){
+          $headers = array (
+                  'Authorization: key=' . "AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt",
+                  'Content-Type: application/json'
+          );
+        }else if($user_type=='5'){
+          $headers = array (
+                  'Authorization: key=' . "AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc",
+                  'Content-Type: application/json'
+          );
+        }else{
+          $headers = array (
+                  'Authorization: key=' . "AAAAhjEIRDs:APA91bHRuky-KETpCqjNytc4VKwQb73qCqJyahfoaMo-eY_CSqU0SUlOShqSncpWeU_-AvWaZrP5rMyjuLnRWGL_gZXUD9__HV0pEjcr346-TBCsIA8oPQBTco8b2sXWdD_Hj6uwhc73",
+                  'Content-Type: application/json'
+          );
+        }
+
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+        $rew = curl_exec ( $ch );
+        curl_close ( $ch );
+
       }
 
-      $ch = curl_init ();
-      curl_setopt ( $ch, CURLOPT_URL, $url );
-      curl_setopt ( $ch, CURLOPT_POST, true );
-      curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
-      curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-      curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
-      $rew = curl_exec ( $ch );
-      curl_close ( $ch );
 
     }
 

@@ -157,66 +157,29 @@ Class Smsmodel extends CI_Model
 
 
  function push_notification_checking($head,$message,$gcm_key,$mobile_type,$user_type){
-   // $url = "https://fcm.googleapis.com/fcm/send";
-   //   $token = $gcm_key;
-   //   if($user_type=='3'){
-   //     $serverKey='AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt';
-   //   }else if($user_type=='4'){
-   //     $serverKey='AAAAhjEIRDs:APA91bHRuky-KETpCqjNytc4VKwQb73qCqJyahfoaMo-eY_CSqU0SUlOShqSncpWeU_-AvWaZrP5rMyjuLnRWGL_gZXUD9__HV0pEjcr346-TBCsIA8oPQBTco8b2sXWdD_Hj6uwhc73';
-   //   }else{
-   //     $serverKey='AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc';
-   //
-   //   }
-   //
-   //  $title = "Notification title";
-   //  $body = $message;
-   //  $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
-   //  $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
-   //  $json = json_encode($arrayToSend);
-   //  $headers = array();
-   //  $headers[] = 'Content-Type: application/json';
-   //  $headers[] = 'Authorization: key='. $serverKey;
-   //  $ch = curl_init();
-   //  curl_setopt($ch, CURLOPT_URL, $url);
-   //  curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
-   //  curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-   //  curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
-   //  //Send the request
-   //  $res = curl_exec($ch);
-   //  //Close request
-   //  if ($res === FALSE) {
-   //  die('FCM Send Error: ' . curl_error($ch));
-   //  }
-   //  curl_close($ch);
-
-   $path_to_firebase_cm = 'https://fcm.googleapis.com/fcm/send';
-   $token=array($gcm_key);
-   $fields = array(
-        'registration_ids' => $gcm_key,
-        'priority' => 10,
-        'data'=>$message,
-        'notification' => array('title' => 'high', 'body' => "skilex" ,'sound'=>'Default'),
-    );
-    $headers = array(
-        'Authorization:key=' .'AAAAuoTcq58:APA91bEyV2z6t4yhSgEpIrNWSO_NFsEp5-5dPwpnQd0BMyxwYEjIXHvyHqzgNsY29bpq2l23nK9FUSxVbWlW96XxL3Ua6oHdCsCcy7Z8XpMXr74orBo3t1zwmF18xxtsqJnsV7SZKizt' ,
-        'Content-Type:application/json'
-    );
-
-    // Open connection
-    $ch = curl_init('https://fcm.googleapis.com/fcm/send');
-    // Set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $path_to_firebase_cm);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-    // Execute post
-    $result = curl_exec($ch);
-    // Close connection
-    curl_close($ch);
-    return $result;
+   // define( 'API_ACCESS_KEY', 'AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc' );
+   $api_key     =   'AAAAKxxpzT0:APA91bE-Rr1H9AvMrV7dvIB4r9yAMtYbGCfo7E3k26dRjZL6sh-OR0BSxNZ-vrEuW1aq8O9DZZLOQ2ZEXYNiXtaZFji9LQPTvar0KHzg7Qvri-qiD99X-trbHl6Mea_KYVZ2_Yhw8Qqc';//get the api key from FCM backend
+       $url = 'https://fcm.googleapis.com/fcm/send';
+       $fields = array('registration_ids'  => array($gcm_key));//get the device token from Android
+       $headers = array( 'Authorization: key=' . $api_key,'Content-Type: application/json');
+       $ch = curl_init();
+       curl_setopt( $ch, CURLOPT_URL, $url );
+       curl_setopt( $ch, CURLOPT_POST, true );
+       curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
+       curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+       curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+       curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+       curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($fields) );
+       $result = curl_exec($ch);
+       if(curl_errno($ch)){
+           return 'Curl error: ' . curl_error($ch);
+       }
+       curl_close($ch);
+       $cur_message=json_decode($result);
+       if($cur_message->success==1)
+           return true;
+       else
+           return false;
  }
 
 

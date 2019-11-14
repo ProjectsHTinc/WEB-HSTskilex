@@ -2487,7 +2487,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
             $this->smsmodel->check_notify($head,$message,$gcm_key,$mobile_type,$user_type);
           }
       }
-      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
+       $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
       $user_result = $this->db->query($sQuery);
       if ($user_result->num_rows() > 0) {
           foreach ($user_result->result() as $rows) {

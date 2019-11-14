@@ -1794,21 +1794,21 @@ return $response;
     public function List_ongoing_services($user_master_id)
     {
 
-      $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
-      $user_result = $this->db->query($sQuery);
-      if($user_result->num_rows()>0)
-      {
-          foreach ($user_result->result() as $rows)
-          {
-            $gcm_key=$rows->mobile_key;
-            $mobile_type=$rows->mobile_type;
-            $head='Skilex';
-            $message="Notification checking";
-            $user_type='3';
-            //$this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-            $this->smsmodel->push_notification_android($head,$message,$gcm_key,$mobile_type,$user_type);
-          }
-      }
+      // $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
+      // $user_result = $this->db->query($sQuery);
+      // if($user_result->num_rows()>0)
+      // {
+      //     foreach ($user_result->result() as $rows)
+      //     {
+      //       $gcm_key=$rows->mobile_key;
+      //       $mobile_type=$rows->mobile_type;
+      //       $head='Skilex';
+      //       $message="Notification checking";
+      //       $user_type='3';
+      //       //$this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+      //       $this->smsmodel->push_notification_android($head,$message,$gcm_key,$mobile_type,$user_type);
+      //     }
+      // }
 
 
         $sQuery         = "SELECT

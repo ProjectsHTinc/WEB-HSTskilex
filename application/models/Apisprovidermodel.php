@@ -2482,9 +2482,9 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
             $gcm_key=$rows->mobile_key;
             $mobile_type=$rows->mobile_type;
             $head='Skilex';
-            $message="Your service request is Cancelled Customer.";
+            $message="Customer notification inside app check";
             $user_type='5';
-            $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            $this->smsmodel->check_notify($head,$message,$gcm_key,$mobile_type,$user_type);
           }
       }
        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";

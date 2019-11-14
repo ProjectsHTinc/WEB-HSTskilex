@@ -1895,6 +1895,70 @@ function proceed_for_payment($user_master_id,$service_order_id){
 //-------------------- Service Reviews Add End -------------------//
 
 
+//-------------------- Service Payment success -------------------//
+
+  function service_payment_success($service_order_id){
+    $sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
+    $user_result = $this->db->query($sQuery);
+    if($user_result->num_rows()>0)
+    {
+        foreach ($user_result->result() as $rows)
+        {
+          $customer_id = $rows->customer_id;
+          $contact_person_name = $rows->contact_person_name;
+          $contact_person_number = $rows->contact_person_number;
+          $serv_prov_id=$rows->serv_prov_id;
+          $serv_pers_id=$rows->serv_pers_id;
+        }
+    }
+
+
+        $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+        $user_result = $this->db->query($sQuery);
+        if($user_result->num_rows()>0)
+        {
+            foreach ($user_result->result() as $rows)
+            {
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Service payment success.";
+              $user_type='3';
+              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            }
+        }
+
+        $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+        $user_result = $this->db->query($sQuery);
+        if($user_result->num_rows()>0)
+        {
+            foreach ($user_result->result() as $rows)
+            {
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Your payment is made successfully.";
+              $user_type='5';
+              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            }
+        }
+        $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_pers_id."'";
+        $user_result = $this->db->query($sQuery);
+        if($user_result->num_rows()>0)
+        {
+            foreach ($user_result->result() as $rows)
+            {
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Service payment success.";
+              $user_type='4';
+              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            }
+        }
+  }
+  //-------------------- Service Payment success -------------------//
+
 }
 
 ?>

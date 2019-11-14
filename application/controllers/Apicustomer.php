@@ -1398,5 +1398,37 @@ class Apicustomer extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function service_payment_success()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service - Reviews List";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$order_id = $this->input->post("order_id");
+		$result = explode("-", $order_id);
+		$service_order_id= $result[2];
+		$data['result']=$this->apicustomermodel->service_payment_success($service_order_id);
+		$response = $data['result'];
+		// echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 }
 ?>

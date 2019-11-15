@@ -984,6 +984,21 @@ class Apicustomermodel extends CI_Model {
               $full_name=$rows_id_next->owner_full_name;
               $sp_user_master_id=$rows_id_next->user_master_id;
 
+
+            $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
+             $user_result = $this->db->query($sQuery);
+             if ($user_result->num_rows() > 0) {
+                 foreach ($user_result->result() as $rows) {
+                   $gcm_key=$rows->mobile_key;
+                   $mobile_type=$rows->mobile_type;
+                   $head='Skilex';
+                   $message="You have received order from customer.";
+                   $user_type='3';
+                   $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                 }
+             }
+
+
              $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
               $res_order_history=$this->db->query($check_order_history);
 
@@ -995,6 +1010,8 @@ class Apicustomermodel extends CI_Model {
                 $phone=$Phoneno;
                 //$this->smsmodel->send_sms($phone,$notes);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+
+
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Pending' AND service_order_id='$service_id'";
                 $res_expried=$this->db->query($update_exper);
 
@@ -1088,6 +1105,19 @@ class Apicustomermodel extends CI_Model {
                 $mobiletype=$rows_id_next->mobile_type;
                 $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
                 $phone=$Phoneno;
+
+                $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
+                 $user_result = $this->db->query($sQuery);
+                 if ($user_result->num_rows() > 0) {
+                     foreach ($user_result->result() as $rows) {
+                       $gcm_key=$rows->mobile_key;
+                       $mobile_type=$rows->mobile_type;
+                       $head='Skilex';
+                       $message="You have received order from customer.";
+                       $user_type='3';
+                       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                     }
+                 }
                 //$this->smsmodel->send_sms($phone,$notes);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id'";

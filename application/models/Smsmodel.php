@@ -271,8 +271,7 @@ Class Smsmodel extends CI_Model
                  'priority' => 'high',
                 'notification' => array (
                         "body" => $message,
-                        "title" => "Skilex",
-                        "icon" => "myicon"
+                        "title" => "Skilex"
                 )
         );
         $fields = json_encode ( $fields );

@@ -265,6 +265,44 @@ Class Smsmodel extends CI_Model
     }
 
     function check_notify($head,$message,$gcm_key,$mobile_type,$user_type){
+      if($mobile_type=='2'){
+         include_once 'assets/notification/Push.php';
+        $push = null;
+        $push = new Push(
+            $head,
+            $message,
+            null
+          );
+
+
+        $passphrase = 'hs123';
+        $loction ='assets/notification/skilex.pem';
+        $payload = '{
+              "aps": {
+                "alert": {
+                  "body": "'.$message.'",
+                  "title": "'.$head.'"
+                }
+              }
+            }';
+             $ctx = stream_context_create();
+           stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+           stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+           $ctx = stream_context_create();
+           stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+           stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+           // Open a connection to the APNS server
+           $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+           if (!$fp)
+           exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+           $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
+            $result = fwrite($fp, $msg, strlen($msg));
+           fclose($fp);
+
+      }else{
         $url = 'https://fcm.googleapis.com/fcm/send';
         $fields = array (
                 'to' => $gcm_key,
@@ -302,6 +340,7 @@ Class Smsmodel extends CI_Model
         curl_close ( $ch );
 
     }
+  }
 
 
 

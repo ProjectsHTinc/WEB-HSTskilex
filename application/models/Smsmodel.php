@@ -282,6 +282,7 @@ Class Smsmodel extends CI_Model
                 "alert": {
                   "body": "'.$message.'",
                   "title": "'.$head.'",
+                  "badge":"1",
                   "sound":"default"
                 }
               }

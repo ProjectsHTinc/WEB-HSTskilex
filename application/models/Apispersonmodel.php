@@ -1122,7 +1122,7 @@ public function Services_list($category_id,$sub_category_id)
          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
        }
    }
-   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
+   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
    $user_result = $this->db->query($sQuery);
    if ($user_result->num_rows() > 0) {
        foreach ($user_result->result() as $rows) {
@@ -1130,7 +1130,7 @@ public function Services_list($category_id,$sub_category_id)
          $mobile_type=$rows->mobile_type;
          $head='Skilex';
          $message="Service order is updated.";
-         $user_type='5';
+         $user_type='3';
          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
        }
    }

@@ -281,7 +281,8 @@ Class Smsmodel extends CI_Model
               "aps": {
                 "alert": {
                   "body": "'.$message.'",
-                  "title": "'.$head.'"
+                  "title": "'.$head.'",
+                  "sound":"default"
                 }
               }
             }';

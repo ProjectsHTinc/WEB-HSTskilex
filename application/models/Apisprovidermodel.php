@@ -1434,7 +1434,8 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					AA.serv_prov_id = '" . $user_master_id . "' AND (AA.status = 'Requested' OR AA.status = 'Accepted') AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					AA.serv_prov_id = '" . $user_master_id . "'
+          AND (AA.status = 'Requested' OR AA.status = 'Accepted') AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -2476,42 +2477,42 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     function payment_notification($user_master_id,$provider_id,$expert_id){
 
-      // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $user_master_id . "'";
-      // $user_result = $this->db->query($sQuery);
-      // if ($user_result->num_rows() > 0) {
-      //     foreach ($user_result->result() as $rows) {
-      //       $gcm_key=$rows->mobile_key;
-      //       $mobile_type=$rows->mobile_type;
-      //       $head='Skilex';
-      //       $message="Customer notification inside app check";
-      //       $user_type='5';
-      //       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-      //     }
-      // }
-      //  $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
-      // $user_result = $this->db->query($sQuery);
-      // if ($user_result->num_rows() > 0) {
-      //     foreach ($user_result->result() as $rows) {
-      //       $gcm_key=$rows->mobile_key;
-      //       $mobile_type=$rows->mobile_type;
-      //       $head='Skilex';
-      //       $message="Provider  notification inside app check.";
-      //       $user_type='3';
-      //       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-      //     }
-      // }
-      // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$expert_id'";
-      // $user_result = $this->db->query($sQuery);
-      // if ($user_result->num_rows() > 0) {
-      //     foreach ($user_result->result() as $rows) {
-      //       $gcm_key=$rows->mobile_key;
-      //       $mobile_type=$rows->mobile_type;
-      //       $head='Skilex';
-      //       $message="Expert notification inside app check.";
-      //       $user_type='4';
-      //       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-      //     }
-      // }
+      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $user_master_id . "'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Customer notification inside app check";
+            $user_type='5';
+            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
+       $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Provider  notification inside app check.";
+            $user_type='3';
+            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
+      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$expert_id'";
+      $user_result = $this->db->query($sQuery);
+      if ($user_result->num_rows() > 0) {
+          foreach ($user_result->result() as $rows) {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Expert notification inside app check.";
+            $user_type='4';
+            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+      }
 
     }
 

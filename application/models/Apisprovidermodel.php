@@ -1434,7 +1434,7 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					AA.serv_prov_id = '" . $user_master_id . "' AND (AA.status = 'Requested' OR AA.status = 'Accepted') AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 

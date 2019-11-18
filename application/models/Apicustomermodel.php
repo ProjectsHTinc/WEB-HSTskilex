@@ -1602,21 +1602,24 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
               $notes="Thank you.Your order has been Cancelled";
               $phone=$Phoneno;
               $this->smsmodel->send_sms($phone,$notes);
+              if($serv_prov_id=='0'){
 
-              $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
-               $user_result = $this->db->query($sQuery);
-               if($user_result->num_rows()>0)
-               {
-                   foreach ($user_result->result() as $rows)
-                   {
-                     $gcm_key=$rows->mobile_key;
-                     $mobile_type=$rows->mobile_type;
-                     $head='Skilex';
-                     $message="Service order is cancelled.";
-                     $user_type='3';
-                     $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                   }
-               }
+              }else{
+                $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+                 $user_result = $this->db->query($sQuery);
+                 if($user_result->num_rows()>0)
+                 {
+                     foreach ($user_result->result() as $rows)
+                     {
+                       $gcm_key=$rows->mobile_key;
+                       $mobile_type=$rows->mobile_type;
+                       $head='Skilex';
+                       $message="Service order is cancelled.";
+                       $user_type='3';
+                       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                     }
+                 }
+              }
 
               $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
               $res_insert = $this->db->query($insert);

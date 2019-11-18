@@ -1576,19 +1576,19 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
         function cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments){
           $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
-                 $user_result = $this->db->query($sQuery);
-                 if($user_result->num_rows()>0)
-                 {
-                     foreach ($user_result->result() as $rows)
-                     {
-                       $gcm_key=$rows->mobile_key;
-                       $mobile_type=$rows->mobile_type;
-                       $head='Skilex';
-                       $message="Your service order is cancelled.";
-                       $user_type='5';
-                       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                     }
-                 }
+           $user_result = $this->db->query($sQuery);
+           if($user_result->num_rows()>0)
+           {
+               foreach ($user_result->result() as $rows)
+               {
+                 $gcm_key=$rows->mobile_key;
+                 $mobile_type=$rows->mobile_type;
+                 $head='Skilex';
+                 $message="Your service order is cancelled.";
+                 $user_type='5';
+                 $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+               }
+           }
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
@@ -1597,10 +1597,27 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){ }
                $id=$rows_service->id;
+               $serv_prov_id=$rows_service->serv_pers_id;
               $Phoneno=$rows_service->phone_no;
               $notes="Thank you.Your order has been Cancelled";
               $phone=$Phoneno;
               $this->smsmodel->send_sms($phone,$notes);
+
+              $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+               $user_result = $this->db->query($sQuery);
+               if($user_result->num_rows()>0)
+               {
+                   foreach ($user_result->result() as $rows)
+                   {
+                     $gcm_key=$rows->mobile_key;
+                     $mobile_type=$rows->mobile_type;
+                     $head='Skilex';
+                     $message="Service order is cancelled.";
+                     $user_type='3';
+                     $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                   }
+               }
+
               $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
               $res_insert = $this->db->query($insert);
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";

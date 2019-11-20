@@ -998,7 +998,7 @@ public function Services_list($category_id,$sub_category_id)
             "service_ta_name" => $rows->service_ta_name,
             "service_pic_url" => $service_pic_url,
             "rate_card" => $rows->rate_card,
-            "selected" =>0,
+            "selected" =>"0",
         );
       }
           $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData,"msg_en"=>"","msg_ta"=>"");

@@ -500,6 +500,70 @@ function user_info($user_master_id){
 //#################### Initiat services End ####################//
 
 
+
+      function from_hold_to_ongoing($user_master_id,$service_order_id){
+        $update_sql = "UPDATE service_orders SET status = 'Ongoing', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+        $update_result = $this->db->query($update_sql);
+
+        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
+        $ins_query = $this->db->query($sQuery);
+
+
+      $sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
+      $user_result = $this->db->query($sQuery);
+      if($user_result->num_rows()>0)
+      {
+          foreach ($user_result->result() as $rows)
+          {
+            $customer_id = $rows->customer_id;
+            $contact_person_name = $rows->contact_person_name;
+            $contact_person_number = $rows->contact_person_number;
+            $serv_prov_id=$rows->serv_prov_id;
+          }
+      }
+
+
+    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+    $user_result = $this->db->query($sQuery);
+    if($user_result->num_rows()>0)
+    {
+        foreach ($user_result->result() as $rows)
+        {
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Service request is ongoing now.";
+          $user_type='3';
+          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+        }
+    }
+
+    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+    $user_result = $this->db->query($sQuery);
+    if($user_result->num_rows()>0)
+    {
+        foreach ($user_result->result() as $rows)
+        {
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Your service request is ongoing now.";
+          $user_type='5';
+          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+        }
+    }
+
+    //$title = "Service Request Initiated";
+    $message_details = "SKILEX - Service Request ongoing now";
+    $notes=$message_details;
+    $phone=$contact_person_number;
+    $this->smsmodel->send_sms($phone,$notes);
+    //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
+
+      $response = array("status" => "success", "msg" => "Service Order Ongoing");
+      return $response;
+          }
+
 ########### List Ongoing services ####################//
 
 	public function List_ongoing_services($user_master_id)

@@ -83,9 +83,9 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Company :</label>
+                          <label class="col-sm-4 col-form-label">Any Police Case:</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->company_status; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->any_police_case; ?>">
                             </div>
                         </div>
                       </div>
@@ -115,9 +115,22 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Any Police Case:</label>
+                          <label class="col-sm-4 col-form-label">Registered as:</label>
                           <div class="col-sm-8">
-                                <input type="text" class="form-control" readonly value="<?php echo $rows->any_police_case; ?>">
+                                <input type="text" class="form-control" readonly value="<?php echo $rows->company_status; ?>">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">change to:</label>
+                          <div class="col-sm-8">
+                                <!-- <input type="text" class="form-control"  value="<?php echo $rows->company_status; ?>"> -->
+                                <select class="form-control form-control-sm border-info" id="company_status" name="company_status">
+                                  <option value="Company">Company</option>
+                                  <option value="Individual">Individual</option>
+                                </select>
+                                  <script>$('#company_status').val('<?php echo $rows->company_status; ?>');</script>
                             </div>
                         </div>
                       </div>
@@ -330,9 +343,36 @@ $('#deposit_status').change(function(){
       } else {
        swal('cancelled')
       }
-
 });
 
+
+$('#company_status').change(function(){
+    var status=$(this).val();
+    alert(status);
+    var id=$("#serv_prov_id").val();
+    if (confirm('Are you sure you want to submit this Change?')) {
+      $.ajax({
+                 url: "<?php echo base_url(); ?>verifyprocess/update_company_status",
+                 type: 'POST',
+                 data: {
+                     'status': status,
+                     'id': id
+                   },
+                 dataType: "json",
+                 success: function(response) {
+                    var stats=response.status;
+                     if (stats=="success") {
+                       swal('Status  Updated successfully');
+                      
+                   }else{
+                      swal(stats);
+                       }
+                 }
+             });
+      } else {
+       swal('cancelled')
+      }
+});
 
 
 </script>

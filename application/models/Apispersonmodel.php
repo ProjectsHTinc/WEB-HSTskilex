@@ -967,6 +967,53 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Services list End ####################//
 
+//#################### Add Extra service ####################//
+
+    function add_extra_services($user_master_id,$service_order_id){
+
+      $select="SELECT * FROM service_orders  WHERE id='$service_order_id'";
+      $select_query = $this->db->query($select);
+      if($select_query->num_rows()==0){
+        	$response=array("status" => "error","msg" => "Something Wrong");
+      }else{
+        $result=$select_query->result();
+        foreach($result as $rows){}
+        $main_cat_id=$rows->main_cat_id;
+        $query="SELECT *  FROM services WHERE main_cat_id='$main_cat_id' and status='Active'";
+        $res = $this->db->query($query);
+        if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $service_pic = $rows->service_pic;
+        if ($service_pic != ''){
+          $service_pic_url = base_url().'assets/category/'.$service_pic;
+        }else {
+           $service_pic_url = '';
+        }
+        $subcatData[]  = array(
+            "service_id" => $rows->id,
+            "main_cat_id" => $rows->main_cat_id,
+            "sub_cat_id" => $rows->sub_cat_id,
+            "service_name" => $rows->service_name,
+            "service_ta_name" => $rows->service_ta_name,
+            "service_pic_url" => $service_pic_url,
+            "rate_card" => $rows->rate_card,
+        );
+      }
+          $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
+
+    }else{
+            $response = array("status" => "error", "msg" => "Services not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
+    }
+
+      }
+
+	return $response;
+
+    }
+//#################### Add Extra service  ####################//
+
+
 //#################### Add addtional Services ####################//
 
 	public function Add_addtional_services($user_master_id,$service_order_id,$service_id,$ad_service_rate_card)

@@ -87,6 +87,20 @@ class Verifyprocess extends CI_Controller {
 	 }
 
 
+		public function update_company_status(){
+				$data=$this->session->userdata();
+				$user_id=$this->session->userdata('user_id');
+				$user_type=$this->session->userdata('user_role');
+				if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+				$status=$this->db->escape_str($this->input->post('status'));
+				$id=$this->db->escape_str($this->input->post('id'));
+				$data['res']=$this->verificationmodel->update_company_status($status,$id);
+				echo json_encode($data['res']);
+				}else {
+				redirect('/login');
+				}
+		}
+
 	 public function get_vendor_doc_status(){
 		 $data=$this->session->userdata();
 		 $user_id=$this->session->userdata('user_id');

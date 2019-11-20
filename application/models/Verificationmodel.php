@@ -40,6 +40,19 @@ Class Verificationmodel extends CI_Model
       }
   }
 
+  function update_company_status($status,$id){
+    $pro_id=base64_decode($id)/98765;
+   $update="UPDATE service_provider_details SET company_status='$status' WHERE user_master_id='$pro_id'";
+    $result=$this->db->query($update);
+    if($result){
+        $data = array("status" => "success");
+          return $data;
+    }else{
+      $data = array("status" => "failed");
+        return $data;
+    }
+  }
+
   function update_serv_verify_status($status,$id){
     $pro_id=base64_decode($id)/98765;
     if($status=='Approved'){

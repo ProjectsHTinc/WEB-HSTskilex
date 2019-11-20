@@ -754,6 +754,45 @@ class Apisperson extends CI_Controller {
 //-----------------------------------------------//
 
 
+
+//-----------------------------------------------//
+
+	public function add_extra_services()
+	{
+		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services list";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = '';
+		$service_order_id  = '';
+		$service_id  = '';
+		$ad_service_rate_card  = '';
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+		$data['result']=$this->apispersonmodel->add_extra_services($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
 //-----------------------------------------------//
 
 	public function add_addtional_services()

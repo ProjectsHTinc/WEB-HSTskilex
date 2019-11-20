@@ -374,7 +374,7 @@ function user_info($user_master_id){
 					service_timeslot E,
 					service_provider_details F
 				WHERE
-					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_prov_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -418,8 +418,8 @@ function user_info($user_master_id){
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id
-           AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id
+           AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -542,7 +542,7 @@ function user_info($user_master_id){
 				WHERE
 					 A.serv_pers_id = '$user_master_id'
            AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold')
-           AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id
+           AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
            AND A.serv_pers_id = F.user_master_id order by A.id desc";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
@@ -591,7 +591,7 @@ function user_info($user_master_id){
 					service_person_details F
 				WHERE
 					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."'
-           AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+           AND A.status = 'Initiated' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -640,7 +640,7 @@ function user_info($user_master_id){
 					service_timeslot E,
 					service_provider_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
            AND A.serv_prov_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
@@ -811,8 +811,8 @@ function user_info($user_master_id){
 		// 			service_timeslot E,
 		// 			service_provider_details F
 		// 		WHERE
-		// 			 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Initiate'OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
-    //        AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id";
+		// 			 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Initiate'OR A.status = 'Hold') AND A.main_cat_id = B.id AND A.sub_cat_id = C.id
+    //        AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_prov_id = F.user_master_id";
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,
     so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
     from service_orders as so
@@ -949,7 +949,7 @@ public function Services_list($category_id,$sub_category_id)
 					sub_category C,
 					services D
 				WHERE
-					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.`service_id` = D.id AND A.status = 'Active'";
+					A.user_master_id = '".$user_master_id."' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.status = 'Active'";
 		$ser_result = $this->db->query($sQuery);
 
 		$services_result = $ser_result->result();
@@ -992,7 +992,7 @@ public function Services_list($category_id,$sub_category_id)
 	{
 		$sQuery = "SELECT
 						A.id,
-						A.`ad_service_rate_card`,
+						A.ad_service_rate_card,
 						B.service_name,
 						B.service_ta_name,
 						C.main_cat_name,
@@ -1027,7 +1027,7 @@ public function Services_list($category_id,$sub_category_id)
 
 	public function Remove_addtional_services($user_master_id,$order_additional_id)
 	{
-		$sQuery = "DELETE FROM `service_order_additional` WHERE id = '".$order_additional_id."'";
+		$sQuery = "DELETE FROM service_order_additional WHERE id = '".$order_additional_id."'";
 		$serv_result = $this->db->query($sQuery);
 
 		if($serv_result)
@@ -1361,7 +1361,7 @@ public function Services_list($category_id,$sub_category_id)
 					services D,
 					service_timeslot E
 				WHERE
-					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
@@ -1404,19 +1404,19 @@ public function Services_list($category_id,$sub_category_id)
 					services D,
 					service_timeslot E
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Cancelled' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();
 
 		$reason_query = "SELECT
-						A.id,C.reasons,A.`comments`,B.id as cancel_user_id,D.id as role_id,D.role_name
+						A.id,C.reasons,A.comments,B.id as cancel_user_id,D.id as role_id,D.role_name
 					FROM
 						cancel_history A,
 						login_users B,
 						cancel_master C,
 						user_role D
 					WHERE
-						A.`service_order_id` = '".$service_order_id."' AND A.`user_master_id` = B.id AND B.id AND A.`cancel_master_id` = C.id AND B.user_type = D.id";
+						A.service_order_id = '".$service_order_id."' AND A.user_master_id = B.id AND B.id AND A.cancel_master_id = C.id AND B.user_type = D.id";
 		$reason_res = $this->db->query($reason_query);
 		$reason_result = $reason_res->result();
 			if($reason_res->num_rows()>0)
@@ -1596,7 +1596,7 @@ public function Services_list($category_id,$sub_category_id)
 		// 			service_payments G
 		// 		WHERE
 		// 			 A.serv_pers_id = '".$user_master_id."'
-    //        AND A.status = 'Completed' OR A.Status = 'Paid' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
+    //        AND A.status = 'Completed' OR A.Status = 'Paid' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,sppd.owner_full_name as service_provider,
 sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,
   TIME_FORMAT(st.to_time,'%r') as to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
@@ -1664,18 +1664,32 @@ sp.status AS Payment_status,DATE_FORMAT(so.finish_datetime, '%d-%m-%Y %h:%s') as
 
 //#################### Service Person Tracking ####################//
 
-	public function Add_tracking($user_master_id,$lat_1,$lon_1,$location,$lat_2,$lon_2,$miles_distance_bw,$service_order_id)
+	public function Add_tracking($user_master_id,$latitude,$longitude,$location,$miles,$service_order_id,$location_datetime)
 	{
-		$sQuery = "INSERT INTO serv_pers_tracking (user_master_id,lat_1,lon_1,location,lat_2,lon_2,miles_distance_bw,service_order_id,created_at) VALUES ('". $user_master_id . "','". $lat_1 . "','". $lon_1 . "','". $location . "','". $lat_2 . "','". $lon_2 . "','". $miles_distance_bw . "','". $service_order_id . "',NOW())";
-		$ins_query = $this->db->query($sQuery);
+		$dt = strtotime($location_datetime); //make timestamp with datetime string
+            $chk_date = date("Y-m-d", $dt); //echo the year of the datestamp just created
 
-		if($ins_query){
-				$response=array("status" => "success","msg" => "Tracking Details Added");
-           }else{
-				$response=array("status" => "error","msg" => "Something Wrong");
+	       $user_query = "SELECT * FROM serv_pers_tracking WHERE user_master_id = '$user_master_id' AND date(created_at) = '$chk_date' ORDER BY id DESC LIMIT 1";
+           $user_result = $this->db->query($user_query);
+           $user_res = $user_result->result();
 
-           }
-		return $response;
+        	    if($user_result->num_rows()>0){
+        		   foreach($user_res as $rows){
+						$to_latitude = $rows->to_lat;
+						$to_longitude = $rows->to_long;
+					}
+
+        	        $location_query = "INSERT INTO serv_pers_tracking (user_master_id,user_lat,user_long,user_location,to_lat,to_long,miles,created_at,service_order_id) VALUES ('$user_master_id','$to_latitude','$to_longitude','$location','$latitude','$longitude','$miles','$location_datetime','$service_order_id')";
+	                $location_res = $this->db->query($location_query);
+        	        $response = array("status" => "Sucess", "msg" => "Location Added");
+        		} else {
+
+        		    $location_query = "INSERT INTO serv_pers_tracking (user_master_id,user_lat,user_long,user_location,to_lat,to_long,miles,created_at,service_order_id) VALUES ('$user_master_id','$latitude','$longitude','$location','$latitude','$longitude','$miles','$location_datetime','$service_order_id')";
+	                $location_res = $this->db->query($location_query);
+        		    $response = array("status" => "Sucess", "msg" => "Location Added");
+        		}
+
+			return $response;
 	}
 
 //#################### Cancel services End ####################//

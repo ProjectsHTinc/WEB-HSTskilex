@@ -1289,26 +1289,24 @@ class Apisperson extends CI_Controller {
 			echo json_encode($res);
 			return;
 		}
+
 		$user_master_id = '';
-		$lat_1 = '';
-		$lon_1 = '';
-		$lat_1 = '';
+		$latitude = '';
+		$longitude = '';
 		$location = '';
-		$lat_2 = '';
-		$lon_2 = '';
-		$miles_distance_bw = '';
+		$miles = '';
 		$service_order_id  = '';
+		$location_datetime = '';
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$lat_1  = $this->input->post("lat_1");
-		$lon_1  = $this->input->post("lon_1");
+		$latitude  = $this->input->post("latitude");
+		$longitude  = $this->input->post("longitude");
 		$location  = $this->input->post("location");
-		$lat_2  = $this->input->post("lat_2");
-		$lon_2  = $this->input->post("lon_2");
-		$miles_distance_bw  = $this->input->post("miles_distance_bw");
+		$miles  = $this->input->post("miles");
 		$service_order_id  = $this->input->post("service_order_id");
+		$location_datetime = $this->input->post("location_datetime");
 
-		$data['result']=$this->apispersonmodel->Add_tracking($user_master_id,$lat_1,$lon_1,$location,$lat_2,$lon_2,$miles_distance_bw,$service_order_id);
+		$data['result']=$this->apispersonmodel->Add_tracking($user_master_id,$latitude,$longitude,$location,$miles,$service_order_id,$location_datetime);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

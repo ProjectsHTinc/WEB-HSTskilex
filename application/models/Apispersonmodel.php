@@ -1742,6 +1742,29 @@ sp.status AS Payment_status,DATE_FORMAT(so.finish_datetime, '%d-%m-%Y %h:%s') as
 
 //#################### Cancel services End ####################//
 
+
+  function add_current_location($user_master_id,$latitude,$longitude){
+    $select="SELECT * FROM vendor_status WHERE serv_pro_id='$user_master_id'";
+    $user_result = $this->db->query($select);
+    if($user_result->num_rows()==0){
+        $insert="INSERT INTO vendor_status (serv_pro_id,online_status,serv_lat,serv_lon,status,created_at,created_by) VALUES('$user_master_id','Online','$latitude','$longitude','Active',NOW(),'$user_master_id')";
+        $ins_result = $this->db->query($insert);
+    }else{
+      $update="UPDATE vendor_status SET serv_lat='$latitude',serv_lon='$longitude',created_at=NOW(),created_by='$user_master_id'";
+      $ins_result = $this->db->query($update);
+    }
+    if($ins_result){
+      $response = array("status" => "Sucess", "msg" => "Location Added");
+    }else{
+      $response = array("status" => "error", "msg" => "Failed to add");
+    }
+    return $response;
+
+  }
+
+
+
+
 }
 
 ?>

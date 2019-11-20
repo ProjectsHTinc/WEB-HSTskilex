@@ -1356,6 +1356,46 @@ class Apisperson extends CI_Controller {
 
 
 
+//-----------------------------------------------//
+
+	public function add_current_location()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service person tracking";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$latitude  = $this->input->post("latitude");
+		$longitude  = $this->input->post("longitude");
+
+
+		$data['result']=$this->apispersonmodel->add_current_location($user_master_id,$latitude,$longitude);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+
+
 
 }
 ?>

@@ -1396,7 +1396,7 @@ return $response;
     left join sub_category as sc on sc.id=so.sub_cat_id
     left join services as s on s.id=so.service_id
     left join service_timeslot as st on st.id=so.order_timeslot
-    where so.serv_prov_id='$user_master_id'  and (soh.status='Requested' OR so.status='Accepted') GROUP by so.id";
+    where soh.serv_prov_id='$user_master_id'  and (soh.status='Requested' OR so.status='Accepted') GROUP by so.id";
         // $sQuery         = "SELECT
 				// 	A.id,
 				// 	A.service_location,

@@ -436,11 +436,18 @@ function user_info($user_master_id){
 //#################### Initiate services ####################//
 	public function Initiate_services($user_master_id,$service_order_id)
 	{
-            $update_sql = "UPDATE service_orders SET status = 'Initiated', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
+      $update_sql = "UPDATE service_orders SET status = 'Initiated', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
 
-			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Initiated',NOW(),'". $user_master_id . "')";
-			$ins_query = $this->db->query($sQuery);
+      $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Initiated'";
+      $res_select=$this->db->query($select);
+      if($res_select->num_rows()==0){
+        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Initiated',NOW(),'". $user_master_id . "')";
+  			$ins_query = $this->db->query($sQuery);
+      }else{
+
+      }
+
 
 
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
@@ -505,8 +512,15 @@ function user_info($user_master_id){
         $update_sql = "UPDATE service_orders SET status = 'Ongoing', iniate_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
         $update_result = $this->db->query($update_sql);
 
-        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
-        $ins_query = $this->db->query($sQuery);
+        $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Ongoing'";
+        $res_select=$this->db->query($select);
+        if($res_select->num_rows()==0){
+          $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
+          $ins_query = $this->db->query($sQuery);
+        }else{
+
+        }
+
 
 
       $sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
@@ -743,8 +757,14 @@ function user_info($user_master_id){
 			$update_sql = "UPDATE service_orders SET status = 'Started', start_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
 
-			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Started',NOW(),'". $user_master_id . "')";
-			$ins_query = $this->db->query($sQuery);
+      $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Started'";
+      $res_select=$this->db->query($select);
+      if($res_select->num_rows()==0){
+        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Started',NOW(),'". $user_master_id . "')";
+        $ins_query = $this->db->query($sQuery);
+      }
+
+
 
 			 $message_details = "Your OTP :".$OTP;
        $notes=$message_details;
@@ -774,8 +794,13 @@ function user_info($user_master_id){
 			$update_sql = "UPDATE service_orders SET status = 'Ongoing', start_datetime =NOW() ,updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 			$update_result = $this->db->query($update_sql);
 
-			$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
-			$ins_query = $this->db->query($sQuery);
+      $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Ongoing'";
+      $res_select=$this->db->query($select);
+      if($res_select->num_rows()==0){
+        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Ongoing',NOW(),'". $user_master_id . "')";
+        $ins_query = $this->db->query($sQuery);
+      }
+
 
 			$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
 			$user_result = $this->db->query($sQuery);
@@ -847,36 +872,7 @@ function user_info($user_master_id){
 
 	public function Detail_ongoing_services($user_master_id,$service_order_id)
 	{
-		// $sQuery = "SELECT
-		// 			A.id,
-		// 			A.service_location,
-		// 			DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
-		// 			A.contact_person_name,
-		// 			A.contact_person_number,
-		// 			A.service_rate_card,
-		// 			A.serv_pers_id,
-		// 			F.owner_full_name AS service_provider,
-		// 			B.main_cat_name,
-		// 			B.main_cat_ta_name,
-		// 			C.sub_cat_name,
-		// 			C.sub_cat_ta_name,
-		// 			D.service_name,
-		// 			D.service_ta_name,
-		// 			E.from_time,
-		// 			E.to_time,
-		// 			A.status,
-		// 			A.start_datetime,
-		// 			A.material_notes
-		// 		FROM
-		// 			service_orders A,
-		// 			main_category B,
-		// 			sub_category C,
-		// 			services D,
-		// 			service_timeslot E,
-		// 			service_provider_details F
-		// 		WHERE
-		// 			 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Initiate'OR A.status = 'Hold') AND A.main_cat_id = B.id AND A.sub_cat_id = C.id
-    //        AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_prov_id = F.user_master_id";
+
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,
     so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
     from service_orders as so
@@ -1266,8 +1262,13 @@ public function Services_list($category_id,$sub_category_id)
       $update_sql = "UPDATE service_orders SET status = '$status',resume_date='$resume_date',resume_timeslot='$resume_timeslot', updated_by  = '$user_master_id', updated_at =NOW() WHERE id ='$service_order_id'";
       $update_result = $this->db->query($update_sql);
 
-      $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_order_id','$user_master_id','$status',NOW(),'$user_master_id ')";
-  		$ins_query = $this->db->query($sQuery);
+      $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='$status'";
+      $res_select=$this->db->query($select);
+      if($res_select->num_rows()==0){
+        $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_order_id','$user_master_id','$status',NOW(),'$user_master_id ')";
+    		$ins_query = $this->db->query($sQuery);
+      }
+
 
       $get_prov="SELECT sppd.id,lu.id,lu.phone_no from service_person_details as sppd
       left join service_provider_details as spd on spd.id=sppd.service_provider_id
@@ -1383,8 +1384,14 @@ public function Services_list($category_id,$sub_category_id)
 		$update_sql = "UPDATE service_orders SET status = 'Cancelled', updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($update_sql);
 
-		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Cancelled',NOW(),'". $user_master_id . "')";
-		$ins_query = $this->db->query($sQuery);
+    $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Cancelled'";
+    $res_select=$this->db->query($select);
+    if($res_select->num_rows()==0){
+      $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Cancelled',NOW(),'". $user_master_id . "')";
+      $ins_query = $this->db->query($sQuery);
+    }
+
+
 
 		$sQuery = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('". $cancel_master_id . "','". $user_master_id . "','". $service_order_id . "','". $comments . "',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
@@ -1613,8 +1620,13 @@ public function Services_list($category_id,$sub_category_id)
 		$sQuery = "UPDATE service_orders SET status = 'Completed', finish_datetime =NOW(), updated_by  = '".$user_master_id."', updated_at =NOW() WHERE id ='".$service_order_id."'";
 		$update_result = $this->db->query($sQuery);
 
-		$sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Completed',NOW(),'". $user_master_id . "')";
-		$ins_query = $this->db->query($sQuery);
+    $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Completed'";
+    $res_select=$this->db->query($select);
+    if($res_select->num_rows()==0){
+      $sQuery = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('". $service_order_id . "','". $user_master_id . "','Completed',NOW(),'". $user_master_id . "')";
+  		$ins_query = $this->db->query($sQuery);
+    }
+
 
 
 		$sQuery = "SELECT * FROM service_orders WHERE id ='".$service_order_id."'";
@@ -1683,32 +1695,7 @@ public function Services_list($category_id,$sub_category_id)
 
 	public function List_completed_services($user_master_id)
 	{
-		// $sQuery = "SELECT
-		// 			A.id,
-		// 			A.service_location,
-		// 			DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
-		// 			A.status,
-		// 			B.main_cat_name,
-		// 			B.main_cat_ta_name,
-		// 			C.sub_cat_name,
-		// 			C.sub_cat_ta_name,
-		// 			D.service_name,
-		// 			D.service_ta_name,
-		// 			E.from_time,
-		// 			E.to_time,
-		// 			F.owner_full_name AS service_provider,
-		// 			G.status AS Payment_status
-		// 		FROM
-		// 			service_orders A,
-		// 			main_category B,
-		// 			sub_category C,
-		// 			services D,
-		// 			service_timeslot E,
-		// 			service_provider_details F,
-		// 			service_payments G
-		// 		WHERE
-		// 			 A.serv_pers_id = '".$user_master_id."'
-    //        AND A.status = 'Completed' OR A.Status = 'Paid' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_prov_id = F.user_master_id AND A.id=G.service_order_id";
+	
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,sppd.owner_full_name as service_provider,
 sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,
   TIME_FORMAT(st.to_time,'%r') as to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time

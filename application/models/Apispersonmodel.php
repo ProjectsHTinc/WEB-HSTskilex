@@ -1695,7 +1695,7 @@ public function Services_list($category_id,$sub_category_id)
 
 	public function List_completed_services($user_master_id)
 	{
-	
+
     $sQuery="SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,sppd.owner_full_name as service_provider,
 sp.status as Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,
   TIME_FORMAT(st.to_time,'%r') as to_time,so.status,DATE_FORMAT(so.start_datetime, '%d-%m-%Y %h:%s') as start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
@@ -1801,7 +1801,7 @@ sp.status AS Payment_status,DATE_FORMAT(so.finish_datetime, '%d-%m-%Y %h:%s') as
         $insert="INSERT INTO vendor_status (serv_pro_id,online_status,serv_lat,serv_lon,status,created_at,created_by) VALUES('$user_master_id','Online','$latitude','$longitude','Active',NOW(),'$user_master_id')";
         $ins_result = $this->db->query($insert);
     }else{
-      $update="UPDATE vendor_status SET serv_lat='$latitude',serv_lon='$longitude',created_at=NOW(),created_by='$user_master_id'";
+      $update="UPDATE vendor_status SET serv_lat='$latitude',serv_lon='$longitude',created_at=NOW(),created_by='$user_master_id' WHERE serv_pro_id='$user_master_id'";
       $ins_result = $this->db->query($update);
     }
     if($ins_result){

@@ -1829,6 +1829,37 @@ sp.status AS Payment_status,DATE_FORMAT(so.finish_datetime, '%d-%m-%Y %h:%s') as
 
 
 
+  //-------------------- Cancel  reason list   -------------------//
+
+
+
+      function list_reason_for_cancel($user_master_id){
+        $select="SELECT * FROM cancel_master WHERE user_type=5";
+           $res_offer = $this->db->query($select);
+           if($res_offer->num_rows()==0){
+               $response = array("status" => "error", "msg" => "No  Service found","msg_en"=>"","msg_ta"=>"");
+           }else{
+             $offer_result = $res_offer->result();
+             foreach($offer_result as $rows){
+               $cancel_list[]=array(
+                 "id"=>$rows->id,
+                 "cancel_reason"=>$rows->reasons,
+               );
+              }
+
+              $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list,"msg_en"=>"","msg_ta"=>"");
+
+
+
+           }
+           return $response;
+      }
+      //-------------------- Cancel  reason list   -------------------//
+
+
+
+
+
 }
 
 ?>

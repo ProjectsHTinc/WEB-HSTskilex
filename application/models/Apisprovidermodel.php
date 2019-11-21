@@ -1389,53 +1389,37 @@ return $response;
 
     public function List_requested_services($user_master_id)
     {
-        /*
-        $sQuery = "SELECT
-        A.id,
-        A.service_location,
-        DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
-        A.status,
-        B.main_cat_name,
-        B.main_cat_ta_name,
-        C.sub_cat_name,
-        C.sub_cat_ta_name,
-        D.service_name,
-        D.service_ta_name,
-        E.from_time,
-        E.to_time
-
-        FROM
-        service_orders A,
-        main_category B,
-        sub_category C,
-        services D,
-        service_timeslot E
-        WHERE
-        A.serv_prov_id = '".$user_master_id."' AND (A.status = 'Requested' OR A.status = 'Accepted') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
-        */
-        $sQuery         = "SELECT
-					A.id,
-					A.service_location,
-					DATE_FORMAT(A.order_date, '%e-%m-%Y') AS order_date,
-					AA.status,
-					B.main_cat_name,
-					B.main_cat_ta_name,
-					C.sub_cat_name,
-					C.sub_cat_ta_name,
-					D.service_name,
-					D.service_ta_name,
-					E.from_time,
-					E.to_time
-				FROM
-					service_order_history AA,
-					service_orders A,
-					main_category B,
-					sub_category C,
-					services D,
-					service_timeslot E
-				WHERE
-					AA.serv_prov_id = '" . $user_master_id . "'
-          AND (AA.status = 'Requested' OR AA.status = 'Accepted') AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id ORDER BY A.id desc";
+        $sQuery="SELECT so.id,soh.status,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_name,sc.sub_cat_ta_name,s.service_name,s.service_ta_name,st.from_time,st.to_time
+    from service_orders as so
+    left join service_order_history as soh on soh.service_order_id=so.id
+    left JOIN main_category as mc on mc.id=so.main_cat_id
+    left join sub_category as sc on sc.id=so.sub_cat_id
+    left join services as s on s.id=so.service_id
+    left join service_timeslot as st on st.id=so.order_timeslot
+    where so.serv_prov_id='$user_master_id'  and (soh.status='Requested' OR so.status='Accepted') GROUP by so.id";
+        // $sQuery         = "SELECT
+				// 	A.id,
+				// 	A.service_location,
+				// 	DATE_FORMAT(A.order_date, '%e-%m-%Y') AS order_date,
+				// 	AA.status,
+				// 	B.main_cat_name,
+				// 	B.main_cat_ta_name,
+				// 	C.sub_cat_name,
+				// 	C.sub_cat_ta_name,
+				// 	D.service_name,
+				// 	D.service_ta_name,
+				// 	E.from_time,
+				// 	E.to_time
+				// FROM
+				// 	service_order_history AA,
+				// 	service_orders A,
+				// 	main_category B,
+				// 	sub_category C,
+				// 	services D,
+				// 	service_timeslot E
+				// WHERE
+				// 	AA.serv_prov_id = '" . $user_master_id . "'
+        //   AND (AA.status = 'Requested' OR AA.status = 'Accepted') AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id ORDER BY A.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -2473,6 +2457,36 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
       return $response;
     }
   //#################### GET deposit amount ####################//
+
+
+
+  //-------------------- Cancel  reason list   -------------------//
+
+
+
+      function list_reason_for_cancel($user_master_id){
+        $select="SELECT * FROM cancel_master WHERE user_type=5";
+           $res_offer = $this->db->query($select);
+           if($res_offer->num_rows()==0){
+               $response = array("status" => "error", "msg" => "No  Service found","msg_en"=>"","msg_ta"=>"");
+           }else{
+             $offer_result = $res_offer->result();
+             foreach($offer_result as $rows){
+               $cancel_list[]=array(
+                 "id"=>$rows->id,
+                 "cancel_reason"=>$rows->reasons,
+               );
+              }
+
+              $response = array("status" => "success", "msg" => "Service Cancelled","reason_list"=>$cancel_list,"msg_en"=>"","msg_ta"=>"");
+
+
+
+           }
+           return $response;
+      }
+
+      //-------------------- Cancel  reason list   -------------------//
 
 
     function payment_notification($user_master_id,$provider_id,$expert_id){

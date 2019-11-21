@@ -1543,12 +1543,11 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
   //----------------------Service order bills---------------//
 
-//-------------------- Service order Summary details  -------------------//
+//-------------------- Cancel  reason list   -------------------//
 
 
 
     function list_reason_for_cancel($user_master_id){
-
       $select="SELECT * FROM cancel_master WHERE user_type=5";
          $res_offer = $this->db->query($select);
          if($res_offer->num_rows()==0){
@@ -1569,6 +1568,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
          }
          return $response;
     }
+    //-------------------- Cancel  reason list   -------------------//
 
 
 //-------------------- Cancel  Service order    -------------------//

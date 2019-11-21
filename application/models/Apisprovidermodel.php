@@ -2465,7 +2465,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
 
       function list_reason_for_cancel($user_master_id){
-        $select="SELECT * FROM cancel_master WHERE user_type=5";
+        $select="SELECT * FROM cancel_master WHERE user_type=3";
            $res_offer = $this->db->query($select);
            if($res_offer->num_rows()==0){
                $response = array("status" => "error", "msg" => "No  Service found","msg_en"=>"","msg_ta"=>"");

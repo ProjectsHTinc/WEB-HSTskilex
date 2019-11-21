@@ -1623,6 +1623,10 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
               $insert="INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,status,created_at,created_by) VALUES ('$cancel_id','$user_master_id','$service_order_id','$comments','Cancelled',NOW(),'$user_master_id')";
               $res_insert = $this->db->query($insert);
+
+              $update_hist="UPDATE service_order_history SET status='Cancelled',serv_prov_id='$user_master_id' WHERE service_order_id='$id'";
+              $res_update_hist = $this->db->query($update_hist);
+
               $update="UPDATE service_orders SET status='Cancelled',updated_at=NOW(),updated_by='$user_master_id' WHERE id='$id'";
               $res_update = $this->db->query($update);
               if($res_update){

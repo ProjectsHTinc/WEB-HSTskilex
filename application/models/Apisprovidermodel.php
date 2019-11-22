@@ -583,6 +583,7 @@ return $response;
        $result=$res->result();
        $response = array("status" => "success","msg" => "View Application","applicant" => $result);
      }
+       return $response;
 
     }
 

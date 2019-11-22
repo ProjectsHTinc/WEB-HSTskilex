@@ -337,6 +337,39 @@ class Apisprovider extends CI_Controller
 //-----------------------------------------------//
 
 
+    //-----------------------------------------------//
+
+  public function check_application_status()
+  {
+    // $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+    if(!$this->checkMethod())
+    {
+      return FALSE;
+    }
+
+    if($_POST == FALSE)
+    {
+      $res = array();
+      $res["opn"] = "Customer Profile Update";
+      $res["scode"] = 204;
+      $res["message"] = "Input error";
+
+      echo json_encode($res);
+      return;
+    }
+
+
+    $user_master_id  = $this->input->post("user_master_id");
+    $status  = $this->input->post("status");
+    $data['result']=$this->apisprovidermodel->check_application_status($user_master_id,$status);
+    $response = $data['result'];
+    echo json_encode($response);
+  }
+
+//-----------------------------------------------//
+
+
       //-----------------------------------------------//
 
       public function get_deposit_amt()
@@ -1201,6 +1234,7 @@ class Apisprovider extends CI_Controller
     }
 
     //-----------------------------------------------//
+
 
 
     //-----------------------------------------------//

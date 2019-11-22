@@ -349,7 +349,7 @@ class Apisprovidermodel extends CI_Model
             }
 
             $doc_url    = base_url() . 'assets/providers/documents/';
-            $sQuery     = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.status FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='" . $user_master_id . "'";
+            $sQuery     = "SELECT A.id,A.doc_master_id,B.doc_name,A.doc_proof_number, A.file_name,A.status FROM document_details A, document_master B WHERE A.doc_master_id = B.id AND A.user_master_id='" . $user_master_id . "'";
             $doc_result = $this->db->query($sQuery);
             if ($doc_result->num_rows() != 0) {
                 foreach ($doc_result->result() as $rows) {
@@ -1054,7 +1054,7 @@ return $response;
     {
         $doc_url = base_url() . 'assets/providers/documents/';
 
-        $sQuery     = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='" . $user_master_id . "'";
+        $sQuery     = "SELECT A.id,A.doc_master_id,B.doc_name,A.doc_proof_number, A.file_name,A.status FROM document_details A, document_master B WHERE A.doc_master_id = B.id AND A.user_master_id='" . $user_master_id . "'";
         $doc_result = $this->db->query($sQuery);
 
 
@@ -1327,7 +1327,7 @@ return $response;
 
         }
 
-        $sQuery     = "SELECT A.`id`,A.doc_master_id,B.doc_name,A.`doc_proof_number`, A.`file_name`,A.`status` FROM document_details A, document_master B WHERE A.`doc_master_id` = B.id AND A.`user_master_id`='" . $serv_person_id . "'";
+        $sQuery     = "SELECT A.id,A.doc_master_id,B.doc_name,A.doc_proof_number, A.file_name,A.status FROM document_details A, document_master B WHERE A.doc_master_id = B.id AND A.user_master_id='" . $serv_person_id . "'";
         $doc_result = $this->db->query($sQuery);
 
         if ($doc_result->num_rows() > 0) {
@@ -1474,8 +1474,8 @@ return $response;
 					services D,
 					service_timeslot E
 				WHERE
-					  AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND A.id = '" . $service_order_id . "' AND AA.service_order_id = A.id AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
-            AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					  AA.serv_prov_id = '" . $user_master_id . "' AND AA.status = 'Requested' AND A.id = '" . $service_order_id . "' AND AA.service_order_id = A.id AND A.main_cat_id = B.id AND A.sub_cat_id = C.id
+            AND A.service_id = D.id AND A.order_timeslot = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1682,7 +1682,7 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
+					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1733,7 +1733,7 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id
+					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
            AND A.serv_pers_id = F.user_master_id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
@@ -1802,8 +1802,8 @@ return $response;
 					service_timeslot E,
 					service_person_details F
 				WHERE
-					 A.serv_prov_id = '$user_master_id' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id
-           AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
+					 A.serv_prov_id = '$user_master_id' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.main_cat_id = B.id AND A.sub_cat_id = C.id
+           AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1856,7 +1856,7 @@ return $response;
 					service_person_details F
 				WHERE
 					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "'
-           AND A.status = 'Initiated' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id AND A.serv_pers_id = F.user_master_id";
+           AND A.status = 'Initiated' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -1924,7 +1924,7 @@ return $response;
     public function Additional_service_orders($service_order_id)
     {
         $sQuery      = "SELECT
-						A.`ad_service_rate_card`,
+						A.ad_service_rate_card,
 						B.service_name,
 						B.service_ta_name,
 						C.main_cat_name,
@@ -2174,7 +2174,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 					services D,
 					service_timeslot E
 				WHERE
-					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
@@ -2221,19 +2221,19 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 					services D,
 					service_timeslot E
 				WHERE
-					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.`main_cat_id` = B.id AND A.`sub_cat_id` = C.id AND A.`service_id` = D.id AND A.`order_timeslot` = E.id";
+					 A.id = '" . $service_order_id . "' AND A.serv_prov_id = '" . $user_master_id . "' AND A.status = 'Cancelled' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id";
         $serv_result    = $this->db->query($sQuery);
         $service_result = $serv_result->result();
 
         $reason_query  = "SELECT
-						A.id,C.reasons,A.`comments`,B.id as cancel_user_id,D.id as role_id,D.role_name
+						A.id,C.reasons,A.comments,B.id as cancel_user_id,D.id as role_id,D.role_name
 					FROM
 						cancel_history A,
 						login_users B,
 						cancel_master C,
 						user_role D
 					WHERE
-						A.`service_order_id` = '" . $service_order_id . "' AND A.`user_master_id` = B.id AND B.id AND A.`cancel_master_id` = C.id AND B.user_type = D.id";
+						A.service_order_id = '" . $service_order_id . "' AND A.user_master_id = B.id AND B.id AND A.cancel_master_id = C.id AND B.user_type = D.id";
         $reason_res    = $this->db->query($reason_query);
         $reason_result = $reason_res->result();
         if ($reason_res->num_rows() > 0) {
@@ -2304,16 +2304,25 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function Transaction_details($user_master_id)
     {
-        $sql       = "SELECT total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '" . $user_master_id . "' AND DATE(`service_date`) >= Date(NOW()) - INTERVAL 1 DAY";
+        $sql       = "SELECT id,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "' AND DATE(service_date) >= Date(NOW()) - INTERVAL 1 DAY";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {
             $yesterday_result = $tran_ress->result();
         } else {
-            $yesterday_result = "No Records Found";
+            $yesterday_result = array(
+              "total_service_per_day"=>"0",
+              "serv_total_amount"=>"0",
+              "serv_prov_commission_amt"=>"0",
+              "skilex_commission_amt"=>"0",
+              "online_transaction_amt"=>"0",
+              "offline_transaction_amt"=>"0",
+              "taxable_amount"=>"0"
+
+            );
         }
 
-        $sQuery       = "SELECT SUM(total_service_per_day) AS total_services,SUM(serv_total_amount) AS total_amount,SUM(serv_prov_commission_amt) AS total_serv_prov_commission,SUM(skilex_commission_amt) AS total_skilex_commission,SUM(online_transaction_amt) AS total_online_transaction,SUM(offline_transaction_amt) AS total_offline_transaction,SUM(taxable_amount) AS total_taxable_amount FROM daily_payment_transaction WHERE `serv_prov_id` = '" . $user_master_id . "' AND `service_date` <= Date(NOW()) - INTERVAL 2 DAY AND service_date < CURDATE()";
+        $sQuery       = "SELECT SUM(total_service_per_day) AS total_services,SUM(serv_total_amount) AS total_amount,SUM(serv_prov_commission_amt) AS total_serv_prov_commission,SUM(skilex_commission_amt) AS total_skilex_commission,SUM(online_transaction_amt) AS total_online_transaction,SUM(offline_transaction_amt) AS total_offline_transaction,SUM(taxable_amount) AS total_taxable_amount FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "' AND service_date <= Date(NOW()) - INTERVAL 2 DAY AND service_date < CURDATE()";
         $overall_ress = $this->db->query($sQuery);
 
         if ($overall_ress->num_rows() > 0) {
@@ -2338,7 +2347,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function Transaction_list($user_master_id)
     {
-        $sql       = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '" . $user_master_id . "'";
+        $sql       = "SELECT id,DATE_FORMAT(service_date, '%e-%M-%Y') AS service_date,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount  FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "'";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {
@@ -2368,7 +2377,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function View_transaction_details($user_master_id, $daily_payment_id)
     {
-        $sql       = "SELECT * FROM daily_payment_transaction WHERE `serv_prov_id` = '" . $user_master_id . "' AND id='" . $daily_payment_id . "'";
+        $sql       = "SELECT id,total_service_per_day,DATE_FORMAT(service_date,'%d-%M-%Y') as service_date,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,taxable_amount,pay_to_serv_prov,skilex_closing_status,serv_prov_closing_status,transaction_notes,order_id,ccavenue_track_id FROM daily_payment_transaction WHERE serv_prov_id = '$user_master_id' AND id='$daily_payment_id'";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {

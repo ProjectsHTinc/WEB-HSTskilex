@@ -2347,7 +2347,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function Transaction_list($user_master_id)
     {
-        $sql       = "SELECT id,DATE_FORMAT(service_date, '%e-%M-%Y') AS service_date,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount  FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "'";
+        $sql       = "SELECT id,DATE_FORMAT(service_date, '%e-%M-%Y') AS service_date,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount,serv_prov_closing_status  FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "'";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {

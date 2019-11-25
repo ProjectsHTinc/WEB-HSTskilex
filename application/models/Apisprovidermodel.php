@@ -573,7 +573,7 @@ return $response;
       if($status==1){
         $checkstatus="spd.serv_pers_verify_status='Approved'";
       }else{
-        $checkstatus="spd.serv_pers_verify_status='Pending' AND spd.serv_pers_verify_status='Rejected'";
+        $checkstatus="(spd.serv_pers_verify_status='Pending' OR spd.serv_pers_verify_status='Rejected')";
       }
      $select="SELECT spd.id,spd.full_name,lu.phone_no,spd.serv_pers_verify_status FROM service_person_details as spd left join login_users  as lu on lu.id=spd.user_master_id where spd.service_provider_id='$user_master_id' AND $checkstatus";
      $res   = $this->db->query($select);

@@ -1717,6 +1717,37 @@ class Apisprovider extends CI_Controller
 
     //-----------------------------------------------//
 
+    	public function view_addtional_service()
+    	{
+    		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+    		if(!$this->checkMethod())
+    		{
+    			return FALSE;
+    		}
+
+    		if($_POST == FALSE)
+    		{
+    			$res = array();
+    			$res["opn"] = "Service";
+    			$res["scode"] = 204;
+    			$res["message"] = "Input error";
+    			echo json_encode($res);
+    			return;
+    		}
+
+    		$service_order_id  = $this->input->post("service_order_id");
+    		$user_master_id  = $this->input->post("user_master_id");
+    		$data['result']=$this->apisprovidermodel->view_addtional_service($user_master_id,$service_order_id);
+    		$response = $data['result'];
+    		echo json_encode($response);
+    	}
+
+    //-----------------------------------------------//
+
+
+    //-----------------------------------------------//
+
     public function vendor_status_update()
     {
         $_POST = json_decode(file_get_contents("php://input"), TRUE);

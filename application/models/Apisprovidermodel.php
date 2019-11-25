@@ -1015,6 +1015,10 @@ return $response;
                     $sQuery    = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('" . $person_user_master_id . "','" . $doc_master_id . "','" . $doc_proof_number . "','" . $documentFileName . "','Pending',NOW(),'" . $user_master_id . "')";
                     $ins_query = $this->db->query($sQuery);
                 }
+                if ($doc_master_id == '3') {
+                    $sQuery    = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('" . $person_user_master_id . "','" . $doc_master_id . "','" . $doc_proof_number . "','" . $documentFileName . "','Pending',NOW(),'" . $user_master_id . "')";
+                    $ins_query = $this->db->query($sQuery);
+                }
             }
         }
         $response = array(
@@ -2311,7 +2315,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
             }
 
       //-------------------- Addtional Service order  details  -------------------//
-      
+
 
     //#################### Vendor status update ####################//
 

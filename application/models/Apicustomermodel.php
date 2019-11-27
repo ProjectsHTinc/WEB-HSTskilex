@@ -625,7 +625,7 @@ class Apicustomermodel extends CI_Model {
         $insert="DELETE FROM order_cart WHERE service_id='$service_id' AND user_master_id='$user_master_id'";
         $insert_result = $this->db->query($insert);
         if($insert_result){
-          $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
+          $get_total_count="SELECT count(*) as service_count,IFNULL(sum(s.rate_card),'') as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
             $cnt_query = $this->db->query($get_total_count);
             $result=$cnt_query->result();
             foreach($result as $rows){}

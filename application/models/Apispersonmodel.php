@@ -1098,7 +1098,7 @@ public function Services_list($category_id,$sub_category_id)
 
 
 function remove_addtional_services($user_master_id,$service_order_id,$service_id){
-  $sQuery = "DELETE * FROM service_order_additional WHERE service_order_id='$service_order_id' and service_id='$service_id'  ORDER BY created_at desc  LIMIT 1";
+  $sQuery = "DELETE  FROM service_order_additional WHERE service_order_id='$service_order_id' and service_id='$service_id'  ORDER BY created_at desc  LIMIT 1";
   $ins_query = $this->db->query($sQuery);
 
   if($ins_query){
@@ -1106,7 +1106,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          }else{
       $response=array("status" => "error","msg" => "Something Wrong");
          }
-
+	return $response;
 }
 
 //#################### Remove addtional Services End ####################//

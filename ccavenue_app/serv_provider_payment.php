@@ -85,8 +85,8 @@ for($i = 0; $i < $dataSize; $i++)
 
     	if($order_status=="Success")
     	{
-            $query = "UPDATE daily_payment_transaction SET skilex_closing_status ='Received', serv_prov_closing_status = 'Paid', order_id = '$orderid', ccavenue_track_id ='$track_id',updated_by = '$user_id',,updated_at = NOW() WHERE id = '$daily_payment_id'";
-			$objRs  = mysql_query($query) or die("Could not select Query ");
+            echo $query = "UPDATE daily_payment_transaction SET skilex_closing_status ='Received', serv_prov_closing_status = 'Paid', order_id = '$orderid', ccavenue_track_id ='$track_id',updated_by = '$user_id',,updated_at = NOW() WHERE id = '$daily_payment_id'";
+			     exit; $objRs  = mysql_query($query) or die("Could not select Query ");
 
 			$response["status"] = "Success";
 		}

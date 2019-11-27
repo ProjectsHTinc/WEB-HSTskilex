@@ -1115,13 +1115,17 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 
 	public function List_addtional_services($user_master_id,$service_order_id)
 	{
-		$sQuery = "SELECT
+		 $sQuery = "SELECT
 						A.id,
 						A.ad_service_rate_card,
 						B.service_name,
+            B.service_pic,
 						B.service_ta_name,
-						C.main_cat_name,
+            C.main_cat_name,
+						B.main_cat_id,
 						C.main_cat_ta_name,
+            B.sub_cat_id,
+            B.rate_card,
 						D.sub_cat_name,
 						D.sub_cat_ta_name
 					FROM
@@ -1133,12 +1137,31 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 						A.service_order_id = '".$service_order_id."' AND A.service_id = B.id AND B.main_cat_id = C.id AND B.sub_cat_id = D.id";
 		$serv_result = $this->db->query($sQuery);
 
-		$service_result = $serv_result->result();
 		$service_count = $serv_result->num_rows();
 
 		if($serv_result->num_rows()>0)
 		{
-			$response = array("status" => "success", "msg" => "Addtional Service list", "service_count" => $service_count, "service_list"=>$service_result);
+      $service_result = $serv_result->result();
+      foreach ($service_result as $rows)
+    {
+      $service_pic = $rows->service_pic;
+      if ($service_pic != ''){
+        $service_pic_url = base_url().'assets/category/'.$service_pic;
+      }else {
+         $service_pic_url = '';
+      }
+      $service_list_result[]  = array(
+          "id" => $rows->id,
+          "main_cat_id" => $rows->main_cat_id,
+          "sub_cat_id" => $rows->sub_cat_id,
+          "service_name" => $rows->service_name,
+          "service_ta_name" => $rows->service_ta_name,
+          "service_pic_url" => $service_pic_url,
+          "ad_service_rate_card" => $rows->rate_card,
+      );
+    }
+
+			$response = array("status" => "success", "msg" => "Addtional Service list", "service_count" => $service_count, "service_list"=>$service_list_result);
 		} else {
 			$response = array("status" => "error", "msg" => "Services Not Found");
 		}

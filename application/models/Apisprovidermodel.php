@@ -1835,7 +1835,7 @@ return $response;
     {
         $sQuery         = "SELECT
 					A.id,
-					A.service_location,
+					A.service_latlon as service_location,
 					DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
 					A.contact_person_name,
 					A.contact_person_number,

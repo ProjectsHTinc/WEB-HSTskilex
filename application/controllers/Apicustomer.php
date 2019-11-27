@@ -565,6 +565,43 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function remove_service_from_cart()
+	{
+	  $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Services";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$category_id  = $this->input->post("category_id");
+		$sub_category_id  = $this->input->post("sub_category_id");
+		$service_id  = $this->input->post("service_id");
+
+
+		$data['result']=$this->apicustomermodel->remove_service_from_cart($user_master_id,$category_id,$sub_category_id,$service_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function remove_service_to_cart()
 	{
 		 $_POST = json_decode(file_get_contents("php://input"), TRUE);

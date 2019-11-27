@@ -581,6 +581,7 @@ class Apicustomermodel extends CI_Model {
    }
 
 //-------------------- Services Details  -------------------//
+
 //-------------------- Add Services Cart  -------------------//
 
 
@@ -612,6 +613,39 @@ class Apicustomermodel extends CI_Model {
         return $response;
     }
 //-------------------- Add Services Cart  -------------------//
+
+
+//-------------------- Remove Services Cart  -------------------//
+
+
+    function remove_service_from_cart($user_master_id,$category_id,$sub_category_id,$service_id){
+       $check_service="SELECT * FROM order_cart WHERE service_id='$service_id' AND user_master_id='$user_master_id'";
+      $check_res= $this->db->query($check_service);
+      if($check_res->num_rows()==1){
+        $insert="DELETE FROM order_cart WHERE service_id='$service_id' AND user_master_id='$user_master_id'";
+        $insert_result = $this->db->query($insert);
+        if($insert_result){
+          $get_total_count="SELECT count(*) as service_count,sum(s.rate_card) as total_amt FROM order_cart as oc left join  services as s on s.id=oc.service_id WHERE oc.user_master_id='$user_master_id'";
+            $cnt_query = $this->db->query($get_total_count);
+            $result=$cnt_query->result();
+            foreach($result as $rows){}
+              $cart_count=array(
+                "service_count" => $rows->service_count,
+                "total_amt" => $rows->total_amt,
+              );
+
+
+          $response = array("status" => "success", "msg" => "Service added to cart","cart_total"=>$cart_count,"msg_en"=>"","msg_ta"=>"");
+        }else{
+          $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+        }
+      }else{
+        $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Service not found","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+      }
+
+        return $response;
+    }
+//-------------------- remove Services Cart  -------------------//
 
 
 //-------------------- Remove Services Cart  -------------------//

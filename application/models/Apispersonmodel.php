@@ -1077,7 +1077,7 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Add addtional Services ####################//
 
-	public function Add_addtional_services($user_master_id,$service_order_id,$service_id,$ad_service_rate_card)
+ function Add_addtional_services($user_master_id,$service_order_id,$service_id,$ad_service_rate_card)
 	{
 		$sQuery = "INSERT INTO service_order_additional (service_order_id,service_id,ad_service_rate_card,status,created_at,created_by) VALUES ('". $service_order_id . "','". $service_id . "','". $ad_service_rate_card . "','Active',NOW(),'". $user_master_id . "')";
 		$ins_query = $this->db->query($sQuery);
@@ -1093,6 +1093,23 @@ public function Services_list($category_id,$sub_category_id)
 
 //#################### Add addtional Services End ####################//
 
+
+//#################### Remove addtional Services End ####################//
+
+
+function remove_addtional_services($user_master_id,$service_order_id,$service_id){
+  $sQuery = "DELETE * FROM service_order_additional WHERE service_order_id='$service_order_id' and service_id='$service_id'  ORDER BY created_at desc  LIMIT 1";
+  $ins_query = $this->db->query($sQuery);
+
+  if($ins_query){
+      $response=array("status" => "success","msg" => "Services Removed Sucessfully!..");
+         }else{
+      $response=array("status" => "error","msg" => "Something Wrong");
+         }
+
+}
+
+//#################### Remove addtional Services End ####################//
 
 //#################### Additional service list orders ####################//
 

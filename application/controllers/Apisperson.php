@@ -943,7 +943,7 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
-	public function remove_addtional_services()
+	public function list_remove_addtional_services()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -969,7 +969,7 @@ class Apisperson extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$order_additional_id  = $this->input->post("order_additional_id");
 
-		$data['result']=$this->apispersonmodel->Remove_addtional_services($user_master_id,$order_additional_id);
+		$data['result']=$this->apispersonmodel->list_remove_addtional_services($user_master_id,$order_additional_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

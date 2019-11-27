@@ -1150,7 +1150,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 
 //#################### Remove Additional service remove ####################//
 
-	public function Remove_addtional_services($user_master_id,$order_additional_id)
+	public function list_remove_addtional_services($user_master_id,$order_additional_id)
 	{
 		$sQuery = "DELETE FROM service_order_additional WHERE id = '".$order_additional_id."'";
 		$serv_result = $this->db->query($sQuery);

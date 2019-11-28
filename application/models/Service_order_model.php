@@ -175,7 +175,7 @@ Class service_order_model extends CI_Model
              }
          }
 
-        $update="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
+        $update="UPDATE service_order_history SET status='Expired',created_at=NOW()  WHERE service_order_id='$service_order_id'";
         $res_update=$this->db->query($update);
 
 

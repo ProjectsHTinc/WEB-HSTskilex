@@ -163,9 +163,26 @@ Class service_order_model extends CI_Model
         $this->smsmodel->send_sms($phone_no,$notes);
         $update="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
         $res_update=$this->db->query($update);
+
+        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
+         $user_result = $this->db->query($sQuery);
+         if ($user_result->num_rows() > 0) {
+             foreach ($user_result->result() as $rows) {
+               $gcm_key=$rows->mobile_key;
+               $mobile_type=$rows->mobile_type;
+               $head='Skilex';
+               $message="You have received order from customer.";
+               $user_type='3';
+               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+             }
+         }
+
+         
         $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at) VALUES('$service_order_id','$prov_id','Requested',NOW())";
         $res_inset=$this->db->query($insert);
         if($res_inset){
+
+
             $data = array("status" => "success");
               return $data;
         }else{

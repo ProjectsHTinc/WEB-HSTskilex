@@ -161,8 +161,6 @@ Class service_order_model extends CI_Model
         $phone_no=$rows->phone_no;
         $notes="You Received order from Customer.Please look into app for more details";
         $this->smsmodel->send_sms($phone_no,$notes);
-        $update="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
-        $res_update=$this->db->query($update);
 
         $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$prov_id'";
          $user_result = $this->db->query($sQuery);
@@ -175,6 +173,35 @@ Class service_order_model extends CI_Model
                $user_type='3';
                $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
              }
+         }
+
+        $update="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
+        $res_update=$this->db->query($update);
+
+
+
+
+         $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
+         $result_expired=$this->db->query($select_expired_user);
+         if($result_expired->num_rows()==0){
+
+         }else{
+           $result_exp=$result_expired->result();
+           foreach($result_exp as $rows_expired){
+           $serv_id=$rows_expired->serv_prov_id;
+           $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_id'";
+            $user_result = $this->db->query($sQuery);
+            if ($user_result->num_rows() > 0) {
+                foreach ($user_result->result() as $rows) {
+                  $gcm_key=$rows->mobile_key;
+                  $mobile_type=$rows->mobile_type;
+                  $head='Skilex';
+                  $message="Service Order expired.";
+                  $user_type='3';
+                  $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                }
+            }
+           }
          }
 
 

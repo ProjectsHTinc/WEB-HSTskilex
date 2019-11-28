@@ -1048,7 +1048,7 @@ class Apicustomermodel extends CI_Model {
                      }
                  }
 
-                $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ";
+                $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                 $res_expried=$this->db->query($update_exper);
 
 

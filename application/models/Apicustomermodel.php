@@ -958,23 +958,10 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_provider_allocation($user_master_id,$service_id,$display_minute){
-      $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
+    $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
       $result = $this->db->query($query);
       if($result->num_rows()==1){
-        $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
-         $res_gcm= $this->db->query($get_gcm);
-         if($res_gcm->num_rows()==0){
-         }else{
-           $gcm_result=$res_gcm->result();
-             foreach($gcm_result as $rows_gcm){
-               $gcm_key=$rows_gcm->mobile_key;
-               $mobile_type=$rows_gcm->mobile_type;
-               $head='Skilex';
-               $message='Thank you for booking service ';
-               $user_type='5';
-               $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-             }
-         }
+
           $res=$result->result();
           foreach($res as $rows){}
           $advance_check=$rows->advance_payment_status;
@@ -992,7 +979,7 @@ class Apicustomermodel extends CI_Model {
           }else{
 
 
-              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
+          $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
 
 
 
@@ -1046,7 +1033,20 @@ class Apicustomermodel extends CI_Model {
                 $phone=$Phoneno;
                 $this->smsmodel->send_sms($phone,$notes);
                 ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
-
+                $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+                 $res_gcm= $this->db->query($get_gcm);
+                 if($res_gcm->num_rows()==0){
+                 }else{
+                   $gcm_result=$res_gcm->result();
+                     foreach($gcm_result as $rows_gcm){
+                       $gcm_key=$rows_gcm->mobile_key;
+                       $mobile_type=$rows_gcm->mobile_type;
+                       $head='Skilex';
+                       $message='Thank you for booking service ';
+                       $user_type='5';
+                       $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                     }
+                 }
 
                 $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ";
                 $res_expried=$this->db->query($update_exper);
@@ -1098,6 +1098,20 @@ class Apicustomermodel extends CI_Model {
 
              if($display_minute==1){
                $limit="LIMIT 1";
+               $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+                $res_gcm= $this->db->query($get_gcm);
+                if($res_gcm->num_rows()==0){
+                }else{
+                  $gcm_result=$res_gcm->result();
+                    foreach($gcm_result as $rows_gcm){
+                      $gcm_key=$rows_gcm->mobile_key;
+                      $mobile_type=$rows_gcm->mobile_type;
+                      $head='Skilex';
+                      $message='Thank you for booking service ';
+                      $user_type='5';
+                      $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                    }
+                }
              }else if($display_minute==2){
                  $limit="LIMIT 1,1";
              }else if($display_minute==3){

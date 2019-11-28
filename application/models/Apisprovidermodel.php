@@ -736,7 +736,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
@@ -775,7 +775,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
         return $response;
@@ -799,7 +799,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
@@ -858,7 +858,7 @@ return $response;
             } else {
                 $response = array(
                     "status" => "error",
-                    "msg" => "Something Wrong"
+                    "msg" => "Something Went Wrong"
                 );
             }
           }else{
@@ -898,7 +898,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
@@ -1390,7 +1390,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
@@ -1563,14 +1563,14 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
       }else{
         $response = array(
             "status" => "error",
-            "msg" => "Something Wrong"
+            "msg" => "Something Went Wrong"
         );
       }
 
@@ -1660,7 +1660,7 @@ return $response;
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
 
@@ -2093,6 +2093,10 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function Cancel_services($user_master_id, $service_order_id, $cancel_master_id, $comments)
     {
+
+      $check_order="SELECT * FROM service_order_history WHERE status='Expired' AND serv_prov_id='$user_master_id'";
+      $result_ch_order=$this->db->query($check_order);
+      if($result_ch_order->num_rows()==0){
         $update_sql    = "UPDATE service_orders SET status = 'Cancelled', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 
@@ -2154,9 +2158,17 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
         } else {
             $response = array(
                 "status" => "error",
-                "msg" => "Something Wrong"
+                "msg" => "Something Went Wrong"
             );
         }
+      }else{
+        $response = array(
+            "status" => "error",
+            "msg" => "Something Went Wrong"
+        );
+      }
+
+
 
         return $response;
     }

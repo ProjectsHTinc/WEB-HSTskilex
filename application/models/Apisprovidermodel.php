@@ -1506,10 +1506,10 @@ return $response;
     public function Accept_requested_services($user_master_id, $service_order_id)
     {
 
-       $check_order="SELECT * FROM service_orders WHERE status='Pending' AND id='$service_order_id'";
+       $check_order="SELECT * FROM service_order_history WHERE status='Expired' AND service_order_id='$service_order_id' AND serv_prov_id='$user_master_id'";
       $result_ch_order=$this->db->query($check_order);
 
-      if($result_ch_order->num_rows()==1){
+      if($result_ch_order->num_rows()==0){
         $update_sql    = "UPDATE service_orders SET serv_prov_id = '" . $user_master_id . "', status  = 'Accepted', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 

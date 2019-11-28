@@ -164,7 +164,7 @@ Class service_order_model extends CI_Model
         $update="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
         $res_update=$this->db->query($update);
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
+        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$prov_id'";
          $user_result = $this->db->query($sQuery);
          if ($user_result->num_rows() > 0) {
              foreach ($user_result->result() as $rows) {
@@ -177,7 +177,7 @@ Class service_order_model extends CI_Model
              }
          }
 
-         
+
         $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at) VALUES('$service_order_id','$prov_id','Requested',NOW())";
         $res_inset=$this->db->query($insert);
         if($res_inset){

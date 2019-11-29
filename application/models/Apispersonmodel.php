@@ -718,7 +718,7 @@ function user_info($user_master_id){
 					service_timeslot E,
 					service_provider_details F
 				WHERE
-					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND A.status = 'Initiated' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
+					 A.id = '".$service_order_id."' AND A.serv_pers_id = '".$user_master_id."' AND (A.status = 'Started' OR A.status = 'Initiated') AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
            AND A.serv_prov_id = F.user_master_id";
 		$serv_result = $this->db->query($sQuery);
 		$service_result = $serv_result->result();

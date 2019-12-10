@@ -194,7 +194,7 @@ class Apisprovidermodel extends CI_Model
             $enc_user_master_id = base64_encode($user_master_id);
 
             // $notes = "OTP :" . $OTP;
-            $msg = "Your SkilEx Verification code is: ".$OTP."  Y3XZqSQzX9V";
+            $msg = "Your SkilEx Verification code is: ".$OTP."  0gQ4RsI6iX4";
             $notes=$msg;
             $phone=$mobile;
             $this->smsmodel->send_sms($phone,$notes);

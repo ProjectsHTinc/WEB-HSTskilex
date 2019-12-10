@@ -81,45 +81,54 @@ for($i = 0; $i < $dataSize; $i++)
         $payment_id=$result[3];
 
          $sQuery = "INSERT INTO online_payment_history (order_id,user_id,track_id,bank_ref_no,order_status,failure_message,payment_mode,card_name,status_code,status_message,currency,amount,billing_name,billing_address, billing_city,billing_state,billing_zip,billing_country,billing_tel,billing_email,delievery_name,delievery_address,delievery_city,delievery_state,delievery_zip,delievery_country,delievery_tel,merch_param1,merch_param2,merch_param3,merch_param4,merch_param5,vault,offer_type,offer_code,discount_value, mer_amt,eci_value,retry,response_code,billing_notes,trans_date,bin_country) VALUES ('$orderid','$user_id','$track_id','$bank_ref_no','$order_status','$failure_message','$payment_mode','$card_name','$status_code','$status_message','$currency','$amount','$billing_name','$billing_address','$billing_city','$billing_state','$billing_zip','$billing_country','$billing_tel','$billing_email','$delievery_name','$delievery_address','$delievery_city','$delievery_state','$delievery_zip','$delievery_country','$delievery_tel','$merch_param1','$merch_param2','$merch_param3','$merch_param4','$merch_param5','$vault','$offer_type','$offer_code','$discount_value','$mer_amt','$eci_value','$retry','$response_code','$billing_notes','$transdate','$bin_country')";
-        $objRs  = mysql_query($sQuery) or die("Could not select Query ");
+        // $objRs  = mysql_query($sQuery) or die("Could not select Query ");
+          mysqli_query($link, $sQuery);
 
 
     	if($order_status=="Success")
     	{
 
         $update_so="UPDATE service_orders SET status='Paid' WHERE id='$service_id'";
-        $objRs  = mysql_query($update_so) or die("Could not select Query ");
+        // $objRs  = mysql_query($update_so) or die("Could not select Query ");
+          mysqli_query($link, $update_so);
 
         $update="UPDATE service_payments SET status='Paid',online_amount=online_amount+'$amount' WHERE id='$payment_id'";
-        $objRs  = mysql_query($update) or die("Could not select Query ");
+        // $objRs  = mysql_query($update) or die("Could not select Query ");
+          mysqli_query($link, $update);
 
         $insert_sph="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Online','$string','$track_id','Netamount','$order_status',NOW(),'$user_id')";
-        $objRs  = mysql_query($insert_sph) or die("Could not select Query ");
+        // $objRs  = mysql_query($insert_sph) or die("Could not select Query ");
+        mysqli_query($link, $insert_sph);
         $response["status"] = "Success";
 
 
-    	}
+    	}else{
+        $query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
+  			// $objRs  = mysql_query($query) or die("Could not select Query ");
+          mysqli_query($link, $query);
+        	$response["status"] = $order_status;
+      }
 
-    	if($order_status=="Aborted")
-    	{
-      $query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
-			$objRs  = mysql_query($query) or die("Could not select Query ");
-			$response["status"] = "Aborted";
-    	}
-
-    	if($order_status=="Failure")
-    	{
-    	$query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
-			$objRs  = mysql_query($query) or die("Could not select Query ");
-			$response["status"] = "Failure";
-    	}
-
-    	if($order_status=="Invalid")
-    	{
-    	$query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
-			$objRs  = mysql_query($query) or die("Could not select Query ");
-			$response["status"] = "Invalid";
-
-    	}
+    	// if($order_status=="Aborted")
+    	// {
+      // $query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
+			// $objRs  = mysql_query($query) or die("Could not select Query ");
+			// $response["status"] = "Aborted";
+    	// }
+      //
+    	// if($order_status=="Failure")
+    	// {
+    	// $query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
+			// $objRs  = mysql_query($query) or die("Could not select Query ");
+			// $response["status"] = "Failure";
+    	// }
+      //
+    	// if($order_status=="Invalid")
+    	// {
+    	// $query="INSERT INTO service_payment_history (service_order_id,payment_type,payment_order_id,ccavenue_track_id,notes,status,created_at,created_by) VALUES ('$service_id','Online','$string','$track_id','Advance','$order_status',NOW(),'$user_id')";
+			// $objRs  = mysql_query($query) or die("Could not select Query ");
+			// $response["status"] = "Invalid";
+      //
+    	// }
     echo json_encode($response);
 ?>

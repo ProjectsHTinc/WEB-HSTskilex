@@ -371,7 +371,7 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-6 col-lg-6 wow fadeInRight">
                     <div class="title-box left">
                         <h2 class="title">About SkilEx</h2>
-                        <p class="title">Skilex is an online platform to avail various home services at your door step </p>
+                        <p class="title">Skilex is an online platform to avail various skill based service at your door step </p>
                         <p class="desc" style="text-align:justify;">SkilEx is an online platform to get the best professionals to sort all your home needs. With the help of SkilEx App, you can book various household services at time and place of your own choice, we simplify your everyday living with a variety of at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible.
                       </p>
 

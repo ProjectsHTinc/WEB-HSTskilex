@@ -2062,6 +2062,39 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     //#################### Detail completed services End ####################//
 
+    //#################### Service bills list ####################//
+
+    	public function List_service_bills($user_master_id,$service_order_id)
+    	{
+    		 $bill_url = base_url().'assets/bills/';
+
+    		$sQuery = "SELECT * FROM service_order_bills WHERE service_order_id = '".$service_order_id."'";
+    		$doc_result = $this->db->query($sQuery);
+
+
+    		if($doc_result->num_rows()!=0)
+    		{
+    				foreach ($doc_result->result() as $rows)
+    				{
+    					 $id = $rows->id;
+    					 $bill_copy = $rows->file_name;
+
+    					$data[]  = array(
+    						"id" => $id,
+    						"bill_copy" => $bill_copy,
+    						"bill_copy_url" => $bill_url.$bill_copy
+    					);
+    				}
+    			$response = array("status" => "success", "msg" => "Bill list", "bill_copy_result"=>$data);
+    		} else {
+    			$response = array("status" => "error", "msg" => "Bills Not Found");
+    		}
+    		return $response;
+
+    	}
+
+    //#################### Service bills list End ####################//
+
 
     //#################### Cancel service Reasons ####################//
 

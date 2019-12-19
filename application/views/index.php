@@ -52,6 +52,7 @@
             <li><a href="#service-area">Services</a></li>
             <li><a href="#about-area">About</a></li>
             <li><a href="#feature-area">FAQ</a></li>
+            <li><a href="https://skilex.in/insights/">Blog</a></li>
             <li><a href="#contact-area">Contact</a></li>
           </ul>
         </div>

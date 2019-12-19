@@ -47,6 +47,7 @@
            <li><a href="<?php echo base_url(); ?>#service-area">Service</a></li>
            <li><a href="<?php echo base_url(); ?>#about-area">About</a></li>
              <li><a href="<?php echo base_url(); ?>#feature-area">FAQ</a></li>
+             <li><a href="https://skilex.in/insights/">Blog</a></li>
            <li><a href="<?php echo base_url(); ?>#contact-area">Contact</a></li>
          </ul>
        </div>

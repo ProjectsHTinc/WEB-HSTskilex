@@ -1758,7 +1758,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             $select="SELECT s.id,s.service_name,s.service_ta_name,s.rate_card,s.service_pic,s.rate_card_details,s.rate_card_details_ta FROM  service_order_additional AS soa LEFT JOIN services AS s ON soa.service_id=s.id WHERE service_order_id='$service_order_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
-                $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
+                $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"No Service found","msg_ta"=>"No Service found");
             }else{
               $offer_result = $res_offer->result();
               foreach($offer_result as $rows_service){

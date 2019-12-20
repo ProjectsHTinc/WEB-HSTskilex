@@ -366,7 +366,7 @@ From people who are capable</h2>
             <div class="row" style="padding-top:130px;">
                 <div class="col-xs-12 col-md-6 col-lg-6 hidden-xs hidden-sm text-center">
                     <figure class="single-image wow fadeInDown" data-wow-delay="0.5s" >
-                        <img src="<?php echo base_url(); ?>/assets/images/screen-1.png" alt="" style="height:500px;">
+                        <img src="<?php echo base_url(); ?>/assets/images/screen-112.png" alt="" style="height:500px;">
                     </figure>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6 wow fadeInRight">

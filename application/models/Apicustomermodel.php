@@ -1624,7 +1624,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
            $response = array("status" => "error", "msg" => "No  Bills found","msg_en"=>"Bills unavailable!","msg_ta"=>"ரசிதுகள் கிடைக்கவில்லை!");
        }else{
          $offer_result = $res_offer->result();
-         foreach($offer_result as $rows){}
+         foreach($offer_result as $rows){
            $file=$rows->file_name;
            if(empty($file)){
              $pic="";
@@ -1636,6 +1636,9 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
              "id"=>$rows->id,
              "file_bill"=>$pic,
            );
+
+
+         }
 
 
           $response = array("status" => "success", "msg" => "Service Bill Found","service_bill"=>$service_bill,"msg_en"=>"","msg_ta"=>"");

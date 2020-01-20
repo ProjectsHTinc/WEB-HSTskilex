@@ -23,7 +23,7 @@
                 <th>Company status</th>
                 <th>Expert Count</th>
                 <th>Deposit status</th>
-                <th>Login Status</th>
+                <!-- <th>Login Status</th> -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -47,12 +47,13 @@
                    ?>
                 </td>
 
-                <td><?php if($rows->login_status=='Inactive'){ ?>
-                  <button type="button" class="badge badge-danger ">Inactive</button>
-              <?php   }else{ ?>
-                <button type="button" class="badge badge-success ">Active</button>
-              <?php   }
-                 ?></td>
+                <!--<td>-->
+                  <!--<?php if($rows->login_status=='Inactive'){ ?>-->
+                <!--<button type="button" class="badge badge-danger ">Inactive</button>-->
+            <!--<?php   }else{ ?>-->
+              <!--<button type="button" class="badge badge-success ">Active</button>-->
+          <?php   }                 ?>
+               <!--</td>-->
                 <td>
                   <a title="Edit" href="<?php echo base_url(); ?>verifyprocess/get_vendor_details/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;
                   <a title="View Documents " href="<?php echo base_url(); ?>verifyprocess/get_vendor_doc_status/<?php echo $rows->company_status; ?>/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>&nbsp;

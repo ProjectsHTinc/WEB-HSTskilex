@@ -958,7 +958,7 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_provider_allocation($user_master_id,$service_id,$display_minute){
-    $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
+      $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
       $result = $this->db->query($query);
       if($result->num_rows()==1){
 
@@ -995,6 +995,8 @@ class Apicustomermodel extends CI_Model {
               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
               GROUP by spps.user_master_id order by spps.id asc LIMIT 1";
+
+
 
 
 
@@ -1044,7 +1046,7 @@ class Apicustomermodel extends CI_Model {
                        $head='Skilex';
                        $message='Thank you for booking service ';
                        $user_type='5';
-                       $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                      $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                      }
                  }
 
@@ -1057,6 +1059,7 @@ class Apicustomermodel extends CI_Model {
                 if($result_expired->num_rows()==0){
 
                 }else{
+
                   $result_exp=$result_expired->result();
                   foreach($result_exp as $rows_expired){
                   $serv_id=$rows_expired->serv_prov_id;
@@ -1069,7 +1072,7 @@ class Apicustomermodel extends CI_Model {
                          $head='Skilex';
                          $message="Service Order expired.";
                          $user_type='3';
-                         $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                        $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                        }
                    }
                   }
@@ -1146,7 +1149,7 @@ class Apicustomermodel extends CI_Model {
 
 
 
-                           $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                            $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
                               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
                               SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
                               FROM serv_prov_pers_skills AS spps
@@ -1167,6 +1170,7 @@ class Apicustomermodel extends CI_Model {
                               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
                               WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
                               AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
+
 
               }
 
@@ -1199,7 +1203,6 @@ class Apicustomermodel extends CI_Model {
                      }
                  }
                 $this->smsmodel->send_sms($phone,$notes);
-                ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                 $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                 $res_expried=$this->db->query($update_exper);
 

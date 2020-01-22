@@ -1831,7 +1831,8 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 //-------------------- Apply Coupon to Service Order  -------------------//
 
   function apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id){
-      $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+       $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
           $result_service=  $res_query->result();
@@ -1843,41 +1844,40 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
               foreach($result_service as $rows_service){}
                 $payment_id=$rows_service->id;
                 $advance=$rows_service->paid_advance_amount;
-                $total= $rows_service->total_service_amount;
+                 $total= $rows_service->total_service_amount;
 
-                $coupm_amt=($rows_coupon->offer_percent / 100) * $total;
-                $max_amt=$rows_coupon->max_offer_amount;
-                $dis_cp=$total-$coupm_amt;
-                if($coupm_amt > $max_amt){
-                  $final_total=$total-$max_amt;
-                  $payable=$final_total-$advance;
-                  if($coupon_id=='0'){
-                      $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                 $minimu_purchase_amt=$rows_coupon->minimum_purchase_amt;
+                 if($total >= $minimu_purchase_amt){
+                   $coupm_amt=($rows_coupon->offer_percent / 100) * $total;
+                   $max_amt=$rows_coupon->max_offer_amount;
+                   $dis_cp=$total-$coupm_amt;
+                  if($coupm_amt > $max_amt){
+                    $final_total=$total-$max_amt;
+                    $payable=$final_total-$advance;
+                    if($coupon_id=='0'){
+                        $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                    }else{
+                        $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                    }
                   }else{
-                      $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                    $final_total=$total-$coupm_amt;
+                    $payable=$final_total-$advance;
+                    if($coupon_id=='0'){
+                        $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                    }else{
+                        $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$coupm_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                    }
+
                   }
-
-
-                }else{
-                  $final_total=$total-$coupm_amt;
-                  $payable=$final_total-$advance;
-                  if($coupon_id=='0'){
-                      $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
-                  }else{
-                      $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$coupm_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
-                  }
-
-                }
-
-                	$update_result = $this->db->query($update);
-                  if($update_result){
-                    $response = array("status" => "success", "msg" => "You saved $rows_coupon->offer_percent","msg_en"=>"","msg_ta"=>"");
-                  }else{
-                    $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
-                  }
-
-
-
+                  	$update_result = $this->db->query($update);
+                    if($update_result){
+                      $response = array("status" => "success", "msg" => "You saved $rows_coupon->offer_percent","msg_en"=>"","msg_ta"=>"");
+                    }else{
+                      $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                    }
+                 }else{
+                    	$response = array("status" => "error", "msg" => "You have minimum amount coupon cannot applicable","msg_en"=>"You have minimum amount coupon cannot applicable!","msg_ta"=>"தவறான குறியீடு!");
+                 }
           }else{
             	$response = array("status" => "error", "msg" => "Coupon Invalid","msg_en"=>"Invaild code!","msg_ta"=>"தவறான குறியீடு!");
           }

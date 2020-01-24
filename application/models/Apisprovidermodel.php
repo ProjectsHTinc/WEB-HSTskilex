@@ -1068,6 +1068,7 @@ return $response;
                 $doc_master_id    = $rows->doc_master_id;
                 $doc_name         = $rows->doc_name;
                 $doc_proof_number = $rows->doc_proof_number;
+                $status = $rows->status;
                 $file_name        = $rows->file_name;
 
                 $data[] = array(
@@ -1076,6 +1077,7 @@ return $response;
                     "doc_name" => $doc_name,
                     "doc_proof_number" => $doc_proof_number,
                     "file_name" => $file_name,
+                    "status"=>$status,
                     "file_url" => $doc_url . $file_name
                 );
             }

@@ -1571,7 +1571,7 @@ return $response;
       }else{
         $response = array(
             "status" => "error",
-            "msg" => "Something Went Wrong"
+            "msg" => "Service has been Expired"
         );
       }
 

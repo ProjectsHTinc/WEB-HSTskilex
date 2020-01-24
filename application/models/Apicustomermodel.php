@@ -2140,6 +2140,19 @@ function proceed_for_payment($user_master_id,$service_order_id){
   }
   //-------------------- Service Payment success -------------------//
 
+
+
+  function check_every_minute($user_master_id){
+    ob_implicit_flush(true);
+    ob_end_flush();
+
+    for ($i=1; $i<=3; $i++) {
+       $insert="INSERT INTO serv_pers_tracking (user_master_id,created_at) VALUES('$i',NOW())";
+       $user_result = $this->db->query($insert);
+       sleep(30);
+    }
+  }
+
 }
 
 ?>

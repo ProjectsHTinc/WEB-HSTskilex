@@ -1506,7 +1506,7 @@ return $response;
     public function Accept_requested_services($user_master_id, $service_order_id)
     {
 
-       $check_order="SELECT * FROM service_order_history WHERE status='Expired' AND service_order_id='$service_order_id' AND serv_prov_id='$user_master_id'";
+       $check_order="SELECT * FROM service_order_history WHERE  service_order_id='$service_order_id' AND serv_prov_id='$user_master_id'";
       $result_ch_order=$this->db->query($check_order);
 
       if($result_ch_order->num_rows()==0){

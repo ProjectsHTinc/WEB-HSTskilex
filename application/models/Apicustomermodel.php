@@ -966,7 +966,8 @@ class Apicustomermodel extends CI_Model {
       if($cnt_provider->prov_count==0){
 
       }else{
-        for ($i=1; $i<=3; $i++) {
+        $cnt=$cnt_provider->prov_count-1;
+        for ($i=1; $i<=$cnt; $i++) {
           $display_minute=$i;
           $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
           $result = $this->db->query($query);

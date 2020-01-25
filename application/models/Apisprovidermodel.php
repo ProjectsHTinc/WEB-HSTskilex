@@ -1081,9 +1081,15 @@ return $response;
                     "file_url" => $doc_url . $file_name
                 );
             }
+
+            $bank_details="SELECT bank_name,bank_branch_name,bank_acc_no,bank_ifsc_code FROM service_provider_details where user_master_id='$user_master_id'";
+            $bank_result = $this->db->query($bank_details);
+            $bank_ex=$bank_result->result();
+
             $response = array(
                 "status" => "success",
                 "msg" => "Documents list",
+                "bank_details"=>$bank_ex,
                 "document_result" => $data
             );
         } else {

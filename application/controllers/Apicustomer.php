@@ -850,8 +850,8 @@ class Apicustomer extends CI_Controller {
 		$order_id = $this->input->post("order_id");
 		$result = explode("-", $order_id);
 	 	$service_id= $result[2];
-		$display_minute = $this->input->post("display_minute");
-		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id,$display_minute);
+		// $display_minute = $this->input->post("display_minute");
+		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1473,7 +1473,7 @@ class Apicustomer extends CI_Controller {
 
 	public function check_every_minute()
 	{
-	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+	   // $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
 		if(!$this->checkMethod())
 		{

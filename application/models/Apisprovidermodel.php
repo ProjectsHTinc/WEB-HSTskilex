@@ -1058,7 +1058,7 @@ return $response;
     {
         $doc_url = base_url() . 'assets/providers/documents/';
 
-        $sQuery     = "SELECT A.id,A.doc_master_id,B.doc_name,A.doc_proof_number, A.file_name,A.status FROM document_details A, document_master B WHERE A.doc_master_id = B.id AND A.user_master_id='" . $user_master_id . "'";
+        $sQuery     = "SELECT A.id,A.doc_master_id,B.doc_name,A.doc_proof_number, A.file_name,A.status FROM document_details A, document_master B WHERE A.doc_master_id = B.id AND A.user_master_id='$user_master_id'";
         $doc_result = $this->db->query($sQuery);
 
 
@@ -1103,6 +1103,9 @@ return $response;
     }
 
     //#################### Document list End ####################//
+  //#################### Document rejected details ####################//
+
+
 
 
     //#################### Welcome status ####################//
@@ -1132,7 +1135,26 @@ return $response;
 
     //#################### Document list End ####################//
 
+    function document_rejected_details($doc_detail_id){
+      $sQuery      = " SELECT * FROM document_notes WHERE doc_detail_id='$doc_detail_id' AND STATUS='Rejected'";
+      $usr_result  = $this->db->query($sQuery);
+      $user_result = $usr_result->result();
 
+
+      if ($usr_result->num_rows() > 0) {
+          $response = array(
+              "status" => "success",
+              "msg" => "Document notes",
+              "doc_notes" => $user_result
+          );
+      } else {
+          $response = array(
+              "status" => "error",
+              "msg" => "Document notes Not found"
+          );
+      }
+      return $response;
+    }
 
     //#################### Create Service Persons ####################//
 

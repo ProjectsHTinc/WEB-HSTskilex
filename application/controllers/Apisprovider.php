@@ -900,6 +900,32 @@ class Apisprovider extends CI_Controller
     //-----------------------------------------------//
 
 
+    public function document_rejected_details(){
+
+      $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+      if (!$this->checkMethod()) {
+          return FALSE;
+      }
+
+      if ($_POST == FALSE) {
+          $res            = array();
+          $res["opn"]     = "Documents";
+          $res["scode"]   = 204;
+          $res["message"] = "Input error";
+
+          echo json_encode($res);
+          return;
+      }
+      $user_master_id = '';
+
+      $doc_detail_id = $this->input->post("doc_detail_id");
+      $data['result'] = $this->apisprovidermodel->document_rejected_details($doc_detail_id);
+      $response       = $data['result'];
+      echo json_encode($response);
+    }
+
+
     //-----------------------------------------------//
 
     public function provider_active_status()

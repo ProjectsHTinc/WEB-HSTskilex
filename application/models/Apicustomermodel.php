@@ -958,277 +958,303 @@ class Apicustomermodel extends CI_Model {
 
 
     function service_provider_allocation($user_master_id,$service_id){
-
       ob_implicit_flush(true);
       ob_end_flush();
-      for ($i=1; $i<=3; $i++) {
-        $display_minute=$i;
-        $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
-        $result = $this->db->query($query);
-        if($result->num_rows()==1){
+    $count_provider="SELECT count(*) as prov_count from login_users as lu where lu.status='Active' and lu.user_type=3 and lu.document_verify='Y'";
+    $result_cnt = $this->db->query($count_provider);
+    foreach($result_cnt->result() as $cnt_provider){}
+      if($cnt_provider->prov_count==0){
 
-            $res=$result->result();
-            foreach($res as $rows){}
-            $advance_check=$rows->advance_payment_status;
-            $selected_service_id=$rows->service_id;
-            $selected_main_cat_id=$rows->main_cat_id;
-            $service_latlon=$rows->service_latlon;
-            $contact_person_name=$rows->contact_person_name;
-            $contact_person_number=$rows->contact_person_number;
-            $result = explode(",", $service_latlon);
-            $lat=$result[0];
-            $long= $result[1];
+      }else{
+        for ($i=1; $i<=3; $i++) {
+          $display_minute=$i;
+          $query="SELECT * FROM service_orders WHERE id='$service_id' AND customer_id='$user_master_id' AND status='Pending'";
+          $result = $this->db->query($query);
+          if($result->num_rows()==1){
 
-            if($advance_check=='N'){
-                $response = array("status" => "error", "msg" => "Service Advance not Paid","msg_en"=>"","msg_ta"=>"");
-            }else{
-            $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
-              $result_last_sp_id=$this->db->query($get_last_service_provider_id);
-              $res_sp_id=$result_last_sp_id->result();
-              if($result_last_sp_id->num_rows()==0){
+              $res=$result->result();
+              foreach($res as $rows){}
+              $advance_check=$rows->advance_payment_status;
+              $selected_service_id=$rows->service_id;
+              $selected_main_cat_id=$rows->main_cat_id;
+              $service_latlon=$rows->service_latlon;
+              $contact_person_name=$rows->contact_person_name;
+              $contact_person_number=$rows->contact_person_number;
+              $result = explode(",", $service_latlon);
+              $lat=$result[0];
+              $long= $result[1];
 
-                $first_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no FROM serv_prov_pers_skills as spps
-                left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
-                left join login_users as lu on lu.id=spd.user_master_id
-                left join vendor_status as vs on vs.serv_pro_id=lu.id
-                LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-                WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
-                GROUP by spps.user_master_id order by spps.id asc LIMIT 1";
-
-                $ex_next_id=$this->db->query($first_id);
-                $res_next_ip=$ex_next_id->result();
-                foreach($res_next_ip as $rows_id_next){}
-                 $Phoneno=$rows_id_next->phone_no;
-
-                $full_name=$rows_id_next->owner_full_name;
-                $sp_user_master_id=$rows_id_next->user_master_id;
-
-
-              $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
-               $user_result = $this->db->query($sQuery);
-               if ($user_result->num_rows() > 0) {
-                   foreach ($user_result->result() as $rows) {
-                     $gcm_key=$rows->mobile_key;
-                     $mobile_type=$rows->mobile_type;
-                     $head='Skilex';
-                     $message="You have received order from customer.";
-                     $user_type='3';
-                     $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                   }
-               }
-               $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
-                $res_order_history=$this->db->query($check_order_history);
-
-                if($res_order_history->num_rows()==0){
-                  $title="Order";
-                  $gcm_key=$rows_id_next->mobile_key;
-                  $mobiletype=$rows_id_next->mobile_type;
-                  $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
-                  $phone=$Phoneno;
-                  $this->smsmodel->send_sms($phone,$notes);
-                  ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
-                  $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
-                   $res_gcm= $this->db->query($get_gcm);
-                   if($res_gcm->num_rows()==0){
-                   }else{
-                     $gcm_result=$res_gcm->result();
-                       foreach($gcm_result as $rows_gcm){
-                         $gcm_key=$rows_gcm->mobile_key;
-                         $mobile_type=$rows_gcm->mobile_type;
-                         $head='Skilex';
-                         $message='Thank you for booking service ';
-                         $user_type='5';
-                        $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                       }
-                   }
-
-                  $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
-                  $res_expried=$this->db->query($update_exper);
-
-
-                  $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
-                  $result_expired=$this->db->query($select_expired_user);
-                  if($result_expired->num_rows()==0){
-                  }else{
-                    $result_exp=$result_expired->result();
-                    foreach($result_exp as $rows_expired){
-                    $serv_id=$rows_expired->serv_prov_id;
-                    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_id'";
-                     $user_result = $this->db->query($sQuery);
-                     if ($user_result->num_rows() > 0) {
-                         foreach ($user_result->result() as $rows) {
-                           $gcm_key=$rows->mobile_key;
-                           $mobile_type=$rows->mobile_type;
-                           $head='Skilex';
-                           $message="Service Order expired.";
-                           $user_type='3';
-                          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                         }
-                     }
-                    }
-                  }
-                  $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
-                  $res_quest=$this->db->query($request_insert_query);
-                  if($res_quest){
-                    $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
-                  }else{
-                    $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
-                  }
-                }else{
-                    $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
-                }
+              if($advance_check=='N'){
+                  $response = array("status" => "error", "msg" => "Service Advance not Paid","msg_en"=>"","msg_ta"=>"");
               }else{
-                foreach($res_sp_id as $rows_last_sp_id){}
-                 $last_sp_id=$rows_last_sp_id->last_id;
-                $next_id=$display_minute+$last_sp_id;
+              $get_last_service_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
+                $result_last_sp_id=$this->db->query($get_last_service_provider_id);
+                $res_sp_id=$result_last_sp_id->result();
+                if($result_last_sp_id->num_rows()==0){
 
-               if($display_minute==1){
-                 $limit="LIMIT 1";
-                 $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
-                  $res_gcm= $this->db->query($get_gcm);
-                  if($res_gcm->num_rows()==0){
-                  }else{
-                    $gcm_result=$res_gcm->result();
-                      foreach($gcm_result as $rows_gcm){
-                        $gcm_key=$rows_gcm->mobile_key;
-                        $mobile_type=$rows_gcm->mobile_type;
-                        $head='Skilex';
-                        $message='Thank you for booking service ';
-                        $user_type='5';
-                        $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                      }
-                  }
-               }else if($display_minute==2){
-                   $limit="LIMIT 1,1";
-               }else if($display_minute==3){
-                 $limit="LIMIT 2,1";
-               }else{
-                 $limit="LIMIT 0";
-               }
+                  $first_id="SELECT ns.mobile_key,ns.mobile_type,spps.user_master_id,spd.owner_full_name,lu.phone_no FROM serv_prov_pers_skills as spps
+                  left join service_provider_details as spd on spd.user_master_id=spps.user_master_id
+                  left join login_users as lu on lu.id=spd.user_master_id
+                  left join vendor_status as vs on vs.serv_pro_id=lu.id
+                  LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                  WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' and lu.status='Active'
+                  GROUP by spps.user_master_id order by spps.id asc LIMIT 1";
 
-                  $check_provider="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
-                FROM serv_prov_pers_skills AS spps
-                LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
-                LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
-                LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-                LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-                WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
-
-              $res_chec_provider=$this->db->query($check_provider);
-                if($res_chec_provider->num_rows()==1){
-
-
-                $get_sp_id="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-                COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-                SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status
-                FROM serv_prov_pers_skills AS spps
-                LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
-                LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
-                LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-                LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-                WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
-
-                }else{
-                              $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-                                COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-                                SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
-                                FROM serv_prov_pers_skills AS spps
-                                LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
-                                LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
-                                LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-                                LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-                                WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-                                AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
-                                UNION
-                                SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
-                                              COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
-                                              SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
-                                FROM serv_prov_pers_skills AS spps
-                                LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
-                                LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
-                                LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
-                                LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
-                                WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-                                AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
-
-
-                }
-                $ex_next_id=$this->db->query($get_sp_id);
-                if($ex_next_id->num_rows()==0){
-                  $response = array("status" => "error", "msg" => "Hitback","msg_en"=>"","msg_ta"=>"");
-                }else{
+                  $ex_next_id=$this->db->query($first_id);
                   $res_next_ip=$ex_next_id->result();
-                  foreach($res_next_ip as $rows_id_next){ }
-                  $Phoneno=$rows_id_next->phone_no;
+                  foreach($res_next_ip as $rows_id_next){}
+                   $Phoneno=$rows_id_next->phone_no;
+
                   $full_name=$rows_id_next->owner_full_name;
                   $sp_user_master_id=$rows_id_next->user_master_id;
-                  $title="Order";
-                  $gcm_key=$rows_id_next->mobile_key;
-                  $mobiletype=$rows_id_next->mobile_type;
-                  $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
-                  $phone=$Phoneno;
 
-                  $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
-                   $user_result = $this->db->query($sQuery);
-                   if ($user_result->num_rows() > 0) {
-                       foreach ($user_result->result() as $rows) {
-                         $gcm_key=$rows->mobile_key;
-                         $mobile_type=$rows->mobile_type;
-                         $head='Skilex';
-                         $message="You have received order from customer.";
-                         $user_type='3';
-                         $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+
+                $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
+                 $user_result = $this->db->query($sQuery);
+                 if ($user_result->num_rows() > 0) {
+                     foreach ($user_result->result() as $rows) {
+                       $gcm_key=$rows->mobile_key;
+                       $mobile_type=$rows->mobile_type;
+                       $head='Skilex';
+                       $message="You have received order from customer.";
+                       $user_type='3';
+                       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                     }
+                 }
+                 $check_order_history="SELECT * FROM service_order_history WHERE service_order_id='$service_id' and serv_prov_id='$sp_user_master_id'";
+                  $res_order_history=$this->db->query($check_order_history);
+
+                  if($res_order_history->num_rows()==0){
+                    $title="Order";
+                    $gcm_key=$rows_id_next->mobile_key;
+                    $mobiletype=$rows_id_next->mobile_type;
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $phone=$Phoneno;
+                    $this->smsmodel->send_sms($phone,$notes);
+                    ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+                    $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+                     $res_gcm= $this->db->query($get_gcm);
+                     if($res_gcm->num_rows()==0){
+                     }else{
+                       $gcm_result=$res_gcm->result();
+                         foreach($gcm_result as $rows_gcm){
+                           $gcm_key=$rows_gcm->mobile_key;
+                           $mobile_type=$rows_gcm->mobile_type;
+                           $head='Skilex';
+                           $message='Thank you for booking service ';
+                           $user_type='5';
+                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                         }
+                     }
+
+                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $res_expried=$this->db->query($update_exper);
+
+
+                    $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
+                    $result_expired=$this->db->query($select_expired_user);
+                    if($result_expired->num_rows()==0){
+                    }else{
+                      $result_exp=$result_expired->result();
+                      foreach($result_exp as $rows_expired){
+                      $serv_id=$rows_expired->serv_prov_id;
+                      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_id'";
+                       $user_result = $this->db->query($sQuery);
+                       if ($user_result->num_rows() > 0) {
+                           foreach ($user_result->result() as $rows) {
+                             $gcm_key=$rows->mobile_key;
+                             $mobile_type=$rows->mobile_type;
+                             $head='Skilex';
+                             $message="Service Order expired.";
+                             $user_type='3';
+                            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                           }
                        }
-                   }
-                  $this->smsmodel->send_sms($phone,$notes);
-                  $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
-                  $res_expried=$this->db->query($update_exper);
+                      }
+                    }
+                    $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
+                    $res_quest=$this->db->query($request_insert_query);
+                    if($res_quest){
+                      $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
+                    }else{
+                      $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                    }
+                  }else{
+                      $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                  }
+                }else{
+                  foreach($res_sp_id as $rows_last_sp_id){}
+                   $last_sp_id=$rows_last_sp_id->last_id;
+                  $next_id=$display_minute+$last_sp_id;
+
+                 if($display_minute==1){
+                   $limit="LIMIT 1";
+                   $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
+                    $res_gcm= $this->db->query($get_gcm);
+                    if($res_gcm->num_rows()==0){
+                    }else{
+                      $gcm_result=$res_gcm->result();
+                        foreach($gcm_result as $rows_gcm){
+                          $gcm_key=$rows_gcm->mobile_key;
+                          $mobile_type=$rows_gcm->mobile_type;
+                          $head='Skilex';
+                          $message='Thank you for booking service ';
+                          $user_type='5';
+                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                        }
+                    }
+                 }else if($display_minute==2){
+                     $limit="LIMIT 1,1";
+                 }else if($display_minute==3){
+                   $limit="LIMIT 2,1";
+                 }else{
+                   $limit="LIMIT 0";
+                 }
+
+                    $check_provider="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
+                  FROM serv_prov_pers_skills AS spps
+                  LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                  LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                  LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                  LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                  WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
+
+                $res_chec_provider=$this->db->query($check_provider);
+                  if($res_chec_provider->num_rows()==1){
 
 
-                  $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
-                  $result_expired=$this->db->query($select_expired_user);
-                  if($result_expired->num_rows()==0){
+                  $get_sp_id="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                  COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                  SIN( RADIANS( serv_lat ) ) ) ) AS distance,vs.status
+                  FROM serv_prov_pers_skills AS spps
+                  LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                  LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                  LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                  LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                  WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
 
                   }else{
-                    $result_exp=$result_expired->result();
-                    foreach($result_exp as $rows_expired){
-                    $serv_id=$rows_expired->serv_prov_id;
-                    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_id'";
+                                // $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                //   COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                                //   SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                                //   FROM serv_prov_pers_skills AS spps
+                                //   LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                                //   LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                                //   LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                                //   LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                                //   WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                                //   AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
+                                //   UNION
+                                //   SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                //                 COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                                //                 SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                                //   FROM serv_prov_pers_skills AS spps
+                                //   LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                                //   LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                                //   LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                                //   LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                                //   WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                                //   AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
+
+                                  $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                    COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                                    SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                                    FROM serv_prov_pers_skills AS spps
+                                    LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                                    LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                                    LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                                    LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                                    WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                                    AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
+                                    UNION
+                                    SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                                  COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                                                  SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                                    FROM serv_prov_pers_skills AS spps
+                                    LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                                    LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                                    LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                                    LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                                    WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                                    AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union";
+
+
+                  }
+                  $ex_next_id=$this->db->query($get_sp_id);
+                  if($ex_next_id->num_rows()==0){
+                    $response = array("status" => "error", "msg" => "Hitback","msg_en"=>"","msg_ta"=>"");
+                  }else{
+                    $res_next_ip=$ex_next_id->result();
+                    foreach($res_next_ip as $rows_id_next){ }
+                    $Phoneno=$rows_id_next->phone_no;
+                    $full_name=$rows_id_next->owner_full_name;
+                    $sp_user_master_id=$rows_id_next->user_master_id;
+                    $title="Order";
+                    $gcm_key=$rows_id_next->mobile_key;
+                    $mobiletype=$rows_id_next->mobile_type;
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $phone=$Phoneno;
+
+                    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
                      $user_result = $this->db->query($sQuery);
                      if ($user_result->num_rows() > 0) {
                          foreach ($user_result->result() as $rows) {
                            $gcm_key=$rows->mobile_key;
                            $mobile_type=$rows->mobile_type;
                            $head='Skilex';
-                           $message="Service Order expired.";
+                           $message="You have received order from customer.";
                            $user_type='3';
                            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                          }
                      }
-                    }
-                  }
-                  $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
-                  $res_quest=$this->db->query($request_insert_query);
+                    $this->smsmodel->send_sms($phone,$notes);
+                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $res_expried=$this->db->query($update_exper);
 
-                  if($res_quest){
-                    $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
-                  }else{
-                    $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+
+                    $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
+                    $result_expired=$this->db->query($select_expired_user);
+                    if($result_expired->num_rows()==0){
+
+                    }else{
+                      $result_exp=$result_expired->result();
+                      foreach($result_exp as $rows_expired){
+                      $serv_id=$rows_expired->serv_prov_id;
+                      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_id'";
+                       $user_result = $this->db->query($sQuery);
+                       if ($user_result->num_rows() > 0) {
+                           foreach ($user_result->result() as $rows) {
+                             $gcm_key=$rows->mobile_key;
+                             $mobile_type=$rows->mobile_type;
+                             $head='Skilex';
+                             $message="Service Order expired.";
+                             $user_type='3';
+                             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                           }
+                       }
+                      }
+                    }
+                    $request_insert_query="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('$service_id','$sp_user_master_id','Requested',NOW(),'$user_master_id')";
+                    $res_quest=$this->db->query($request_insert_query);
+
+                    if($res_quest){
+                      $response = array("status" => "success", "msg" => "Waiting for Service Provider to Accept","msg_en"=>"","msg_ta"=>"");
+                    }else{
+                      $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+                    }
+
                   }
 
                 }
-
-              }
+            }
+             sleep(30);
+               // return $response;
+          }else{
+            $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
           }
-           sleep(30);
-             // return $response;
-        }else{
-          $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
         }
-         // sleep(30);
 
       }
-
 
        return $response;
 

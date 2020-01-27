@@ -1691,7 +1691,7 @@ return $response;
         $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Assigned'";
         $res_select=$this->db->query($select);
         if($res_select->num_rows()==0){
-          $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Assigned',NOW(),'" . $user_master_id . "')";
+          $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $service_person_id . "','Assigned',NOW(),'" . $user_master_id . "')";
           $ins_query = $this->db->query($sQuery);
         }
 

@@ -828,6 +828,32 @@ class Apisprovider extends CI_Controller
 
     //-----------------------------------------------//
 
+    //-----------------------------------------------//
+
+    public function re_upload_doc()
+    {
+
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        $user_master_id   = $this->uri->segment(3);
+        $doc_master_id    = $this->uri->segment(4);
+        $doc_proof_number = $this->uri->segment(5);
+        $doc_detail_id = $this->uri->segment(5);
+
+        $document         = $_FILES["document_file"]["name"];
+        $extension        = end((explode(".", $document)));
+        $documentFileName = $user_master_id . '-' . time() . '.' . $extension;
+        $uploaddir        = './assets/providers/documents/';
+        $documentFile     = $uploaddir . $documentFileName;
+        move_uploaded_file($_FILES['document_file']['tmp_name'], $documentFile);
+
+        $data['result'] = $this->apisprovidermodel->Upload_doc($user_master_id, $doc_master_id, $doc_proof_number, $documentFileName,$doc_detail_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
 
     // ------------------Update service provider bank detail--------------------------- //
 

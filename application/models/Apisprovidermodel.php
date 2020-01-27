@@ -1033,6 +1033,76 @@ return $response;
     //#################### Document Upload End ####################//
 
 
+    //#################### Document Upload ####################//
+    public function re_upload_doc($user_master_id, $doc_master_id, $doc_proof_number, $documentFileName,$doc_detail_id)
+    {
+        // $sQuery         = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('" . $user_master_id . "','" . $doc_master_id . "','" . $doc_proof_number . "','" . $documentFileName . "','Pending',NOW(),'" . $user_master_id . "')";
+
+        $sQuery         = "UPDATE document_details SET doc_master_id='$doc_master_id',doc_proof_number='$doc_proof_number',file_name='$documentFileName',status='Uploaded',updated_at=NOW() WHERE id='$doc_detail_id' AND user_master_id='$user_master_id'";
+        $ins_query      = $this->db->query($sQuery);
+        $last_insert_id = $this->db->insert_id();
+        $document_url   = base_url() . 'assets/providers/documents/' . $documentFileName;
+
+
+        $get_user_details="SELECT * FROM service_provider_details where user_master_id='$user_master_id'";
+        $ex_get_user_details= $this->db->query($get_user_details);
+        $ex_get_user_details_result = $ex_get_user_details->result();
+        foreach($ex_get_user_details_result  as $rows_user_details){}
+        $get_user_name=$rows_user_details->owner_full_name;
+
+        $get_doc_name="SELECT * FROM document_master WHERE id='$doc_master_id'";
+        $ex_get_doc_name=$this->db->query($get_doc_name);
+        foreach($ex_get_doc_name->result() as $rows_doc_name){}
+
+
+        $subject = "SKILEX - $get_user_name Re-Uploaded new document";
+        $notes = '<p>Document:<span><a target="_blank" href="'.$document_url.'"'.$doc_proof_number.'>Download '.$rows_doc_name->doc_name.'</a></span></p>';
+        $this->mailmodel->send_mail_to_skilex($subject,$notes);
+
+        $sQuery    = "INSERT INTO document_notes(user_master_id,doc_detail_id,notes,status,created_at,created_by) VALUES ('" . $user_master_id . "','" . $last_insert_id . "','Uploaded','Active',NOW(),'" . $user_master_id . "')";
+        $ins_query = $this->db->query($sQuery);
+
+        $prov_sql    = "SELECT * FROM service_provider_details WHERE user_master_id = '" . $user_master_id . "' AND also_service_person = 'Y'";
+        $prov_result = $this->db->query($prov_sql);
+        if ($prov_result->num_rows() > 0) {
+            $pers_sql    = "SELECT * FROM service_person_details WHERE service_provider_id = '" . $user_master_id . "'";
+            $pers_result = $this->db->query($pers_sql);
+            if ($pers_result->num_rows() > 0) {
+                foreach ($pers_result->result() as $rows) {
+                    $person_user_master_id = $rows->user_master_id;
+                }
+
+            }
+
+            // $doc_sql    = "SELECT * FROM document_master WHERE id = '" . $doc_master_id . "'";
+            // $doc_result = $this->db->query($doc_sql);
+            // if ($doc_result->num_rows() > 0) {
+            //     foreach ($doc_result->result() as $rows) {
+            //         $doc_type = trim($rows->doc_type);
+            //     }
+            //
+            //     if ($doc_type == 'IdAddressProof') {
+            //         $sQuery    = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('" . $person_user_master_id . "','" . $doc_master_id . "','" . $doc_proof_number . "','" . $documentFileName . "','Pending',NOW(),'" . $user_master_id . "')";
+            //         $ins_query = $this->db->query($sQuery);
+            //     }
+            //     if ($doc_master_id == '3') {
+            //         $sQuery    = "INSERT INTO document_details(user_master_id,doc_master_id,doc_proof_number,file_name,status,created_at,created_by) VALUES ('" . $person_user_master_id . "','" . $doc_master_id . "','" . $doc_proof_number . "','" . $documentFileName . "','Pending',NOW(),'" . $user_master_id . "')";
+            //         $ins_query = $this->db->query($sQuery);
+            //     }
+            // }
+        }
+        $response = array(
+            "status" => "success",
+            "msg" => "Document Uploaded",
+            "document_id" => $last_insert_id,
+            "doc_master_id" => $doc_master_id,
+            "document_url" => $document_url
+        );
+        return $response;
+    }
+    //#################### Document Upload End ####################//
+
+
     //################### Update provider bank detail ##################//
 
     public function Update_provider_bank_detail($user_master_id, $bank_name, $branch_name, $acc_no, $ifsc_code,$any_police_case)

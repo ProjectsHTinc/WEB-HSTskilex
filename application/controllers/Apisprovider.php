@@ -847,7 +847,7 @@ class Apisprovider extends CI_Controller
         $documentFile     = $uploaddir . $documentFileName;
         move_uploaded_file($_FILES['document_file']['tmp_name'], $documentFile);
 
-        $data['result'] = $this->apisprovidermodel->Upload_doc($user_master_id, $doc_master_id, $doc_proof_number, $documentFileName,$doc_detail_id);
+        $data['result'] = $this->apisprovidermodel->re_upload_doc($user_master_id, $doc_master_id, $doc_proof_number, $documentFileName,$doc_detail_id);
         $response       = $data['result'];
         echo json_encode($response);
     }

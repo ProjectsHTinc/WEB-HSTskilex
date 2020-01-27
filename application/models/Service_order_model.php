@@ -157,7 +157,7 @@ Class service_order_model extends CI_Model
 
     }
 
-    function assign_orders($prov_id,$id){
+    function assign_orders($prov_id,$id,$user_id){
       $service_order_id=base64_decode($id)/98765;
       $select="SELECT * FROM login_users AS lu WHERE id='$prov_id'";
       $result=$this->db->query($select);
@@ -209,9 +209,17 @@ Class service_order_model extends CI_Model
            }
          }
 
-
-        $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at) VALUES('$service_order_id','$prov_id','Requested',NOW())";
+        $check_provider_id="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND serv_pro_id='$prov_id'";
+        $ex_prov_query=$this->db->query($check_provider_id);
+        if($ex_prov_query->num_rows()>=1){
+          $insert="UPDATE service_order_history SET status='Requested',created_at=NOW(),created_by='$user_id' WHERE service_order_id='$service_order_id' AND serv_pro_id='$prov_id'";
+        }else{
+          $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES('$service_order_id','$prov_id','Requested',NOW(),'$user_id')";
+        }
         $res_inset=$this->db->query($insert);
+
+
+
         if($res_inset){
 
 

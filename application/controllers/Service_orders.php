@@ -164,7 +164,7 @@ class Service_orders extends CI_Controller {
 		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			 $prov_id=$this->input->post('prov_id');
 			 $id=$this->input->post('id');
-			 $data['res']=$this->service_order_model->assign_orders($prov_id,$id);
+			 $data['res']=$this->service_order_model->assign_orders($prov_id,$id,$user_id);
 			 echo json_encode( $data['res']);
 		 }
 	 }

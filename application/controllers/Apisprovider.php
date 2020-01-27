@@ -838,7 +838,7 @@ class Apisprovider extends CI_Controller
         $user_master_id   = $this->uri->segment(3);
         $doc_master_id    = $this->uri->segment(4);
         $doc_proof_number = $this->uri->segment(5);
-        $doc_detail_id = $this->uri->segment(5);
+        $doc_detail_id = $this->uri->segment(6);
 
         $document         = $_FILES["document_file"]["name"];
         $extension        = end((explode(".", $document)));

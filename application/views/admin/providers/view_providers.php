@@ -16,7 +16,8 @@
                 <table id="example" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>S.no</th>
+                <th>S.no <br>
+                User ID</th>
                 <th>Name</th>
                 <th>Online status</th>
                 <th>Login status</th>
@@ -31,7 +32,7 @@
 
 
             <tr>
-                  <td><?php echo $i; ?></td>
+                  <td><?php echo $i; ?> - &nbsp; <?php  echo $rows->id; ?></td>
                 <td><?php echo $rows->owner_full_name; ?></td>
                 <td><?php if($rows->online_status=='Online'){ ?>
                   <button type="button" class="badge badge-success ">Online</button>

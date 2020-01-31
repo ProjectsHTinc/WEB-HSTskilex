@@ -239,6 +239,73 @@ Class service_order_model extends CI_Model
     }
 
 
+    function cancel_service_order_from_admin($id,$user_id){
+      $service_order_id=base64_decode($id)/98765;
+      $query="SELECT * from service_orders   WHERE id='$service_order_id'";
+      $result=$this->db->query($query);
+      $res=$result->result();
+      foreach($res as $rows_res){}
+        $serv_prov_id=$rows_res->serv_prov_id;
+        $serv_person_id=$rows_res->serv_pers_id;
+        $customer_id=$rows_res->customer_id;
+
+        // $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES('$service_order_id','$user_id','Cancelled',NOW(),'$user_id')";
+        // $res_ins=$this->db->query($insert);
+        $update="UPDATE service_orders SET status='Cancelled' WHERE id='$service_order_id'";
+        $res_update=$this->db->query($update);
+        if($res_update){
+           $response = array("status" => "success", "msg" => "Service order has been cancelled");
+        }else{
+             $response = array("status" => "error", "msg" => "Something went wrong!");
+        }
+
+
+        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
+         $user_result = $this->db->query($sQuery);
+         if ($user_result->num_rows() > 0) {
+             foreach ($user_result->result() as $rows) {
+               $gcm_key=$rows->mobile_key;
+               $mobile_type=$rows->mobile_type;
+               $head='Skilex';
+               $message="Service Order has cancelled please contact the Skilex.";
+               $user_type='5';
+              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+             }
+         }
+
+         if(!empty($serv_prov_id)){
+           $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+            $user_result = $this->db->query($sQuery);
+            if ($user_result->num_rows() > 0) {
+                foreach ($user_result->result() as $rows) {
+                  $gcm_key=$rows->mobile_key;
+                  $mobile_type=$rows->mobile_type;
+                  $head='Skilex';
+                  $message="Service Order has cancelled please contact the Skilex.";
+                  $user_type='3';
+                 $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                }
+            }
+         }
+         if(!empty($serv_person_id)){
+           $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_person_id'";
+            $user_result = $this->db->query($sQuery);
+            if ($user_result->num_rows() > 0) {
+                foreach ($user_result->result() as $rows) {
+                  $gcm_key=$rows->mobile_key;
+                  $mobile_type=$rows->mobile_type;
+                  $head='Skilex';
+                  $message="Service Order has cancelled please contact the Skilex.";
+                  $user_type='4';
+                 $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                }
+            }
+         }
+         return $response;
+
+
+    }
+
 
 
 

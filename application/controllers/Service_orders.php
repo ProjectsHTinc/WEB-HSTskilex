@@ -170,6 +170,18 @@ class Service_orders extends CI_Controller {
 	 }
 
 
+	 public function cancel_service_order_from_admin(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+			 $id=$this->input->post('id');
+			 $data['res']=$this->service_order_model->cancel_service_order_from_admin($id,$user_id);
+			 echo json_encode( $data['res']);
+		 }
+	 }
+
+
 
 
 

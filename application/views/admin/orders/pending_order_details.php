@@ -140,6 +140,7 @@
 
                     }else{ ?>
                         <a style="border:1px solid #777777;" class="open-AddBookDialog btn assign_btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a>
+                        <a style="border:1px solid #777777;" class="open-AddBookDialog btn btn-cancel " data-toggle="modal" data-target="#exampleModal-5">Cancel Order</a>
                   <?php  } ?>
                   </span></h4>
                   <table id="" class="table table-striped table-bordered ">
@@ -294,6 +295,38 @@
           </div>
       </div>
 
+
+
+      <div class="modal fade" id="exampleModal-5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel-4">Are you sure you want to cancel the order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <div class="modal-body">
+                    <form action="" method="post" id="form_cancel_order">
+
+                        <div class="text-center">
+                          <input type="hidden" name="service_order_id" id="service_order_id" value="<?php echo base64_encode($rows->id*98765);  ?>"/>
+
+                        </div>
+                        <div class="form-group text-center">
+                          <input type="button" name="" value="Yes" class="btn btn-success" onclick="cancel_order()">
+                          <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close"> No
+                          </button>
+                        </div>
+
+
+
+                    </form>
+              </div>
+              </div>
+          </div>
+      </div>
+
     <script>
 
 
@@ -335,6 +368,7 @@ $('#provider_list').change(function(){
     var prov_id=$(this).val();
     var id=$("#service_order_id").val();
     if (confirm('Are you sure you want to submit this Change?')) {
+      swal('Please wait');
       $.ajax({
                  url: "<?php echo base_url(); ?>service_orders/assign_orders",
                  type: 'POST',
@@ -360,10 +394,38 @@ $('#provider_list').change(function(){
        swal('cancelled')
       }
 
-})
+});
 
 
 
+function cancel_order(){
 
+  var id=$("#service_order_id").val();
+  if (confirm('Are you sure you want to submit this Change?')) {
+    swal('Please wait');
+// swal.showLoading();
+    $.ajax({
+               url: "<?php echo base_url(); ?>service_orders/cancel_service_order_from_admin",
+               type: 'POST',
+               data: {'id': id },
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
 
+                   if (stats=="success") {
+                     swal(response.msg);
+                     setTimeout(function() {
+                         location.reload();
+                     }, 1000);
+                     location.href = "<?php echo base_url(); ?>service_orders/cancelled_orders"
+
+                 }else{
+                    swal(response.msg);
+                     }
+               }
+           });
+    } else {
+     swal('cancelled');
+    }
+}
 </script>

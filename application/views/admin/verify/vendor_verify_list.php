@@ -16,7 +16,7 @@
                 <table id="example" class="table table-striped table-bordered  "  >
         <thead>
             <tr>
-                <th >S.no</th>
+                <th >S.no <br> User ID</th>
                 <th>Name <br> Phone No <br> Email</th>
                 <th>Document Verify status</th>
                 <!-- <th>profile_pic</th> -->
@@ -32,7 +32,7 @@
 
 
             <tr>
-                <td><?php echo $i; ?></td>
+                <td><?php echo $i; ?> - &nbsp; <?php  echo $rows->user_master_id; ?></td>
                 <td><?php echo $rows->owner_full_name; ?> <br><br> <?php echo $rows->phone_no; ?><br><br> <?php echo $rows->email; ?></td>
                 <td><?php echo $rows->serv_prov_verify_status; ?></td>
                 <!-- <td><?php echo $rows->profile_pic; ?></td> -->

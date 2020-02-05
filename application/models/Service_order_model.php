@@ -252,7 +252,7 @@ Class service_order_model extends CI_Model
         // $insert="INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES('$service_order_id','$user_id','Cancelled',NOW(),'$user_id')";
         // $res_ins=$this->db->query($insert);
 
-        $insert="UPDATE INTO service_order_history SET status='Expired' WHERE service_order_id='$service_order_id' and status='Requested'";
+        $insert="UPDATE  service_order_history SET status='Expired' WHERE service_order_id='$service_order_id' and status='Requested'";
         $res_ins=$this->db->query($insert);
         $update="UPDATE service_orders SET status='Cancelled' WHERE id='$service_order_id'";
         $res_update=$this->db->query($update);

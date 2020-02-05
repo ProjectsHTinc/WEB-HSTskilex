@@ -1264,7 +1264,7 @@ class Apicustomermodel extends CI_Model {
 
                 }
             }
-             sleep(30);
+             sleep(60);
                // return $response;
           }else{
             $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");

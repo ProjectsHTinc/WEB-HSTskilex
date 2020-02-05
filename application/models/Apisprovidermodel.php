@@ -2234,12 +2234,15 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
         $update_sql    = "UPDATE service_orders SET status = 'Cancelled', updated_by  = '" . $user_master_id . "', updated_at =NOW() WHERE id ='" . $service_order_id . "'";
         $update_result = $this->db->query($update_sql);
 
-        $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Cancelled'";
+        $select="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND serv_prov_id='$user_master_id'  AND status='Cancelled'";
         $res_select=$this->db->query($select);
         if($res_select->num_rows()==0){
           $sQuery    = "INSERT INTO service_order_history (service_order_id,serv_prov_id,status,created_at,created_by) VALUES ('" . $service_order_id . "','" . $user_master_id . "','Cancelled',NOW(),'" . $user_master_id . "')";
           $ins_query = $this->db->query($sQuery);
 
+        }else{
+          $sQuery    = "UPDATE service_order_history SET status='Cancelled' WHERE service_order_id='$service_order_id' AND serv_prov_id='$user_master_id'";
+          $ins_query = $this->db->query($sQuery);
         }
 
         $sQuery    = "INSERT INTO cancel_history (cancel_master_id,user_master_id,service_order_id,comments,created_at,created_by) VALUES ('" . $cancel_master_id . "','" . $user_master_id . "','" . $service_order_id . "','" . $comments . "',NOW(),'" . $user_master_id . "')";

@@ -960,7 +960,7 @@ class Apicustomermodel extends CI_Model {
     function service_provider_allocation($user_master_id,$service_id){
       ob_implicit_flush(true);
       ob_end_flush();
-    $count_provider="SELECT count(*) as prov_count from login_users as lu where lu.status='Active' and lu.user_type=3 and lu.document_verify='Y'";
+    $count_provider="SELECT count(*) as prov_count from login_users as lu left join vendor_status  as vs on vs.serv_pro_id=lu.id where lu.status='Active' and vs.online_status='Online' and lu.user_type=3 and lu.document_verify='Y'";
     $result_cnt = $this->db->query($count_provider);
     foreach($result_cnt->result() as $cnt_provider){}
       if($cnt_provider->prov_count==0){

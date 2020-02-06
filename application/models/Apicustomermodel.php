@@ -960,7 +960,16 @@ class Apicustomermodel extends CI_Model {
     function service_provider_allocation($user_master_id,$service_id){
       ob_implicit_flush(true);
       ob_end_flush();
-    $count_provider="SELECT count(*) as prov_count from login_users as lu left join vendor_status  as vs on vs.serv_pro_id=lu.id where lu.status='Active' and vs.online_status='Online' and lu.user_type=3 and lu.document_verify='Y'";
+    $get_main_cat="SELECT * FROM service_orders WHERE id='$service_id'";
+    $get_main_cat_res  = $this->db->query($get_main_cat);
+    $res_main_cat=$get_main_cat_res->result();
+    foreach($res_main_cat as $row_get_main_cat_id){}
+      $main_cat_id_first=$row_get_main_cat_id->main_cat_id;
+    $count_provider="SELECT count(*) as prov_count from login_users as lu
+    left join vendor_status  as vs on vs.serv_pro_id=lu.id
+    left JOIN serv_prov_pers_skills as spps on spps.user_master_id=lu.id
+    where lu.status='Active' and vs.online_status='Online' and lu.user_type=3 and lu.document_verify='Y' and spps.main_cat_id='$main_cat_id_first'";
+  
     $result_cnt = $this->db->query($count_provider);
     foreach($result_cnt->result() as $cnt_provider){}
       if($cnt_provider->prov_count==0){

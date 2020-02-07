@@ -84,7 +84,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <td class="amt"><?php echo $rows->pay_to_serv_prov; ?></td>
                 <td class=""><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
                   <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
-                  <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex')" data-toggle="modal" data-target="#exampleModal-5"
+                  <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex','<?php echo $rows->id; ?>')" data-toggle="modal" data-target="#exampleModal-5"
                     >Need to Pay </a>
                 <?php }else{
                     if($rows->serv_prov_closing_status=='Unpaid'){
@@ -306,10 +306,10 @@ table.dataTable thead th, table.dataTable thead td {
     </style>
     <script>
 
-function update_status(msg){
+function update_status(msg,id){
   var status=msg;
-  $(".modal-body #status").val( status );
-  var daily_id=$('#daily_id').val();
+   $(".modal-body #status").val( status );
+  var daily_id=id;
   $(".modal-body #daily_id").val( daily_id );
 }
 

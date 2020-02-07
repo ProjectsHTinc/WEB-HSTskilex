@@ -47,6 +47,38 @@ class Apicustomer extends CI_Controller {
 		return TRUE;
 	}
 
+
+	//-----------------------------------------------//
+
+		public function version_check()
+		{
+		  $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+			if(!$this->checkMethod())
+			{
+				return FALSE;
+			}
+
+			if($_POST == FALSE)
+			{
+				$res = array();
+				$res["opn"] = "Mobile Check";
+				$res["scode"] = 204;
+				$res["message"] = "Input error";
+
+				echo json_encode($res);
+				return;
+			}
+
+
+			$version_code = $this->input->post("version_code");
+			$data['result']=$this->apicustomermodel->version_check($version_code);
+			$response = $data['result'];
+			echo json_encode($response);
+		}
+
+	//-----------------------------------------------//
+
 //-----------------------------------------------//
 
 	public function mobile_check()

@@ -103,7 +103,19 @@ class Apispersonmodel extends CI_Model {
 
 //#################### Notification End ####################//
 
+//-------------------- Version check -------------------//
 
+
+function version_check($version_code){
+if($version_code==1){
+  $response = array("status" => "success");
+}else{
+  $response = array("status" => "error");
+}
+  return $response;
+}
+
+//-------------------- Version check -------------------//
 //#################### Dashboard ####################//
 
 	public function Dashboard($user_master_id)

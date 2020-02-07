@@ -112,7 +112,24 @@ class Apicustomermodel extends CI_Model {
 
 
 
-//-------------------- Mobile Check -------------------//
+    //-------------------- Version check -------------------//
+
+
+  function version_check($version_code){
+    if($version_code==1){
+      $response = array("status" => "success");
+    }else{
+      $response = array("status" => "error");
+    }
+    	return $response;
+  }
+
+  //-------------------- Version check -------------------//
+
+
+
+  //-------------------- Mobile Check -------------------//
+
 
 	 function Mobile_check($phone_no)
 	{
@@ -969,7 +986,7 @@ class Apicustomermodel extends CI_Model {
     left join vendor_status  as vs on vs.serv_pro_id=lu.id
     left JOIN serv_prov_pers_skills as spps on spps.user_master_id=lu.id
     where lu.status='Active' and vs.online_status='Online' and lu.user_type=3 and lu.document_verify='Y' and spps.main_cat_id='$main_cat_id_first'";
-  
+
     $result_cnt = $this->db->query($count_provider);
     foreach($result_cnt->result() as $cnt_provider){}
       if($cnt_provider->prov_count==0){

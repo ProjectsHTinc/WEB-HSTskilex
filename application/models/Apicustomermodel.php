@@ -415,33 +415,39 @@ class Apicustomermodel extends CI_Model {
 
 
 //-------------------- Main Category -------------------//
-	 function View_maincategory($user_master_id)
+	 function View_maincategory($user_master_id,$version_code)
 	{
-			$query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active' order by cat_position asc";
-			$res = $this->db->query($query);
+      if(empty($version_code)){
+        $response = array("status" => "error", "msg" => "Sorry you have to update latest App!","msg_en"=>"Sorry you have to update latest App!","msg_ta"=>"பிரிவுகள் கிடைக்கவில்லை!");
 
-			 if($res->num_rows()>0){
-			    foreach ($res->result() as $rows)
-				{
-					$cat_pic = $rows->cat_pic;
-					if ($cat_pic != ''){
-						$cat_pic_url = base_url().'assets/category/'.$cat_pic;
-					}else {
-						 $cat_pic_url = '';
-					}
+      }else{
+        $query = "SELECT id,main_cat_name,main_cat_ta_name,cat_pic from main_category WHERE status = 'Active' order by cat_position asc";
+        $res = $this->db->query($query);
 
-					$catData[]  = array(
-							"cat_id" => $rows->id,
-							"cat_name" => $rows->main_cat_name,
-							"cat_ta_name" => $rows->main_cat_ta_name,
-							"cat_pic_url" => $cat_pic_url
-					);
-				}
-			     	$response = array("status" => "success", "msg" => "View Category","categories"=>$catData,"msg_en"=>"","msg_ta"=>"");
+         if($res->num_rows()>0){
+            foreach ($res->result() as $rows)
+          {
+            $cat_pic = $rows->cat_pic;
+            if ($cat_pic != ''){
+              $cat_pic_url = base_url().'assets/category/'.$cat_pic;
+            }else {
+               $cat_pic_url = '';
+            }
 
-			}else{
-			        $response = array("status" => "error", "msg" => "Category not found","msg_en"=>"Categories not found!","msg_ta"=>"பிரிவுகள் கிடைக்கவில்லை!");
-			}
+            $catData[]  = array(
+                "cat_id" => $rows->id,
+                "cat_name" => $rows->main_cat_name,
+                "cat_ta_name" => $rows->main_cat_ta_name,
+                "cat_pic_url" => $cat_pic_url
+            );
+          }
+              $response = array("status" => "success", "msg" => "View Category","categories"=>$catData,"msg_en"=>"","msg_ta"=>"");
+
+        }else{
+                $response = array("status" => "error", "msg" => "Category not found","msg_en"=>"Categories not found!","msg_ta"=>"பிரிவுகள் கிடைக்கவில்லை!");
+        }
+      }
+
 
 			return $response;
 	}

@@ -414,8 +414,9 @@ class Apicustomer extends CI_Controller {
 
 		$user_master_id  = '';
 		$user_master_id  = $this->input->post("user_master_id");
+			$version_code  = $this->input->post("version_code");
 
-		$data['result']=$this->apicustomermodel->View_maincategory($user_master_id);
+		$data['result']=$this->apicustomermodel->View_maincategory($user_master_id,$version_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}

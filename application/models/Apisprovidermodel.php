@@ -1218,7 +1218,7 @@ return $response;
     //#################### Document list End ####################//
 
     function document_rejected_details($doc_detail_id){
-      $sQuery      = " SELECT * FROM document_notes WHERE doc_detail_id='$doc_detail_id' AND STATUS='Rejected'";
+      $sQuery      = " SELECT notes FROM document_notes WHERE STATUS='Rejected' and doc_detail_id='$doc_detail_id' order by created_at desc LIMIT 1";
       $usr_result  = $this->db->query($sQuery);
       $user_result = $usr_result->result();
 
@@ -1226,7 +1226,7 @@ return $response;
       if ($usr_result->num_rows() > 0) {
           $response = array(
               "status" => "success",
-              "msg" => "Document notes",
+              "msg" => $user_result,
               "doc_notes" => $user_result
           );
       } else {

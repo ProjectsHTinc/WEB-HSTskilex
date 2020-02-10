@@ -108,7 +108,7 @@ class Apisprovidermodel extends CI_Model
 
 
   function version_check($version_code){
-    if($version_code==2){
+    if($version_code==1){
       $response = array("status" => "success");
     }else{
       $response = array("status" => "error");

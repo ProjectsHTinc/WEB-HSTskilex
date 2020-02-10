@@ -1226,7 +1226,7 @@ return $response;
       if ($usr_result->num_rows() > 0) {
           $response = array(
               "status" => "success",
-              "msg" => $user_result,
+              "msg" => $user_result[0]->notes,
               "doc_notes" => $user_result
           );
       } else {

@@ -1451,20 +1451,6 @@ class Apicustomermodel extends CI_Model {
 
                  if($display_minute==1){
                    $limit="LIMIT 1";
-                   $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
-                    $res_gcm= $this->db->query($get_gcm);
-                    if($res_gcm->num_rows()==0){
-                    }else{
-                      $gcm_result=$res_gcm->result();
-                        foreach($gcm_result as $rows_gcm){
-                          $gcm_key=$rows_gcm->mobile_key;
-                          $mobile_type=$rows_gcm->mobile_type;
-                          $head='Skilex';
-                          $message='Thank you for booking service ';
-                          $user_type='5';
-                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
-                        }
-                    }
                  }else if($display_minute==2){
                      $limit="LIMIT 1,1";
                  }else if($display_minute==3){
@@ -1616,7 +1602,7 @@ class Apicustomermodel extends CI_Model {
           }else{
             $response = array("status" => "error", "msg" => "Service not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
           }
-      
+
 
        return $response;
 

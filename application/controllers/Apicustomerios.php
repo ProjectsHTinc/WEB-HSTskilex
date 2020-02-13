@@ -883,10 +883,10 @@ class Apicustomerios extends CI_Controller {
 		$order_id = $this->input->post("order_id");
 		$result = explode("-", $order_id);
 	 	$service_id= $result[2];
-		// $display_minute = $this->input->post("display_minute");
-		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id);
-		// $response = $data['result'];
-			$response =array('status'=>'success');
+		$display_minute = $this->input->post("display_minute");
+		$data['result']=$this->apicustomermodel->service_provider_allocation_ios($user_master_id,$service_id,$display_minute);
+		$response = $data['result'];
+			// $response =array('status'=>'success');
 		echo json_encode($response);
 	}
 

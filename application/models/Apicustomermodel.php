@@ -1082,7 +1082,7 @@ class Apicustomermodel extends CI_Model {
                          }
                      }
 
-                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                     $res_expried=$this->db->query($update_exper);
 
 
@@ -1257,7 +1257,7 @@ class Apicustomermodel extends CI_Model {
                          }
                      }
                     $this->smsmodel->send_sms($phone,$notes);
-                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                     $res_expried=$this->db->query($update_exper);
 
 
@@ -1397,7 +1397,7 @@ class Apicustomermodel extends CI_Model {
                          }
                      }
 
-                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                     $res_expried=$this->db->query($update_exper);
 
 
@@ -1432,32 +1432,33 @@ class Apicustomermodel extends CI_Model {
                   }else{
                       $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
                   }
-                }else{
+                }
+                else{
                   foreach($res_sp_id as $rows_last_sp_id){}
                     // $last_sp_id=$rows_last_sp_id->last_id;
                   if($display_minute==1){
                   $last_sp_id=$rows_last_sp_id->last_id;
                   }else{
-                    $checking_order_hist="SELECT * from service_order_history where service_order_id='$service_id' and status='Requested' order by id desc LIMIT 1";
+                     $checking_order_hist="SELECT * from service_order_history where service_order_id='$service_id' and status='Requested' order by id desc LIMIT 1";
                     $ex_checking_order_hist=$this->db->query($checking_order_hist);
                     $res_checking_hist=$ex_checking_order_hist->result();
                     foreach($res_checking_hist as $rows_checking_existory){}
-                     $last_sp_id=$rows_checking_existory->serv_prov_id;
+                      $last_sp_id=$rows_checking_existory->serv_prov_id;
 
 
                   }
 
                   $next_id=$display_minute+$last_sp_id;
 
-                 if($display_minute==1){
-                   $limit="LIMIT 1";
-                 }else if($display_minute==2){
-                     $limit="LIMIT 1,1";
-                 }else if($display_minute==3){
-                   $limit="LIMIT 2,1";
-                 }else{
-                   $limit="LIMIT 0";
-                 }
+                //  if($display_minute==1){
+                //   $limit="LIMIT 1";
+                //  }else if($display_minute==2){
+                //      $limit="LIMIT 1,1";
+                //  }else if($display_minute==3){
+                //   $limit="LIMIT 2,1";
+                //  }else{
+                //   $limit="LIMIT 0";
+                //  }
 
                     $check_provider="SELECT spd.id,mobile_key, mobile_type,spd.user_master_id,owner_full_name,phone_no,vs.STATUS
                   FROM serv_prov_pers_skills AS spps
@@ -1482,7 +1483,7 @@ class Apicustomermodel extends CI_Model {
                   WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active' GROUP by spd.id";
 
                   }else{
-                                 $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                                  $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
                                   COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
                                   SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
                                   FROM serv_prov_pers_skills AS spps
@@ -1491,7 +1492,7 @@ class Apicustomermodel extends CI_Model {
                                   LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
                                   LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
                                   WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-                                  AND spd.id>$last_sp_id GROUP BY spps.user_master_id ASC
+                                  AND spd.user_master_id>$last_sp_id GROUP BY spps.user_master_id ASC
                                   UNION
                                   SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
                                                 COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
@@ -1502,7 +1503,9 @@ class Apicustomermodel extends CI_Model {
                                   LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
                                   LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
                                   WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
-                                  AND spd.id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union $limit";
+                                  AND spd.user_master_id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union";
+
+
 
                                     //  $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
                                     // COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
@@ -1539,6 +1542,7 @@ class Apicustomermodel extends CI_Model {
                     $Phoneno=$rows_id_next->phone_no;
                     $full_name=$rows_id_next->owner_full_name;
                     $sp_user_master_id=$rows_id_next->user_master_id;
+
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
@@ -1558,7 +1562,7 @@ class Apicustomermodel extends CI_Model {
                          }
                      }
                     $this->smsmodel->send_sms($phone,$notes);
-                    $update_exper="UPDATE service_order_history SET status='Expired',created_at=NOW() WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
+                    $update_exper="UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                     $res_expried=$this->db->query($update_exper);
 
 

@@ -1381,7 +1381,7 @@ class Apicustomermodel extends CI_Model {
                     $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
                     $phone=$Phoneno;
                     $this->smsmodel->send_sms($phone,$notes);
-                    ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+                    $this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                     $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
                      $res_gcm= $this->db->query($get_gcm);
                      if($res_gcm->num_rows()==0){

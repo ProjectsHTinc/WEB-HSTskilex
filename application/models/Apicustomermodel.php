@@ -1435,7 +1435,7 @@ class Apicustomermodel extends CI_Model {
                 }else{
                   foreach($res_sp_id as $rows_last_sp_id){}
                     // $last_sp_id=$rows_last_sp_id->last_id;
-                  if($i==1){
+                  if($display_minute==1){
                   $last_sp_id=$rows_last_sp_id->last_id;
                   }else{
                     $checking_order_hist="SELECT * from service_order_history where service_order_id='$service_id' and status='Requested' order by id desc LIMIT 1";

@@ -885,8 +885,8 @@ class Apicustomer extends CI_Controller {
 	 	$service_id= $result[2];
 		// $display_minute = $this->input->post("display_minute");
 		$data['result']=$this->apicustomermodel->service_provider_allocation($user_master_id,$service_id);
-		// $response = $data['result'];
-			$response =array('status'=>'success');
+		$response = $data['result'];
+			// $response =array('status'=>'success');
 		echo json_encode($response);
 	}
 

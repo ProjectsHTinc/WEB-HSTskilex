@@ -1537,5 +1537,23 @@ class Apicustomerios extends CI_Controller {
 
 
 
+//-----------------------------------------------//
+
+	public function automatic_provider_allocation()
+	{
+	   // $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+
+
+		// $user_master_id = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->automatic_provider_allocation();
+		// $response = $data['result'];
+		// echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
 }
 ?>

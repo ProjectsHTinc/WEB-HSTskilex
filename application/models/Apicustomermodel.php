@@ -6,6 +6,7 @@ class Apicustomermodel extends CI_Model {
     {
         parent::__construct();
         $this->load->model('smsmodel');
+        $this->load->model('apicustomermodel');
     }
 
 
@@ -116,7 +117,7 @@ class Apicustomermodel extends CI_Model {
 
 
   function version_check($version_code){
-    if($version_code==1){
+    if($version_code==2){
       $response = array("status" => "success");
     }else{
       $response = array("status" => "error");
@@ -2501,15 +2502,52 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 
 
-  function check_every_minute($user_master_id){
-    ob_implicit_flush(true);
-    ob_end_flush();
-    for ($i=1; $i<=3; $i++) {
-       $insert="INSERT INTO serv_pers_tracking (user_master_id,created_at) VALUES('$i',NOW())";
+  function check_every_minute($user_master_id,$service_order_id){
+
+
+        $insert="INSERT INTO serv_pers_tracking (user_master_id,created_at,service_order_id) VALUES('$user_master_id',NOW(),'$service_order_id')";
        $user_result = $this->db->query($insert);
-       sleep(30);
-    }
+
   }
+
+
+    function automatic_provider_allocation(){
+
+      $select="SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) = CURDATE()) and status='Pending'";
+      $excute= $this->db->query($select);
+      if($excute->num_rows()==0){
+
+      }else{
+        $result=$excute->result();
+        foreach($result as $rows_order){
+         $service_order_id=$rows_order->id;
+         $user_master_id=$rows_order->customer_id;
+         $main_cat_id=$rows_order->main_cat_id;
+         $service_latlon=$rows_order->service_latlon;
+         $contact_person_name=$rows_order->contact_person_name;
+         $contact_person_number=$rows_order->contact_person_number;
+         $result = explode(",", $service_latlon);
+         $lat=$result[0];
+         $long= $result[1];
+         $advance_check=$rows_order->advance_payment_status;
+
+          $get_last_provider_id="SELECT spd.id as last_id,so.* FROM service_orders as so left join service_provider_details as spd on spd.user_master_id=so.serv_prov_id where so.serv_prov_id!=0  and (so.status='Paid' OR so.status='Completed') ORDER BY so.id desc LIMIT 1";
+          $ex_last_provider_id=$this->db->query($get_last_provider_id);
+          if($ex_last_provider_id->num_rows()==0){
+            echo "No Last Provider";
+          }else{
+            $result_last_provider_id=$ex_last_provider_id->result();
+            foreach($result_last_provider_id as $row_last_provider_id){}
+            $last_provider_id=$row_last_provider_id->serv_prov_id;
+
+
+
+
+          }
+        }
+      }
+
+    }
 
 }
 

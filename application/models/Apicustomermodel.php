@@ -1064,7 +1064,7 @@ class Apicustomermodel extends CI_Model {
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $phone=$Phoneno;
                     $this->smsmodel->send_sms($phone,$notes);
                     ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
@@ -1242,7 +1242,7 @@ class Apicustomermodel extends CI_Model {
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $phone=$Phoneno;
 
                     $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
@@ -1379,7 +1379,7 @@ class Apicustomermodel extends CI_Model {
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $phone=$Phoneno;
                     $this->smsmodel->send_sms($phone,$notes);
                     $this->sendNotification($gcm_key,$title,$Message,$mobiletype);
@@ -1547,7 +1547,7 @@ class Apicustomermodel extends CI_Model {
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name: $contact_person_number";
+                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $phone=$Phoneno;
 
                     $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
@@ -2541,8 +2541,20 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $last_provider_id=$row_last_provider_id->serv_prov_id;
 
 
+            $get_provider_count="SELECT count(*) as prov_count from login_users as lu
+            left join vendor_status  as vs on vs.serv_pro_id=lu.id
+            left JOIN serv_prov_pers_skills as spps on spps.user_master_id=lu.id
+            where lu.status='Active' and vs.online_status='Online' and lu.user_type=3 and lu.document_verify='Y' and spps.main_cat_id='$main_cat_id'";
+            $result_cnt = $this->db->query($get_provider_count);
+            foreach($result_cnt->result() as $cnt_provider){}
+              if($cnt_provider->prov_count==0){
+
+              }else{
+                echo $cnt=$cnt_provider->prov_count;
 
 
+
+               }
           }
         }
       }

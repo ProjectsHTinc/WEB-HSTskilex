@@ -1533,7 +1533,16 @@ class Apicustomer extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+//-----------------------------------------------//
 
+	public function automatic_provider_allocation()
+	{
+		$data['result']=$this->apicustomermodel->automatic_provider_allocation();
+		// $response = $data['result'];
+		// echo json_encode($response);
+	}
+
+//-----------------------------------------------//
 
 
 }

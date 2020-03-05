@@ -784,7 +784,7 @@ class Apicustomermodel extends CI_Model {
 
 
 
-  function proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot){
+  function proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot,$order_notes){
     $serv_date = date("Y-m-d", strtotime($order_date));
     $check_cart="SELECT oc.category_id,oc.sub_category_id,oc.service_id,s.rate_card,s.advance_amount FROM order_cart as oc left join services as s on oc.service_id=s.id
     WHERE oc.user_master_id='$user_master_id' AND oc.status='Pending' order by s.advance_amount desc";
@@ -809,7 +809,7 @@ class Apicustomermodel extends CI_Model {
           $adva_status='N';
         }
 
-        $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
+        $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,order_notes,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$order_notes','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
       $res_service = $this->db->query($insert_service);
          $last_id=$this->db->insert_id();
          if($res_service){
@@ -2539,8 +2539,6 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $result_last_provider_id=$ex_last_provider_id->result();
             foreach($result_last_provider_id as $row_last_provider_id){}
             $last_provider_id=$row_last_provider_id->serv_prov_id;
-
-
             $get_provider_count="SELECT count(*) as prov_count from login_users as lu
             left join vendor_status  as vs on vs.serv_pro_id=lu.id
             left JOIN serv_prov_pers_skills as spps on spps.user_master_id=lu.id
@@ -2550,14 +2548,131 @@ function proceed_for_payment($user_master_id,$service_order_id){
               if($cnt_provider->prov_count==0){
 
               }else{
-                echo $cnt=$cnt_provider->prov_count;
+             $cnt=$cnt_provider->prov_count;
+             $check_order_history="SELECT * FROM service_order_history where service_order_id='$service_order_id' and (status='Requested' OR status='Expired' or status='Cancelled') order by id desc LIMIT 1";
+              $check_ex_order_history=$this->db->query($check_order_history);
+              if($check_ex_order_history->num_rows()==0){
 
+                $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+               SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+               FROM serv_prov_pers_skills AS spps
+               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+               LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+               WHERE spps.main_cat_id='$main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+               AND spd.user_master_id>$last_provider_id GROUP BY spps.user_master_id ASC
+               UNION
+               SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                             COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                             SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+               FROM serv_prov_pers_skills AS spps
+               LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+               LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+               LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+               LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+               WHERE spps.main_cat_id='$main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+               AND spd.user_master_id<$last_provider_id GROUP BY spps.user_master_id ASC) s_union";
+               $ex_next_id=$this->db->query($get_sp_id);
+               if($ex_next_id->num_rows()==0){
 
+               }else{
+                 foreach($ex_next_id->result() as $rows_provider_first){}
+                   $first_provider=$rows_provider_first->user_master_id;
 
+                   $check_exist_history="SELECT * FROM service_order_history where serv_prov_id='$first_provider' AND service_order_id='$service_order_id'";
+                   $ex_check_exist_history=$this->db->query($check_exist_history);
+                   if($ex_check_exist_history->num_rows()==0){
+
+                      $set_expire="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
+                      $ex_set_expire=$this->db->query($set_expire);
+
+                      $insert_service_history="INSERT INTO service_order_history (serv_prov_id,service_order_id,status,created_at) VALUES('$first_provider','$service_order_id','Requested',NOW())";
+                      $exc=$this->db->query($insert_service_history);
+
+                   }else{
+
+                   }
                }
+
+              }else{
+                $result_order_history=$check_ex_order_history->result();
+                foreach($result_order_history as $rows_order_history){
+                  // echo $rows_order_history->id;
+                  $last_sp_id=$rows_order_history->serv_prov_id;
+
+                 $get_sp_id="SELECT * FROM (SELECT spd.id AS id , ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                 COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                 SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                 FROM serv_prov_pers_skills AS spps
+                 LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                 LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                 LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                 LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                 WHERE spps.main_cat_id='$main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                 AND spd.user_master_id>$last_sp_id GROUP BY spps.user_master_id ASC
+                 UNION
+                 SELECT spd.id AS id, ns.mobile_key AS mobile_key, ns.mobile_type AS mobile_type, spps.user_master_id AS user_master_id, spd.owner_full_name AS owner_full_name, lu.phone_no AS phone_no,( 3959 * ACOS( COS( RADIANS('$lat') ) * COS( RADIANS( serv_lat ) ) *
+                               COS( RADIANS( serv_lon ) - RADIANS('$long') ) + SIN( RADIANS('$lat') ) *
+                               SIN( RADIANS( serv_lat ) ) ) ) AS distance, vs.status AS STATUS
+                 FROM serv_prov_pers_skills AS spps
+                 LEFT JOIN service_provider_details AS spd ON spd.user_master_id=spps.user_master_id
+                 LEFT JOIN login_users AS lu ON lu.id=spd.user_master_id
+                 LEFT JOIN vendor_status AS vs ON vs.serv_pro_id=lu.id
+                 LEFT JOIN notification_master AS ns ON ns.user_master_id=lu.id
+                 WHERE spps.main_cat_id='$main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
+                 AND spd.user_master_id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union";
+                 $ex_next_id=$this->db->query($get_sp_id);
+                 foreach($ex_next_id->result() as $rows_provider){}
+                 $selected_provider=$rows_provider->user_master_id;
+
+                 $check_exist_history="SELECT * FROM service_order_history where serv_prov_id='$selected_provider' AND service_order_id='$service_order_id'";
+                 $ex_check_exist_history=$this->db->query($check_exist_history);
+                 if($ex_check_exist_history->num_rows()==0){
+
+                   $set_expire="UPDATE service_order_history SET status='Expired' WHERE service_order_id='$service_order_id'";
+                   $ex_set_expire=$this->db->query($set_expire);
+
+                   $insert_service_history="INSERT INTO service_order_history (serv_prov_id,service_order_id,status,created_at) VALUES('$selected_provider','$service_order_id','Requested',NOW())";
+                   $exc=$this->db->query($insert_service_history);
+
+                   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                    $user_result = $this->db->query($sQuery);
+                    if ($user_result->num_rows() > 0) {
+                        foreach ($user_result->result() as $rows) {
+                          $gcm_key=$rows->mobile_key;
+                          $mobile_type=$rows->mobile_type;
+                          $head='Skilex';
+                          $message="You have received order from customer.";
+                          $user_type='3';
+                          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                        }
+                    }
+
+                 }else{
+                   echo "exists";
+                 }
+
+
+
+
+                  }
+
+              }
+            }
           }
         }
       }
+
+    }
+
+
+
+
+    function hour_cron_job_checking(){
+      $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+      $excute=$this->db->query($insert);
 
     }
 

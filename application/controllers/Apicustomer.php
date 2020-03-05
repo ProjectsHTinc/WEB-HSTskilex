@@ -789,7 +789,8 @@ class Apicustomer extends CI_Controller {
 		$service_address  = $this->input->post("service_address");
 		$order_date  = $this->input->post("order_date");
 		$order_timeslot  = $this->input->post("order_timeslot_id");
-		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot);
+		$order_notes  = $this->input->post("order_notes");
+		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot,$order_notes);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1538,6 +1539,18 @@ class Apicustomer extends CI_Controller {
 	public function automatic_provider_allocation()
 	{
 		$data['result']=$this->apicustomermodel->automatic_provider_allocation();
+		// $response = $data['result'];
+		// echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function hour_cron_job_checking()
+	{
+		$data['result']=$this->apicustomermodel->hour_cron_job_checking();
 		// $response = $data['result'];
 		// echo json_encode($response);
 	}

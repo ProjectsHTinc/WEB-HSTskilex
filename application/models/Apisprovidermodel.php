@@ -2563,17 +2563,18 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function Transaction_list($user_master_id)
     {
-        $sql       = "SELECT id,DATE_FORMAT(service_date, '%e-%M-%Y') AS service_date,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount,serv_prov_closing_status,pay_to_serv_prov,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,skilex_closing_status,serv_prov_closing_status  FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "'";
+         $sql       = "SELECT id,DATE_FORMAT(service_date, '%e-%M-%Y') AS service_date,total_service_per_day,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,taxable_amount,serv_prov_closing_status,pay_to_serv_prov,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,skilex_closing_status,serv_prov_closing_status  FROM daily_payment_transaction WHERE serv_prov_id = '" . $user_master_id . "'";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {
             $result = $tran_ress->result();
             foreach($result as $rows_result){
-              if($rows_result->pay_to_serv_prov<0){
+              if($rows_result->pay_to_serv_prov<=0){
                 $pay_to_ser_provider_flag="Yes";
               }else{
                 $pay_to_ser_provider_flag="No";
               }
+
               $transaction_result[]=array(
                 "id"=>$rows_result->id,
                 "total_service_per_day"=>$rows_result->total_service_per_day,
@@ -2620,7 +2621,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     public function View_transaction_details($user_master_id, $daily_payment_id)
     {
-        $sql       = "SELECT id,total_service_per_day,DATE_FORMAT(service_date,'%d-%M-%Y') as service_date,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,taxable_amount,pay_to_serv_prov,skilex_closing_status,serv_prov_closing_status,transaction_notes,order_id,ccavenue_track_id FROM daily_payment_transaction WHERE serv_prov_id = '$user_master_id' AND id='$daily_payment_id'";
+         $sql       = "SELECT id,total_service_per_day,DATE_FORMAT(service_date,'%d-%M-%Y') as service_date,serv_total_amount,serv_prov_commission_amt,skilex_commission_amt,online_transaction_amt,offline_transaction_amt,online_skilex_commission,offline_skilex_commission,online_serv_prov_commission,offline_serv_prov_commission,taxable_amount,pay_to_serv_prov,skilex_closing_status,serv_prov_closing_status,transaction_notes,order_id,ccavenue_track_id FROM daily_payment_transaction WHERE serv_prov_id = '$user_master_id' AND id='$daily_payment_id'";
         $tran_ress = $this->db->query($sql);
 
         if ($tran_ress->num_rows() > 0) {
@@ -2631,6 +2632,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
               }else{
                 $pay_to_ser_provider_flag="No";
               }
+
               $transaction_result=array(
                 "id"=>$rows_result->id,
                 "total_service_per_day"=>$rows_result->total_service_per_day,

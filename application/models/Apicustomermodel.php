@@ -2673,7 +2673,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
     function hour_cron_job_checking(){
       $date = date_default_timezone_set('Asia/Kolkata');
       $today = date("g:i");
-      $ten_am='9:00';
+      $ten_am='09:00';
       $end_time='7:00';
       if($today >= $ten_am && $today <= $end_time) {
         $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";

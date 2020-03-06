@@ -2671,11 +2671,17 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 
     function hour_cron_job_checking(){
-      echo $current_time = date("h:i:sa");
+      $date = date_default_timezone_set('Asia/Kolkata');
+      echo $today = date("g:i");
+      $ten_am='10:48';
+      $end_time='12:10';
+      if($today >= $ten_am && $today <= $end_time) {
+          // $this->automatic_provider_allocation();
 
-      if(date("Hi") < "0900") {
-        $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-        $excute=$this->db->query($insert);
+          $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+          $excute=$this->db->query($insert);
+
+
       }
 
 

@@ -2513,7 +2513,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
     function automatic_provider_allocation(){
 
-      $select="SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) = CURDATE()) and status='Pending'";
+      $select="SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) = CURDATE()) and status='Pending' and (advance_payment_status='N' OR advance_payment_status='NA')";
       $excute= $this->db->query($select);
       if($excute->num_rows()==0){
 
@@ -2673,13 +2673,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
     function hour_cron_job_checking(){
       $date = date_default_timezone_set('Asia/Kolkata');
       echo $today = date("g:i");
-      $ten_am='10:48';
-      $end_time='12:10';
+      $ten_am='09:00';
+      $end_time='06:00';
       if($today >= $ten_am && $today <= $end_time) {
-          // $this->automatic_provider_allocation();
+          $this->automatic_provider_allocation();
 
-          $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-          $excute=$this->db->query($insert);
+          // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+          // $excute=$this->db->query($insert);
 
 
       }

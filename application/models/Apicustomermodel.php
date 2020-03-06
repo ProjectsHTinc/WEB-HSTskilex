@@ -2676,10 +2676,11 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $ten_am='09:00';
       $end_time='06:00';
       if($today >= $ten_am && $today <= $end_time) {
+        $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+        $excute=$this->db->query($insert);
           $this->automatic_provider_allocation();
 
-          // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-          // $excute=$this->db->query($insert);
+
 
 
       }

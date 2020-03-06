@@ -2637,7 +2637,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                    $insert_service_history="INSERT INTO service_order_history (serv_prov_id,service_order_id,status,created_at) VALUES('$selected_provider','$service_order_id','Requested',NOW())";
                    $exc=$this->db->query($insert_service_history);
 
-                   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                echo   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
                     $user_result = $this->db->query($sQuery);
                     if ($user_result->num_rows() > 0) {
                         foreach ($user_result->result() as $rows) {

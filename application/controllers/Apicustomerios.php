@@ -789,7 +789,8 @@ class Apicustomerios extends CI_Controller {
 		$service_address  = $this->input->post("service_address");
 		$order_date  = $this->input->post("order_date");
 		$order_timeslot  = $this->input->post("order_timeslot_id");
-		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot);
+			$order_notes  = $this->input->post("order_notes");
+		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot,$order_notes);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -885,9 +886,9 @@ class Apicustomerios extends CI_Controller {
 		$result = explode("-", $order_id);
 	 	$service_id= $result[2];
 
-		$data['result']=$this->apicustomermodel->service_provider_allocation_ios($user_master_id,$service_id,$display_minute);
-		$response = $data['result'];
-			// $response =array('status'=>'success');
+		// $data['result']=$this->apicustomermodel->service_provider_allocation_ios($user_master_id,$service_id,$display_minute);
+		// $response = $data['result'];
+			$response =array('status'=>'success');
 		echo json_encode($response);
 	}
 

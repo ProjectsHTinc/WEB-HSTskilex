@@ -803,6 +803,10 @@ class Apicustomermodel extends CI_Model {
         $last_ser_id= $rows->service_id;
         $ser_rate_card=$rows->rate_card;
         $advance_amount=$rows->advance_amount;
+        $phone=$rows->contact_person_number;
+        $notes='Thank you for Booking Service.';
+        $this->smsmodel->send_sms($phone,$notes);
+
         if($advance_amount=='0.00'){
         $adva_status='NA';
         }else{
@@ -843,6 +847,12 @@ class Apicustomermodel extends CI_Model {
            $last_ser_id= $rows->service_id;
            $ser_rate_card=$rows->rate_card;
            $advance_amount=$rows->advance_amount;
+           
+           $phone=$rows->contact_person_number;
+           $notes='Thank you for Booking Service.';
+           $this->smsmodel->send_sms($phone,$notes);
+
+
           if($advance_amount=='0.00'){
             $adva_status='NA';
           }else{

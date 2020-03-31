@@ -541,6 +541,45 @@ class Apicustomermodel extends CI_Model {
 
   ############### Check wallet balance and history ###############
 
+  ############### Top Trending services ###############
+
+  function top_trending_services($user_master_id){
+
+    $query="SELECT so.service_id,s.id,count(so.service_id) as service_count,s.service_name,s.service_ta_name,s.service_pic,s.main_cat_id,s.sub_cat_id FROM service_orders as so
+    left join services as s on s.id=so.service_id  where s.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $service_pic = $rows->service_pic;
+        if ($service_pic != ''){
+          $service_pic_url = base_url().'assets/category/'.$service_pic;
+        }else {
+           $service_pic_url = '';
+        }
+        $subcatData[]  = array(
+            "service_id" => $rows->id,
+            "main_cat_id" => $rows->main_cat_id,
+            "sub_cat_id" => $rows->sub_cat_id,
+            "service_name" => $rows->service_name,
+            "service_ta_name" => $rows->service_ta_name,
+            "service_pic_url" => $service_pic_url
+
+        );
+      }
+          $response = array("status" => "success", "msg" => "View Services","services"=>$subcatData,"msg_en"=>"","msg_ta"=>"");
+
+    }else{
+            $response = array("status" => "error", "msg" => "Services not found","msg_en"=>"Services not found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
+    }
+
+    return $response;
+
+  }
+
+  ############### Top Trending services ###############
+
 
   ############### banner list###############
 

@@ -581,6 +581,47 @@ class Apicustomermodel extends CI_Model {
   ############### Top Trending services ###############
 
 
+  ############### Top Trending services ###############
+
+  function service_rating_and_reviews($user_master_id,$service_id){
+
+    $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name from service_reviews as sr
+left join service_orders as so on so.id=sr.service_order_id
+left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.service_id='$service_id'";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+
+        if(empty($rows->full_name)){
+          $name="Unknown";
+        }else{
+          $name=$rows->full_name;
+        }
+        $ser_data[]  = array(
+            "service_id" => $rows->id,
+            "rating" => $rows->rating,
+            "review" => $rows->review,
+            "customer_name" => $name,
+            "service_id" => $rows->service_id,
+            "customer_id" => $rows->customer_id
+
+        );
+      }
+          $response = array("status" => "success", "msg" => "View Services reviews and rating","services_reviews"=>$ser_data,"msg_en"=>"","msg_ta"=>"");
+
+    }else{
+            $response = array("status" => "error", "msg" => "No reviews and rating found!","msg_en"=>"No reviews and rating found!","msg_ta"=>"சேவைகள் கிடைக்கவில்லை!");
+    }
+
+    return $response;
+
+  }
+
+  ############### Top Trending services ###############
+
+
   ############### banner list###############
 
   function view_banner_list($user_master_id){

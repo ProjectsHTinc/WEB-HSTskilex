@@ -525,6 +525,39 @@ class Apicustomer extends CI_Controller {
 //-----------------------------------------------//
 
 
+//-----------------------------------------------//
+
+	public function service_rating_and_reviews()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_id  = $this->input->post("service_id");
+		$data['result']=$this->apicustomermodel->service_rating_and_reviews($user_master_id,$service_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
 
 //-----------------------------------------------//
 

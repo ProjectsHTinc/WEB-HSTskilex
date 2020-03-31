@@ -383,6 +383,167 @@ class Apicustomermodel extends CI_Model {
   }
 
 
+############### User language update###############
+  function user_lang_update($user_master_id,$lang_id){
+    $update="UPDATE login_users SET preferred_lang_id='$lang_id' WHERE id='$user_master_id'";
+    $res = $this->db->query($update);
+    if($res){
+      $response=array("status"=>"success","msg_en"=>"Language update successfully","msg_ta"=>"Language Update successfully");
+    }else{
+      $response = array("status" => "error","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+
+    }
+      return $response;
+  }
+############### User language update###############
+
+############### User points and referral code###############
+
+  function user_points_referral_code($user_master_id){
+
+    $query="SELECT lu.referral_code,ifnull(up.points_to_claim,'0') as points_to_claim FROM login_users as lu left join user_points as up on up.user_master_id=lu.id  where lu.id='$user_master_id'";
+    $res = $this->db->query($query);
+
+     if($res->num_rows()>0){
+        foreach ($res->result() as $rows)
+      {
+        $user_points  = array(
+            "referral_code" => $rows->referral_code,
+            "points_to_claim" => $rows->points_to_claim
+        );
+      }
+          $response = array("status" => "success", "msg" => "View points ","points_code"=>$user_points,"msg_en"=>"","msg_ta"=>"");
+
+    }else{
+            $response = array("status" => "error", "msg" => "points not found","msg_en"=>"","msg_ta"=>"");
+    }
+
+    return $response;
+
+  }
+  ############### User points and referral code###############
+
+
+  ############### check  points to claim ###############
+
+  function check_to_claim_points($user_master_id){
+    $check="SELECT * FROM referral_master WHERE id='1'";
+    $res = $this->db->query($check);
+    foreach($res->result() as $row_referral){}
+    $minimum_points=$row_referral->minimum_points_to_claim;
+    $division_points=$row_referral->division_points;
+    $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
+    $re_select = $this->db->query($select);
+    if($re_select->num_rows()==0){
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low");
+    }else{
+      foreach($re_select->result() as $rows_points){}
+      $user_points_to_claim=$rows_points->points_to_claim;
+      if($user_points_to_claim >= $minimum_points){
+        $exact_amt=$user_points_to_claim/$division_points;
+        $response=array("status"=>"success","msg"=>"Can Claim","amount_to_be_claim"=>$exact_amt);
+      }else{
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low");
+      }
+    }
+    return $response;
+
+  }
+
+
+  ############### check  points to claim ###############
+
+
+  ############### Confrim to claim ###############
+
+  function confirm_to_claim($user_master_id){
+    $check="SELECT * FROM referral_master WHERE id='1'";
+    $res = $this->db->query($check);
+    foreach($res->result() as $row_referral){}
+    $minimum_points=$row_referral->minimum_points_to_claim;
+    $division_points=$row_referral->division_points;
+    $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
+    $re_select = $this->db->query($select);
+    if($re_select->num_rows()==0){
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low");
+    }else{
+      foreach($re_select->result() as $rows_points){}
+      $user_points_to_claim=$rows_points->points_to_claim;
+      if($user_points_to_claim >= $minimum_points){
+        $exact_amt=$user_points_to_claim/$division_points;
+
+         $update_user_points="UPDATE user_points SET points_to_claim=points_to_claim-points_to_claim,claimed_points=claimed_points+points_to_claim,earned_amount=earned_amount+'$exact_amt',updated_at=NOW() WHERE user_master_id='$user_master_id'";
+         $re_update = $this->db->query($update_user_points);
+
+
+         $check_wallet="SELECT * FROM user_wallet WHERE user_master_id='$user_master_id'";
+         $res_wallet=$this->db->query($check_wallet);
+         if($res_wallet->num_rows()==0){
+            $query_wallet="INSERT INTO user_wallet(user_master_id,amt_in_wallet,total_amt_in_wallet,status,updated_at,updated_by) VALUES('$user_master_id','$exact_amt','$exact_amt','Active',NOW(),'$user_master_id')";
+         }else{
+           $query_wallet="UPDATE user_wallet SET amt_in_wallet=amt_in_wallet+'$exact_amt',total_amt_in_wallet=total_amt_in_wallet+'$exact_amt',updated_at=NOW() WHERE user_master_id='$user_master_id'";
+         }
+         $res_wallet_query=$this->db->query($query_wallet);
+         $wallet_history="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at,created_by) VALUES ('$user_master_id','$exact_amt','Reedem','Earned from points',NOW(),'$user_master_id')";
+         $ex_wallet_history=$this->db->query($wallet_history);
+         if($ex_wallet_history){
+             $response=array("status"=>"success","msg_en"=>"Amount added in wallet","msg_ta"=>"Amount added in wallet");
+         }else{
+             $response = array("status" => "error","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+         }
+      }else{
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low");
+      }
+    }
+
+    return $response;
+
+  }
+
+  ############### Confim to claim ###############
+
+
+  ############### Check wallet balance and history ###############
+
+  function check_wallet_balance_and_history($user_master_id){
+
+    $query_wallet="SELECT * FROM user_wallet where user_master_id='$user_master_id'";
+    $re_query_wallet=$this->db->query($query_wallet);
+    if($re_query_wallet->num_rows()==0){
+      $wallet_balance="0";
+    }else{
+      foreach($re_query_wallet->result() as $row_wallet_balance){}
+      $wallet_balance=$row_wallet_balance->amt_in_wallet;
+    }
+
+
+    $query_wallet_history="SELECT DATE_FORMAT(created_at,'%d-%m-%Y') as created_date,TIME_FORMAT(created_at, '%h:%i') as created_time,transaction_amt,status,notes,user_master_id,id FROM wallet_history where user_master_id='$user_master_id'";
+    $re_wallet_history=$this->db->query($query_wallet_history);
+    if($re_wallet_history->num_rows()==0){
+      $res_wallet=array("status"=>"error","msg_en"=>"no history found","msg_ta"=>"no history found");
+    }else{
+      foreach($re_wallet_history->result() as $rows_history){
+        $wallet_array[]=array(
+            "id" => $rows_history->id,
+            "transaction_amt" => $rows_history->transaction_amt,
+            "status"=>$rows_history->status,
+            "created_date"=>$rows_history->created_date,
+            "created_time"=>$rows_history->created_time,
+            "notes"=>$rows_history->notes
+        );
+      }
+    $res_wallet=array("status"=>"success","msg_en"=>"wallet history found","msg_ta"=>"wallet history found","wallet_data"=>$wallet_array);
+    }
+    $response=array("status"=>"success","wallet_balance"=>$wallet_balance,"result_wallet"=>$res_wallet);
+    return $response;
+
+  }
+
+  ############### Check wallet balance and history ###############
+
+
+  ############### banner list###############
+
   function view_banner_list($user_master_id){
     $query = "SELECT * from banners WHERE status = 'Active'";
     $res = $this->db->query($query);
@@ -847,7 +1008,7 @@ class Apicustomermodel extends CI_Model {
            $last_ser_id= $rows->service_id;
            $ser_rate_card=$rows->rate_card;
            $advance_amount=$rows->advance_amount;
-           
+
            $phone=$rows->contact_person_number;
            $notes='Thank you for Booking Service.';
            $this->smsmodel->send_sms($phone,$notes);
@@ -2699,16 +2860,22 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $ten_am='09:00';
       $end_time='7:00';
       if($today >= $ten_am && $today <= $end_time) {
-        $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-        $excute=$this->db->query($insert);
+        // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+        // $excute=$this->db->query($insert);
           $this->automatic_provider_allocation();
-
-
-
-
       }
+    }
 
 
+
+    function db_data_updating(){
+    // $text='SKILEXC0';
+    // $select="SELECT * FROM login_users where user_type='5'";
+    // $result=$this->db->query($select);
+    // foreach($result->result() as $rows){
+    //   $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
+    //   $excute=$this->db->query($update);
+    // }
     }
 
 }

@@ -331,6 +331,137 @@ class Apicustomerios extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+//-----------------------------------------------//
+
+	public function user_lang_update()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$lang_id  = $this->input->post("lang_id");
+		$data['result']=$this->apicustomermodel->user_lang_update($user_master_id,$lang_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function user_points_referral_code()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+			$data['result']=$this->apicustomermodel->user_points_referral_code($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+//-----------------------------------------------//
+
+	public function check_to_claim_points()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+			$data['result']=$this->apicustomermodel->check_to_claim_points($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+
+//-----------------------------------------------//
+
+	public function check_wallet_balance_and_history()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+			$data['result']=$this->apicustomermodel->check_wallet_balance_and_history($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
 
 //-----------------------------------------------//
 

@@ -190,7 +190,7 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Login -------------------//
 
-	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number)
+	 function Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number,$referral_code)
 	{
 		$sql = "SELECT * FROM login_users WHERE phone_no = '".$phone_no."' AND otp = '".$otp."' AND user_type = '5' AND status='Active'";
 		$sql_result = $this->db->query($sql);
@@ -204,6 +204,11 @@ class Apicustomermodel extends CI_Model {
       $update_unique_number="UPDATE notification_master SET user_master_id='$user_master_id',user_stat='Register' WHERE user_master_id='$unique_number'";
       $update_unique_number_result = $this->db->query($update_unique_number);
 
+      if(empty($referral_code)){
+
+      }else{
+          $this->add_referral_code($user_master_id,$referral_code);
+      }
 
 
 			$gcmQuery = "SELECT * FROM notification_master WHERE mobile_key like '%" .$device_token. "%' AND user_master_id = '".$user_master_id."' LIMIT 1";
@@ -260,6 +265,71 @@ class Apicustomermodel extends CI_Model {
 	}
 
 //-------------------- Main Login End -------------------//
+
+
+
+  ############### Adding referral Code ##################################
+  function add_referral_code($user_master_id,$referral_code){
+     $output = str_split($referral_code, 7);
+     $referral_user_id=$output[1];
+
+     $check="SELECT * FROM login_users WHERE id='$user_master_id'";
+     $re_check=$this->db->query($check);
+     foreach($re_check->result() as $row_checks){}
+       $referral_status=$row_checks->referral_status;
+       if($referral_status=='0'){
+
+         $update_status="UPDATE login_users SET referral_status='1' WHERE id='$user_master_id'";
+         $excute=$this->db->query($update_status);
+
+         $master="SELECT * FROM referral_master where id='1'";
+         $res_master=$this->db->query($master);
+         foreach($res_master->result() as $rows_master_point){}
+         $get_point=$rows_master_point->referral_points;
+
+
+         $adding_history="INSERT INTO referral_history (user_master_id,user_points,referral_code,referral_master_id,referral_points,created_at,created_by) VALUES ('$user_master_id','$get_point','$referral_code','$referral_user_id','$get_point',NOW(),'$user_master_id')";
+         $res_adding_history=$this->db->query($adding_history);
+
+
+         $check_referral_master="SELECT * FROM user_points WHERE user_master_id='$referral_user_id'";
+         $re_referral_master=$this->db->query($check_referral_master);
+         if($re_referral_master->num_rows()==0){
+           $master_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$referral_user_id','$get_point','$get_point','Active',NOW(),'$referral_user_id')";
+         }else{
+           $master_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$referral_user_id' WHERE user_master_id='$referral_user_id'";
+         }
+         $excute=$this->db->query($master_referral_query);
+
+
+
+         $query_user_master="SELECT * FROM user_points WHERE user_master_id='$user_master_id'";
+         $re_query_user_master=$this->db->query($query_user_master);
+         if($re_query_user_master->num_rows()==0){
+           $user_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$user_master_id','$get_point','$get_point','Active',NOW(),'$user_master_id')";
+         }else{
+           $user_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+         }
+         $excute_user=$this->db->query($user_referral_query);
+         if($excute_user){
+           	$response = array("status" => "success");
+         }else{
+            	$response = array("status" => "error");
+         }
+
+
+
+
+
+       }else{
+        	$response = array("status" => "error");
+       }
+
+       return $response;
+
+  }
+  ############### Adding referral Code ##################################
+
 
 //-------------------- Email Verify status -------------------//
 
@@ -684,6 +754,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
             );
           }
               $response = array("status" => "success", "msg" => "View Category","categories"=>$catData,"msg_en"=>"","msg_ta"=>"");
+
 
         }else{
                 $response = array("status" => "error", "msg" => "Category not found","msg_en"=>"Categories not found!","msg_ta"=>"பிரிவுகள் கிடைக்கவில்லை!");
@@ -2760,6 +2831,54 @@ function proceed_for_payment($user_master_id,$service_order_id){
        $user_result = $this->db->query($insert);
 
   }
+
+
+  ############ Customer feedback question ####################
+
+      function customer_feedback_question($user_master_id){
+        $query="SELECT * FROM feedback_master WHERE status='Active' and user_type='5'";
+        $res=$this->db->query($query);
+        if($res->num_rows()==0){
+              $response = array("status" => "error", "msg" => "No feedback question found","msg_en"=>"No feedback question found","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+        }else{
+          foreach($res->result() as $rows){
+            $data[]=array(
+              "id"=>$rows->id,
+              "feedback_question"=>$rows->question
+            );
+
+          }
+          $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data);
+        }
+
+         return $response;
+
+      }
+
+    ############ Customer feedback question ####################
+
+    ############ Customer feedback answer ####################
+
+    function customer_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text){
+
+      $query="SELECT * FROM feedback_response WHERE service_order_id='$service_order_id' and query_id='$feedback_id'";
+      $res=$this->db->query($query);
+      if($res->num_rows()==0){
+        $insert="INSERT INTO feedback_response  (user_master_id,service_order_id,query_id,answer_text,status,created_at,created_by) VALUES ('$user_master_id','$service_order_id','$feedback_id','$feedback_text','Active',NOW(),'$user_master_id')";
+        $result=$this->db->query($insert);
+        if($result){
+          $response=array("status"=>"success","msg"=>"Feedback added successfully");
+        }else{
+            $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+        }
+      }else{
+            $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+      }
+      return $response;
+
+    }
+    ############ Customer feedback answer ####################
+
 
 
     function automatic_provider_allocation(){

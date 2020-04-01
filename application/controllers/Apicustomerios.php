@@ -111,6 +111,7 @@ class Apicustomerios extends CI_Controller {
 
 //-----------------------------------------------//
 
+
 //-----------------------------------------------//
 
 	public function login()
@@ -145,8 +146,9 @@ class Apicustomerios extends CI_Controller {
 		$device_token = $this->input->post("device_token");
 		$mobiletype = $this->input->post("mobile_type");
 		$unique_number = $this->input->post("unique_number");
+		$referral_code = $this->input->post("referral_code");
 
-		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number);
+		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number,$referral_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -357,6 +359,39 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$lang_id  = $this->input->post("lang_id");
 		$data['result']=$this->apicustomermodel->user_lang_update($user_master_id,$lang_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function add_referral_code()
+	{
+		 $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$referral_code  = $this->input->post("referral_code");
+			$data['result']=$this->apicustomermodel->add_referral_code($user_master_id,$referral_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1699,6 +1734,73 @@ class Apicustomerios extends CI_Controller {
 	}
 
 //-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function customer_feedback_question()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+			$data['result']=$this->apicustomermodel->customer_feedback_question($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function customer_feedback_answer()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+		$feedback_id  = $this->input->post("feedback_id");
+		$feedback_text  = $this->input->post("feedback_text");
+		$data['result']=$this->apicustomermodel->customer_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 
 
 //-----------------------------------------------//

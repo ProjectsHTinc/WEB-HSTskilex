@@ -112,7 +112,15 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+					     <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Order Notes :</label>
+                          <div class="col-sm-8">
+								<textarea type="text" class="form-control" readonly><?php echo $rows->order_notes; ?></textarea>
+                        </div>
+                      </div>
+					
+					</div>
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Resume Date :</label>

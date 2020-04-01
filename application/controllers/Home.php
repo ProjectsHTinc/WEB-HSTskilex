@@ -528,6 +528,43 @@ class Home extends CI_Controller {
 	}
 
 
+
+	public function get_customer_points(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+				$c_id=$this->uri->segment(3);
+				$data['tot_points']=$this->loginmodel->get_total_points($c_id);
+				$data['earned_points']=$this->loginmodel->get_earned_points($c_id);
+				$data['referal_points']=$this->loginmodel->get_referal_points($c_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/customer/view_customer_points',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+		
+	public function get_customer_wallet(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+				$c_id=$this->uri->segment(3);
+				$data['wallet_details']=$this->loginmodel->get_wallet_details($c_id);
+				$data['wallet_list']=$this->loginmodel->get_wallet_list($c_id);
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/customer/view_customer_wallet',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+
+		}
+		
+		
 	// public function query()	{
 	// 		$main_cat_id=1;
 	// 		$data=$this->loginmodel->query_update($main_cat_id);

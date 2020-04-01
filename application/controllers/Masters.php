@@ -121,7 +121,8 @@ class Masters extends CI_Controller {
 			$user_id=$this->session->userdata('user_id');
 			$user_type=$this->session->userdata('user_role');
 			 if($user_type=='1'||$user_type=='2'){
-				 $data['res']=$this->mastermodel->get_all_tax_commission();
+				$data['res']=$this->mastermodel->get_all_tax_commission();
+				$data['referal']=$this->mastermodel->get_referal_details();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/master/tax_commission',$data);
 				$this->load->view('admin/admin_footer');
@@ -144,6 +145,7 @@ class Masters extends CI_Controller {
 					redirect('/login');
 			 }
 		}
+		
 
 		public function update_commission_percentage(){
 			$data=$this->session->userdata();
@@ -173,7 +175,21 @@ class Masters extends CI_Controller {
 			 }
 		}
 
+		public function update_referal_details(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				  $referal_points=$this->db->escape_str($this->input->post('referal_points'));
+				  $minimum_points_claim=$this->db->escape_str($this->input->post('minimum_points_claim'));
+				  $division_points=$this->db->escape_str($this->input->post('division_points'));
 
+				 $data['res']=$this->mastermodel->update_referal_details($referal_points,$minimum_points_claim,$division_points,$user_id);
+				 echo json_encode($data['res']);
+			 }else{
+					redirect('/login');
+			 }
+		}
 
 	 		// Category section
 

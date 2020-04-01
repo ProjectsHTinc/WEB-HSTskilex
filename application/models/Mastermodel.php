@@ -119,6 +119,26 @@ Class Mastermodel extends CI_Model
     }
 
 
+    function get_referal_details(){
+      $select="SELECT * FROM referral_master";
+      $result=$this->db->query($select);
+      return $result->result();
+    }
+	
+	
+	function update_referal_details($referal_points,$minimum_points_claim,$division_points,$user_id){
+     $update="UPDATE referral_master SET division_points='$division_points',minimum_points_to_claim='$minimum_points_claim',referral_points='$referal_points',updated_by='$user_id',updated_at=NOW() WHERE id='1'";
+
+     $result=$this->db->query($update);
+     if($result){
+         $data = array("status" => "success");
+           return $data;
+     }else{
+       $data = array("status" => "failed");
+         return $data;
+     }
+    }
+	
     function update_tax_percentage($sgst,$cgst,$user_id){
      $update="UPDATE tax_commission SET sgst='$sgst',cgst='$cgst',updated_by='$user_id',updated_at=NOW() WHERE id='1'";
      $result=$this->db->query($update);

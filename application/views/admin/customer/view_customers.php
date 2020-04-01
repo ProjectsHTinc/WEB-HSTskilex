@@ -18,12 +18,13 @@
             <tr>
                 <th>S.no</th>
                 <th>Name/Username</th>
-                
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Gender</th>
                 <th>Status</th>
-                <th>Order details</th>
+				<!--<th>Points</th>-->
+                <!--<th>Order details</th>-->
+				 <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -31,9 +32,8 @@
 
 
             <tr>
-                  <td><?php echo $i; ?></td>
+                <td><?php echo $i; ?></td>
                 <td><?php echo $rows->full_name; ?><br> <?php echo $rows->username; ?></td>
-
                 <td><?php echo $rows->email; ?></td>
                 <td><?php echo $rows->phone_no; ?></td>
                 <td><?php echo $rows->gender; ?></td>
@@ -43,12 +43,7 @@
                 <button type="button" class="btn btn-success btn-fw">Active</button>
               <?php   }
                  ?></td>
-                <td>
-                  <!-- <a title="Customer details" href="<?php echo base_url(); ?>home/get_customer_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp; -->
-                  <!-- <a href="<?php echo base_url(); ?>home/get_staff_details/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> -->
-                  <a title="Order list" href="<?php echo base_url(); ?>home/get_customer_orders/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list"></i></a> &nbsp;&nbsp;
-
-                </td>
+				 <td><a title="Referal Points" href="<?php echo base_url(); ?>home/get_customer_points/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-shopping-basket"></i></a> &nbsp;&nbsp;&nbsp; <a title="SkilEx Wallet" href="<?php echo base_url(); ?>home/get_customer_wallet/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-shopping-cart"></i></a> &nbsp;&nbsp;&nbsp; <a title="Order list" href="<?php echo base_url(); ?>home/get_customer_orders/<?php echo base64_encode($rows->user_master_id*98765); ?>"><i class="fa fa-list"></i></a></td>
             </tr>
           <?php  $i++;  }  ?>
 

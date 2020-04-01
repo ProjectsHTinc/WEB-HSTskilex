@@ -65,12 +65,36 @@
               </div>
             </div>
 
-
-
-
-
-
           </div>
+
+<div class="row">
+
+            <div class="col-md-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <?php foreach($referal as $rows){} ?>
+                  <h4 class="card-title">Referal Points </h4>
+
+                  <form class="forms-sample" id="update_referal" method="post">
+                    <div class="form-group">
+                      <label for="username">Referal Points</label>
+                      <input type="text" class="form-control" maxlength="3" name="referal_points" id="referal_points"  value="<?php echo $rows->referral_points; ?>" placeholder="Referal Points">
+                    </div>
+                    <div class="form-group">
+                      <label for="city_ta_name">Minimum Points Claim</label>
+                      <input type="text" class="form-control"  maxlength="3" name="minimum_points_claim" id="minimum_points_claim" value="<?php echo $rows->minimum_points_to_claim; ?>" placeholder="Minimum Points Claim" >
+                    </div>
+					<div class="form-group">
+                      <label for="city_ta_name">Division by</label>
+                      <input type="text" class="form-control" maxlength="2" name="division_points" id="division_points" value="<?php echo $rows->division_points; ?>" placeholder="Division by" >
+                    </div>
+                    <button type="submit" class="btn btn-success mr-2">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+</div>
+
         </div>
       </div>
     </div>
@@ -177,6 +201,48 @@
                   var stats=response.status;
                    if (stats=="success") {
                      swal('Deposit amount Updated successfully')
+                     window.setTimeout(function () {
+                      location.href = "<?php echo base_url();  ?>masters/tax_commission";
+                  }, 1000);
+
+                 }else{
+                    swal(stats);
+                     }
+               }
+           });
+         }
+
+    });
+	
+	
+	
+	$('#update_referal').validate({
+    rules: {
+        referal_points: {required: true,number:true,maxlength:3 },
+        minimum_points_claim: {required: true,number:true,maxlength:3 },
+		division_points: {required: true,number:true,maxlength:2 }
+    },
+    messages: {
+        referal_points:{
+            required :"Enter Referal Points"
+        },
+        minimum_points_claim:{
+            required :"Enter Minimum Points Claim"
+          },
+		division_points:{
+            required :"Division Value"
+          },
+    },
+    submitHandler: function(form) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>masters/update_referal_details",
+               type: 'POST',
+               data: $('#update_referal').serialize(),
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     swal('Refer Details Updated successfully')
                      window.setTimeout(function () {
                       location.href = "<?php echo base_url();  ?>masters/tax_commission";
                   }, 1000);

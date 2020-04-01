@@ -374,6 +374,64 @@ Class Loginmodel extends CI_Model
        }
 
 
+       function get_total_points($c_id){
+          $id=base64_decode($c_id)/98765;
+          $query="SELECT * FROM user_points WHERE user_master_id='$id'";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+      
+	  function get_referal_points($c_id){
+          $id=base64_decode($c_id)/98765;
+          $query="SELECT * FROM referral_history WHERE referral_master_id='$id'";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+	   
+	   function get_earned_points($c_id){
+          $id=base64_decode($c_id)/98765;
+		  
+			$earned_points = "SELECT SUM(referral_points) AS total_earned_points FROM referral_history WHERE user_master_id='$id'";
+			$earned_points_res = $this->db->query($earned_points);
+			$earned_points_count = $earned_points_res->num_rows();
+			if ($earned_points_count >0){
+				$eres=$earned_points_res->result();
+				foreach($eres as $rows){
+					$total_earned_points = $rows->total_earned_points;
+				}
+			}
+			$referal_points = "SELECT SUM(referral_points) AS total_referal_points FROM referral_history WHERE referral_master_id='$id'";
+			$referal_points_res = $this->db->query($referal_points);
+			$referal_points_count = $referal_points_res->num_rows();
+			if ($referal_points_count >0){
+				$rres=$referal_points_res->result();
+				foreach($rres as $rows){
+					$total_referal_points = $rows->total_referal_points;
+				}
+			}
+
+		$count_result  = array(
+					"total_earned_points" => $total_earned_points,
+					"total_referal_points" => $total_referal_points
+				); 
+			return $count_result;
+       }
+	   
+       function get_wallet_details($c_id){
+          $id=base64_decode($c_id)/98765;
+          $query="SELECT * FROM user_wallet WHERE user_master_id='$id'";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+
+       function get_wallet_list($c_id){
+          $id=base64_decode($c_id)/98765;
+          $query="SELECT * FROM wallet_history WHERE user_master_id='$id'";
+          $resultset=$this->db->query($query);
+          return $resultset->result();
+       }
+
+
        function contact_form($name,$email,$subject,$phone_number,$message){
          $insert="INSERT INTO tb_contact_form (name,email,subject,phone_number,message,created_at) VALUES ('$name','$email','$subject','$phone_number','$message',NOW())";
          $resultset=$this->db->query($insert);

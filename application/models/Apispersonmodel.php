@@ -360,6 +360,104 @@ function user_info($user_master_id){
   }
 
 
+  #################### Expert Digital ID Card ####################//
+
+    function digital_id_card($user_master_id){
+      $query="SELECT spd.profile_pic,spd.full_name,DATE_FORMAT(spd.created_at ,'%d-%m-%Y') as joining_date,spd.user_master_id,lu.phone_no FROM service_person_details as spd
+      left join login_users as lu on lu.id=spd.user_master_id where spd.user_master_id='$user_master_id'";
+      $res=$this->db->query($query);
+      if($res->num_rows()==0){
+        $response=array("status"=>"error","msg"=>"No User information found","msg"=>"User details not found!","msg_ta"=>"பயனர் விபரங்கள் கிடைக்கவில்லை!");
+
+      }else{
+        foreach($res->result() as $rows){}
+          $service_get="SELECT spps.main_cat_id,mc.main_cat_name,mc.main_cat_ta_name from serv_prov_pers_skills as spps
+          left join main_category as mc  on mc.id=spps.main_cat_id
+          where spps.user_master_id='$user_master_id' LIMIT 2";
+          $res_service=$this->db->query($service_get);
+          if($res_service->num_rows()==0){
+              $service_return=array("status"=>"error");
+          }else{
+            foreach($res_service->result() as $rows_service){
+              $service_array[]=array(
+                "id"=>$rows_service->main_cat_id,
+                "main_cat_name"=>$rows_service->main_cat_name,
+                "main_cat_ta_name"=>$rows_service->main_cat_ta_name
+              );
+            }
+            $service_return=array("status"=>"success","service_list"=>$service_array);
+          }
+
+          $profile=$rows->profile_pic;
+          if(empty($profile)){
+            $pic="";
+          }else{
+              $pic=base_url().'assets/persons/'.$profile;
+          }
+          $result_data=array(
+            "id"=>$rows->user_master_id,
+            "full_name"=>$rows->full_name,
+            "joining_date"=>$rows->joining_date,
+            "phone_no"=>$rows->phone_no,
+            "profile_pic"=>$pic
+          );
+        $response =array("status"=>"success","msg_en"=>"Information found","msg_ta"=>"Information found","result"=>$result_data,"service_data"=>$service_return);
+      }
+    return $response;
+    }
+
+ #################### Expert Digital ID Card ####################//
+
+ ############ Expert feedback question ####################
+
+     function expert_feedback_question($user_master_id){
+       $query="SELECT * FROM feedback_master WHERE status='Active' and user_type='4'";
+       $res=$this->db->query($query);
+       if($res->num_rows()==0){
+             $response = array("status" => "error", "msg" => "No feedback question found","msg_en"=>"No feedback question found","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+       }else{
+         foreach($res->result() as $rows){
+           $data[]=array(
+             "id"=>$rows->id,
+             "feedback_question"=>$rows->question
+           );
+
+         }
+         $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data);
+       }
+
+        return $response;
+
+     }
+
+   ############ Expert feedback question ####################
+
+
+   ############ Customer feedback answer ####################
+
+   function expert_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text){
+
+     $query="SELECT * FROM feedback_response WHERE service_order_id='$service_order_id' and query_id='$feedback_id'";
+     $res=$this->db->query($query);
+     if($res->num_rows()==0){
+       $insert="INSERT INTO feedback_response  (user_master_id,service_order_id,query_id,answer_text,status,created_at,created_by) VALUES ('$user_master_id','$service_order_id','$feedback_id','$feedback_text','Active',NOW(),'$user_master_id')";
+       $result=$this->db->query($insert);
+       if($result){
+         $response=array("status"=>"success","msg"=>"Feedback added successfully");
+       }else{
+           $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+       }
+     }else{
+           $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+     }
+     return $response;
+
+   }
+   ############ Customer feedback answer ####################
+
+
+
+
 //#################### List Aassigned services ####################//
 
 	public function List_assigned_services($user_master_id)

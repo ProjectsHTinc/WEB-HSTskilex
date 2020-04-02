@@ -115,6 +115,52 @@ Class service_order_model extends CI_Model
     return $result->result();
   }
 
+  function get_customer_feedback($service_order_id){
+    $id=base64_decode($service_order_id)/98765;
+	
+		$sql="SELECT * FROM service_orders WHERE id = '$id'";
+		$resultset=$this->db->query($sql);
+		$res=$resultset->result();
+		foreach($res as $rows){
+				$customer_id = $rows->customer_id;
+			}
+		$query="SELECT
+				B.question,
+				A.answer_text,
+				A.service_order_id,
+				A.user_master_id
+			FROM
+				feedback_response A,
+				feedback_master B
+			WHERE
+				A.`service_order_id` = '$id' AND A.user_master_id ='$customer_id' AND A.query_id = B.id";
+    $result=$this->db->query($query);
+    return $result->result();
+  }
+
+  function get_expert_feedback($service_order_id){
+    $id=base64_decode($service_order_id)/98765;
+	
+	$sql="SELECT * FROM service_orders WHERE id = '$id'";
+		$resultset=$this->db->query($sql);
+		$res=$resultset->result();
+		foreach($res as $rows){
+				$serv_pers_id = $rows->serv_pers_id;
+			}
+		$query="SELECT
+				B.question,
+				A.answer_text,
+				A.service_order_id,
+				A.user_master_id
+			FROM
+				feedback_response A,
+				feedback_master B
+			WHERE
+				A.`service_order_id` = '$id' AND A.user_master_id ='$serv_pers_id' AND A.query_id = B.id";
+    $result=$this->db->query($query);
+    return $result->result();
+  }
+  
   function get_service_payments($service_order_id){
     $id=base64_decode($service_order_id)/98765;
     $query="SELECT  sp.*,om.offer_code FROM  service_payments as sp  left join offer_master as om on om.id=sp.coupon_id  WHERE service_order_id='$id'";

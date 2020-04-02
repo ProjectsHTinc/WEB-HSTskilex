@@ -119,6 +119,7 @@ class Service_orders extends CI_Controller {
 		 $user_type=$this->session->userdata('user_role');
 		 if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$service_order_id=$this->uri->segment(3);
+			
 			$data['res']=$this->service_order_model->get_ongoing_order_details($service_order_id);
 			$data['res_additional']=$this->service_order_model->get_service_additional($service_order_id);
 			$data['res_prov']=$this->service_order_model->get_service_provider($service_order_id);
@@ -127,6 +128,10 @@ class Service_orders extends CI_Controller {
 			$data['res_provider_list']=$this->service_order_model->get_provider_list($service_order_id);
 			$data['res_reviews']=$this->service_order_model->get_reviews($service_order_id);
 			$data['res_bills']=$this->service_order_model->get_service_bills($service_order_id);
+			$data['res_cfeedback']=$this->service_order_model->get_customer_feedback($service_order_id);
+			$data['res_efeedback']=$this->service_order_model->get_expert_feedback($service_order_id);
+			//print_r($data['res_cfeedback']);
+			//print_r($data['res_efeedback']);
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/orders/ongoing_order_details',$data);
 			$this->load->view('admin/admin_footer');

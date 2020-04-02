@@ -16,6 +16,7 @@
                 <div class="card-body">
                   <h4 class="card-title">View Commando details <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){} ?>
+				  <?php foreach($tax as $stax){} ?>
                   <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
@@ -173,8 +174,37 @@
                       </div>
 
                     </div>
-                      <h4 class="card-title">Deposit Details</h4>
-                      <form class="forms-sample" id="deposit_status_form" method="post" action="" enctype="multipart/form-data">
+                    <h4 class="card-title">Deposit Details</h4>
+					<?php 
+					$deposit_status = $rows->deposit_status; 
+					if ($deposit_status == 'Unpaid') {
+					?>
+                    <form class="forms-sample" id="deposit_status_form" method="post" action="" enctype="multipart/form-data">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Deposit Amt :</label>
+                          <div class="col-sm-8">
+                                <input type="text" id="deposit_amount" name="deposit_amount" class="form-control" readonly value="<?php echo $stax->deposit_amt; ?>">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Deposit Status :</label>
+                          <div class="col-sm-8">
+                                <select class="form-control form-control-sm border-info" id="deposit_status" name="deposit_status">
+                                  <option value="Paid">Paid</option>
+                                  <option value="Unpaid">Unpaid</option>
+                                </select>
+                                  <script>$('#deposit_status').val('<?php echo $rows->deposit_status; ?>');</script>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+					<?php } else { ?>
+					
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
@@ -188,18 +218,18 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Deposit Status :</label>
                           <div class="col-sm-8">
-                                <!-- <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>"> -->
-                                <select class="form-control form-control-sm border-info" id="deposit_status" name="deposit_status">
+                                <input type="text" class="form-control" value="<?php echo $rows->deposit_status; ?>" readonly>
+                                <!--<select class="form-control form-control-sm border-info" id="deposit_status" name="deposit_status" readonly>
                                   <option value="Paid">Paid</option>
                                   <option value="Unpaid">Unpaid</option>
                                 </select>
-                                  <script>$('#deposit_status').val('<?php echo $rows->deposit_status; ?>');</script>
+                                  <script>$('#deposit_status').val('<?php echo $rows->deposit_status; ?>');</script>-->
                             </div>
                         </div>
                       </div>
                     </div>
-
-                </form>
+					
+					<?php } ?>
                     <h4 class="card-title">Verification Details</h4>
                       <form class="forms-sample" id="verify_status_form" method="post" action="" enctype="multipart/form-data">
                   <div class="row">
@@ -296,6 +326,7 @@ $('#serv_prov_display_status').change(function(){
 })
 $('#serv_prov_verify_status').change(function(){
     var status=$(this).val();
+	var status=$(this).val();
     var id=$("#serv_prov_id").val();
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
@@ -320,15 +351,20 @@ $('#serv_prov_verify_status').change(function(){
       }
 })
 $('#deposit_status').change(function(){
-    var status=$(this).val();
-    var id=$("#serv_prov_id").val();
+    //var status=$(this).val();
+	//alert (status);
+	var id=$("#serv_prov_id").val();
+    var status=$("#deposit_status").val();
+	var amount=$("#deposit_amount").val();
+	
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
                  url: "<?php echo base_url(); ?>verifyprocess/update_deposit_status",
                  type: 'POST',
                  data: {
+					 'id': id,
+					 'amount': amount,
                      'status': status,
-                     'id': id
                    },
                  dataType: "json",
                  success: function(response) {

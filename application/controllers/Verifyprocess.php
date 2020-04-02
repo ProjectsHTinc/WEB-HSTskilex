@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Verifyprocess extends CI_Controller {
-		function __construct() {
+	function __construct() {
 			 parent::__construct();
-			    $this->load->helper('url');
-			    $this->load->library('session');
-					$this->_ci =& get_instance();
-				  $this->load->model('verificationmodel');
-
+			$this->load->helper('url');
+			$this->load->library('session');
+			$this->_ci =& get_instance();
+			$this->load->model('verificationmodel');
+			$this->load->model('mastermodel');
 	 }
 
 
@@ -35,6 +35,7 @@ class Verifyprocess extends CI_Controller {
 		$user_type=$this->session->userdata('user_role');
 		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 			$ser_pro_id=$this->uri->segment(3);
+			$data['tax']=$this->mastermodel->get_all_tax_commission();
 			$data['res']=$this->verificationmodel->get_vendor_details($ser_pro_id);
 			$this->load->view('admin/admin_header');
 			$this->load->view('admin/verify/update_vendor_details',$data);
@@ -50,9 +51,10 @@ class Verifyprocess extends CI_Controller {
 				$user_id=$this->session->userdata('user_id');
 				$user_type=$this->session->userdata('user_role');
 				if($user_type=='1'||$user_type=='2'||$user_type=='7'){
-				$status=$this->db->escape_str($this->input->post('status'));
 				$id=$this->db->escape_str($this->input->post('id'));
-				$data['res']=$this->verificationmodel->update_deposit_status($status,$id);
+				$status=$this->db->escape_str($this->input->post('status'));
+				$amount=$this->db->escape_str($this->input->post('amount'));
+				$data['res']=$this->verificationmodel->update_deposit_status($id,$amount,$status);
 				echo json_encode($data['res']);
 				}else {
 				redirect('/login');

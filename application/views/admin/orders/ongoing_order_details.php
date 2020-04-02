@@ -23,7 +23,10 @@ padding: 15px;
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">View Service Order details  <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
-                  <?php foreach($res as $rows){} ?>
+                  <?php foreach($res as $rows){
+					  $order_status = $rows->status;
+					  
+				  } ?>
                   <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -426,7 +429,52 @@ padding: 15px;
                     </tbody>
                   </table>
                   <br>
-
+				
+				
+				<div class="row">
+				
+                      <div class="col-md-6">
+					  <?php if(!empty($res_cfeedback)){ ?>
+                        <h4 class="card-title">Customer Feedback</h4>
+						<table id="" class="table table-striped ">
+                      <thead>
+					  <?php $i=1;
+                        foreach($res_cfeedback as $cfeedback){ ?>
+                        <tr>
+                          <th><?php echo $i ?>. <?php echo $cfeedback->question; ?></th>
+						</tr>
+						<tr>
+							<td><?php echo $cfeedback->answer_text; ?></td>
+						</tr>
+						<?php  $i++;  }  ?>
+						</table>
+							<?php   }  ?>
+                      </div>
+                      <div class="col-md-6">
+					  
+					  <div class="col-md-6">
+					  <?php if(!empty($res_efeedback)){ ?>
+                        <h4 class="card-title">Service Expert Feedback</h4>
+						<table id="" class="table table-striped ">
+                      <thead>
+					  <?php $i=1;
+                        foreach($res_efeedback as $efeedback){ ?>
+                        <tr>
+                          <th><?php echo $i ?>. <?php echo $efeedback->question; ?></th>
+						</tr>
+						<tr>
+							<td><?php echo $efeedback->answer_text; ?></td>
+						</tr>
+						<?php  $i++;  }  ?>
+						</table>
+							<?php   }  ?>
+                      </div>
+					  
+						
+                      </div>
+				</div>
+				
+				
                 </div>
               </div>
             </div>

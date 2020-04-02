@@ -1530,7 +1530,7 @@ return $response;
 
     public function List_requested_services($user_master_id)
     {
-        $sQuery="SELECT so.id,soh.status,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_name,sc.sub_cat_ta_name,s.service_name,s.service_ta_name,st.from_time,st.to_time
+        $sQuery="SELECT so.id,soh.status,so.order_notes,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_name,sc.sub_cat_ta_name,s.service_name,s.service_ta_name,st.from_time,st.to_time
     from service_orders as so
     left join service_order_history as soh on soh.service_order_id=so.id
     left JOIN main_category as mc on mc.id=so.main_cat_id
@@ -1573,6 +1573,7 @@ return $response;
 					A.contact_person_name,
 					A.contact_person_number,
 					A.service_rate_card,
+          A.order_notes,
 					B.main_cat_name,
 					B.main_cat_ta_name,
 					C.sub_cat_name,

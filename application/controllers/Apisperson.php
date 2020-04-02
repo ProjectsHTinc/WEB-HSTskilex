@@ -106,6 +106,105 @@ class Apisperson extends CI_Controller {
 
 //-----------------------------------------------//
 
+
+//-----------------------------------------------//
+
+	public function digital_id_card()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Dashboard";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+		$user_master_id  = '';
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apispersonmodel->digital_id_card($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function expert_feedback_question()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+			$data['result']=$this->apispersonmodel->expert_feedback_question($user_master_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
+	public function expert_feedback_answer()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Input";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+		$user_master_id  = $this->input->post("user_master_id");
+		$service_order_id  = $this->input->post("service_order_id");
+		$feedback_id  = $this->input->post("feedback_id");
+		$feedback_text  = $this->input->post("feedback_text");
+		$data['result']=$this->apispersonmodel->expert_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
 //-----------------------------------------------//
 
 	public function mobile_check()

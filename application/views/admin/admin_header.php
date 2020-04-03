@@ -102,11 +102,12 @@ th{
                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Commando list </a></li>
                        </ul>
                      </div>
-
-
-
-
-
+					<div class="col-group col-md-2">
+                       <p class="category-heading">Promotions</p>
+                       <ul class="submenu-item">
+                         <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/send_sms">Send SMS </a></li>
+                       </ul>
+                     </div>
                 </div>
               </div>
             </li>

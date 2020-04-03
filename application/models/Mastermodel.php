@@ -6,8 +6,7 @@ Class Mastermodel extends CI_Model
   public function __construct()
   {
       parent::__construct();
-
-
+		$this->load->model('smsmodel');
   }
 
 
@@ -594,7 +593,21 @@ Class Mastermodel extends CI_Model
             }
 
         }
-
+		
+	   function send_sms_content($sms_content){
+		    $select="SELECT *  FROM `login_users` WHERE `user_type` = 5 AND `mobile_verify` LIKE 'Y' ORDER BY `user_type` ASC ";
+            $result=$this->db->query($select);
+                  foreach($result->result() as $rows_sub){
+                    $phone_no=$rows_sub->phone_no;
+					$this->smsmodel->send_sms($phone_no,$sms_content);
+                }
+			if($result){
+					$data = array("status" => "success");
+				}else{
+					$data = array("status" => "failed");
+				}
+			return $data;
+       }
 
 
 

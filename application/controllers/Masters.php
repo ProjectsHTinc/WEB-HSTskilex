@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Masters extends CI_Controller {
-		function __construct() {
-			 parent::__construct();
+	class Masters extends CI_Controller {
+		
+	function __construct() {
+				parent::__construct();
 			    $this->load->helper('url');
 			    $this->load->library('session');
-				  $this->load->model('mastermodel');
-
+				$this->load->model('mastermodel');
 	 }
 
 
@@ -774,6 +774,31 @@ class Masters extends CI_Controller {
 	}
 
 
-
+	public function send_sms(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/master/send_sms');
+			 $this->load->view('admin/admin_footer');
+		 }else{
+			 	redirect('/');
+		 }
+	}
+	
+	
+	public function send_sms_content(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type=='1' || $user_type=='2'){
+			$sms_content=$this->db->escape_str($this->input->post('sms_content'));
+			$data['res']=$this->mastermodel->send_sms_content($sms_content);
+			echo json_encode($data['res']);
+		}else{
+			redirect('/');
+		}
+	}
 
 }

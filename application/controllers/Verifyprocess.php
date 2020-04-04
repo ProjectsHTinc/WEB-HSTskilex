@@ -246,6 +246,19 @@ class Verifyprocess extends CI_Controller {
 			 }
 	 }
 
+	 
+	public function delete_skills(){
+		$data=$this->session->userdata();
+		$user_id=$this->session->userdata('user_id');
+		$user_type=$this->session->userdata('user_role');
+		if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+			$skill_id=$this->uri->segment(3);
+			$user_id=$this->uri->segment(4);
+			$data =$this->verificationmodel->delete_skills($skill_id,$user_id);
+		}else {
+			 redirect('/login');
+		}
+	 }
 
 
 }

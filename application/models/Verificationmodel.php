@@ -138,7 +138,7 @@ Class Verificationmodel extends CI_Model
   function get_service_skils_for_user($ser_user_id){
     $id=base64_decode($ser_user_id)/98765;
     $select="SELECT mc.main_cat_name,sc.sub_cat_name,s.service_name,sppk.id,sppk.status,sppk.user_master_id FROM serv_prov_pers_skills as sppk left join main_category as mc on sppk.main_cat_id=mc.id left join sub_category as sc on sppk.sub_cat_id=sc.id left join services as s on sppk.service_id=s.id where sppk.user_master_id='$id'";
-    $result=$this->db->query($select);
+	$result=$this->db->query($select);
     return $result->result();
   }
 
@@ -201,7 +201,12 @@ Class Verificationmodel extends CI_Model
     }
   }
 
-
-
+	function delete_skills($skill_id,$user_id){
+		$user_master_id=base64_decode($user_id)/98765;
+		$delete_lu = "DELETE FROM `serv_prov_pers_skills` WHERE `user_master_id` = '$user_master_id' AND id = '$skill_id' ";
+		$result_lu=$this->db->query($delete_lu);
+		//exit;
+	   redirect('verifyprocess/get_skills_details/'.$user_id);
+	}
 }
 ?>

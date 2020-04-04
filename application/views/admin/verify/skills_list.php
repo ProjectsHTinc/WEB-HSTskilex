@@ -22,25 +22,24 @@
 
         <thead>
             <tr>
-                <th >S.no</th>
-                <th>Main Category</th>
-                <!-- <th>Sub Category</th>
-                <th>Service</th> -->
-                <th>Status</th>
-
+                <th width="10%">S.no</th>
+                <th width="70%">Main Category</th>
+                <th width="20%">Status</th>
             </tr>
         </thead>
         <tbody>
-          <?php $i=1; foreach($res as $rows) { ?>
-
-
+          <?php 
+			$i=1; 
+				foreach($res as $rows) { 
+				$user_master_id = $rows->user_master_id;
+		  ?>
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $rows->main_cat_name; ?></td>
                 <!-- <td><?php echo $rows->sub_cat_name; ?></td>
                 <td><?php echo $rows->service_name; ?></td> -->
-                <td><?php echo $rows->status; ?></td>
-
+				<td><?php echo $rows->status; ?><?php if (count($res) >2) { ?>&nbsp <a href="<?php echo base_url(); ?>verifyprocess/delete_skills/<?php echo $rows->id; ?>/<?php echo base64_encode($user_master_id*98765);?>" onclick="return confirm('Are you sure want to delete?');" style="cursor:pointer" class="btn go_back_btn pull-right">Delete</a><?php } ?>
+				</td> 
             </tr>
           <?php  $i++;  }  ?>
 
@@ -58,3 +57,24 @@
       </div>
 
     </div>
+<script>
+
+
+function confirm_remove(id){
+	
+  swal({
+      title: '',
+      text: "Are you sure want to remove?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+  }).then(function(){
+		window.location.href='<?php echo base_url(); ?>reviews/remove_review/'+id;
+  }).catch(function(reason){
+
+  });
+}
+</script>

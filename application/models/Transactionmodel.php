@@ -146,7 +146,28 @@ Class Transactionmodel extends CI_Model
     return $result->result();
   }
 
+ function from_date_to_date_tax_details($from_date,$to_date){
+     
+	  $timestamp = strtotime($from_date);
+      $from_date_new = date('Y-m-d', $timestamp);
 
+      $timestamp_to_date = strtotime($to_date);
+      $to_date_new = date('Y-m-d', $timestamp_to_date);
+	  
+      $check="SELECT SUM(serv_total_amount) AS tot_amount,SUM(serv_prov_commission_amt) AS sp_commission,SUM(skilex_commission_amt) AS sk_commision,SUM(taxable_amount) AS tax_amount,'$from_date_new' AS from_date,'$to_date_new' AS to_date FROM daily_payment_transaction WHERE (service_date BETWEEN '$from_date_new' AND '$to_date_new')";
+	  $result=$this->db->query($check);
+	  
+      return $result->result();
+    }
+
+ function from_date_to_date_tax_list($from_date,$to_date){
+  
+      $check="SELECT spd.owner_full_name,dpt.* FROM daily_payment_transaction as dpt LEFT JOIN
+      service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id WHERE (service_date BETWEEN '$from_date' AND '$to_date') ORDER BY dpt.service_date DESC";
+	  $result=$this->db->query($check);
+	  
+      return $result->result();
+    }
 
 
 

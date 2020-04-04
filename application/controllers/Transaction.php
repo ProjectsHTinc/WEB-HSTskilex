@@ -141,7 +141,58 @@ class Transaction extends CI_Controller {
 
 	 }
 
+	 public function from_date_to_date_tax(){
 
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/datewise_transactions_stax',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+
+	 }
+	 
+	 
+	 
+	  public function from_date_to_date_tax_details(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $from_date=$this->input->post('from_date');
+			 $to_date=$this->input->post('to_date');
+			 $data['res']=$this->transactionmodel->from_date_to_date_tax_details($from_date,$to_date);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/from_date_to_date_tax_details',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+	  }
+	  
+	   public function from_date_to_date_tax_list(){
+		 $data=$this->session->userdata();
+		 $user_id=$this->session->userdata('user_id');
+		 $user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 
+			 $from_date=$this->uri->segment(3);
+			 $to_date=$this->uri->segment(4);
+			 			 
+			 $data['res']=$this->transactionmodel->from_date_to_date_tax_list($from_date,$to_date);
+			 //print_r($data['res']);
+			 //exit;
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/transactions/from_date_to_date_tax_list',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else {
+				redirect('/login');
+		 }
+	  }
 
 
 

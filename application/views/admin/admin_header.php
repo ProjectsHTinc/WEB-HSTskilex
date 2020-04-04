@@ -155,7 +155,7 @@ th{
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_and_to_date_transactions">From & To date </a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Commando transactions</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/online_payment_history">Online Payment History</a></li>
-
+				  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_to_date_tax">Date wise Tax Details</a></li>
                 </li>
 
 

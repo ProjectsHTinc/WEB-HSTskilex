@@ -667,7 +667,7 @@ Class Mastermodel extends CI_Model
 		
 		function update_distance_rates($rate_id,$from_km,$rates,$status,$user_id){
 			$id=base64_decode($rate_id)/98765;
-			echo $update="UPDATE surge_master SET surge_distance='$from_km',surge_price='$rates',status='$status',updated_by='$user_id',updated_at=NOW() WHERE id='$id'";
+			$update="UPDATE surge_master SET surge_distance='$from_km',surge_price='$rates',status='$status',updated_by='$user_id',updated_at=NOW() WHERE id='$id'";
 			$result=$this->db->query($update);
             if($result){
                 $data = array("status" => "success");

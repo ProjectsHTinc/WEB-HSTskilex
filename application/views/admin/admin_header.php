@@ -103,9 +103,10 @@ th{
                        </ul>
                      </div>
 					<div class="col-group col-md-2">
-                       <p class="category-heading">Promotions</p>
+                       <p class="category-heading">Extras</p>
                        <ul class="submenu-item">
                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/send_sms">Send SMS </a></li>
+						 <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/distance_rates">Distance Rates </a></li>
                        </ul>
                      </div>
                 </div>

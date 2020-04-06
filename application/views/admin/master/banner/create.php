@@ -29,11 +29,10 @@
 
                     <div class="form-group">
                       <label for="exampleFormControlSelect3">Status</label>
-                      <select class="form-control form-control-sm" id="status" name="status">
+						<select class="form-control form-control-sm" id="status" name="status">
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
-
-                      </select>
+						</select>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Create</button>
 

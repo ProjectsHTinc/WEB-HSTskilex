@@ -800,5 +800,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			redirect('/');
 		}
 	}
+	
+	public function distance_rates(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $data['result']=$this->mastermodel->distance_rates();
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/master/create_distance_rates',$data);
+			 $this->load->view('admin/admin_footer');
+		 }else{
+			 	redirect('/');
+		 }
+	}
 
+
+	public function check_km(){
+		$frm_km=$this->input->post('frm_km');
+		$data=$this->mastermodel->check_km($frm_km);
+	}
+	
+	public function add_distance_rates(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $from_km=$this->db->escape_str($this->input->post('frm_km'));
+			 $rates=$this->db->escape_str($this->input->post('rates'));
+			 $status=$this->db->escape_str($this->input->post('status'));
+			 
+			 $data['res']=$this->mastermodel->add_distance_rates($from_km,$rates,$status,$user_id);
+			 
+			 if($data['res']['status']=="success"){
+				$messge = array('message' => 'Surge Rate Added','class' => 'alert alert-success fade in');
+				$this->session->set_flashdata('msg', $messge);
+				redirect('masters/distance_rates');
+			}else{
+				$messge = array('message' => 'Something went wrong','class' => 'alert alert-danger fade in');
+				$this->session->set_flashdata('msg', $messge);
+				redirect('masters/distance_rates');
+			}
+		 }else{
+			 	redirect('/');
+		 }
+	}
+	
+	public function edit_distance_rates(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $rate_id=$this->uri->segment(3);
+			 $data['res']=$this->mastermodel->edit_distance_rates($rate_id);
+			 $this->load->view('admin/admin_header');
+			 $this->load->view('admin/master/edit_distance_rates', $data);
+			 $this->load->view('admin/admin_footer');
+		 }else{
+			 	redirect('/');
+		 }
+	}
+	
+	public function check_km_exist(){
+		 $rate_id=$this->uri->segment(3);
+		 $frm_km=$this->input->post('frm_km');
+		$data=$this->mastermodel->check_km_exist($rate_id,$frm_km);
+	}
+	
+	public function update_distance_rates(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+		 if($user_type=='1'||$user_type=='2'){
+			 $rate_id=$this->db->escape_str($this->input->post('rate_id'));
+			 $from_km=$this->db->escape_str($this->input->post('frm_km'));
+			 $rates=$this->db->escape_str($this->input->post('rates'));
+			 $status=$this->db->escape_str($this->input->post('status'));
+			 
+			 $data['res']=$this->mastermodel->update_distance_rates($rate_id,$from_km,$rates,$status,$user_id);
+			 
+			 if($data['res']['status']=="success"){
+				$messge = array('message' => 'Surge Rate Update','class' => 'alert alert-success fade in');
+				$this->session->set_flashdata('msg', $messge);
+				redirect('masters/distance_rates');
+			}else{
+				$messge = array('message' => 'Something went wrong','class' => 'alert alert-danger fade in');
+				$this->session->set_flashdata('msg', $messge);
+				redirect('masters/distance_rates');
+			}
+		 }else{
+			 	redirect('/');
+		 }
+	}
+	
+	
 }

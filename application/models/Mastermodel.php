@@ -460,7 +460,7 @@ Class Mastermodel extends CI_Model
         }
 
         function get_all_service($id){
-            $sub_cat_id=base64_decode($id)/98765;
+          $sub_cat_id=base64_decode($id)/98765;
           $select="SELECT * FROM services WHERE sub_cat_id='$sub_cat_id' ORDER BY service_position asc";
           $result=$this->db->query($select);
           return $result->result();
@@ -609,6 +609,76 @@ Class Mastermodel extends CI_Model
 			return $data;
        }
 
+        function distance_rates(){
+          $check="SELECT * FROM surge_master order by id";
+          $result=$this->db->query($check);
+          return $result->result();
+        }
+		
+		function check_km($frm_km)
+		{
+			$select="SELECT * FROM surge_master Where surge_distance='$frm_km'";
+			$result = $this->db->query($select);
+			  if($result->num_rows()>0){
+					echo "false";
+				}else{
+					echo "true";
+			  }
+		}
+		
+		
+		function check_km_exist($rate_id,$frm_km)
+		{
+			$select="SELECT * FROM surge_master WHERE id != '$rate_id' AND surge_distance = '$frm_km'";
+			$result = $this->db->query($select);
+			  if($result->num_rows()>0){
+					echo "false";
+				}else{
+					echo "true";
+			  }
+        }
+		
+		function add_distance_rates($from_km,$rates,$status,$user_id){
+          $check="SELECT * FROM surge_master WHERE surge_distance='$from_km'";
+          $result=$this->db->query($check);
+          if($result->num_rows()==0){
+            $insert="INSERT INTO surge_master(surge_distance,surge_price,status,created_at,created_by) VALUES('$from_km','$rates','$status',NOW(),'$user_id')";
+            $result=$this->db->query($insert);
+            if($result){
+                $data = array("status" => "success");
+                return $data;
+            }else{
+              $data = array("status" => "failed");
+              return $data;
+            }
+
+          }else{
+            $data = array("status" => "Already exist");
+            return $data;
+          }
+        }
+
+        function edit_distance_rates($rate_id){
+		  $id=base64_decode($rate_id)/98765;
+          $check="SELECT * FROM surge_master WHERE id='$id'";
+          $result=$this->db->query($check);
+          return $result->result();
+        }
+		
+		function update_distance_rates($rate_id,$from_km,$rates,$status,$user_id){
+			$id=base64_decode($rate_id)/98765;
+			echo $update="UPDATE surge_master SET surge_distance='$from_km',surge_price='$rates',status='$status',updated_by='$user_id',updated_at=NOW() WHERE id='$id'";
+			$result=$this->db->query($update);
+            if($result){
+                $data = array("status" => "success");
+                return $data;
+            }else{
+              $data = array("status" => "failed");
+              return $data;
+            }
+
+         
+        }
 
 
 }

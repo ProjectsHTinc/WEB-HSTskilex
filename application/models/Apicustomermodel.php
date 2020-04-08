@@ -587,7 +587,7 @@ class Apicustomermodel extends CI_Model {
     }
 
 
-    $query_wallet_history="SELECT DATE_FORMAT(created_at,'%d-%m-%Y') as created_date,TIME_FORMAT(created_at, '%h:%i') as created_time,transaction_amt,status,notes,user_master_id,id FROM wallet_history where user_master_id='$user_master_id'";
+    $query_wallet_history="SELECT DATE_FORMAT(created_at,'%d-%m-%Y') as created_date,TIME_FORMAT(created_at, '%h:%i %p') as created_time,transaction_amt,status,notes,user_master_id,id FROM wallet_history where user_master_id='$user_master_id' order by id desc";
     $re_wallet_history=$this->db->query($query_wallet_history);
     if($re_wallet_history->num_rows()==0){
       $res_wallet=array("status"=>"error","msg_en"=>"no history found","msg_ta"=>"no history found");
@@ -2217,18 +2217,8 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
 
     function service_order_summary($user_master_id,$service_order_id){
-      // $service_query="SELECT IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,st.from_time,st.to_time,s.service_name,s.service_ta_name,
-      // (SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS ad_serv_rate,
-      // (SELECT count( service_order_id) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id' ) AS count_add,IFNULL(spa.paid_advance_amount,'') as paid_advance_amount,IFNULL(spa.service_amount,' ') as service_amount,IFNULL(spa.ad_service_amount,'') as ad_service_amount,spa.sgst_amount,spa.cgst_amount,INULL(spa.total_amount,'') as total_amount,IFNULL(spa.coupon_id,'') as coupon_id,INULL(spa.discount_amt,'') as discount_amt,spa.status,spa.id as payment_id,so.* FROM service_orders  AS so
-      // LEFT JOIN services AS s ON s.id=so.service_id
-      // LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
-      // LEFT JOIN service_provider_details AS spd ON spd.user_master_id=so.serv_prov_id
-      // LEFT JOIN service_person_details AS spp ON spp.user_master_id=so.serv_pers_id
-      // LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
-      // LEFT JOIN service_payments AS spa ON spa.service_order_id=so.id
-      // WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
 
-        $service_query="SELECT IF(DATE_FORMAT(so.start_datetime,'%Y-%m-%d %r')='0000-00-00 12:00:00 AM', '',DATE_FORMAT(so.start_datetime,'%Y-%m-%d %r')) as start_time,IF(DATE_FORMAT(so.finish_datetime,'%Y-%m-%d %r')='0000-00-00 12:00:00 AM', '',DATE_FORMAT(so.finish_datetime,'%Y-%m-%d %r')) as finish_time,
+        $service_query="SELECT spa.travelling_allowance,IF(DATE_FORMAT(so.start_datetime,'%Y-%m-%d %r')='0000-00-00 12:00:00 AM', '',DATE_FORMAT(so.start_datetime,'%Y-%m-%d %r')) as start_time,IF(DATE_FORMAT(so.finish_datetime,'%Y-%m-%d %r')='0000-00-00 12:00:00 AM', '',DATE_FORMAT(so.finish_datetime,'%Y-%m-%d %r')) as finish_time,
         IFNULL(lu.phone_no,'') as phone_no,IFNULL(spp.full_name,'') AS full_name,IFNULL(spd.owner_full_name,'') AS owner_full_name,
         TIME_FORMAT(st.from_time,'%r') as from_time ,TIME_FORMAT(st.to_time,'%r') as to_time,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,
         s.service_name,s.service_ta_name,IFNULL((SELECT SUM( ad_service_rate_card) FROM service_order_additional AS soa WHERE service_order_id='$service_order_id'),'') as ad_serv_rate,
@@ -2248,7 +2238,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         $response = array("status" => "error", "msg" => "No Service found");
       }else{
         $service_result=$res_service->result();
-
+          $rate=$this->get_distance_rate($service_order_id);
         foreach($service_result as $rows_service){
           $payment_id=$rows_service->payment_id;
           $tim=time();
@@ -2284,6 +2274,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             "offer_percent"=>$rows_service->offer_percent,
             "discount_amt"=>$rows_service->discount_amt,
             "total_service_cost"=>$rows_service->total_service_amount,
+            "travelling_allowance"=>$rate,
             "net_service_amount"=>$rows_service->net_service_amount,
 
           );
@@ -2513,6 +2504,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 //-------------------- Apply Coupon to Service Order  -------------------//
 
   function apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id){
+      $rate=$this->get_distance_rate($service_order_id);
        $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
 
       $res_query = $this->db->query($query);
@@ -2539,7 +2531,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                     if($coupon_id=='0'){
                         $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
                     }else{
-                        $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                        $update="UPDATE service_payments SET travelling_allowance='$rate',coupon_id='$coupon_id',discount_amt='$max_amt',net_service_amount='$final_total',payable_amount='$payable'+'$rate' WHERE service_order_id='$service_order_id'";
                     }
                   }else{
                     $final_total=$total-$coupm_amt;
@@ -2547,7 +2539,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                     if($coupon_id=='0'){
                         $update="UPDATE service_payments SET net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
                     }else{
-                        $update="UPDATE service_payments SET coupon_id='$coupon_id',discount_amt='$coupm_amt',net_service_amount='$final_total',payable_amount='$payable' WHERE service_order_id='$service_order_id'";
+                        $update="UPDATE service_payments SET travelling_allowance='$rate',coupon_id='$coupon_id',discount_amt='$coupm_amt',net_service_amount='$final_total',payable_amount='$payable'+'$rate' WHERE service_order_id='$service_order_id'";
                     }
 
                   }
@@ -2579,6 +2571,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 //--------------------  Remove Coupon to Service Order  -------------------//
 
     function remove_coupon_from_order($user_master_id,$service_order_id){
+        $rate=$this->get_distance_rate($service_order_id);
       $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
@@ -2588,7 +2581,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
           $advance=$rows_service->paid_advance_amount;
           $total= $rows_service->total_service_amount;
           $payable=$total-$advance;
-          $update="UPDATE service_payments SET coupon_id='0',discount_amt='0',net_service_amount='$total',payable_amount='$payable' WHERE service_order_id='$service_order_id' ";
+          $update="UPDATE service_payments SET coupon_id='0',discount_amt='0',net_service_amount='$total',travelling_allowance='$rate',payable_amount='$payable'+'$rate' WHERE service_order_id='$service_order_id' ";
           $update_result = $this->db->query($update);
           if($update_result){
             $response = array("status" => "success", "msg" => "Coupon removed Successfully","msg_en"=>"","msg_ta"=>"");
@@ -2608,6 +2601,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 //-------------------- Payment to Service Order  -------------------//
 
 function proceed_for_payment($user_master_id,$service_order_id){
+      $rate=$this->get_distance_rate($service_order_id);
       $query="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
       $res_query = $this->db->query($query);
       if($res_query->num_rows()!=0){
@@ -2615,6 +2609,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
               foreach($result_service as $rows_service){}
                 $payment_id=$rows_service->id;
                 $payable=$rows_service->payable_amount;
+
                 $advance=$rows_service->paid_advance_amount;
                 $total_service_amount=$rows_service->total_service_amount;
                 $net_amount=$rows_service->net_service_amount;
@@ -2642,14 +2637,14 @@ function proceed_for_payment($user_master_id,$service_order_id){
                 $gst_amount=$total_gst*$skilex_amount/2;
                 $skile_net_amount=$skilex_amount-$gst;
                 $payable=$net_service_amount-$advance;
-                $update="UPDATE service_payments SET net_service_amount='$net_service_amount',payable_amount='$payable',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";
+                $update="UPDATE service_payments SET net_service_amount='$net_service_amount',payable_amount='$payable'+'$rate',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";
                 	$update_result = $this->db->query($update);
                   if($update_result){
                     $tim=time();
                     $order_id=$tim.'-'.$user_master_id.'-'.$service_order_id.'-'.$payment_id;
                     $pay_details=array(
                       "order_id"=>$order_id,
-                      "payable_amount"=>$payable,
+                      "payable_amount"=>$payable+$rate,
                     );
                     $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details,"msg_en"=>"","msg_ta"=>"");
                   }else{
@@ -2665,6 +2660,48 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
     }
 //--------------------  Payment  to Service Order  -------------------//
+
+
+############### Distance calculation  ###############################3
+    function get_distance_rate($service_order_id){
+      $get_lat="SELECT * FROM service_orders where id='$service_order_id'";
+      $res=$this->db->query($get_lat);
+      foreach($res->result() as $rows_lat){}
+      $result = explode(",", $rows_lat->service_latlon);
+      $lat1=$result[0];
+      $lon1= $result[1];
+
+      $get_person="SELECT * FROM service_person_details where user_master_id='$rows_lat->serv_pers_id'";
+      $res_person=$this->db->query($get_person);
+      foreach($res_person->result() as $rows_person){}
+      if(empty($rows_person->person_lat)){
+        $get_vendor_status="SELECT * FROM vendor_status WHERE serv_pro_id='$rows_lat->serv_pers_id'";
+        $res_vendor=$this->db->query($get_vendor_status);
+        foreach($res_vendor->result() as $rows_vendor){}
+          $lat2=$rows_vendor->serv_lat;
+          $lon2=$rows_vendor->serv_lon;
+      }else{
+        $lat2=$rows_person->person_lat;
+        $lon2=$rows_person->person_long;
+      }
+
+      $rad = M_PI / 180;
+      $km=acos(sin($lat2*$rad) * sin($lat1*$rad) + cos($lat2*$rad) * cos($lat1*$rad) * cos($lon2*$rad - $lon1*$rad)) * 6371;
+      $dis= round($km,2);
+      $get_rate="SELECT * FROM surge_master where surge_distance>='$dis' LIMIT 1";
+      $res_rate=$this->db->query($get_rate);
+      if($res_rate->num_rows()==0){
+        $rate='0';
+      }else{
+        foreach($res_rate->result() as $rows_rate){}
+          $rate=$rows_rate->surge_price;
+      }
+      return $rate;
+}
+
+
+
+############### Distance calculation  ###############################3
 
 
 
@@ -2692,6 +2729,95 @@ function proceed_for_payment($user_master_id,$service_order_id){
         }
 
 //--------------------  Service Person Tracking  -------------------//
+
+
+  ############### Pay Using Wallet  ################################
+
+  function pay_using_wallet($user_master_id,$service_order_id){
+      $query="SELECT * FROM user_wallet WHERE user_master_id='$user_master_id'";
+      $result=$this->db->query($query);
+      if($result->num_rows()==0){
+            $wallet_amount='0';
+            $response=array("status"=>"error","msg"=>"No balance");
+      }else{
+          foreach($result->result() as $rows){}
+            $wallet_amount=$rows->amt_in_wallet;
+            if($wallet_amount=='0.00'){
+              $response=array("status"=>"error","msg"=>"No balance");
+            }else{
+            $get_payment="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+            $res_payment=$this->db->query($get_payment);
+            foreach($res_payment->result() as $rows){}
+             $payable_amt=$rows->payable_amount;
+
+
+            if($payable_amt >= $wallet_amount){
+              $detected_amt=$wallet_amount;
+            $finalamount=$payable_amt-$wallet_amount;
+            $payable_balance=$finalamount;
+            $update_wallet="UPDATE user_wallet SET amt_in_wallet='0',total_amt_used=total_amt_used+'$wallet_amount',updated_at=NOW() where user_master_id='$user_master_id'";
+
+            }else{
+
+              $finalamount=$wallet_amount-$payable_amt;
+               $wallet_balance=$finalamount;
+                 $detected_amt=$payable_amt;
+                $update_wallet="UPDATE user_wallet SET amt_in_wallet='$wallet_balance',total_amt_used=total_amt_used+'$detected_amt',updated_at=NOW() where user_master_id='$user_master_id'";
+              }
+
+            $res_update=$this->db->query($update_wallet);
+            $ins_history="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at) VALUES ('$user_master_id','$detected_amt','Debited','Debited for Service',NOW())";
+            $res=$this->db->query($ins_history);
+            $update_service_payment="UPDATE service_payments SET wallet_amount='$detected_amt' where service_order_id='$service_order_id'";
+            $res_payment=$this->db->query($update_service_payment);
+            if($res_payment){
+              $response=array("status"=>"success","msg"=>"Paid from wallet");
+            }else{
+              $response=array("status"=>"error","msg"=>"Something went wrong");
+            }
+
+
+            }
+      }
+      return $response;
+
+
+
+
+  }
+  ############### Pay Using Wallet  ################################
+
+    ############### Un check Pay Using Wallet  ################################
+    function uncheck_from_wallet($user_master_id,$service_order_id){
+
+      $get_wallet_amount="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
+      $result=$this->db->query($get_wallet_amount);
+      if($result->num_rows()==0){
+          $response=array("status"=>"error","msg"=>"Something went wrong");
+      }else{
+        foreach($result->result() as $rows_amt){}
+          $service_wallet=$rows_amt->wallet_amount;
+          $update="UPDATE service_payments SET wallet_amount='0' where service_order_id='$service_order_id'";
+          $res_update=$this->db->query($update);
+
+          $wallet="UPDATE user_wallet SET amt_in_wallet=amt_in_wallet+'$service_wallet',total_amt_used=total_amt_used-'$service_wallet' WHERE user_master_id='$user_master_id'";
+          $res_wallet=$this->db->query($wallet);
+
+          $ins_history="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at) VALUES ('$user_master_id','$service_wallet','Credited','Returned from service payment',NOW())";
+          $res=$this->db->query($ins_history);
+          if($res){
+            $response=array("status"=>"success","msg"=>"Amount back to wallet");
+          }else{
+            $response=array("status"=>"error","msg"=>"Something went wrong");
+          }
+
+      }
+      return $response;
+
+    }
+
+    ############### Un check Pay Using Wallet  ################################
+
 
 
 //--------------------  Pay By cash  -------------------//

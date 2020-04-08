@@ -1701,6 +1701,75 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 
+	public function pay_using_wallet()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service - Reviews List";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+		$service_order_id  = $this->input->post("service_order_id");
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->pay_using_wallet($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+	public function uncheck_from_wallet()
+	{
+	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+		{
+			return FALSE;
+		}
+
+		if($_POST == FALSE)
+		{
+			$res = array();
+			$res["opn"] = "Service - Reviews List";
+			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+			echo json_encode($res);
+			return;
+		}
+
+
+
+		$service_order_id  = $this->input->post("service_order_id");
+		$user_master_id  = $this->input->post("user_master_id");
+
+		$data['result']=$this->apicustomermodel->uncheck_from_wallet($user_master_id,$service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
+
+//-----------------------------------------------//
+
+
+//-----------------------------------------------//
+
 	public function service_reviews_list()
 	{
 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
@@ -1884,6 +1953,17 @@ class Apicustomer extends CI_Controller {
 		// $response = $data['result'];
 		// echo json_encode($response);
 	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+	// 
+	// public function get_distance_rate()
+	// {
+	// 	$data['result']=$this->apicustomermodel->get_distance_rate();
+	// 	$response = $data['result'];
+	// 	echo json_encode($response);
+	// }
 
 //-----------------------------------------------//
 

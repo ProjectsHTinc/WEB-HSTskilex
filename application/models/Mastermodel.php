@@ -517,30 +517,24 @@ Class Mastermodel extends CI_Model
 
 
         function service_update($service_name,$service_ta_name,$status,$cat_pic,$user_id,$service_id,$is_advance_payment,$advance_amount,$rate_card,$rate_card_details,$rate_card_details_ta,$inclusions,$inclusions_ta,$exclusion,$exclusions_ta,$service_procedure,$service_procedure_ta,$others,$others_ta){
-          $id=base64_decode($service_id)/98765;
-          if($is_advance_payment=='Y'){
-            $advance=$advance_amount;
-          }else{
-              $advance='0';
-          }
-          $update="UPDATE services SET  service_name='$service_name',service_ta_name='$service_ta_name',service_pic='$cat_pic',status='$status',created_by='$user_id',updated_at=NOW(),is_advance_payment='$is_advance_payment',advance_amount='$advance',rate_card='$rate_card',rate_card_details='$rate_card_details',rate_card_details_ta='$rate_card_details_ta',inclusions='$inclusions',inclusions_ta='$inclusions_ta',exclusions='$exclusion',exclusions_ta='$exclusions_ta',service_procedure='$service_procedure',service_procedure_ta='$service_procedure_ta',others='$others',others_ta='$others_ta' WHERE id='$id'";
-
-
-        $result=$this->db->query($update);
-        if($result){
-            $data = array("status" => "success");
-              return $data;
-        }else{
-          $data = array("status" => "failed");
-            return $data;
+			$id=base64_decode($service_id)/98765;
+			  if($is_advance_payment=='Y'){
+				$advance=$advance_amount;
+			  }else{
+				  $advance='0';
+			  }
+			$update="UPDATE services SET  service_name='$service_name',service_ta_name='$service_ta_name',service_pic='$cat_pic',status='$status',created_by='$user_id',updated_at=NOW(),is_advance_payment='$is_advance_payment',advance_amount='$advance',rate_card='$rate_card',rate_card_details='$rate_card_details',rate_card_details_ta='$rate_card_details_ta',inclusions='$inclusions',inclusions_ta='$inclusions_ta',exclusions='$exclusion',exclusions_ta='$exclusions_ta',service_procedure='$service_procedure',service_procedure_ta='$service_procedure_ta',others='$others',others_ta='$others_ta' WHERE id='$id'";
+			$result=$this->db->query($update);
+			if($result){
+				$data = array("status" => "success");
+				  return $data;
+			}else{
+				$data = array("status" => "failed");
+				return $data;
+			}
         }
-        }
-
-
-
 
         // Banner section
-
 
         function get_banner(){
           $check="SELECT * FROM banners order by id desc";
@@ -565,16 +559,15 @@ Class Mastermodel extends CI_Model
             $insert="INSERT INTO banners(banner_title,banner_img,status,created_at,created_by) VALUES('$banner_title','$pic','$status',NOW(),'$user_id')";
             $result=$this->db->query($insert);
             if($result){
-                $data = array("status" => "success");
-                return $data;
+				$data = array("status" => "success");
+				return $data;
             }else{
-              $data = array("status" => "failed");
-              return $data;
+				$data = array("status" => "failed");
+				return $data;
             }
-
           }else{
-            $data = array("status" => "Already exist");
-            return $data;
+				$data = array("status" => "Already exist");
+				return $data;
           }
 
         }
@@ -658,12 +651,14 @@ Class Mastermodel extends CI_Model
           }
         }
 
+
         function edit_distance_rates($rate_id){
 		  $id=base64_decode($rate_id)/98765;
           $check="SELECT * FROM surge_master WHERE id='$id'";
           $result=$this->db->query($check);
           return $result->result();
         }
+		
 		
 		function update_distance_rates($rate_id,$from_km,$rates,$status,$user_id){
 			$id=base64_decode($rate_id)/98765;
@@ -676,8 +671,6 @@ Class Mastermodel extends CI_Model
               $data = array("status" => "failed");
               return $data;
             }
-
-         
         }
 
 

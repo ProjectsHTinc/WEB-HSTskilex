@@ -21,13 +21,13 @@ Class Transactionmodel extends CI_Model
         SUM(sp.serv_pro_net_amount) AS serv_prov_comm_amt,
         SUM(sp.skilex_net_amount) AS skilex_comm_amt,
         SUM(sp.skilex_tax_amount) AS tax_able_amt,
-        SUM(sp.online_amount) AS online_trans_amt,
+        SUM(sp.online_amount+sp.wallet_amount) AS online_trans_amt,
         SUM(sp.offline_amount) AS offline_trans_amt,
-        SUM(sp.online_amount * 0.2) AS online_skile_com_amt,
-        SUM(sp.online_amount * 0.8) AS online_sp_com_amt,
+        SUM(sp.online_amount+sp.wallet_amount * 0.2) AS online_skile_com_amt,
+        SUM(sp.online_amount+sp.wallet_amount * 0.8) AS online_sp_com_amt,
         SUM(sp.offline_amount * 0.2) AS offline_skile_com_amt,
         SUM(sp.offline_amount * 0.8) AS offline_sp_com_amt,
-        (SUM(sp.online_amount * 0.8) - SUM(sp.offline_amount * 0.2)) AS pay_to_serv
+        (SUM(sp.online_amount+sp.wallet_amount * 0.8) - SUM(sp.offline_amount * 0.2)) AS pay_to_serv
       FROM
       service_orders AS so
       LEFT JOIN service_payments AS sp  ON so.id = sp.service_order_id
@@ -147,25 +147,25 @@ Class Transactionmodel extends CI_Model
   }
 
  function from_date_to_date_tax_details($from_date,$to_date){
-     
+
 	  $timestamp = strtotime($from_date);
       $from_date_new = date('Y-m-d', $timestamp);
 
       $timestamp_to_date = strtotime($to_date);
       $to_date_new = date('Y-m-d', $timestamp_to_date);
-	  
+
       $check="SELECT SUM(serv_total_amount) AS tot_amount,SUM(serv_prov_commission_amt) AS sp_commission,SUM(skilex_commission_amt) AS sk_commision,SUM(taxable_amount) AS tax_amount,'$from_date_new' AS from_date,'$to_date_new' AS to_date FROM daily_payment_transaction WHERE (service_date BETWEEN '$from_date_new' AND '$to_date_new')";
 	  $result=$this->db->query($check);
-	  
+
       return $result->result();
     }
 
  function from_date_to_date_tax_list($from_date,$to_date){
-  
+
       $check="SELECT spd.owner_full_name,dpt.* FROM daily_payment_transaction as dpt LEFT JOIN
       service_provider_details as spd on spd.user_master_id=dpt.serv_prov_id WHERE (service_date BETWEEN '$from_date' AND '$to_date') ORDER BY dpt.service_date DESC";
 	  $result=$this->db->query($check);
-	  
+
       return $result->result();
     }
 

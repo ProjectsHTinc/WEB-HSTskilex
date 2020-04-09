@@ -2852,6 +2852,39 @@ function proceed_for_payment($user_master_id,$service_order_id){
 //--------------------  Pay By cash  -------------------//
 
 
+//-------------------- Paid on wallet  -------------------//
+
+    function paid_on_wallet($user_master_id,$service_order_id){
+
+      $select="SELECT * FROM service_orders as so WHERE so.id='$service_order_id'";
+      $res = $this->db->query($select);
+      if($res->num_rows()==1){
+        $result = $res->result();
+        foreach($result as $rows){}
+        $update="UPDATE service_orders SET status='Paid' WHERE id='$service_order_id'";
+        $res_update = $this->db->query($update);
+        $update_pay="UPDATE service_payments SET status='Paid' WHERE service_order_id='$service_order_id'";
+        $res_pay = $this->db->query($update_pay);
+        // $insert="INSERT INTO service_payment_history (service_order_id,service_payment_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_id','$payment_id','Offline','Netamount','Success',NOW(),'$user_master_id')";
+        $insert="INSERT INTO service_payment_history (service_order_id,payment_type,notes,status,created_at,created_by) VALUES ('$service_order_id','Online','Netamount','Success',NOW(),'$user_master_id')";
+        $res_ins = $this->db->query($insert);
+        if($res_ins){
+           $response = array("status" => "success", "msg" => "Thank you for Payment","msg_en"=>"","msg_ta"=>"");
+        }else{
+          $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+        }
+
+      } else {
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
+      }
+
+      return $response;
+
+
+    }
+    //-------------------- Paid on wallet  -------------------//
+
+
 
 
 //-------------------- Service Reviews Add -------------------//

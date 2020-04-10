@@ -1963,6 +1963,43 @@ class Apicustomer extends CI_Controller {
 //-----------------------------------------------//
 
 
+
+// 
+// //-----------------------------------------------//
+//
+// 	public function sample_sms_test()
+// 	{
+// 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+//
+// 		if(!$this->checkMethod())
+// 		{
+// 			return FALSE;
+// 		}
+//
+// 		if($_POST == FALSE)
+// 		{
+// 			$res = array();
+// 			$res["opn"] = "Input";
+// 			$res["scode"] = 204;
+// 			$res["message"] = "Input error";
+//
+// 			echo json_encode($res);
+// 			return;
+// 		}
+//
+//
+// 		$phone  = $this->input->post("mobile_number");
+// 		$notes  = utf8_encode($this->input->post("notes"));
+//
+// 		$data['result']=$this->smsmodel->send_sms($phone,$notes);
+// 		$response = $data['result'];
+// 		echo json_encode($response);
+// 	}
+//
+// //-----------------------------------------------//
+
+
+
 //-----------------------------------------------//
 
 	public function automatic_provider_allocation()

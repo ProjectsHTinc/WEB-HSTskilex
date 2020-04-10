@@ -68,6 +68,11 @@
                                       <td class="text-left">Discount amount &nbsp; <b>(<?php echo $rows->offer_code; ?>)</b></td>
                                       <td><?php echo $rows->discount_amt; ?></td>
                                     </tr>
+                                    <tr class="text-right">
+                                      <td class="text-left">5</td>
+                                      <td class="text-left">Travel Allowance &nbsp; <b>(<?php echo $rows->offer_code; ?>)</b></td>
+                                      <td><?php echo $rows->travelling_allowance; ?></td>
+                                    </tr>
 
                                   </tbody>
                                 </table>

@@ -147,6 +147,7 @@ table.dataTable thead th, table.dataTable thead td{
                   data-ccavenue_track_id="<?php echo $rows->ccavenue_track_id; ?>"
 
 
+
                   >View</a></td>
 
 
@@ -229,6 +230,7 @@ table.dataTable thead th, table.dataTable thead td{
                       <table id="example" class="table table-striped table-bordered ">
                           <thead>
                             <tr>
+                              <!-- <th>Wallet amount</th> -->
                               <th>Online Amount</th>
                               <th>Offline amount</th>
                               <th>Online Skilex commission</th>
@@ -241,6 +243,7 @@ table.dataTable thead th, table.dataTable thead td{
                         <tbody>
 
                             <tr>
+                              <!-- <td><p id="wallet_amount"></p> </td> -->
                             <td><p id="online_transaction_amt"></p> </td>
                             <td><p id="offline_transaction_amt"></p></td>
                             <td><p id="online_skilex_commission">  </td>
@@ -357,6 +360,8 @@ function update_status(msg,id){
     $(".modal-body #order_id").html( order_id );
     var ccavenue_track_id = $(this).data('ccavenue_track_id');
     $(".modal-body #ccavenue_track_id").html( ccavenue_track_id );
+    // var wallet_amount = $(this).data('wallet_amount');
+    // $(".modal-body #wallet_amount").html( wallet_amount );
 
 
 

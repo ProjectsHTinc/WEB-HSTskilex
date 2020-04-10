@@ -2738,12 +2738,12 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $result=$this->db->query($query);
       if($result->num_rows()==0){
             $wallet_amount='0';
-            $response=array("status"=>"error","msg"=>"No balance");
+            $response=array("status"=>"error","msg"=>"No balance","msg_en"=>"No balance","msg_ta"=>"No balance");
       }else{
           foreach($result->result() as $rows){}
             $wallet_amount=$rows->amt_in_wallet;
             if($wallet_amount=='0.00'){
-              $response=array("status"=>"error","msg"=>"No balance");
+              $response=array("status"=>"error","msg"=>"No balance","msg_en"=>"No balance","msg_ta"=>"No balance");
             }else{
             $get_payment="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
             $res_payment=$this->db->query($get_payment);
@@ -2771,9 +2771,9 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $update_service_payment="UPDATE service_payments SET wallet_amount='$detected_amt' where service_order_id='$service_order_id'";
             $res_payment=$this->db->query($update_service_payment);
             if($res_payment){
-              $response=array("status"=>"success","msg"=>"Paid from wallet");
+              $response=array("status"=>"success","msg"=>"Paid from wallet","msg_en"=>"Paid from wallet","msg_ta"=>"Paid from wallet");
             }else{
-              $response=array("status"=>"error","msg"=>"Something went wrong");
+              $response=array("status"=>"error","msg"=>"Something went wrong","msg_en"=>"Something went wrong","msg_ta"=>"Something went wrong");
             }
 
 

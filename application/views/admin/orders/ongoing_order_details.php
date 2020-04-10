@@ -25,7 +25,7 @@ padding: 15px;
                   <h4 class="card-title">View Service Order details  <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>
                   <?php foreach($res as $rows){
 					  $order_status = $rows->status;
-					  
+
 				  } ?>
                   <div class="row">
                       <div class="col-md-6">
@@ -365,6 +365,7 @@ padding: 15px;
                           <th>Advance amt</th>
                           <th>Service amt</th>
                           <th>Additional Service amt</th>
+                          <th>Travel</th>
                           <th>Offer code</th>
                           <th>Discount amt</th>
                           <th>Tax amt (CGST + SGST)</th>
@@ -384,6 +385,7 @@ padding: 15px;
                           <td class="amt"><?php echo $rows_pay->paid_advance_amount; ?>  </td>
                           <td class="amt"><?php echo $rows_pay->service_amount; ?>  </td>
                           <td class="amt"><?php echo $rows_pay->ad_service_amount; ?>  </td>
+                          <td class="amt"><?php echo $rows_pay->travelling_allowance; ?>  </td>
                           <td class="amt"><?php echo $rows_pay->offer_code; ?></td>
                           <td class="amt"><?php echo $rows_pay->discount_amt; ?></td>
                           <td class="amt"><?php echo $rows_pay->skilex_tax_amount; ?></td>
@@ -429,10 +431,10 @@ padding: 15px;
                     </tbody>
                   </table>
                   <br>
-				
-				
+
+
 				<div class="row">
-				
+
                       <div class="col-md-6">
 					  <?php if(!empty($res_cfeedback)){ ?>
                         <h4 class="card-title">Customer Feedback</h4>
@@ -451,7 +453,7 @@ padding: 15px;
 							<?php   }  ?>
                       </div>
                       <div class="col-md-6">
-					  
+
 					  <div class="col-md-6">
 					  <?php if(!empty($res_efeedback)){ ?>
                         <h4 class="card-title">Service Expert Feedback</h4>
@@ -469,12 +471,12 @@ padding: 15px;
 						</table>
 							<?php   }  ?>
                       </div>
-					  
-						
+
+
                       </div>
 				</div>
-				
-				
+
+
                 </div>
               </div>
             </div>

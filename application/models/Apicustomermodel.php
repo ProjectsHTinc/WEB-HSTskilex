@@ -2801,7 +2801,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $get_wallet_amount="SELECT * FROM service_payments WHERE service_order_id='$service_order_id'";
       $result=$this->db->query($get_wallet_amount);
       if($result->num_rows()==0){
-          $response=array("status"=>"error","msg"=>"Something went wrong");
+          $response=array("status"=>"error","msg"=>"Something went wrong","msg_en"=>"Something went wrong","msg_ta"=>"Something went wrong");
       }else{
         foreach($result->result() as $rows_amt){}
           $service_wallet=$rows_amt->wallet_amount;
@@ -2814,9 +2814,9 @@ function proceed_for_payment($user_master_id,$service_order_id){
           $ins_history="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at) VALUES ('$user_master_id','$service_wallet','Credited','Returned from service payment',NOW())";
           $res=$this->db->query($ins_history);
           if($res){
-            $response=array("status"=>"success","msg"=>"Amount back to wallet");
+            $response=array("status"=>"success","msg"=>"Amount back to wallet","msg_ta"=>"Amount back to wallet","msg_en"=>"Amount back to wallet");
           }else{
-            $response=array("status"=>"error","msg"=>"Something went wrong");
+            $response=array("status"=>"error","msg"=>"Something went wrong","msg_ta"=>"Something went wrong","msg_en"=>"Something went wrong");
           }
 
       }

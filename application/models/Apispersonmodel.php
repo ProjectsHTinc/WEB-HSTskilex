@@ -156,12 +156,17 @@ if($version_code==1){
 			foreach ($user_result->result() as $rows)
 			{
 				  $user_master_id = $rows->id;
+          $preferred_lang_id=$rows->preferred_lang_id;
 			}
 
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
+      if($preferred_lang_id=='1'){
+        $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+      }else{
+        $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+      }
 
-		  $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
       $notes=$msg;
       $phone=$phone_no;
       $this->smsmodel->send_sms($phone,$notes);
@@ -1420,7 +1425,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       }
 
 
-      $get_prov="SELECT sppd.id,lu.id,lu.phone_no from service_person_details as sppd
+      $get_prov="SELECT sppd.id,lu.id,lu.phone_no,lu.preferred_lang_id from service_person_details as sppd
       left join service_provider_details as spd on spd.id=sppd.service_provider_id
       left join login_users as lu on lu.id=sppd.service_provider_id
       where sppd.user_master_id='$user_master_id'";

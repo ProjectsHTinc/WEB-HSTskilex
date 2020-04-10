@@ -146,6 +146,7 @@ class Apicustomermodel extends CI_Model {
 			foreach ($user_result->result() as $rows)
 			{
 				  $user_master_id = $rows->id;
+          $preferred_lang_id=$rows->preferred_lang_id;
 			}
 
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
@@ -158,7 +159,12 @@ class Apicustomermodel extends CI_Model {
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
              $insert_result = $this->db->query($insert_query);
 		}
-    $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+    if($preferred_lang_id=='1'){
+        $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+    }else{
+        $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+    }
+
     $phone=$phone_no;
     $this->smsmodel->send_sms($phone,$notes);
 		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
@@ -2608,6 +2614,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
           $result_service=  $res_query->result();
               foreach($result_service as $rows_service){}
                 $payment_id=$rows_service->id;
+                $wallet_amount=$rows_service->wallet_amount;
                 $payable=$rows_service->payable_amount;
 
                 $advance=$rows_service->paid_advance_amount;
@@ -2645,6 +2652,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                     $pay_details=array(
                       "order_id"=>$order_id,
                       "payable_amount"=>$payable+$rate,
+                      "wallet_amount"=>$wallet_amount,
                     );
                     $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details,"msg_en"=>"","msg_ta"=>"");
                   }else{

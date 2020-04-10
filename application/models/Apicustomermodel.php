@@ -2617,7 +2617,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                 $wallet_amount=$rows_service->wallet_amount;
                 $payable=$rows_service->payable_amount;
 
-                $advance=$rows_service->paid_advance_amount;
+                 $advance=$rows_service->paid_advance_amount;
                 $total_service_amount=$rows_service->total_service_amount;
                 $net_amount=$rows_service->net_service_amount;
                 if($net_amount=='0.00'){
@@ -2652,7 +2652,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                     $pay_details=array(
                       "order_id"=>$order_id,
                       "payable_amount"=>$payable+$rate,
-                      "wallet_amount"=>$wallet_amount,
+                      "wallet_amount"=>floor($wallet_amount),
                     );
                     $response = array("status" => "success", "msg" => "Proceed for Payment","payment_details"=>$pay_details,"msg_en"=>"","msg_ta"=>"");
                   }else{

@@ -1724,6 +1724,7 @@ return $response;
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
                 $sperson_mobile = $rows->phone_no;
+                $preferred_lang_id=$rows->preferred_lang_id;
             }
         }
 
@@ -1743,7 +1744,7 @@ return $response;
         }
 
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $customer_id . "'";
+        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
@@ -1757,7 +1758,12 @@ return $response;
         }
 
         $title           = "Service Request Assigned";
-        $notes = "SKILEX - Service Request Assigned";
+        if($preferred_lang_id=='1'){
+          $notes = "SKILEX - Service Request Assigned";
+        }else{
+          $notes = "SKILEX - Service Request Assigned";
+        }
+
         $phone=$contact_person_number;
         $this->smsmodel->send_sms($phone,$notes);
         $phone=$sperson_mobile;

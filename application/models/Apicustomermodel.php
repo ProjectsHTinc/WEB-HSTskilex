@@ -1122,7 +1122,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
         $ser_rate_card=$rows->rate_card;
         $advance_amount=$rows->advance_amount;
         $phone=$rows->contact_person_number;
-        $notes='Thank you for Booking Service.';
+        $notes='Greetings from Skilex!.Your Order has been Booked.';
         $this->smsmodel->send_sms($phone,$notes);
 
         if($advance_amount=='0.00'){
@@ -1167,7 +1167,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
            $advance_amount=$rows->advance_amount;
 
            $phone=$rows->contact_person_number;
-           $notes='Thank you for Booking Service.';
+           $notes='Greetings from Skilex!. Your Order has been Booked.';
            $this->smsmodel->send_sms($phone,$notes);
 
 
@@ -1392,7 +1392,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                    // $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                    $notes="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                     $phone=$Phoneno;
                     $this->smsmodel->send_sms($phone,$notes);
                     ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
@@ -1580,7 +1581,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                            $gcm_key=$rows->mobile_key;
                            $mobile_type=$rows->mobile_type;
                            $head='Skilex';
-                           $message="You have received order from customer.";
+                           $message="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                            $user_type='3';
                            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                          }
@@ -1707,7 +1708,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $title="Order";
                     $gcm_key=$rows_id_next->mobile_key;
                     $mobiletype=$rows_id_next->mobile_type;
-                    $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                    // $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                    $notes="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                     $phone=$Phoneno;
                     $this->smsmodel->send_sms($phone,$notes);
                     $this->sendNotification($gcm_key,$title,$Message,$mobiletype);
@@ -1885,7 +1887,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                            $gcm_key=$rows->mobile_key;
                            $mobile_type=$rows->mobile_type;
                            $head='Skilex';
-                           $message="You have received order from customer.";
+                           $message="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                            $user_type='3';
                            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                          }

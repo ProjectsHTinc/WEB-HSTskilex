@@ -14,7 +14,8 @@ Class Smsmodel extends CI_Model
  function send_sms($phone,$notes)
  {
 
-  $msg=urlencode($notes);
+  $uni_code=utf8_encode($notes);
+  $msg=urlencode($uni_code);
   $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=SkilEx&text=$msg";
   $curl = curl_init();
       curl_setopt_array($curl, array(

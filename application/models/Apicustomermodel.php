@@ -1121,7 +1121,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
         $last_ser_id= $rows->service_id;
         $ser_rate_card=$rows->rate_card;
         $advance_amount=$rows->advance_amount;
-        $phone=$rows->contact_person_number;
+        $phone=$contact_person_number;
         $notes='Greetings from Skilex!.Your Order has been Booked.';
         $this->smsmodel->send_sms($phone,$notes);
 

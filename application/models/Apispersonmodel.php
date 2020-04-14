@@ -428,7 +428,7 @@ function user_info($user_master_id){
            );
 
          }
-         $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data);
+         $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data,"msg_en"=>"","msg_ta"=>"");
        }
 
         return $response;
@@ -448,7 +448,7 @@ function user_info($user_master_id){
        $insert="INSERT INTO feedback_response  (user_master_id,service_order_id,query_id,answer_text,status,created_at,created_by) VALUES ('$user_master_id','$service_order_id','$feedback_id','$feedback_text','Active',NOW(),'$user_master_id')";
        $result=$this->db->query($insert);
        if($result){
-         $response=array("status"=>"success","msg"=>"Feedback added successfully");
+         $response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
        }else{
            $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
        }

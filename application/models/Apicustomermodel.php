@@ -1166,7 +1166,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
            $ser_rate_card=$rows->rate_card;
            $advance_amount=$rows->advance_amount;
 
-           $phone=$rows->contact_person_number;
+           $phone=$contact_person_number;
            $notes='Greetings from Skilex!. Your Order has been Booked.';
            $this->smsmodel->send_sms($phone,$notes);
 
@@ -2243,7 +2243,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         WHERE so.id='$service_order_id' AND so.customer_id='$user_master_id'";
       $res_service = $this->db->query($service_query);
       if($res_service->num_rows()==0){
-        $response = array("status" => "error", "msg" => "No Service found");
+        $response = array("status" => "error", "msg" => "No Service found","msg_en"=>"","msg_ta"=>"");
       }else{
         $service_result=$res_service->result();
           $rate=$this->get_distance_rate($service_order_id);
@@ -2728,7 +2728,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                "lat"=>$rows->serv_lat,
                "lon"=>$rows->serv_lon,
              );
-            $response = array("status" => "success", "msg" => "Tracking found","track_info"=>$tracking_info);
+            $response = array("status" => "success", "msg" => "Tracking found","track_info"=>$tracking_info,"msg_en"=>"","msg_ta"=>"");
            } else {
              $response = array("status" => "error", "msg" => "No Tracking found","msg_en"=>"","msg_ta"=>"");
            }
@@ -3017,7 +3017,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
             );
 
           }
-          $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data);
+          $response=array("status"=>"success","msg"=>"Feedback questions found","feedback_question"=>$data,"msg_en"=>"","msg_ta"=>"");
         }
 
          return $response;
@@ -3036,7 +3036,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         $insert="INSERT INTO feedback_response  (user_master_id,service_order_id,query_id,answer_text,status,created_at,created_by) VALUES ('$user_master_id','$service_order_id','$feedback_id','$feedback_text','Active',NOW(),'$user_master_id')";
         $result=$this->db->query($insert);
         if($result){
-          $response=array("status"=>"success","msg"=>"Feedback added successfully");
+          $response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
         }else{
             $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
         }

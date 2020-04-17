@@ -3041,7 +3041,14 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
         }
       }else{
+        $update="UPDATE feedback_response SET answer_text='$feedback_text',created_at=NOW() WHERE service_order_id='$service_order_id' and query_id='$feedback_id'";
+        $result=$this->db->query($update);
+        if($result){
+          $response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
+        }else{
             $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+        }
+            // $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
       }
       return $response;
 

@@ -1964,7 +1964,7 @@ class Apicustomer extends CI_Controller {
 
 
 
-// 
+//
 // //-----------------------------------------------//
 //
 // 	public function sample_sms_test()
@@ -2025,12 +2025,15 @@ class Apicustomer extends CI_Controller {
 
 //-----------------------------------------------//
 	//
-	// public function get_distance_rate()
-	// {
-	// 	$data['result']=$this->apicustomermodel->get_distance_rate();
-	// 	$response = $data['result'];
-	// 	echo json_encode($response);
-	// }
+	public function get_distance_rate()
+	{
+		
+		$_POST = json_decode(file_get_contents("php://input"), TRUE);
+		$service_order_id  = $this->input->post("service_order_id");
+		$data['result']=$this->apicustomermodel->get_distance_rate($service_order_id);
+		$response = $data['result'];
+		echo json_encode($response);
+	}
 
 //-----------------------------------------------//
 

@@ -2646,7 +2646,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
                 $gst_amount=$total_gst*$skilex_amount/2;
                 $skile_net_amount=$skilex_amount-$gst;
                 $payable=$net_service_amount-$advance;
-                $update="UPDATE service_payments SET net_service_amount='$net_service_amount',payable_amount='$payable'+'$rate',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";
+                $update="UPDATE service_payments SET net_service_amount='$net_service_amount',travelling_allowance='$rate',payable_amount='$payable'+'$rate',skilex_amount='$skilex_amount',service_provider_amount='$providrt_amt',sgst_amount='$gst_amount',cgst_amount='$gst_amount',skilex_tax_amount='$gst',serv_pro_net_amount='$providrt_amt',skilex_net_amount='$skile_net_amount',updated_at=NOW() WHERE service_order_id='$service_order_id'";
                 	$update_result = $this->db->query($update);
                   if($update_result){
                     $tim=time();

@@ -13,18 +13,7 @@
   display: none;
 }
 </style>
-<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#lstFruits').multiselect({
-                includeSelectAllOption: true
-            });
 
-        });
-    </script>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
 
@@ -44,11 +33,12 @@
                     <div class="col-md-4">
                         <label class="formlabel">Category list</label>
 
-                        <select id="lstFruits" multiple="multiple" name="category_id[]" required>
+                        <select id="lstFruits" class="form-control" name="category_id[]" required>
                           <?php foreach($res_category as $rows_cat){ ?>
                             <option value="<?php echo $rows_cat->id; ?>"><?php echo $rows_cat->main_cat_name; ?></option>
                           <?php } ?>
                         </select>
+
                     </div>
                     <div class="col-md-2">
                         <label class="formlabel">Type</label>

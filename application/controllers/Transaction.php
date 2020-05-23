@@ -166,6 +166,8 @@ class Transaction extends CI_Controller {
 			 $from_date=$this->input->post('from_date');
 			 $to_date=$this->input->post('to_date');
 			 $data['res']=$this->transactionmodel->from_date_to_date_tax_details($from_date,$to_date);
+			 $data['from_date']=$from_date;
+			 $data['to_date']=$to_date;
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/tax_invoice',$data);
 			 $this->load->view('admin/admin_footer');

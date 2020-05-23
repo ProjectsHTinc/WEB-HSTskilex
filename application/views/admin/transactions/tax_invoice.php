@@ -24,7 +24,7 @@
 
                           <div class="container-fluid d-flex justify-content-between">
                             <div class="col-lg-3 pl-0">
-                              <!-- <p class="mb-0 mt-5">Order  Date : <?php echo  date('d-m-Y',strtotime($rows->order_date)) ?></p> -->
+                              <p class="mb-0 mt-5">Date : <?php echo  date('d-m-Y',strtotime($from_date)) ?> - <?php echo  date('d-m-Y',strtotime($to_date)) ?></p>
 
                             </div>
                           </div>
@@ -34,7 +34,7 @@
                                   <thead>
                                     <tr class="bg-light">
                                         <th>#</th>
-                                        <th>Description</th>
+                                        <th>Info</th>
                                         <th class="text-right">Total</th>
                                       </tr>
                                   </thead>
@@ -55,12 +55,12 @@
                                       <td><?php echo $rows->sk_commision + $rows->tax_amount ; ?></td>
                                     </tr>
                                     <tr class="text-right">
-                                      <td class="text-left">3</td>
+                                      <td class="text-left">4</td>
                                       <td class="text-left">SGST</td>
                                       <td><?php echo $rows->tax_amount/2; ?></td>
                                     </tr>
                                     <tr class="text-right">
-                                      <td class="text-left">3</td>
+                                      <td class="text-left">5</td>
                                       <td class="text-left">CGST</td>
                                       <td><?php echo $rows->tax_amount/2; ?></td>
                                     </tr>

@@ -155,7 +155,7 @@ Class Transactionmodel extends CI_Model
       $to_date_new = date('Y-m-d', $timestamp_to_date);
 
       $check="SELECT SUM(serv_total_amount) AS tot_amount,SUM(serv_prov_commission_amt) AS sp_commission,SUM(skilex_commission_amt) AS sk_commision,SUM(taxable_amount) AS tax_amount,'$from_date_new' AS from_date,'$to_date_new' AS to_date FROM daily_payment_transaction WHERE (service_date BETWEEN '$from_date_new' AND '$to_date_new')";
-	  $result=$this->db->query($check);
+	    $result=$this->db->query($check);
 
       return $result->result();
     }

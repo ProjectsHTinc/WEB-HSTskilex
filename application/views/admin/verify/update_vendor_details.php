@@ -175,8 +175,8 @@
 
                     </div>
                     <h4 class="card-title">Deposit Details</h4>
-					<?php 
-					$deposit_status = $rows->deposit_status; 
+					<?php
+					$deposit_status = $rows->deposit_status;
 					if ($deposit_status == 'Unpaid') {
 					?>
                     <form class="forms-sample" id="deposit_status_form" method="post" action="" enctype="multipart/form-data">
@@ -185,7 +185,13 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Deposit Amt :</label>
                           <div class="col-sm-8">
-                                <input type="text" id="deposit_amount" name="deposit_amount" class="form-control" readonly value="<?php echo $stax->deposit_amt; ?>">
+                            <?php if($rows->refundable_deposit=='0.00'){ ?>
+                                <input type="text" id="deposit_amount" name="deposit_amount" class="form-control"  value="<?php echo $rows->refundable_deposit; ?>">
+                          <?php   }else{ ?>
+                                <input type="text" id="deposit_amount" name="deposit_amount" class="form-control"  value="<?php echo $rows->refundable_deposit; ?>">
+                            <?php    } ?>
+
+                                <p><small><a onclick="update_deposit_amt()">Update amount</a></small></p>
                             </div>
                         </div>
                       </div>
@@ -204,7 +210,7 @@
                     </div>
                 </form>
 					<?php } else { ?>
-					
+
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
@@ -228,7 +234,7 @@
                         </div>
                       </div>
                     </div>
-					
+
 					<?php } ?>
                     <h4 class="card-title">Verification Details</h4>
                       <form class="forms-sample" id="verify_status_form" method="post" action="" enctype="multipart/form-data">
@@ -356,7 +362,7 @@ $('#deposit_status').change(function(){
 	var id=$("#serv_prov_id").val();
     var status=$("#deposit_status").val();
 	var amount=$("#deposit_amount").val();
-	
+
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
                  url: "<?php echo base_url(); ?>verifyprocess/update_deposit_status",
@@ -382,9 +388,37 @@ $('#deposit_status').change(function(){
 });
 
 
+
+function update_deposit_amt(){
+  var deposit_amount=$('#deposit_amount').val();
+  var id=$("#serv_prov_id").val();
+  if (confirm('Are you sure you want to submit this Change?')) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>verifyprocess/update_deposit_amt",
+               type: 'POST',
+               data: {
+                   'deposit_amount': deposit_amount,
+                   'id': id
+                 },
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     swal('Deposit amount Updated successfully');
+
+                 }else{
+                    swal(stats);
+                     }
+               }
+           });
+    } else {
+     swal('cancelled')
+    }
+}
+
 $('#company_status').change(function(){
     var status=$(this).val();
-    alert(status);
+
     var id=$("#serv_prov_id").val();
     if (confirm('Are you sure you want to submit this Change?')) {
       $.ajax({
@@ -399,7 +433,7 @@ $('#company_status').change(function(){
                     var stats=response.status;
                      if (stats=="success") {
                        swal('Status  Updated successfully');
-                      
+
                    }else{
                       swal(stats);
                        }

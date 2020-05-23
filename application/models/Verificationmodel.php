@@ -6,7 +6,7 @@ Class Verificationmodel extends CI_Model
   public function __construct()
   {
       parent::__construct();
-	  
+
   }
 
 
@@ -28,14 +28,14 @@ Class Verificationmodel extends CI_Model
 
   function update_deposit_status($id,$amount,$status){
      $pro_id=base64_decode($id)/98765;
-     
+
 	 if ($status == 'Paid'){
 		$update="UPDATE service_provider_details SET refundable_deposit = '$amount',deposit_status='$status' WHERE user_master_id='$pro_id'";
 	 } else {
 		 $update="UPDATE service_provider_details SET refundable_deposit = '0',deposit_status='$status' WHERE user_master_id='$pro_id'";
 	 }
      $result=$this->db->query($update);
-     
+
 	 if($result){
           $data = array("status" => "success");
             return $data;
@@ -48,6 +48,19 @@ Class Verificationmodel extends CI_Model
   function update_company_status($status,$id){
     $pro_id=base64_decode($id)/98765;
    $update="UPDATE service_provider_details SET company_status='$status' WHERE user_master_id='$pro_id'";
+    $result=$this->db->query($update);
+    if($result){
+        $data = array("status" => "success");
+          return $data;
+    }else{
+      $data = array("status" => "failed");
+        return $data;
+    }
+  }
+
+  function update_deposit_amt($deposit_amount,$id){
+    $pro_id=base64_decode($id)/98765;
+    $update="UPDATE service_provider_details SET refundable_deposit='$deposit_amount' WHERE user_master_id='$pro_id'";
     $result=$this->db->query($update);
     if($result){
         $data = array("status" => "success");

@@ -511,15 +511,15 @@ class Apicustomermodel extends CI_Model {
     $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
     $re_select = $this->db->query($select);
     if($re_select->num_rows()==0){
-      $response=array("status"=>"error","msg"=>"You cannot claim amount is low");
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"");
     }else{
       foreach($re_select->result() as $rows_points){}
       $user_points_to_claim=$rows_points->points_to_claim;
       if($user_points_to_claim >= $minimum_points){
         $exact_amt=$user_points_to_claim/$division_points;
-        $response=array("status"=>"success","msg"=>"Can Claim","amount_to_be_claim"=>$exact_amt);
+        $response=array("status"=>"success","msg"=>"Can Claim","amount_to_be_claim"=>$exact_amt,"msg_en"=>"","msg_ta"=>"");
       }else{
-          $response=array("status"=>"error","msg"=>"You cannot claim point is low");
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");
       }
     }
     return $response;
@@ -541,7 +541,7 @@ class Apicustomermodel extends CI_Model {
     $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
     $re_select = $this->db->query($select);
     if($re_select->num_rows()==0){
-      $response=array("status"=>"error","msg"=>"You cannot claim amount is low");
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"");
     }else{
       foreach($re_select->result() as $rows_points){}
       $user_points_to_claim=$rows_points->points_to_claim;
@@ -568,7 +568,7 @@ class Apicustomermodel extends CI_Model {
              $response = array("status" => "error","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
          }
       }else{
-          $response=array("status"=>"error","msg"=>"You cannot claim point is low");
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");
       }
     }
 

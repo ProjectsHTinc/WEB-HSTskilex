@@ -34,6 +34,7 @@
                         <label class="formlabel">Category list</label>
 
                         <select id="lstFruits" class="form-control" name="category_id[]" required>
+                          <option value="">--Select--</option>
                           <?php foreach($res_category as $rows_cat){ ?>
                             <option value="<?php echo $rows_cat->id; ?>"><?php echo $rows_cat->main_cat_name; ?></option>
                           <?php } ?>

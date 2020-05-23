@@ -735,22 +735,30 @@ return $response;
         $delete_query = $this->db->query($delete);
         $result = explode(",", $category_id);
         $cnt    = count($result);
-        for ($i = 0; $i < $cnt; $i++) {
+        if($cnt > 2){
+          $response = array(
+              "status" => "error",
+              "msg" => "You cannot more than 2 category.."
+          );
+        }else{
+          for ($i = 0; $i < $cnt; $i++) {
 
-            $sQuery    = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('$user_master_id','$result[$i]','Active',NOW(),'$user_master_id')";
-            $ins_query = $this->db->query($sQuery);
+              $sQuery    = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('$user_master_id','$result[$i]','Active',NOW(),'$user_master_id')";
+              $ins_query = $this->db->query($sQuery);
+          }
+          if ($ins_query) {
+              $response = array(
+                  "status" => "success",
+                  "msg" => "Services Added Sucessfully!.."
+              );
+          } else {
+              $response = array(
+                  "status" => "error",
+                  "msg" => "Something Went Wrong"
+              );
+          }
         }
-        if ($ins_query) {
-            $response = array(
-                "status" => "success",
-                "msg" => "Services Added Sucessfully!.."
-            );
-        } else {
-            $response = array(
-                "status" => "error",
-                "msg" => "Something Went Wrong"
-            );
-        }
+
 
         return $response;
     }
@@ -2691,7 +2699,18 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
       $result = $tran_ress->result();
       if ($tran_ress->num_rows() > 0) {
         foreach($result  as $row_deposit){}
-        $deposit= $row_deposit->deposit_amt;
+
+        $select="SELECT * FROM service_provider_details where user_master_id='$user_master_id'";
+        $res=$this->db->query($select);
+        foreach($res->result() as $rows_result){}
+
+        $refundable_deposit=$rows_result->refundable_deposit;
+        if($refundable_deposit=='0.00'){
+            $deposit= $row_deposit->deposit_amt;
+        }else{
+            $deposit= intval($refundable_deposit);
+        }
+
           $response = array(
               "status" => "success",
               "msg" => "Deposit amount",

@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 			    $this->load->library('session');
 					$this->load->model('loginmodel');
 					$this->load->model('dashboardmodel');
+					$this->load->model('mastermodel');
 					$this->load->model('smsmodel');
 	 }
 
@@ -220,6 +221,7 @@ class Home extends CI_Controller {
 			$user_type=$this->session->userdata('user_role');
 			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
 				$data['res']=$this->loginmodel->get_all_provider_list();
+				$data['res_category']=$this->mastermodel->get_all_category();
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/providers/view_providers',$data);
 				$this->load->view('admin/admin_footer');
@@ -228,6 +230,27 @@ class Home extends CI_Controller {
 			}
 
 		}
+
+
+
+		public function search_provider(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			if($user_type=='1'||$user_type=='2'||$user_type=='7'){
+				$category_id=$this->db->escape_str($this->input->post('category_id'));
+				$type=$this->db->escape_str($this->input->post('type'));
+				$data['res']=$this->loginmodel->get_all_provider_search_list($category_id,$type);
+				$data['res_category']=$this->mastermodel->get_all_category();
+				$this->load->view('admin/admin_header');
+				$this->load->view('admin/providers/view_providers',$data);
+				$this->load->view('admin/admin_footer');
+			}else{
+				redirect('/');
+			}
+		}
+
+
 		public function get_all_person_list(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -546,7 +569,7 @@ class Home extends CI_Controller {
 			}
 
 		}
-		
+
 	public function get_customer_wallet(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -563,8 +586,8 @@ class Home extends CI_Controller {
 			}
 
 		}
-		
-		
+
+
 	// public function query()	{
 	// 		$main_cat_id=1;
 	// 		$data=$this->loginmodel->query_update($main_cat_id);

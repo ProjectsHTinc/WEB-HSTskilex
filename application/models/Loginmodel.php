@@ -319,6 +319,30 @@ Class Loginmodel extends CI_Model
 
        }
 
+       function get_all_provider_search_list($category_id,$type){
+        $string = implode(', ', $category_id);
+        if($type=='All'){
+          $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
+           from login_users as lu
+           left join service_provider_details as spd on spd.user_master_id=lu.id
+           left join vendor_status as vs on vs.serv_pro_id=lu.id
+           left join serv_prov_pers_skills as spps on spps.user_master_id=lu.id
+           where lu.user_type=3 and spd.serv_prov_verify_status='Approved' and spps.main_cat_id IN ($string) GROUP BY lu.id  ORDER BY lu.id DESC";
+        }else{
+          $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
+           from login_users as lu
+           left join service_provider_details as spd on spd.user_master_id=lu.id
+           left join vendor_status as vs on vs.serv_pro_id=lu.id
+           left join serv_prov_pers_skills as spps on spps.user_master_id=lu.id
+           where lu.user_type=3 and spd.serv_prov_verify_status='Approved' and spps.main_cat_id IN ($string) and spd.company_status='$type' GROUP BY lu.id  ORDER BY lu.id DESC";
+        }
+
+         $resultset=$this->db->query($query);
+         return $resultset->result();
+
+       }
+
+
        function get_all_person_list(){
          $query="SELECT lu.id,lu.status,spd.full_name,vs.online_status,lu.updated_at
          from login_users as lu
@@ -329,6 +353,8 @@ Class Loginmodel extends CI_Model
          return $resultset->result();
 
        }
+
+
 
        function get_all_prov_person_list($pro_id){
           $id=base64_decode($pro_id)/98765;
@@ -341,6 +367,8 @@ Class Loginmodel extends CI_Model
          return $resultset->result();
 
        }
+
+
 
 
        function get_provider_orders($p_id){
@@ -380,17 +408,17 @@ Class Loginmodel extends CI_Model
           $resultset=$this->db->query($query);
           return $resultset->result();
        }
-      
+
 	  function get_referal_points($c_id){
           $id=base64_decode($c_id)/98765;
           $query="SELECT * FROM referral_history WHERE referral_master_id='$id'";
           $resultset=$this->db->query($query);
           return $resultset->result();
        }
-	   
+
 	   function get_earned_points($c_id){
           $id=base64_decode($c_id)/98765;
-		  
+
 			$earned_points = "SELECT SUM(referral_points) AS total_earned_points FROM referral_history WHERE user_master_id='$id'";
 			$earned_points_res = $this->db->query($earned_points);
 			$earned_points_count = $earned_points_res->num_rows();
@@ -413,10 +441,10 @@ Class Loginmodel extends CI_Model
 		$count_result  = array(
 					"total_earned_points" => $total_earned_points,
 					"total_referal_points" => $total_referal_points
-				); 
+				);
 			return $count_result;
        }
-	   
+
        function get_wallet_details($c_id){
           $id=base64_decode($c_id)/98765;
           $query="SELECT * FROM user_wallet WHERE user_master_id='$id'";

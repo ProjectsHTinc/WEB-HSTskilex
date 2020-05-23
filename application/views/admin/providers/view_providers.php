@@ -1,3 +1,30 @@
+<style>
+.formlabel{
+  text-align: left;
+  justify-content: flex-start !important;
+}
+.badge-danger{
+  background-color: #c41c1c !important;
+}
+.badge-success{
+  background-color: #478e2e !important;
+}
+.dropdown-toggle::after{
+  display: none;
+}
+</style>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#lstFruits').multiselect({
+                includeSelectAllOption: true
+            });
+
+        });
+    </script>
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
 
@@ -11,6 +38,33 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">View Commandos list</h4>
+              <div class="row">
+                  <div class="col-md-12">
+                <form action="<?php echo base_url(); ?>home/search_provider" method="post" class="form-inline">
+                    <div class="col-md-4">
+                        <label class="formlabel">Category list</label>
+
+                        <select id="lstFruits" multiple="multiple" name="category_id[]" required>
+                          <?php foreach($res_category as $rows_cat){ ?>
+                            <option value="<?php echo $rows_cat->id; ?>"><?php echo $rows_cat->main_cat_name; ?></option>
+                          <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="formlabel">Type</label>
+                        <select name="type" id="type" class="form-control">
+                          <option value="All">All</option>
+                            <option value="Company">Company</option>
+                            <option value="Individual">Individual</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="formlabel"></label><br>
+                        <input type="submit" class="btn btn-primary" value="Search">
+                    </div>
+                </form>
+              </div>
+              </div>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">
@@ -71,3 +125,9 @@
       </div>
 
     </div>
+    <script type="text/javascript">
+
+
+
+
+    </script>

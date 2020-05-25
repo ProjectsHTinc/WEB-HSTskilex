@@ -25,7 +25,7 @@
                 <th width="10%">S.no</th>
                 <th width="50%">Main Category</th>
                 <th width="20%">Status</th>
-                <th width="20%">Action</th>
+              
             </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
                 <td><?php echo $rows->main_cat_name; ?></td>
                 <!-- <td><?php echo $rows->sub_cat_name; ?></td>
                 <td><?php echo $rows->service_name; ?></td> -->
-				<td><?php echo $rows->status; ?></td><td><?php if (count($res) >2) { ?>&nbsp <a href="<?php echo base_url(); ?>verifyprocess/delete_skills/<?php echo $rows->id; ?>/<?php echo base64_encode($user_master_id*98765);?>" onclick="return confirm('Are you sure want to delete?');" style="cursor:pointer" class="btn go_back_btn pull-right">Delete</a><?php } ?>
+				<td><?php echo $rows->status; ?><?php if (count($res) >2) { ?>&nbsp <a href="<?php echo base_url(); ?>verifyprocess/delete_skills/<?php echo $rows->id; ?>/<?php echo base64_encode($user_master_id*98765);?>" onclick="return confirm('Are you sure want to delete?');" style="cursor:pointer" class="btn go_back_btn pull-right">Delete</a><?php } ?>
 				</td>
             </tr>
           <?php  $i++;  }  ?>

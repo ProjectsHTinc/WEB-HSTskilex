@@ -563,9 +563,9 @@ class Apicustomermodel extends CI_Model {
          $wallet_history="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at,created_by) VALUES ('$user_master_id','$exact_amt','Reedem','Earned from points',NOW(),'$user_master_id')";
          $ex_wallet_history=$this->db->query($wallet_history);
          if($ex_wallet_history){
-             $response=array("status"=>"success","msg_en"=>"Amount added in wallet","msg_ta"=>"Amount added in wallet");
+             $response=array("status"=>"success","msg_en"=>"Amount added in wallet","msg_ta"=>"Amount added in wallet","msg"=>"Amount added in wallet!");
          }else{
-             $response = array("status" => "error","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+             $response = array("status" => "error","msg"=>"Oops! Something went wrong!","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
          }
       }else{
           $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");
@@ -596,7 +596,7 @@ class Apicustomermodel extends CI_Model {
     $query_wallet_history="SELECT DATE_FORMAT(created_at,'%d-%m-%Y') as created_date,TIME_FORMAT(created_at, '%h:%i %p') as created_time,transaction_amt,status,notes,user_master_id,id FROM wallet_history where user_master_id='$user_master_id' order by id desc";
     $re_wallet_history=$this->db->query($query_wallet_history);
     if($re_wallet_history->num_rows()==0){
-      $res_wallet=array("status"=>"error","msg_en"=>"no history found","msg_ta"=>"no history found");
+      $res_wallet=array("status"=>"error","msg_en"=>"no history found","msg_ta"=>"no history found","msg"=>"error");
     }else{
       foreach($re_wallet_history->result() as $rows_history){
         $wallet_array[]=array(

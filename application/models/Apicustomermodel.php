@@ -664,7 +664,7 @@ FROM service_orders as so
 
   function service_rating_and_reviews($user_master_id,$service_id){
 
-    $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name from service_reviews as sr
+    $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name,cd.profile_pic from service_reviews as sr
 left join service_orders as so on so.id=sr.service_order_id
 left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.service_id='$service_id'";
     $res = $this->db->query($query);
@@ -672,9 +672,15 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
      if($res->num_rows()>0){
         foreach ($res->result() as $rows)
       {
+        $profile_pic = $rows->profile_pic;
+        if ($profile_pic!=''){
+          $profile_pic_url = base_url().'assets/customers/'.$profile_pic;
+        } else {
+          $profile_pic_url = "";
+        }
 
         if(empty($rows->full_name)){
-          $name="Unknown";
+          $name="SkilEx Customer";
         }else{
           $name=$rows->full_name;
         }
@@ -684,6 +690,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
             "review" => $rows->review,
             "customer_name" => $name,
             "service_id" => $rows->service_id,
+            "profile_picture" => $profile_pic_url,
             "customer_id" => $rows->customer_id
 
         );

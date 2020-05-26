@@ -621,14 +621,17 @@ class Apicustomermodel extends CI_Model {
 
   function top_trending_services($user_master_id){
 
-    $query="SELECT so.service_id,s.id,count(so.service_id) as service_count,s.service_name,s.service_ta_name,s.service_pic,s.main_cat_id,s.sub_cat_id FROM service_orders as so
-    left join services as s on s.id=so.service_id  where s.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
+    $query="SELECT so.service_id,s.id,count(so.service_id) as service_count,s.service_name,s.service_ta_name,s.service_pic,mc.cat_pic,s.main_cat_id,s.sub_cat_id
+FROM service_orders as so
+    left join services as s on s.id=so.service_id
+    left join main_category as mc on mc.id=s.main_cat_id
+    where s.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
     $res = $this->db->query($query);
 
      if($res->num_rows()>0){
         foreach ($res->result() as $rows)
       {
-        $service_pic = $rows->service_pic;
+        $service_pic = $rows->cat_pic;
         if ($service_pic != ''){
           $service_pic_url = base_url().'assets/category/'.$service_pic;
         }else {

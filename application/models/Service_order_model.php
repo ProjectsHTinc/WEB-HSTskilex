@@ -117,7 +117,7 @@ Class service_order_model extends CI_Model
 
   function get_customer_feedback($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-	
+
 		$sql="SELECT * FROM service_orders WHERE id = '$id'";
 		$resultset=$this->db->query($sql);
 		$res=$resultset->result();
@@ -140,7 +140,7 @@ Class service_order_model extends CI_Model
 
   function get_expert_feedback($service_order_id){
     $id=base64_decode($service_order_id)/98765;
-	
+
 	$sql="SELECT * FROM service_orders WHERE id = '$id'";
 		$resultset=$this->db->query($sql);
 		$res=$resultset->result();
@@ -160,7 +160,7 @@ Class service_order_model extends CI_Model
     $result=$this->db->query($query);
     return $result->result();
   }
-  
+
   function get_service_payments($service_order_id){
     $id=base64_decode($service_order_id)/98765;
     $query="SELECT  sp.*,om.offer_code FROM  service_payments as sp  left join offer_master as om on om.id=sp.coupon_id  WHERE service_order_id='$id'";
@@ -215,7 +215,7 @@ Class service_order_model extends CI_Model
 
 
 
-        $update="UPDATE service_order_history SET status='Expired',created_at=NOW()  WHERE service_order_id='$service_order_id' AND status='Requested'";
+        $update="UPDATE service_order_history SET status='Expired',created_at=NOW()  WHERE service_order_id='$service_order_id' AND (status='Requested' or status='Ongoing' or status='Accepted' or status='Initiated' or status='Assigned')";
         $res_update=$this->db->query($update);
 
          $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";

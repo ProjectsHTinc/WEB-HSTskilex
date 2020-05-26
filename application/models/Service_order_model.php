@@ -218,6 +218,10 @@ Class service_order_model extends CI_Model
         $update="UPDATE service_order_history SET status='Expired',created_at=NOW()  WHERE service_order_id='$service_order_id' AND (status='Requested' or status='Ongoing' or status='Accepted' or status='Initiated' or status='Assigned')";
         $res_update=$this->db->query($update);
 
+        $order_pending_update="UPDATE service_orders SET status='Requested' where id='$service_order_id'";
+        $res_pending_update=$this->db->query($order_pending_update);
+
+
          $select_expired_user="SELECT * FROM service_order_history WHERE service_order_id='$service_order_id' AND status='Expired' ORDER BY created_at desc LIMIT 1";
          $result_expired=$this->db->query($select_expired_user);
          if($result_expired->num_rows()==0){

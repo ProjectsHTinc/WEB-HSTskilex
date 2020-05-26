@@ -117,7 +117,7 @@ class Apicustomermodel extends CI_Model {
 
 
   function version_check($version_code){
-    if($version_code==2){
+    if($version_code==3){
       $response = array("status" => "success");
     }else{
       $response = array("status" => "error");
@@ -664,7 +664,7 @@ FROM service_orders as so
 
   function service_rating_and_reviews($user_master_id,$service_id){
 
-    $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name,cd.profile_pic from service_reviews as sr
+    $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name,cd.profile_pic,DATE_FORMAT(sr.created_at,'%d-%m-%Y') as review_date from service_reviews as sr
 left join service_orders as so on so.id=sr.service_order_id
 left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.service_id='$service_id'";
     $res = $this->db->query($query);
@@ -690,6 +690,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
             "review" => $rows->review,
             "customer_name" => $name,
             "service_id" => $rows->service_id,
+            "review_date" => $rows->review_date,
             "profile_picture" => $profile_pic_url,
             "customer_id" => $rows->customer_id
 

@@ -148,8 +148,8 @@ class Apicustomermodel extends CI_Model {
 				  $user_master_id = $rows->id;
           $preferred_lang_id=$rows->preferred_lang_id;
 			}
-
-			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
+      $text='SKILEXC0';
+			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW(),referral_code='$text$user_master_id' WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
 		} else {
 			 $insert_sql = "INSERT INTO login_users (phone_no, otp, user_type, mobile_verify, email_verify, document_verify, status) VALUES ('". $phone_no . "','". $OTP . "','5','N','N','N','Active')";
@@ -3244,13 +3244,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 
     function db_data_updating(){
-    // $text='SKILEXC0';
-    // $select="SELECT * FROM login_users where user_type='5'";
-    // $result=$this->db->query($select);
-    // foreach($result->result() as $rows){
-    //   $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
-    //   $excute=$this->db->query($update);
-    // }
+    $text='SKILEXC0';
+    $select="SELECT * FROM login_users where user_type='5'";
+    $result=$this->db->query($select);
+    foreach($result->result() as $rows){
+      $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
+      $excute=$this->db->query($update);
+    }
     }
 
 }

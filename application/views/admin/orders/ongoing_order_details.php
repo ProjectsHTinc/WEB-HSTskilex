@@ -281,7 +281,7 @@ padding: 15px;
                   <br>
                   <h4 class="card-title">List of Service Order History
                     <span class="pull-right">
-                      <!-- <a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a> -->
+                      <a style="border:1px solid #777777;" class="open-AddBookDialog btn" data-toggle="modal" data-target="#exampleModal-4">Assign Commando</a>
                       <a style="border:1px solid #777777;" class="open-AddBookDialog btn btn-cancel " data-toggle="modal" data-target="#exampleModal-5">Cancel Order</a>
 
                     </span></h4>

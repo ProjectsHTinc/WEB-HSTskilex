@@ -320,7 +320,8 @@ Class Loginmodel extends CI_Model
        }
 
        function get_all_provider_search_list($category_id,$type){
-        $string = implode(', ', $category_id);
+        // $string = implode(', ',$category_id);
+        $string = $category_id;
         if($type=='All'){
           $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
            from login_users as lu

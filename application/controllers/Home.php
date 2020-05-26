@@ -242,6 +242,8 @@ class Home extends CI_Controller {
 				$type=$this->db->escape_str($this->input->post('type'));
 				$data['res']=$this->loginmodel->get_all_provider_search_list($category_id,$type);
 				$data['res_category']=$this->mastermodel->get_all_category();
+				$data['type']=$type;
+				$data['category_id']=$category_id;
 				$this->load->view('admin/admin_header');
 				$this->load->view('admin/providers/view_providers',$data);
 				$this->load->view('admin/admin_footer');

@@ -868,6 +868,17 @@ return $response;
             $insert_result = $this->db->query($insert_sql);
             $sperson_master_id = $this->db->insert_id();
 
+
+            $select_category="SELECT * FROM serv_prov_pers_skills where user_master_id='$user_master_id'";
+            $res_select_category=$this->db->query($select_category);
+            foreach($res_select_category->result() as $row_category){
+              $cat_id=$row_category->main_cat_id;
+              $sQuery    = "INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at,created_by) VALUES ('$sperson_master_id','$cat_id','Active',NOW(),'$user_master_id')";
+              $ins_query = $this->db->query($sQuery);
+            }
+
+
+
             $insert_query = "INSERT INTO service_person_details (user_master_id,service_provider_id,full_name, serv_pers_display_status, serv_pers_verify_status,also_service_provider,status,created_at,created_by ) VALUES ('". $sperson_master_id . "','". $user_master_id . "','". $full_name . "','Inactive','Pending','Y','Active',NOW(),'". $user_master_id . "')";
             $insert_result = $this->db->query($insert_query);
             if ($uptdate_query) {

@@ -516,7 +516,7 @@ class Apicustomermodel extends CI_Model {
       foreach($re_select->result() as $rows_points){}
       $user_points_to_claim=$rows_points->points_to_claim;
       if($user_points_to_claim >= $minimum_points){
-        $exact_amt=$user_points_to_claim/$division_points;
+        $exact_amt=round($user_points_to_claim/$division_points);
         $response=array("status"=>"success","msg"=>"Can Claim","amount_to_be_claim"=>$exact_amt,"msg_en"=>"","msg_ta"=>"");
       }else{
           $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");

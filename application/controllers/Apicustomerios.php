@@ -4,7 +4,7 @@ class Apicustomerios extends CI_Controller {
 
 		function __construct() {
 			 parent::__construct();
-				$this->load->model('apicustomermodel');
+				$this->load->model('apicustomermodelios');
 				$this->load->model('smsmodel');
 				$this->load->helper("url");
 				$this->load->library('session');
@@ -72,7 +72,7 @@ class Apicustomerios extends CI_Controller {
 
 
 			$version_code = $this->input->post("version_code");
-			$data['result']=$this->apicustomermodel->version_check($version_code);
+			$data['result']=$this->apicustomermodelios->version_check($version_code);
 			$response = $data['result'];
 			echo json_encode($response);
 		}
@@ -104,7 +104,7 @@ class Apicustomerios extends CI_Controller {
 		$phone_no = '';
 
 		$phone_no = $this->input->post("phone_no");
-		$data['result']=$this->apicustomermodel->Mobile_check($phone_no);
+		$data['result']=$this->apicustomermodelios->Mobile_check($phone_no);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -148,7 +148,7 @@ class Apicustomerios extends CI_Controller {
 		$unique_number = $this->input->post("unique_number");
 		$referral_code = $this->input->post("referral_code");
 
-		$data['result']=$this->apicustomermodel->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number,$referral_code);
+		$data['result']=$this->apicustomermodelios->Login($user_master_id,$phone_no,$otp,$device_token,$mobiletype,$unique_number,$referral_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -186,7 +186,7 @@ class Apicustomerios extends CI_Controller {
 		$mobiletype = $this->input->post("mobile_type");
 		$user_stat = $this->input->post("user_stat");
 
-		$data['result']=$this->apicustomermodel->guest_login($unique_number,$device_token,$mobiletype,$user_stat);
+		$data['result']=$this->apicustomermodelios->guest_login($unique_number,$device_token,$mobiletype,$user_stat);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -221,7 +221,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Email_verifystatus($user_master_id);
+		$data['result']=$this->apicustomermodelios->Email_verifystatus($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -254,7 +254,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Email_verification($user_master_id);
+		$data['result']=$this->apicustomermodelios->Email_verification($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -295,7 +295,7 @@ class Apicustomerios extends CI_Controller {
 		$address  = $this->input->post("address");
 		$email  = $this->input->post("email");
 
-		$data['result']=$this->apicustomermodel->Profile_update($user_master_id,$full_name,$gender,$address,$email);
+		$data['result']=$this->apicustomermodelios->Profile_update($user_master_id,$full_name,$gender,$address,$email);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -327,7 +327,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->user_info($user_master_id);
+		$data['result']=$this->apicustomermodelios->user_info($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -358,7 +358,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$lang_id  = $this->input->post("lang_id");
-		$data['result']=$this->apicustomermodel->user_lang_update($user_master_id,$lang_id);
+		$data['result']=$this->apicustomermodelios->user_lang_update($user_master_id,$lang_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -391,7 +391,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$referral_code  = $this->input->post("referral_code");
-			$data['result']=$this->apicustomermodel->add_referral_code($user_master_id,$referral_code);
+			$data['result']=$this->apicustomermodelios->add_referral_code($user_master_id,$referral_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -423,7 +423,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->user_points_referral_code($user_master_id);
+			$data['result']=$this->apicustomermodelios->user_points_referral_code($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -456,7 +456,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->check_to_claim_points($user_master_id);
+			$data['result']=$this->apicustomermodelios->check_to_claim_points($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -487,7 +487,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->confirm_to_claim($user_master_id);
+			$data['result']=$this->apicustomermodelios->confirm_to_claim($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -519,7 +519,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->check_wallet_balance_and_history($user_master_id);
+			$data['result']=$this->apicustomermodelios->check_wallet_balance_and_history($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -550,7 +550,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->top_trending_services($user_master_id);
+			$data['result']=$this->apicustomermodelios->top_trending_services($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -584,7 +584,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_id  = $this->input->post("service_id");
-		$data['result']=$this->apicustomermodel->service_rating_and_reviews($user_master_id,$service_id);
+		$data['result']=$this->apicustomermodelios->service_rating_and_reviews($user_master_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -609,7 +609,7 @@ class Apicustomerios extends CI_Controller {
 		$profilepic = $uploadPicdir.$profileFileName;
 		move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilepic);
 
-		$data['result']=$this->apicustomermodel->Profile_pic_upload($user_master_id,$profileFileName);
+		$data['result']=$this->apicustomermodelios->Profile_pic_upload($user_master_id,$profileFileName);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -642,7 +642,7 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = '';
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->view_banner_list($user_master_id);
+		$data['result']=$this->apicustomermodelios->view_banner_list($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -677,7 +677,7 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 			$version_code  = $this->input->post("version_code");
 
-		$data['result']=$this->apicustomermodel->View_maincategory($user_master_id,$version_code);
+		$data['result']=$this->apicustomermodelios->View_maincategory($user_master_id,$version_code);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -709,7 +709,7 @@ class Apicustomerios extends CI_Controller {
 		$main_cat_id  = '';
 		$main_cat_id  = $this->input->post("main_cat_id");
 
-		$data['result']=$this->apicustomermodel->View_subcategory($main_cat_id);
+		$data['result']=$this->apicustomermodelios->View_subcategory($main_cat_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -745,7 +745,7 @@ class Apicustomerios extends CI_Controller {
 		$sub_cat_id  = $this->input->post("sub_cat_id");
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->Services_list($main_cat_id,$sub_cat_id,$user_master_id);
+		$data['result']=$this->apicustomermodelios->Services_list($main_cat_id,$sub_cat_id,$user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -780,7 +780,7 @@ class Apicustomerios extends CI_Controller {
 		$service_txt_ta  = $this->input->post("service_txt_ta");
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->search_service($service_txt,$service_txt_ta,$user_master_id);
+		$data['result']=$this->apicustomermodelios->search_service($service_txt,$service_txt_ta,$user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -813,7 +813,7 @@ class Apicustomerios extends CI_Controller {
 
 		$service_id  = $this->input->post("service_id");
 
-		$data['result']=$this->apicustomermodel->service_details($service_id);
+		$data['result']=$this->apicustomermodelios->service_details($service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -849,7 +849,7 @@ class Apicustomerios extends CI_Controller {
 		$service_id  = $this->input->post("service_id");
 
 
-		$data['result']=$this->apicustomermodel->add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id);
+		$data['result']=$this->apicustomermodelios->add_service_to_cart($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -886,7 +886,7 @@ class Apicustomerios extends CI_Controller {
 		$service_id  = $this->input->post("service_id");
 
 
-		$data['result']=$this->apicustomermodel->remove_service_from_cart($user_master_id,$category_id,$sub_category_id,$service_id);
+		$data['result']=$this->apicustomermodelios->remove_service_from_cart($user_master_id,$category_id,$sub_category_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -918,7 +918,7 @@ class Apicustomerios extends CI_Controller {
 
 		$cart_id  = $this->input->post("cart_id");
 
-		$data['result']=$this->apicustomermodel->remove_service_to_cart($cart_id);
+		$data['result']=$this->apicustomermodelios->remove_service_to_cart($cart_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -949,7 +949,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->clear_cart($user_master_id);
+		$data['result']=$this->apicustomermodelios->clear_cart($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -979,7 +979,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->view_cart_summary($user_master_id);
+		$data['result']=$this->apicustomermodelios->view_cart_summary($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1012,7 +1012,7 @@ class Apicustomerios extends CI_Controller {
 		 $service_date=$this->input->post("service_date");
 
 
-		$data['result']=$this->apicustomermodel->view_time_slot($user_master_id,$service_date);
+		$data['result']=$this->apicustomermodelios->view_time_slot($user_master_id,$service_date);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1051,7 +1051,7 @@ class Apicustomerios extends CI_Controller {
 		$order_date  = $this->input->post("order_date");
 		$order_timeslot  = $this->input->post("order_timeslot_id");
 			$order_notes  = $this->input->post("order_notes");
-		$data['result']=$this->apicustomermodel->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot,$order_notes);
+		$data['result']=$this->apicustomermodelios->proceed_to_book_order($user_master_id,$contact_person_name,$contact_person_number,$service_latlon,$service_location,$service_address,$order_date,$order_timeslot,$order_notes);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1082,7 +1082,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_id = $this->input->post("service_id");
-		$data['result']=$this->apicustomermodel->service_advance_payment($user_master_id,$service_id);
+		$data['result']=$this->apicustomermodelios->service_advance_payment($user_master_id,$service_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1113,7 +1113,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id = $this->input->post("service_order_id");
-		$data['result']=$this->apicustomermodel->service_order_status($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->service_order_status($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1147,7 +1147,7 @@ class Apicustomerios extends CI_Controller {
 		$result = explode("-", $order_id);
 	 	$service_id= $result[2];
 
-		// $data['result']=$this->apicustomermodel->service_provider_allocation_ios($user_master_id,$service_id,$display_minute);
+		// $data['result']=$this->apicustomermodelios->service_provider_allocation_ios($user_master_id,$service_id,$display_minute);
 		// $response = $data['result'];
 			$response =array('status'=>'success');
 		echo json_encode($response);
@@ -1178,7 +1178,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->service_pending_and_offers_list($user_master_id);
+		$data['result']=$this->apicustomermodelios->service_pending_and_offers_list($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1210,7 +1210,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->ongoing_services($user_master_id);
+		$data['result']=$this->apicustomermodelios->ongoing_services($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1240,7 +1240,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->requested_services($user_master_id);
+		$data['result']=$this->apicustomermodelios->requested_services($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1270,7 +1270,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->service_history($user_master_id);
+		$data['result']=$this->apicustomermodelios->service_history($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1300,7 +1300,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$service_order_id  = $this->input->post("service_order_id");
-		$data['result']=$this->apicustomermodel->service_order_details($service_order_id);
+		$data['result']=$this->apicustomermodelios->service_order_details($service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1330,7 +1330,7 @@ class Apicustomerios extends CI_Controller {
 
 		$service_order_id  = $this->input->post("service_order_id");
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->service_order_summary($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->service_order_summary($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1361,7 +1361,7 @@ class Apicustomerios extends CI_Controller {
 
 		$service_order_id  = $this->input->post("service_order_id");
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->view_addtional_service($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->view_addtional_service($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1390,7 +1390,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->list_reason_for_cancel($user_master_id);
+		$data['result']=$this->apicustomermodelios->list_reason_for_cancel($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1422,7 +1422,7 @@ class Apicustomerios extends CI_Controller {
 		$cancel_id  = $this->input->post("cancel_id");
 		$user_master_id  = $this->input->post("user_master_id");
 		$comments= $this->input->post("comments");
-		$data['result']=$this->apicustomermodel->cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments);
+		$data['result']=$this->apicustomermodelios->cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1452,7 +1452,7 @@ class Apicustomerios extends CI_Controller {
 		}
 
 		$user_master_id  = $this->input->post("user_master_id");
-		$data['result']=$this->apicustomermodel->service_coupon_list($user_master_id);
+		$data['result']=$this->apicustomermodelios->service_coupon_list($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1486,7 +1486,7 @@ class Apicustomerios extends CI_Controller {
 				$coupon_id  = $this->input->post("coupon_id");
 				$service_order_id  = $this->input->post("service_order_id");
 
-				$data['result']=$this->apicustomermodel->apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id);
+				$data['result']=$this->apicustomermodelios->apply_coupon_to_order($user_master_id,$coupon_id,$service_order_id);
 				$response = $data['result'];
 				echo json_encode($response);
 		}
@@ -1519,7 +1519,7 @@ class Apicustomerios extends CI_Controller {
 
 				$user_master_id  = $this->input->post("user_master_id");
 				$service_order_id  = $this->input->post("service_order_id");
-				$data['result']=$this->apicustomermodel->remove_coupon_from_order($user_master_id,$service_order_id);
+				$data['result']=$this->apicustomermodelios->remove_coupon_from_order($user_master_id,$service_order_id);
 				$response = $data['result'];
 				echo json_encode($response);
 		}
@@ -1552,7 +1552,7 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
-		$data['result']=$this->apicustomermodel->proceed_for_payment($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->proceed_for_payment($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1583,7 +1583,7 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
 
-		$data['result']=$this->apicustomermodel->service_order_bills($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->service_order_bills($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1620,7 +1620,7 @@ class Apicustomerios extends CI_Controller {
 		$ratings  = $this->input->post("ratings");
 		$reviews  = $this->input->post("reviews");
 
-		$data['result']=$this->apicustomermodel->Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews);
+		$data['result']=$this->apicustomermodelios->Service_reviewsadd($user_master_id,$service_order_id,$ratings,$reviews);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1658,7 +1658,7 @@ class Apicustomerios extends CI_Controller {
 		$user_master_id  = $this->input->post("user_master_id");
 		$person_id  = $this->input->post("person_id");
 
-		$data['result']=$this->apicustomermodel->service_person_tracking($user_master_id,$person_id);
+		$data['result']=$this->apicustomermodelios->service_person_tracking($user_master_id,$person_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1692,7 +1692,7 @@ class Apicustomerios extends CI_Controller {
 		$payment_id= $result[3];
 		$service_id= $result[2];
 		$amount  = $this->input->post("amount");
-		$data['result']=$this->apicustomermodel->pay_by_cash($user_master_id,$service_id,$payment_id,$amount);
+		$data['result']=$this->apicustomermodelios->pay_by_cash($user_master_id,$service_id,$payment_id,$amount);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1721,7 +1721,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id  = $this->input->post("user_master_id");
 		$service_order_id  = $this->input->post("service_order_id");
-		$data['result']=$this->apicustomermodel->paid_on_wallet($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->paid_on_wallet($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1758,7 +1758,7 @@ class Apicustomerios extends CI_Controller {
 		$service_order_id  = $this->input->post("service_order_id");
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->pay_using_wallet($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->pay_using_wallet($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1792,7 +1792,7 @@ class Apicustomerios extends CI_Controller {
 		$service_order_id  = $this->input->post("service_order_id");
 		$user_master_id  = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->uncheck_from_wallet($user_master_id,$service_order_id);
+		$data['result']=$this->apicustomermodelios->uncheck_from_wallet($user_master_id,$service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1826,7 +1826,7 @@ class Apicustomerios extends CI_Controller {
 
 		$service_order_id  = $this->input->post("service_order_id");
 
-		$data['result']=$this->apicustomermodel->Service_reviewslist($service_order_id);
+		$data['result']=$this->apicustomermodelios->Service_reviewslist($service_order_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1858,7 +1858,7 @@ class Apicustomerios extends CI_Controller {
 		$order_id = $this->input->post("order_id");
 		$result = explode("-", $order_id);
 		$service_order_id= $result[2];
-		$data['result']=$this->apicustomermodel->service_payment_success($service_order_id);
+		$data['result']=$this->apicustomermodelios->service_payment_success($service_order_id);
 		$response = $data['result'];
 		// echo json_encode($response);
 	}
@@ -1889,7 +1889,7 @@ class Apicustomerios extends CI_Controller {
 
 
 		$user_master_id  = $this->input->post("user_master_id");
-			$data['result']=$this->apicustomermodel->customer_feedback_question($user_master_id);
+			$data['result']=$this->apicustomermodelios->customer_feedback_question($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1924,7 +1924,7 @@ class Apicustomerios extends CI_Controller {
 		$service_order_id  = $this->input->post("service_order_id");
 		$feedback_id  = $this->input->post("feedback_id");
 		$feedback_text  = $this->input->post("feedback_text");
-		$data['result']=$this->apicustomermodel->customer_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text);
+		$data['result']=$this->apicustomermodelios->customer_feedback_answer($user_master_id,$service_order_id,$feedback_id,$feedback_text);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1957,7 +1957,7 @@ class Apicustomerios extends CI_Controller {
 
 		$user_master_id = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->check_every_minute($user_master_id);
+		$data['result']=$this->apicustomermodelios->check_every_minute($user_master_id);
 		$response = $data['result'];
 		echo json_encode($response);
 	}
@@ -1976,7 +1976,7 @@ class Apicustomerios extends CI_Controller {
 
 		// $user_master_id = $this->input->post("user_master_id");
 
-		$data['result']=$this->apicustomermodel->automatic_provider_allocation();
+		$data['result']=$this->apicustomermodelios->automatic_provider_allocation();
 		// $response = $data['result'];
 		// echo json_encode($response);
 	}

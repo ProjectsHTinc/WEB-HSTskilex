@@ -55,6 +55,11 @@
                         <label class="formlabel"></label><br>
                         <input type="submit" class="btn btn-primary" value="Search">
                     </div>
+
+                    <div class="col-md-2">
+                        <label class="formlabel"></label><br>
+                        <a href="<?php echo base_url(); ?>home/get_all_provider_list" class="btn btn-primary" value="Search">Show all</a>
+                    </div>
                 </form>
               </div>
               </div>

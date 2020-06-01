@@ -2063,9 +2063,9 @@ class Apisprovider extends CI_Controller
 
 
 
-    public function add_skills_auto(){
-      	$data=$this->apisprovidermodel->add_skills_auto();
-    }
+    // public function add_skills_auto(){
+    //   	$data=$this->apisprovidermodel->add_skills_auto();
+    // }
 
 
 }

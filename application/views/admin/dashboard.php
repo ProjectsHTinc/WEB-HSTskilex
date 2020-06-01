@@ -103,7 +103,7 @@
                     <div class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
                     <img src="<?php echo base_url(); ?>assets/admin/images/pending_orders.png" class="img-responsive dash_icons">
                       <div class="wrapper text-center text-sm-left">
-                        <a href="<?php echo base_url(); ?>service_orders/pending_orders"><p class="card-text mb-0">Pending Orders</p></a>
+                        <a href="<?php echo base_url(); ?>service_orders/pending_orders"><p class="card-text mb-0">New / Unassigned Orders</p></a>
                         <div class="fluid-container">
                           <?php if(empty($res_pending_count)){
                           }else{

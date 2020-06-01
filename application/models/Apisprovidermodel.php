@@ -2814,6 +2814,37 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
 
 
+    function add_skills_auto(){
+      $query="SELECT spd.id,spd.user_master_id as provider_user_id,spd.owner_full_name,spps.user_master_id as person_user_id,spps.full_name from service_provider_details as spd left join service_person_details as spps on spps.full_name=spd.owner_full_name
+      where spd.also_service_person='Y'";
+      $user_result = $this->db->query($query);
+      foreach($user_result->result() as $rows){
+
+        $check="SELECT * FROM serv_prov_pers_skills where user_master_id='$rows->person_user_id'";
+        $res= $this->db->query($check);
+        if($res->num_rows()==0){
+
+            $get_skills_from_provider="SELECT * FROM serv_prov_pers_skills where user_master_id='$rows->provider_user_id'";
+            $res_skiles= $this->db->query($get_skills_from_provider);
+            foreach($res_skiles->result() as $rows_skils){
+
+              $insert="INSERT INTO serv_prov_pers_skills (user_master_id,main_cat_id,status,created_at) VALUES ('$rows->person_user_id','$rows_skils->main_cat_id','Active',NOW())";
+              $res_pers= $this->db->query($insert);
+
+
+            }
+
+
+        }else{
+
+        }
+      }
+
+    }
+
+
+
+
 
 }
 

@@ -666,7 +666,7 @@ FROM service_orders as so
 
     $query="SELECT sr.service_order_id,so.id,so.service_id,sr.rating,sr.review,sr.customer_id,cd.full_name,cd.profile_pic,DATE_FORMAT(sr.created_at,'%d-%m-%Y') as review_date from service_reviews as sr
 left join service_orders as so on so.id=sr.service_order_id
-left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.service_id='$service_id'";
+left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.service_id='$service_id' order by sr.created_at desc";
     $res = $this->db->query($query);
 
      if($res->num_rows()>0){

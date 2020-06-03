@@ -595,7 +595,7 @@ function user_info($user_master_id){
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Service request is Initiated.";
+              $message="Service Expert initiated";
               $user_type='3';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
     				}
@@ -610,14 +610,14 @@ function user_info($user_master_id){
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Your service request is Initiated.";
+              $message="Service request initiated. Please look into the app for tracking the Service person.";
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
         }
 
 		//$title = "Service Request Initiated";
-		$message_details = "SKILEX - Service Request Initiated";
+		$message_details = "SKILEX - Service request initiated. Please look into the app for tracking the Service person.";
     $notes=$message_details;
     $phone=$contact_person_number;
     $this->smsmodel->send_sms($phone,$notes);
@@ -1834,7 +1834,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 
 
 		$title = "Service Request Completed";
-		$notes = "SKILEX - Service Request Completed";
+		$notes = "SKILEX - Service Request Completed. Bill Generated. Kindly pay the bill through Skilex App.";
     $phone=$contact_person_number;
     $this->smsmodel->send_sms($phone,$notes);
 

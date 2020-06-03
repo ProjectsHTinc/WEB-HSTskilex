@@ -134,9 +134,9 @@ From people who are capable</h2>
                     </div>
                     <!-- Header-Text / -->
                     <div class="space-40"></div>
-                    <a href="https://apps.apple.com/us/app/skilex/id1484596811?ls=1" target="_blank" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s"><i class="fa fa-download" aria-hidden="true"></i>  Download on App Store
+                    <a href="https://apps.apple.com/us/app/skilex/id1484596811?ls=1" target="_blank" class="bttn-1 wow fadeInRight" data-wow-delay="0.8s"><i class="fa fa-apple" aria-hidden="true"></i>  Download on App Store
 </a>
-                    <a href="https://play.google.com/store/apps/developer?id=Skilex+Multiservices+Private+Limited&hl=en" target="_blank" class="bttn-1 wow fadeInRight" data-wow-delay="1s"><i class="fa fa-download" aria-hidden="true"></i>  Download on Play Store </a>
+                    <a href="https://play.google.com/store/apps/developer?id=Skilex+Multiservices+Private+Limited&hl=en" target="_blank" class="bttn-1 wow fadeInRight" data-wow-delay="1s"><i class="fa fa-play" aria-hidden="true"></i>  Download on Play Store </a>
                 </div>
                 <div class="col-xs-12 col-md-5 col-lg-4 hidden-xs hidden-sm">
                     <!-- Single-Screen-Image -->

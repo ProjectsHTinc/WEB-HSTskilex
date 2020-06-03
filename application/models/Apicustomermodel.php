@@ -819,7 +819,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 //-------------------- Search Service  -------------------//
 
     function search_service($service_txt,$service_txt_ta,$user_master_id){
-       $query="SELECT *  FROM services WHERE service_name LIKE '%$service_txt%' or service_ta_name LIKE '%$service_txt%' and status='Active'";
+       $query="SELECT s.* as main  FROM services as s
+      left join main_category as mc on mc.id=s.main_cat_id
+      left join sub_category as sc on sc.id=s.sub_cat_id
+      WHERE (s.service_name LIKE '%$service_txt%' or s.service_ta_name LIKE '%$service_txt%') and s.status='Active' and mc.status='Active' and sc.status='Active'";
        $res = $this->db->query($query);
        if($res->num_rows()>0){
           foreach ($res->result() as $rows)
@@ -2980,7 +2983,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Your payment is made successfully.";
+              $message=" Service Payment Success. Thanks for being the part of Skilex. Kindly rate our Service";
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }

@@ -819,7 +819,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 //-------------------- Search Service  -------------------//
 
     function search_service($service_txt,$service_txt_ta,$user_master_id){
-       $query="SELECT s.* as main  FROM services as s
+       $query="SELECT s.*  FROM services as s
       left join main_category as mc on mc.id=s.main_cat_id
       left join sub_category as sc on sc.id=s.sub_cat_id
       WHERE (s.service_name LIKE '%$service_txt%' or s.service_ta_name LIKE '%$service_txt%') and s.status='Active' and mc.status='Active' and sc.status='Active'";

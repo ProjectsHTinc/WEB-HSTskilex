@@ -511,7 +511,7 @@ class Apicustomermodel extends CI_Model {
     $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
     $re_select = $this->db->query($select);
     if($re_select->num_rows()==0){
-      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"");
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"உங்கள் புள்ளி குறைவாக உள்ளது. எனவே நீங்கள் உரிமை கோர முடியாது");
     }else{
       foreach($re_select->result() as $rows_points){}
       $user_points_to_claim=$rows_points->points_to_claim;
@@ -519,7 +519,7 @@ class Apicustomermodel extends CI_Model {
         $exact_amt=round($user_points_to_claim/$division_points);
         $response=array("status"=>"success","msg"=>"Can Claim","amount_to_be_claim"=>$exact_amt,"msg_en"=>"","msg_ta"=>"");
       }else{
-          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"உங்கள் புள்ளி குறைவாக உள்ளது. எனவே நீங்கள் உரிமை கோர முடியாது");
       }
     }
     return $response;
@@ -541,7 +541,7 @@ class Apicustomermodel extends CI_Model {
     $select="SELECT * FROM user_points where user_master_id='$user_master_id'";
     $re_select = $this->db->query($select);
     if($re_select->num_rows()==0){
-      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"");
+      $response=array("status"=>"error","msg"=>"You cannot claim amount is low","msg_en"=>"","msg_ta"=>"உங்கள் புள்ளி குறைவாக உள்ளது. எனவே நீங்கள் உரிமை கோர முடியாது");
     }else{
       foreach($re_select->result() as $rows_points){}
       $user_points_to_claim=$rows_points->points_to_claim;
@@ -568,7 +568,7 @@ class Apicustomermodel extends CI_Model {
              $response = array("status" => "error","msg"=>"Oops! Something went wrong!","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
          }
       }else{
-          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"");
+          $response=array("status"=>"error","msg"=>"You cannot claim point is low","msg_en"=>"","msg_ta"=>"உங்கள் புள்ளி குறைவாக உள்ளது. எனவே நீங்கள் உரிமை கோர முடியாது");
       }
     }
 

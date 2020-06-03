@@ -424,7 +424,8 @@ function user_info($user_master_id){
          foreach($res->result() as $rows){
            $data[]=array(
              "id"=>$rows->id,
-             "feedback_question"=>$rows->question
+             "feedback_question"=>$rows->question,
+             "answer_option"=>$rows->answer_option
            );
 
          }

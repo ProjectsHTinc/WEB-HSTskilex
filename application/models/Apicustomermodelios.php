@@ -3028,7 +3028,8 @@ function proceed_for_payment($user_master_id,$service_order_id){
           foreach($res->result() as $rows){
             $data[]=array(
               "id"=>$rows->id,
-              "feedback_question"=>$rows->question
+              "feedback_question"=>$rows->question,
+              "answer_option"=>$rows->answer_option
             );
 
           }

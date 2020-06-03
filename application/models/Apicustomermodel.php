@@ -625,7 +625,8 @@ class Apicustomermodel extends CI_Model {
 FROM service_orders as so
     left join services as s on s.id=so.service_id
     left join main_category as mc on mc.id=s.main_cat_id
-    where s.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
+    left join sub_category as sc on sc.id=s.sub_cat_id
+    where s.status='Active' and sc.status='Active' and mc.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
     $res = $this->db->query($query);
 
      if($res->num_rows()>0){

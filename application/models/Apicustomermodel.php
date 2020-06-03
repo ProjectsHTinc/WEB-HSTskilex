@@ -116,14 +116,14 @@ class Apicustomermodel extends CI_Model {
     //-------------------- Version check -------------------//
 
 
-  function version_check($version_code){
-    if($version_code==3){
-      $response = array("status" => "success");
-    }else{
-      $response = array("status" => "error");
+    function version_check($version_code){
+      if($version_code==3){
+        $response = array("status" => "success","version_code"=>$version_code);
+      }else{
+          $response = array("status" => "success","version_code"=>$version_code);
+      }
+      	return $response;
     }
-    	return $response;
-  }
 
   //-------------------- Version check -------------------//
 

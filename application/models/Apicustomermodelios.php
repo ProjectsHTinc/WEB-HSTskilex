@@ -118,9 +118,9 @@ class Apicustomermodelios extends CI_Model {
 
   function version_check($version_code){
     if($version_code==3){
-      $response = array("status" => "success");
+      $response = array("status" => "success","version_code"=>$version_code);
     }else{
-      $response = array("status" => "error");
+        $response = array("status" => "success","version_code"=>$version_code);
     }
     	return $response;
   }

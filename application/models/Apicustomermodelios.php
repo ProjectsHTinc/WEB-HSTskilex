@@ -120,7 +120,7 @@ class Apicustomermodelios extends CI_Model {
       if($version_code >= 2){
           $response = array("status" => "success","version_code"=>$version_code);
       }else{
-        $response = array("status" => "success","version_code"=>$version_code);
+        $response = array("status" => "error","version_code"=>$version_code);
       }
 
 

@@ -137,7 +137,7 @@ From people who are capable</h2>
                     <div class="" style="display:inline-flex;">
                     <a href="https://apps.apple.com/us/app/skilex/id1484596811?ls=1" target="_blank" class=" " data-wow-delay="0.8s"><img src="<?php echo base_url(); ?>assets/app_store.png" class="img-responsive">
 </a>
-                    <a href="https://play.google.com/store/apps/developer?id=Skilex+Multiservices+Private+Limited&hl=en" target="_blank" class=" " data-wow-delay="1s"><img src="<?php echo base_url(); ?>assets/play_store.png" class="img-responsive">
+                    <a href="https://play.google.com/store/apps/developer?id=Skilex+Multiservices+Private+Limited&hl=en" target="_blank" class=" " data-wow-delay="1s"><img src="<?php echo base_url(); ?>assets/play_store.png" class="img-responsive"></a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-5 col-lg-4 hidden-xs hidden-sm">

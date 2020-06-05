@@ -1261,7 +1261,12 @@ return $response;
 
     public function Create_serv_person($user_master_id, $name, $mobile, $email)
     {
-         $sql         = "SELECT * FROM login_users WHERE (phone_no ='" . $mobile . "' OR email = '" . $email . "') AND user_type = '4' AND status='Inactive'";
+        if(empty($email)){
+          $sql= "SELECT * FROM login_users WHERE phone_no ='" . $mobile . "'  AND user_type = '4' AND status='Inactive'";
+        }else{
+          $sql= "SELECT * FROM login_users WHERE (phone_no ='" . $mobile . "' OR email = '" . $email . "') AND user_type = '4' AND status='Inactive'";
+
+        }
         $user_result = $this->db->query($sql);
         $ress        = $user_result->result();
 

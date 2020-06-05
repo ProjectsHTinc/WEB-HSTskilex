@@ -1674,24 +1674,28 @@ return $response;
             }
         }
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $customer_id . "'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
               $gcm_key  = $rows->mobile_key;
                $mobile_type = $rows->mobile_type;
-               $head='SKILEX';
-               $message='Service Request Accepted';
+               $preferred_lang_id=$rows->preferred_lang_id;
+              $head='Skilex';
+              if($preferred_lang_id=='1'){
+              $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+              $message=" Skilex- Your Services has been accepted.";
+              }
                $user_type='5';
                $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
+            $notes = $message;
+            $phone=$contact_person_number;
+            $this->smsmodel->send_sms($phone,$notes);
         }
 
-        $title           = "Service Request Accepted";
-        $notes = "SKILEX - Service Request Accepted";
 
-        $phone=$contact_person_number;
-        $this->smsmodel->send_sms($phone,$notes);
 
         if ($update_result) {
             $response = array(
@@ -1752,7 +1756,8 @@ return $response;
             }
         }
 
-        $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$service_person_id."'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$service_person_id'";
+
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -1760,38 +1765,48 @@ return $response;
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
+              $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
-              $message="Service request assigned.";
+              if($preferred_lang_id=='1'){
+              $message="ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  ஒதுக்கப்பட்டது.மேலும் அறிய ஆப்பை  பார்க்கவும்.";
+              }else{
+                $message="Service request assigned.";
+              }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
+            $phone=$sperson_mobile;
+            $notes=$message;
+            $this->smsmodel->send_sms($phone,$notes);
         }
 
 
-        $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
         $user_result = $this->db->query($sQuery);
         if ($user_result->num_rows() > 0) {
             foreach ($user_result->result() as $rows) {
                 $gcm_key  = $rows->mobile_key;
                 $mobile_type = $rows->mobile_type;
-                $head='SKILEX';
+                $preferred_lang_id=$rows->preferred_lang_id;
+                $head='Skilex';
+                if($preferred_lang_id=='1'){
+                $message="ஸஸ்கிலெக்ஸ் தங்களது கோரிக்கையைக்கான சர்வீஸ் நபர் ஒதுக்கப்பட்டுள்ளது.";
+                }else{
                 $message='Service expert assigned to your order.';
+                }
+
                 $user_type='5';
                 $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
+            $notes=$message;
+            $phone=$contact_person_number;
+            $this->smsmodel->send_sms($phone,$notes);
+
         }
 
-        $title           = "Service Request Assigned";
-        if($preferred_lang_id=='1'){
-          $notes = "SKILEX - Service Request Assigned";
-        }else{
-          $notes = "SKILEX - Service Request Assigned";
-        }
 
-        $phone=$contact_person_number;
-        $this->smsmodel->send_sms($phone,$notes);
-        $phone=$sperson_mobile;
-        $this->smsmodel->send_sms($phone,$notes);
+
+
 
 
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
@@ -2305,29 +2320,29 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
 
 
-       $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
+
+       $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
        $user_result = $this->db->query($sQuery);
        if ($user_result->num_rows() > 0) {
            foreach ($user_result->result() as $rows) {
              $gcm_key=$rows->mobile_key;
              $mobile_type=$rows->mobile_type;
+             $preferred_lang_id=$rows->preferred_lang_id;
              $head='Skilex';
-             $message="Service request is cancelled.";
+             if($preferred_lang_id=='1'){
+               $message="ஸ்கிலெக்ஸ் உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது. இதனால் ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம். மற்றொரு சேவை நபர் விரைவில் நியமிக்கப்படுவார்.";
+             }else{
+                 $message = "Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
+             }
+
              $user_type='5';
              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
            }
+           $notes=$message;
+           $phone=$contact_person_number;
+           $this->smsmodel->send_sms($phone,$notes);
+
        }
-
-
-
-
-
-
-        $title           = "Service Request Cancelled";
-        $notes = "Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
-        $phone=$contact_person_number;
-        $this->smsmodel->send_sms($phone,$notes);
-        //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
         if ($update_result) {
             $response = array(
@@ -2777,7 +2792,8 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
     function payment_notification($user_master_id,$provider_id,$expert_id){
 
-      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='" . $user_master_id . "'";
+      $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+
       $user_result = $this->db->query($sQuery);
       if ($user_result->num_rows() > 0) {
           foreach ($user_result->result() as $rows) {
@@ -2789,7 +2805,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
           }
       }
-       $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$provider_id'";
+       $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$provider_id'";
       $user_result = $this->db->query($sQuery);
       if ($user_result->num_rows() > 0) {
           foreach ($user_result->result() as $rows) {
@@ -2801,7 +2817,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
           }
       }
-      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$expert_id'";
+      $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$expert_id'";
       $user_result = $this->db->query($sQuery);
       if ($user_result->num_rows() > 0) {
           foreach ($user_result->result() as $rows) {

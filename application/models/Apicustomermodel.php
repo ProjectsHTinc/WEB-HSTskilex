@@ -2960,7 +2960,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
     }
 
 
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -2985,7 +2985,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         }
 
 
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -3009,7 +3009,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $this->smsmodel->send_sms($phone,$notes);
 
         }
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {

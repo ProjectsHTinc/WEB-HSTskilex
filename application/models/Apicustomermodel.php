@@ -2968,11 +2968,17 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
-              $head='Skilex';
-              $message="Service payment success.";
+              $preferred_lang_id=$rows->preferred_lang_id;
+                $head='Skilex';
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+                $message="Service payment success.";
+              }
               $user_type='3';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
+
             $notes=$message;
             $phone=$rows->phone_no;
             $this->smsmodel->send_sms($phone,$notes);
@@ -2987,8 +2993,14 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
+              $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
-              $message=" Service Payment Success. Thanks for being the part of Skilex. Kindly rate our Service";
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+                $message=" Service Payment Success. Thanks for being the part of Skilex. Kindly rate our Service";
+              }
+
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
@@ -3005,8 +3017,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
+              $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
-              $message="Service payment success.";
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+                $message=" Service Payment Success";
+              }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }

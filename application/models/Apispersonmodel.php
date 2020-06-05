@@ -587,7 +587,8 @@ function user_info($user_master_id){
 		}
 
 
-    		$sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+    		// $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
     		$user_result = $this->db->query($sQuery);
     		if($user_result->num_rows()>0)
     		{
@@ -596,11 +597,36 @@ function user_info($user_master_id){
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Service Expert initiated";
+              $message="Service Expert has initiated";
               $user_type='3';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
     				}
+            $notes=$message;
+            $phone=$rows->phone_no;
+            $this->smsmodel->send_sms($phone,$notes);
+
     		}
+
+
+        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+        $user_result = $this->db->query($sQuery);
+        if($user_result->num_rows()>0)
+        {
+            foreach ($user_result->result() as $rows)
+            {
+              $gcm_key=$rows->mobile_key;
+              $mobile_type=$rows->mobile_type;
+              $head='Skilex';
+              $message="Service has initiated";
+              $user_type='4';
+              $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+            }
+            $notes=$message;
+            $phone=$rows->phone_no;
+            $this->smsmodel->send_sms($phone,$notes);
+
+        }
+
 
         $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
         $user_result = $this->db->query($sQuery);
@@ -611,7 +637,7 @@ function user_info($user_master_id){
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
               $head='Skilex';
-              $message="Service request initiated. Please look into the app for tracking the Service person.";
+              $message="Service request initiated. Please look into the app for tracking the Service expert.";
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
@@ -660,7 +686,9 @@ function user_info($user_master_id){
       }
 
 
-    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+    // $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+    $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
+
     $user_result = $this->db->query($sQuery);
     if($user_result->num_rows()>0)
     {
@@ -669,11 +697,35 @@ function user_info($user_master_id){
           $gcm_key=$rows->mobile_key;
           $mobile_type=$rows->mobile_type;
           $head='Skilex';
-          $message="Service request is ongoing now.";
+          $message="Skilex-Service is has restarted.";
           $user_type='3';
           $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
         }
+        $notes=$message;
+        $phone=$rows->phone_no;
+        $this->smsmodel->send_sms($phone,$notes);
     }
+
+
+    $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+
+    $user_result = $this->db->query($sQuery);
+    if($user_result->num_rows()>0)
+    {
+        foreach ($user_result->result() as $rows)
+        {
+          $gcm_key=$rows->mobile_key;
+          $mobile_type=$rows->mobile_type;
+          $head='Skilex';
+          $message="Skilex-Service is has restarted.";
+          $user_type='4';
+          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+        }
+        $notes=$message;
+        $phone=$rows->phone_no;
+        $this->smsmodel->send_sms($phone,$notes);
+    }
+
 
     $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
     $user_result = $this->db->query($sQuery);
@@ -684,14 +736,14 @@ function user_info($user_master_id){
           $gcm_key=$rows->mobile_key;
           $mobile_type=$rows->mobile_type;
           $head='Skilex';
-          $message="Your service request is ongoing now.";
+          $message="Skilex-Service is has restarted.";
           $user_type='5';
           $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
         }
     }
 
     //$title = "Service Request Initiated";
-    $message_details = "SKILEX - Service Request ongoing now";
+    $message_details = "Skilex-Your Service order has restarted";
     $notes=$message_details;
     $phone=$contact_person_number;
     $this->smsmodel->send_sms($phone,$notes);
@@ -938,7 +990,7 @@ function user_info($user_master_id){
 					}
 			}
 
-      $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$serv_prov_id."'";
+      $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
       $user_result = $this->db->query($sQuery);
       if($user_result->num_rows()>0)
       {
@@ -951,7 +1003,30 @@ function user_info($user_master_id){
             $user_type='3';
             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
           }
+          $notes=$message;
+          $phone=$rows->phone_no;
+          $this->smsmodel->send_sms($phone,$notes);
       }
+
+      $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+      $user_result = $this->db->query($sQuery);
+      if($user_result->num_rows()>0)
+      {
+          foreach ($user_result->result() as $rows)
+          {
+            $gcm_key=$rows->mobile_key;
+            $mobile_type=$rows->mobile_type;
+            $head='Skilex';
+            $message="Service has initiated";
+            $user_type='4';
+            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+          }
+          $notes=$message;
+          $phone=$rows->phone_no;
+          $this->smsmodel->send_sms($phone,$notes);
+
+      }
+
 
       $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
       $user_result = $this->db->query($sQuery);
@@ -1440,7 +1515,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       $get_res = $this->db->query($get_prov);
       foreach($get_res->result() as $row_res){}
       $Phoneno=$row_res->phone_no;
-      $notes="Service is in Hold";
+      $notes="Skilex-Service is On hold";
       $phone=$Phoneno;
       $this->smsmodel->send_sms($phone,$notes);
 
@@ -1455,7 +1530,9 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       $notes="Your Service is hold now will resume on ".$resume;
       $phone=$Phoneno;
       $this->smsmodel->send_sms($phone,$notes);
-      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+
+
+      $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
      $user_result = $this->db->query($sQuery);
      if ($user_result->num_rows() > 0) {
          foreach ($user_result->result() as $rows) {
@@ -1466,7 +1543,11 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
            $user_type='3';
            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
          }
+         $notes=$message;
+         $phone=$rows->phone_no;
+         $this->smsmodel->send_sms($phone,$notes);
      }
+
      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
      $user_result = $this->db->query($sQuery);
      if ($user_result->num_rows() > 0) {
@@ -1575,18 +1656,23 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 
 
 
-   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+   // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+   $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
    $user_result = $this->db->query($sQuery);
    if ($user_result->num_rows() > 0) {
        foreach ($user_result->result() as $rows) {
          $gcm_key=$rows->mobile_key;
          $mobile_type=$rows->mobile_type;
          $head='Skilex';
-         $message="Service request is cancelled by expert";
+         $message="Skilex-Your service request has been cancelled";
          $user_type='3';
          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
        }
+       $notes=$message;
+       $phone=$rows->phone_no;
+       $this->smsmodel->send_sms($phone,$notes);
    }
+
    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
    $user_result = $this->db->query($sQuery);
    if ($user_result->num_rows() > 0) {
@@ -1601,7 +1687,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
    }
 
 		//$title = "Service Request Canceled";
-		$notes = "SKILEX - Service Request Cancelled";
+	   $notes = "Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
     $phone=$contact_person_number;
     $this->smsmodel->send_sms($phone,$notes);
 
@@ -1806,17 +1892,21 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
 		}
 
 
-    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+    // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$serv_prov_id'";
+    $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
    $user_result = $this->db->query($sQuery);
    if ($user_result->num_rows() > 0) {
        foreach ($user_result->result() as $rows) {
          $gcm_key=$rows->mobile_key;
          $mobile_type=$rows->mobile_type;
          $head='Skilex';
-         $message="Service Order Completed";
+         $message="Skilex- Service Request Completed";
          $user_type='3';
          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
        }
+        $notes=$message;
+        $phone=$rows->phone_no;
+        $this->smsmodel->send_sms($phone,$notes);
    }
    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
    $user_result = $this->db->query($sQuery);

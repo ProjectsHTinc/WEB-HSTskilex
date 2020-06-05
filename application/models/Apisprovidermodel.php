@@ -2319,9 +2319,9 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 
 
         $title           = "Service Request Cancelled";
-        $notes = "SKILEX - Service Request Cancelled";
+        $notes = "Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
         $phone=$contact_person_number;
-        // $this->smsmodel->send_sms($phone,$notes);
+        $this->smsmodel->send_sms($phone,$notes);
         //$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
         if ($update_result) {

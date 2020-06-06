@@ -632,7 +632,7 @@ FROM service_orders as so
      if($res->num_rows()>0){
         foreach ($res->result() as $rows)
       {
-        $service_pic = $rows->cat_pic;
+        $service_pic = $rows->service_pic;
         if ($service_pic != ''){
           $service_pic_url = base_url().'assets/category/'.$service_pic;
         }else {

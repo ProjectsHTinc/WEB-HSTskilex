@@ -1595,7 +1595,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
            $preferred_lang_id=$rows->preferred_lang_id;
            $head='Skilex';
            if($preferred_lang_id=='1'){
-           	$message="ஸ்கிலெக்ஸ் சேவை இப்போது நிறுத்தப்பட்டுள்ளது."$resume".மீண்டும் தொடங்கும்";
+           	$message="ஸ்கிலெக்ஸ் சேவை இப்போது நிறுத்தப்பட்டுள்ளது $resume மீண்டும் தொடங்கும்";
            }else{
            	 $message="Service is hold now will resume on ".$resume;
            }
@@ -1618,7 +1618,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
            $preferred_lang_id=$rows->preferred_lang_id;
             $head='Skilex';
             if($preferred_lang_id=='1'){
-            	$message="ஸ்கிலெக்ஸ் உங்கள் சேவை இப்போது நிறுத்தப்பட்டுள்ளது."$resume".மீண்டும் தொடங்கும";
+            	$message="ஸ்கிலெக்ஸ் உங்கள் சேவை இப்போது நிறுத்தப்பட்டுள்ளது.$resume.மீண்டும் தொடங்கும";
             }else{
               $message="Your Service is hold now will resume on ".$resume;
             }

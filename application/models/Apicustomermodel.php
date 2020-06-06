@@ -2996,9 +2996,9 @@ function proceed_for_payment($user_master_id,$service_order_id){
               $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது.எங்கள் சேவையை மதிப்பிடுங்கள்.";
               }else{
-                $message=" Service Payment Success. Thanks for being the part of Skilex. Kindly rate our Service";
+                $message=" Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
               }
 
               $user_type='5';

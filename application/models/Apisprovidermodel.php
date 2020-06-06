@@ -1683,7 +1683,7 @@ return $response;
                $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-              $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              $message="ஸஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்  ";
               }else{
               $message=" Skilex- Your Services has been accepted.";
               }

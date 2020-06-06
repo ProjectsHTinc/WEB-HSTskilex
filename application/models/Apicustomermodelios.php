@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apicustomermodelios extends CI_Model {
+class Apicustomermodel extends CI_Model {
 
     function __construct()
     {
@@ -116,14 +116,14 @@ class Apicustomermodelios extends CI_Model {
     //-------------------- Version check -------------------//
 
 
-  function version_check($version_code){
-      if($version_code >= 3){
+    function version_check($version_code){
+      if($version_code >= 2){
           $response = array("status" => "success","version_code"=>$version_code);
       }else{
         $response = array("status" => "error","version_code"=>$version_code);
       }
     	return $response;
-  }
+    }
 
   //-------------------- Version check -------------------//
 
@@ -622,7 +622,7 @@ class Apicustomermodelios extends CI_Model {
   function top_trending_services($user_master_id){
 
     $query="SELECT so.service_id,s.id,count(so.service_id) as service_count,s.service_name,s.service_ta_name,s.service_pic,mc.cat_pic,s.main_cat_id,s.sub_cat_id
-  FROM service_orders as so
+FROM service_orders as so
     left join services as s on s.id=so.service_id
     left join main_category as mc on mc.id=s.main_cat_id
     left join sub_category as sc on sc.id=s.sub_cat_id
@@ -820,10 +820,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 //-------------------- Search Service  -------------------//
 
     function search_service($service_txt,$service_txt_ta,$user_master_id){
-      $query="SELECT s.*  FROM services as s
-     left join main_category as mc on mc.id=s.main_cat_id
-     left join sub_category as sc on sc.id=s.sub_cat_id
-     WHERE (s.service_name LIKE '%$service_txt%' or s.service_ta_name LIKE '%$service_txt%') and s.status='Active' and mc.status='Active' and sc.status='Active'";
+       $query="SELECT s.*  FROM services as s
+      left join main_category as mc on mc.id=s.main_cat_id
+      left join sub_category as sc on sc.id=s.sub_cat_id
+      WHERE (s.service_name LIKE '%$service_txt%' or s.service_ta_name LIKE '%$service_txt%') and s.status='Active' and mc.status='Active' and sc.status='Active'";
        $res = $this->db->query($query);
        if($res->num_rows()>0){
           foreach ($res->result() as $rows)
@@ -2960,7 +2960,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
     }
 
 
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_prov_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -2968,18 +2968,24 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
-              $head='Skilex';
-              $message="Service payment success.";
+              $preferred_lang_id=$rows->preferred_lang_id;
+                $head='Skilex';
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+                $message="Service payment success.";
+              }
               $user_type='3';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
+
             $notes=$message;
             $phone=$rows->phone_no;
             $this->smsmodel->send_sms($phone,$notes);
         }
 
 
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -2987,8 +2993,14 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
+              $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
-              $message=" Service Payment Success. Thanks for being the part of Skilex. Kindly rate our Service";
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது.எங்கள் சேவையை மதிப்பிடுங்கள்.";
+              }else{
+                $message=" Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
+              }
+
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
@@ -2997,7 +3009,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
             $this->smsmodel->send_sms($phone,$notes);
 
         }
-        $sQuery="SELECT nm.*,lu.phone_no FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {
@@ -3005,8 +3017,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
             {
               $gcm_key=$rows->mobile_key;
               $mobile_type=$rows->mobile_type;
+              $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
-              $message="Service payment success.";
+              if($preferred_lang_id=='1'){
+                $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+              }else{
+                $message=" Service Payment Success";
+              }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
@@ -3016,6 +3033,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         }
   }
   //-------------------- Service Payment success -------------------//
+
 
 
   function check_every_minute($user_master_id,$service_order_id){
@@ -3255,29 +3273,29 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 
 
-    function hour_cron_job_checking(){
-      $date = date_default_timezone_set('Asia/Kolkata');
-      $today = date("g:i");
-      $ten_am='09:00';
-      $end_time='7:00';
-      if($today >= $ten_am && $today <= $end_time) {
-        // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-        // $excute=$this->db->query($insert);
-          $this->automatic_provider_allocation();
-      }
-    }
+    // function hour_cron_job_checking(){
+    //   $date = date_default_timezone_set('Asia/Kolkata');
+    //   $today = date("g:i");
+    //   $ten_am='09:00';
+    //   $end_time='7:00';
+    //   if($today >= $ten_am && $today <= $end_time) {
+    //     // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+    //     // $excute=$this->db->query($insert);
+    //       $this->automatic_provider_allocation();
+    //   }
+    // }
 
 
 
-    function db_data_updating(){
-    $text='SKILEXC0';
-    $select="SELECT * FROM login_users where user_type='5'";
-    $result=$this->db->query($select);
-    foreach($result->result() as $rows){
-      $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
-      $excute=$this->db->query($update);
-    }
-    }
+    // function db_data_updating(){
+    // $text='SKILEXC0';
+    // $select="SELECT * FROM login_users where user_type='5'";
+    // $result=$this->db->query($select);
+    // foreach($result->result() as $rows){
+    //   $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
+    //   $excute=$this->db->query($update);
+    // }
+    // }
 
 }
 

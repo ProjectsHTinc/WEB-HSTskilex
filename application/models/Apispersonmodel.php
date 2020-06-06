@@ -651,12 +651,12 @@ function user_info($user_master_id){
               if($preferred_lang_id=='1'){
               	$message="ஸ்கிலெக்ஸ  சேவை கோரிக்கை தொடங்கப்பட்டது. சேவை நிபுணரைக் கண்காணிப்பதற்கான ஆப்பில் பார்க்கவும்";
               }else{
-              	$message_details = "SKILEX - Service request initiated. Please look into the app for tracking the Service expert.";
+              	$message = "SKILEX - Service request initiated. Please look into the app for tracking the Service expert.";
               }
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
-            $notes=$message_details;
+            $notes=$message;
             $phone=$contact_person_number;
             $this->smsmodel->send_sms($phone,$notes);
         }
@@ -1581,7 +1581,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       $customer_id=$sel_row->customer_id;
       $serv_prov_id=$sel_row->serv_prov_id;
       $resume=date("d-m-Y", strtotime($resume_date) );
-      $notes="Your Service is hold now will resume on ".$resume;
+      // $notes="Your Service is hold now will resume on ".$resume;
       $phone=$Phoneno;
       //$this->smsmodel->send_sms($phone,$notes);
 
@@ -1592,8 +1592,15 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          foreach ($user_result->result() as $rows) {
            $gcm_key=$rows->mobile_key;
            $mobile_type=$rows->mobile_type;
+           $preferred_lang_id=$rows->preferred_lang_id;
            $head='Skilex';
-           $message="Service is hold now will resume on ".$resume;
+           if($preferred_lang_id=='1'){
+           	$message="ஸ்கிலெக்ஸ் சேவை இப்போது நிறுத்தப்பட்டுள்ளது."$resume".மீண்டும் தொடங்கும்";
+           }else{
+           	 $message="Service is hold now will resume on ".$resume;
+           }
+
+
            $user_type='3';
            $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
          }
@@ -1611,7 +1618,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
            $preferred_lang_id=$rows->preferred_lang_id;
             $head='Skilex';
             if($preferred_lang_id=='1'){
-            	$message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+            	$message="ஸ்கிலெக்ஸ் உங்கள் சேவை இப்போது நிறுத்தப்பட்டுள்ளது."$resume".மீண்டும் தொடங்கும";
             }else{
               $message="Your Service is hold now will resume on ".$resume;
             }
@@ -1988,7 +1995,8 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
         $phone=$rows->phone_no;
         $this->smsmodel->send_sms($phone,$notes);
    }
-   $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
+   $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
+
    $user_result = $this->db->query($sQuery);
    if ($user_result->num_rows() > 0) {
        foreach ($user_result->result() as $rows) {
@@ -1997,7 +2005,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $preferred_lang_id=$rows->preferred_lang_id;
           $head='Skilex';
           if($preferred_lang_id=='1'){
-            $message="ஸ்கிலெக்ஸ் சேவை கோரிக்கை முடிந்தது. பில் உருவாக்கப்பட்டது. ஸ்கைலெக்ஸ் ஆப் மூலம் தயவுசெய்து கட்டணத்தை செலுத்துங்கள்.";
+            $message="ஸ்கிலெக்ஸ் சேவை கோரிக்கை முடிந்தது. பில் உருவாக்கப்பட்டது ஸ்கைலெக்ஸ் ஆப் மூலம் கட்டணத்தை செலுத்துங்கள்.";
           }else{
             $message="SKILEX - Service Request Completed. Bill Generated. Kindly pay the bill through Skilex App.";
           }

@@ -626,13 +626,13 @@ class Apicustomermodelios extends CI_Model {
     left join services as s on s.id=so.service_id
     left join main_category as mc on mc.id=s.main_cat_id
     left join sub_category as sc on sc.id=s.sub_cat_id
-    where s.status='Active' and sc.status='Active' and mc.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 5";
+    where s.status='Active' and sc.status='Active' and mc.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 2";
     $res = $this->db->query($query);
 
      if($res->num_rows()>0){
         foreach ($res->result() as $rows)
       {
-        $service_pic = $rows->cat_pic;
+        $service_pic = $rows->service_pic;
         if ($service_pic != ''){
           $service_pic_url = base_url().'assets/category/'.$service_pic;
         }else {

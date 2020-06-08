@@ -3103,7 +3103,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
     function automatic_provider_allocation(){
 
-      $select="SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) = CURDATE()) and status='Pending' and (advance_payment_status='N' OR advance_payment_status='NA')";
+      $select="SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) >= CURDATE()) and status='Pending' and (advance_payment_status='N' OR advance_payment_status='NA')";
       $excute= $this->db->query($select);
       if($excute->num_rows()==0){
 

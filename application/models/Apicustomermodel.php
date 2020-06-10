@@ -2749,7 +2749,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $rad = M_PI / 180;
       $km=acos(sin($lat2*$rad) * sin($lat1*$rad) + cos($lat2*$rad) * cos($lat1*$rad) * cos($lon2*$rad - $lon1*$rad)) * 6371;
       $dis= round($km,2);
-      $get_rate="SELECT * FROM surge_master where surge_distance>='$dis' LIMIT 1";
+      $get_rate="SELECT * FROM surge_master where surge_distance>='$dis' order by surge_distance asc LIMIT 1";
       $res_rate=$this->db->query($get_rate);
       if($res_rate->num_rows()==0){
         $rate='0';

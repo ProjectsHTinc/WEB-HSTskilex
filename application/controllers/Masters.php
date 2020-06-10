@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class Masters extends CI_Controller {
-		
+
 	function __construct() {
 				parent::__construct();
 			    $this->load->helper('url');
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					redirect('/login');
 			 }
 		}
-		
+
 
 		public function update_commission_percentage(){
 			$data=$this->session->userdata();
@@ -169,6 +169,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 if($user_type=='1'||$user_type=='2'){
 				 $deposit_amt=$this->db->escape_str($this->input->post('deposit_amt'));
 				 $data['res']=$this->mastermodel->update_deposit_amt($deposit_amt,$user_id);
+				 echo json_encode($data['res']);
+			 }else{
+					redirect('/login');
+			 }
+		}
+
+
+		public function update_trending_count(){
+			$data=$this->session->userdata();
+			$user_id=$this->session->userdata('user_id');
+			$user_type=$this->session->userdata('user_role');
+			 if($user_type=='1'||$user_type=='2'){
+				 $trending_count=$this->db->escape_str($this->input->post('trending_count'));
+				 $data['res']=$this->mastermodel->update_trending_count($trending_count,$user_id);
 				 echo json_encode($data['res']);
 			 }else{
 					redirect('/login');
@@ -786,8 +800,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 	redirect('/');
 		 }
 	}
-	
-	
+
+
 	public function send_sms_content(){
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
@@ -800,7 +814,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			redirect('/');
 		}
 	}
-	
+
 	public function distance_rates(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -820,7 +834,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$frm_km=$this->input->post('frm_km');
 		$data=$this->mastermodel->check_km($frm_km);
 	}
-	
+
 	public function add_distance_rates(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -829,9 +843,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 $from_km=$this->db->escape_str($this->input->post('frm_km'));
 			 $rates=$this->db->escape_str($this->input->post('rates'));
 			 $status=$this->db->escape_str($this->input->post('status'));
-			 
+
 			 $data['res']=$this->mastermodel->add_distance_rates($from_km,$rates,$status,$user_id);
-			 
+
 			 if($data['res']['status']=="success"){
 				$messge = array('message' => 'Surge Rate Added','class' => 'alert alert-success fade in');
 				$this->session->set_flashdata('msg', $messge);
@@ -845,7 +859,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 	redirect('/');
 		 }
 	}
-	
+
 	public function edit_distance_rates(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -860,13 +874,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 	redirect('/');
 		 }
 	}
-	
+
 	public function check_km_exist(){
 		 $rate_id=$this->uri->segment(3);
 		 $frm_km=$this->input->post('frm_km');
 		$data=$this->mastermodel->check_km_exist($rate_id,$frm_km);
 	}
-	
+
 	public function update_distance_rates(){
 			$data=$this->session->userdata();
 			$user_id=$this->session->userdata('user_id');
@@ -876,9 +890,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 $from_km=$this->db->escape_str($this->input->post('frm_km'));
 			 $rates=$this->db->escape_str($this->input->post('rates'));
 			 $status=$this->db->escape_str($this->input->post('status'));
-			 
+
 			 $data['res']=$this->mastermodel->update_distance_rates($rate_id,$from_km,$rates,$status,$user_id);
-			 
+
 			 if($data['res']['status']=="success"){
 				$messge = array('message' => 'Surge Rate Update','class' => 'alert alert-success fade in');
 				$this->session->set_flashdata('msg', $messge);
@@ -892,6 +906,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 	redirect('/');
 		 }
 	}
-	
-	
+
+
 }

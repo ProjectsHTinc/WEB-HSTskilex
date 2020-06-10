@@ -20,9 +20,9 @@
                       <label>Surge Distance</label>
                       <select class="form-control form-control-sm" id="frm_km" name="frm_km">
 					  <option value="">Select</option>
-						<?php for ($n = 20; $n <= 100; $n++) { ?>
+						<?php for ($n = 1; $n <= 100; $n++) { ?>
 							<option value="<?php echo $n; ?>"><?php echo $n; ?></option>
-						<?php  } ?>                      
+						<?php  } ?>
                       </select>
                     </div>
 					<div class="form-group">
@@ -73,11 +73,11 @@
               <button type="button" class="btn btn-success btn-fw">Active</button>
             <?php   }
                ?></td>
-              
+
                  <td><a href="<?php echo base_url(); ?>masters/edit_distance_rates/<?php echo base64_encode($rows->id*98765); ?>"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
 
                  </td>
-          
+
 
           </tr>
         <?php  $i++;  }  ?>
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-		
+
 <script>
 	$('#rates').keypress(function(event) {
 	  if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {

@@ -648,13 +648,17 @@ function add_referral_code($user_master_id,$referral_code){
   ############### Top Trending services ###############
 
   function top_trending_services($user_master_id){
+    $get_count="SELECT * FROM tax_commission where id='1'";
+    $res_count = $this->db->query($get_count);
+    foreach($res_count->result() as $rows_count){}
+    $trending_count=$rows_count->trending_count;
 
     $query="SELECT so.service_id,s.id,count(so.service_id) as service_count,s.service_name,s.service_ta_name,s.service_pic,mc.cat_pic,s.main_cat_id,s.sub_cat_id
 FROM service_orders as so
     left join services as s on s.id=so.service_id
     left join main_category as mc on mc.id=s.main_cat_id
     left join sub_category as sc on sc.id=s.sub_cat_id
-    where s.status='Active' and sc.status='Active' and mc.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT 2";
+    where s.status='Active' and sc.status='Active' and mc.status='Active' GROUP by so.service_id ORDER by service_count desc LIMIT $trending_count";
     $res = $this->db->query($query);
 
      if($res->num_rows()>0){

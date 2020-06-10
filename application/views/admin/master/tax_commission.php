@@ -72,21 +72,37 @@
             <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <?php foreach($referal as $rows){} ?>
+                  <?php foreach($referal as $rows_referral){} ?>
                   <h4 class="card-title">Referal Points </h4>
 
                   <form class="forms-sample" id="update_referal" method="post">
                     <div class="form-group">
                       <label for="username">Referal Points</label>
-                      <input type="text" class="form-control" maxlength="3" name="referal_points" id="referal_points"  value="<?php echo $rows->referral_points; ?>" placeholder="Referal Points">
+                      <input type="text" class="form-control" maxlength="3" name="referal_points" id="referal_points"  value="<?php echo $rows_referral->referral_points; ?>" placeholder="Referal Points">
                     </div>
                     <div class="form-group">
                       <label for="city_ta_name">Minimum Points Claim</label>
-                      <input type="text" class="form-control"  maxlength="3" name="minimum_points_claim" id="minimum_points_claim" value="<?php echo $rows->minimum_points_to_claim; ?>" placeholder="Minimum Points Claim" >
+                      <input type="text" class="form-control"  maxlength="3" name="minimum_points_claim" id="minimum_points_claim" value="<?php echo $rows_referral->minimum_points_to_claim; ?>" placeholder="Minimum Points Claim" >
                     </div>
 					<div class="form-group">
                       <label for="city_ta_name">Division by</label>
-                      <input type="text" class="form-control" maxlength="2" name="division_points" id="division_points" value="<?php echo $rows->division_points; ?>" placeholder="Division by" >
+                      <input type="text" class="form-control" maxlength="2" name="division_points" id="division_points" value="<?php echo $rows_referral->division_points; ?>" placeholder="Division by" >
+                    </div>
+                    <button type="submit" class="btn btn-success mr-2">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Trending service </h4>
+
+                  <form class="forms-sample" id="trending_count_update" method="post">
+                    <div class="form-group">
+                      <label for="username">Count</label>
+                      <input type="text" class="form-control" id="trending_count" name="trending_count" placeholder="Trending Count" value="<?php echo $rows->trending_count; ?>">
                     </div>
                     <button type="submit" class="btn btn-success mr-2">Update</button>
                   </form>
@@ -213,9 +229,41 @@
          }
 
     });
-	
-	
-	
+
+    $('#trending_count_update').validate({
+    rules: {
+        trending_count: {required: true,number:true }
+    },
+    messages: {
+        trending_count:{
+            required :"Enter the count"
+        }
+    },
+    submitHandler: function(form) {
+    $.ajax({
+               url: "<?php echo base_url(); ?>masters/update_trending_count",
+               type: 'POST',
+               data: $('#trending_count_update').serialize(),
+               dataType: "json",
+               success: function(response) {
+                  var stats=response.status;
+                   if (stats=="success") {
+                     swal('Trending count updated successfully')
+                     window.setTimeout(function () {
+                      location.href = "<?php echo base_url();  ?>masters/tax_commission";
+                  }, 1000);
+
+                 }else{
+                    swal(stats);
+                     }
+               }
+           });
+         }
+
+    });
+
+
+
 	$('#update_referal').validate({
     rules: {
         referal_points: {required: true,number:true,maxlength:3 },

@@ -20,9 +20,9 @@
                       <label>Surge Distance</label>
                       <select class="form-control form-control-sm" id="frm_km" name="frm_km">
 					  <option value="">Select</option>
-						<?php for ($n = 20; $n <= 100; $n++) { ?>
+						<?php for ($n = 1; $n <= 100; $n++) { ?>
 							<option value="<?php echo $n; ?>"><?php echo $n; ?></option>
-						<?php  } ?>                      
+						<?php  } ?>
                       </select><script>$('#frm_km').val('<?php echo $rows->surge_distance; ?>')</script>
                     </div>
 					<div class="form-group">

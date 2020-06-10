@@ -2027,7 +2027,7 @@ class Apicustomer extends CI_Controller {
 	//
 	public function get_distance_rate()
 	{
-		
+
 		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 		$service_order_id  = $this->input->post("service_order_id");
 		$data['result']=$this->apicustomermodel->get_distance_rate($service_order_id);

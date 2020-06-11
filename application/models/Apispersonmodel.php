@@ -1094,7 +1094,7 @@ function user_info($user_master_id){
             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
           }
 
-          $notes=$message_details;
+          $notes=$message;
           $phone=$contact_person_number;
           $this->smsmodel->send_sms($phone,$notes);
       }

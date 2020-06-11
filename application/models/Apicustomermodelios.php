@@ -307,7 +307,7 @@ function add_referral_code($user_master_id,$referral_code){
           $response = array("status" => "error");
        }
   }else{
-    exit;
+    
     $output = str_split($referral_code, 7);
     $referral_user_id=$output[1];
     $check="SELECT * FROM login_users WHERE id='$user_master_id'";

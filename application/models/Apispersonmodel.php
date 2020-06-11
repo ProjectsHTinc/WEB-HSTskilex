@@ -638,7 +638,9 @@ function user_info($user_master_id){
         }
 
 
-        $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+        // $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$customer_id."'";
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
+
         $user_result = $this->db->query($sQuery);
         if($user_result->num_rows()>0)
         {

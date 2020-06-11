@@ -164,6 +164,10 @@ class Apicustomermodelios extends CI_Model {
        foreach($result_pre->result() as $row_preferred){}
        $preferred_lang_id=$row_preferred->preferred_lang_id;
 
+       $text='SKILEXC0';
+       $update_sql = "UPDATE login_users SET  updated_at=NOW(),referral_code='$text$user_master_id' WHERE id ='".$user_master_id."'";
+       $update_result = $this->db->query($update_sql);
+
 		}
     if($preferred_lang_id=='1'){
         $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";

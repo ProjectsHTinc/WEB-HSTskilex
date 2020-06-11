@@ -157,7 +157,12 @@ class Apicustomermodel extends CI_Model {
 			 $user_master_id = $this->db->insert_id();
 
 			 $insert_query = "INSERT INTO customer_details (user_master_id, status) VALUES ('". $user_master_id . "','Active')";
-             $insert_result = $this->db->query($insert_query);
+       $insert_result = $this->db->query($insert_query);
+
+     $get_prefer="SELECT * FROM login_users where id='$user_master_id'";
+     $result_pre=$this->db->query($get_prefer);
+     foreach($result_pre->result() as $row_preferred){}
+     $preferred_lang_id=$row_preferred->preferred_lang_id;
 		}
     if($preferred_lang_id=='1'){
         $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";

@@ -307,55 +307,62 @@ function add_referral_code($user_master_id,$referral_code){
           $response = array("status" => "error");
        }
   }else{
-    
-    $output = str_split($referral_code, 7);
-    $referral_user_id=$output[1];
-    $check="SELECT * FROM login_users WHERE id='$user_master_id'";
-    $re_check=$this->db->query($check);
-    foreach($re_check->result() as $row_checks){}
-      $referral_status=$row_checks->referral_status;
-      if($referral_status=='0'){
 
-        $update_status="UPDATE login_users SET referral_status='1' WHERE id='$user_master_id'";
-        $excute=$this->db->query($update_status);
+    $check_referral="SELECT * FROM login_users where referral_code='$referral_code'";
+    $re_referral=$this->db->query($check_referral);
+    if($re_referral->num_rows()!=0){
+      $output = str_split($referral_code, 7);
+      $referral_user_id=$output[1];
+      $check="SELECT * FROM login_users WHERE id='$user_master_id'";
+      $re_check=$this->db->query($check);
+      foreach($re_check->result() as $row_checks){}
+        $referral_status=$row_checks->referral_status;
+        if($referral_status=='0'){
 
-        $master="SELECT * FROM referral_master where id='1'";
-        $res_master=$this->db->query($master);
-        foreach($res_master->result() as $rows_master_point){}
-        $get_point=$rows_master_point->referral_points;
+          $update_status="UPDATE login_users SET referral_status='1' WHERE id='$user_master_id'";
+          $excute=$this->db->query($update_status);
+
+          $master="SELECT * FROM referral_master where id='1'";
+          $res_master=$this->db->query($master);
+          foreach($res_master->result() as $rows_master_point){}
+          $get_point=$rows_master_point->referral_points;
 
 
-        $adding_history="INSERT INTO referral_history (user_master_id,user_points,referral_code,referral_master_id,referral_points,created_at,created_by) VALUES ('$user_master_id','$get_point','$referral_code','$referral_user_id','$get_point',NOW(),'$user_master_id')";
-        $res_adding_history=$this->db->query($adding_history);
+          $adding_history="INSERT INTO referral_history (user_master_id,user_points,referral_code,referral_master_id,referral_points,created_at,created_by) VALUES ('$user_master_id','$get_point','$referral_code','$referral_user_id','$get_point',NOW(),'$user_master_id')";
+          $res_adding_history=$this->db->query($adding_history);
 
 
-        $check_referral_master="SELECT * FROM user_points WHERE user_master_id='$referral_user_id'";
-        $re_referral_master=$this->db->query($check_referral_master);
-        if($re_referral_master->num_rows()==0){
-          $master_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$referral_user_id','$get_point','$get_point','Active',NOW(),'$referral_user_id')";
+          $check_referral_master="SELECT * FROM user_points WHERE user_master_id='$referral_user_id'";
+          $re_referral_master=$this->db->query($check_referral_master);
+          if($re_referral_master->num_rows()==0){
+            $master_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$referral_user_id','$get_point','$get_point','Active',NOW(),'$referral_user_id')";
+          }else{
+            $master_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$referral_user_id' WHERE user_master_id='$referral_user_id'";
+          }
+          $excute=$this->db->query($master_referral_query);
+
+
+
+          $query_user_master="SELECT * FROM user_points WHERE user_master_id='$user_master_id'";
+          $re_query_user_master=$this->db->query($query_user_master);
+          if($re_query_user_master->num_rows()==0){
+            $user_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$user_master_id','$get_point','$get_point','Active',NOW(),'$user_master_id')";
+          }else{
+            $user_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
+          }
+          $excute_user=$this->db->query($user_referral_query);
+          if($excute_user){
+              $response = array("status" => "success");
+          }else{
+              $response = array("status" => "error");
+          }
         }else{
-          $master_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$referral_user_id' WHERE user_master_id='$referral_user_id'";
+          $response = array("status" => "error");
         }
-        $excute=$this->db->query($master_referral_query);
+    }else{
+      $response = array("status" => "error");
+    }
 
-
-
-        $query_user_master="SELECT * FROM user_points WHERE user_master_id='$user_master_id'";
-        $re_query_user_master=$this->db->query($query_user_master);
-        if($re_query_user_master->num_rows()==0){
-          $user_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$user_master_id','$get_point','$get_point','Active',NOW(),'$user_master_id')";
-        }else{
-          $user_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
-        }
-        $excute_user=$this->db->query($user_referral_query);
-        if($excute_user){
-            $response = array("status" => "success");
-        }else{
-            $response = array("status" => "error");
-        }
-      }else{
-        $response = array("status" => "error");
-      }
 
   }
 

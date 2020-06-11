@@ -272,42 +272,43 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Main Login End -------------------//
 
+############### Adding referral Code ##################################
+function add_referral_code($user_master_id,$referral_code){
+  if($referral_code=='SKILEX100'){
+     $check="SELECT * FROM login_users WHERE id='$user_master_id'";
+     $re_check=$this->db->query($check);
+     foreach($re_check->result() as $row_checks){}
+       $referral_status=$row_checks->referral_status;
+       if($referral_status=='0'){
+         $get_point='100';
+         $adding_history="INSERT INTO referral_history (user_master_id,user_points,referral_code,referral_master_id,referral_points,created_at,created_by) VALUES ('$user_master_id','$get_point','$referral_code','0','$get_point',NOW(),'$user_master_id')";
+         $res_adding_history=$this->db->query($adding_history);
+         $update_status="UPDATE login_users SET referral_status='1' WHERE id='$user_master_id'";
+         $excute=$this->db->query($update_status);
 
-
-  ############### Adding referral Code ##################################
-  function add_referral_code($user_master_id,$referral_code){
-    if($referral_code=='SKILEX100'){
-       $check="SELECT * FROM login_users WHERE id='$user_master_id'";
-       $re_check=$this->db->query($check);
-       foreach($re_check->result() as $row_checks){}
-         $referral_status=$row_checks->referral_status;
-         if($referral_status=='0'){
-           $get_point='100';
-           $adding_history="INSERT INTO referral_history (user_master_id,user_points,referral_code,referral_master_id,referral_points,created_at,created_by) VALUES ('$user_master_id','$get_point','$referral_code','0','$get_point',NOW(),'$user_master_id')";
-           $res_adding_history=$this->db->query($adding_history);
-           $update_status="UPDATE login_users SET referral_status='1' WHERE id='$user_master_id'";
-           $excute=$this->db->query($update_status);
-
-           $query_user_master="SELECT * FROM user_points WHERE user_master_id='$user_master_id'";
-           $re_query_user_master=$this->db->query($query_user_master);
-           if($re_query_user_master->num_rows()==0){
-             $user_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$user_master_id','$get_point','$get_point','Active',NOW(),'$user_master_id')";
-           }else{
-             $user_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
-           }
-           $excute_user=$this->db->query($user_referral_query);
-           if($excute_user){
-              $response = array("status" => "success");
-           }else{
-                $response = array("status" => "error");
-           }
-
-
+         $query_user_master="SELECT * FROM user_points WHERE user_master_id='$user_master_id'";
+         $re_query_user_master=$this->db->query($query_user_master);
+         if($re_query_user_master->num_rows()==0){
+           $user_referral_query="INSERT INTO user_points (user_master_id,total_points,points_to_claim,status,created_at,created_by) VALUES ('$user_master_id','$get_point','$get_point','Active',NOW(),'$user_master_id')";
          }else{
-           	$response = array("status" => "error");
+           $user_referral_query="UPDATE user_points SET total_points=total_points+'$get_point',points_to_claim=points_to_claim+'$get_point',updated_at=NOW(),updated_by='$user_master_id' WHERE user_master_id='$user_master_id'";
          }
-    }else{
-    
+         $excute_user=$this->db->query($user_referral_query);
+         if($excute_user){
+            $response = array("status" => "success");
+         }else{
+              $response = array("status" => "error");
+         }
+
+
+       }else{
+          $response = array("status" => "error");
+       }
+  }else{
+
+    $check_referral="SELECT * FROM login_users where referral_code='$referral_code'";
+    $re_referral=$this->db->query($check_referral);
+    if($re_referral->num_rows()!=0){
       $output = str_split($referral_code, 7);
       $referral_user_id=$output[1];
       $check="SELECT * FROM login_users WHERE id='$user_master_id'";
@@ -349,20 +350,24 @@ class Apicustomermodel extends CI_Model {
           }
           $excute_user=$this->db->query($user_referral_query);
           if($excute_user){
-            	$response = array("status" => "success");
+              $response = array("status" => "success");
           }else{
-             	$response = array("status" => "error");
+              $response = array("status" => "error");
           }
         }else{
-         	$response = array("status" => "error");
+          $response = array("status" => "error");
         }
-
+    }else{
+      $response = array("status" => "error");
     }
 
-       return $response;
 
   }
-  ############### Adding referral Code ##################################
+
+     return $response;
+
+}
+############### Adding referral Code ##################################
 
 
 //-------------------- Email Verify status -------------------//

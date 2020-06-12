@@ -1186,13 +1186,58 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
         $ser_rate_card=$rows->rate_card;
         $advance_amount=$rows->advance_amount;
         $phone=$contact_person_number;
-        $notes='Greetings from Skilex!.Your Order has been Booked.';
-        $this->smsmodel->send_sms($phone,$notes);
 
         if($advance_amount=='0.00'){
         $adva_status='NA';
+        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+        $user_result = $this->db->query($sQuery);
+              if($user_result->num_rows()>0)
+              {
+                  foreach ($user_result->result() as $rows)
+                  {
+                    $gcm_key=$rows->mobile_key;
+                    $mobile_type=$rows->mobile_type;
+                    $preferred_lang_id=$rows->preferred_lang_id;
+                    $head='Skilex';
+                    if($preferred_lang_id=='1'){
+                      $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                    }else{
+                        $message='Greetings from Skilex!.Your Order has been booked.';
+                    }
+                    $user_type='5';
+                    $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                  }
+
+                  $notes=$message;
+                  $phone=$phone;
+                  $this->smsmodel->send_sms($phone,$notes);
+              }
         }else{
           $adva_status='N';
+          $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+          $user_result = $this->db->query($sQuery);
+                if($user_result->num_rows()>0)
+                {
+                    foreach ($user_result->result() as $rows)
+                    {
+                      $gcm_key=$rows->mobile_key;
+                      $mobile_type=$rows->mobile_type;
+                      $preferred_lang_id=$rows->preferred_lang_id;
+                      $head='Skilex';
+                      if($preferred_lang_id=='1'){
+                        $message='உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                      }else{
+                        $message='Skilex!.Once the advance payment has been received your order will booked.';
+                      }
+                      $user_type='5';
+                      $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                    }
+
+                    $notes=$message;
+                    $phone=$phone;
+                    $this->smsmodel->send_sms($phone,$notes);
+                }
+
         }
 
         $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,order_notes,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$order_notes','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
@@ -1231,15 +1276,58 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
            $advance_amount=$rows->advance_amount;
 
            $phone=$contact_person_number;
-           $notes='Greetings from Skilex!. Your Order has been Booked.';
-           $this->smsmodel->send_sms($phone,$notes);
+           if($advance_amount=='0.00'){
+           $adva_status='NA';
+           $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+           $user_result = $this->db->query($sQuery);
+                 if($user_result->num_rows()>0)
+                 {
+                     foreach ($user_result->result() as $rows)
+                     {
+                       $gcm_key=$rows->mobile_key;
+                       $mobile_type=$rows->mobile_type;
+                       $preferred_lang_id=$rows->preferred_lang_id;
+                       $head='Skilex';
+                       if($preferred_lang_id=='1'){
+                         $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                       }else{
+                           $message='Greetings from Skilex!.Your Order has been booked.';
+                       }
+                       $user_type='5';
+                       $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                     }
 
+                     $notes=$message;
+                     $phone=$phone;
+                     $this->smsmodel->send_sms($phone,$notes);
+                 }
+           }else{
+             $adva_status='N';
+             $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+             $user_result = $this->db->query($sQuery);
+                   if($user_result->num_rows()>0)
+                   {
+                       foreach ($user_result->result() as $rows)
+                       {
+                         $gcm_key=$rows->mobile_key;
+                         $mobile_type=$rows->mobile_type;
+                         $preferred_lang_id=$rows->preferred_lang_id;
+                         $head='Skilex';
+                         if($preferred_lang_id=='1'){
+                           $message='உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                         }else{
+                           $message='Skilex!.Once the advance payment has been received your order will booked.';
+                         }
+                         $user_type='5';
+                         $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                       }
 
-          if($advance_amount=='0.00'){
-            $adva_status='NA';
-          }else{
-              $adva_status='N';
-          }
+                       $notes=$message;
+                       $phone=$phone;
+                       $this->smsmodel->send_sms($phone,$notes);
+                   }
+
+           }
 
             $insert_service="INSERT INTO service_orders(customer_id,contact_person_name,contact_person_number,main_cat_id,sub_cat_id,service_id,order_date,order_timeslot,service_latlon,service_location,service_address,advance_amount_paid,advance_payment_status,service_rate_card,status,created_at,created_by) VALUES('$user_master_id','$contact_person_name','$contact_person_number','$f_cat_id','$f_sub_cat_id','$last_ser_id','$serv_date','$order_timeslot','$service_latlon','$service_location','$service_address','$advance_amount','$adva_status','$ser_rate_card','Pending',NOW(),'$user_master_id')";
              $res_service = $this->db->query($insert_service);

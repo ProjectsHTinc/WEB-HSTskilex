@@ -2525,20 +2525,32 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
 
         function cancel_service_order($user_master_id,$service_order_id,$cancel_id,$comments){
-          $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='".$user_master_id."'";
-           $user_result = $this->db->query($sQuery);
-           if($user_result->num_rows()>0)
-           {
-               foreach ($user_result->result() as $rows)
-               {
-                 $gcm_key=$rows->mobile_key;
-                 $mobile_type=$rows->mobile_type;
-                 $head='Skilex';
-                 $message="Your service order is cancelled.";
-                 $user_type='5';
-                 $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+
+           $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
+         $user_result = $this->db->query($sQuery);
+         if($user_result->num_rows()>0)
+         {
+             foreach ($user_result->result() as $rows)
+             {
+               $gcm_key=$rows->mobile_key;
+               $mobile_type=$rows->mobile_type;
+               $preferred_lang_id=$rows->preferred_lang_id;
+               $head='Skilex';
+               if($preferred_lang_id=='1'){
+               	$message="நன்றி உங்கள் ஆர்டர் ரத்து செய்யப்பட்டது";
+               }else{
+                 $message="Thank you.Your order has been Cancelled";
                }
-           }
+
+               $user_type='5';
+               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+             }
+
+             $notes=$message;
+             $phone=$contact_person_number;
+             $this->smsmodel->send_sms($phone,$notes);
+         }
+
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
             $res_offer = $this->db->query($select);
             if($res_offer->num_rows()==0){
@@ -2551,7 +2563,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
               $Phoneno=$rows_service->phone_no;
               $notes="Thank you.Your order has been Cancelled";
               $phone=$Phoneno;
-              $this->smsmodel->send_sms($phone,$notes);
+              // $this->smsmodel->send_sms($phone,$notes);
               if($serv_prov_id=='0'){
 
               }else{

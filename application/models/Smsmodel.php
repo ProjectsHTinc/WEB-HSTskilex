@@ -17,7 +17,7 @@ Class Smsmodel extends CI_Model
   $uni_code=utf8_encode($notes);
   $msg=urlencode($uni_code);
   // $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
-  $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Promo&DCS=0&flashsms=0&number=$phone&text=$msg";
+  $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Promo&DCS=0&flashsms=0&number=$phone&text=$msg&route=5";
   $curl = curl_init();
       curl_setopt_array($curl, array(
       // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",

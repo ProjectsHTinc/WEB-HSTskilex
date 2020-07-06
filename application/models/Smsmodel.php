@@ -54,7 +54,7 @@ Class Smsmodel extends CI_Model
       $senderId = "SKILEX";
 
       //Your message to send, Add URL encoding here.
-      $message = urlencode($smsContent);
+      $message = urlencode($msg);
 
       //Define route
       $route = "transactional";
@@ -63,7 +63,7 @@ Class Smsmodel extends CI_Model
       $postData = array(
           'authkey'=> $authKey,
           'mobiles'=> $mobileNumber,
-          'message'=> $msg,
+          'message'=> $message,
           'sender'=> $senderId,
           'route'=> $route
       );

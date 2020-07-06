@@ -16,33 +16,88 @@ Class Smsmodel extends CI_Model
 
   $uni_code=utf8_encode($notes);
   $msg=urlencode($uni_code);
-  $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
-  // $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=$phone&text=$msg&route=05";
-  $curl = curl_init();
-      curl_setopt_array($curl, array(
-      // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
-      CURLOPT_URL => $url,
+  // $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
+  // // $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=$phone&text=$msg&route=05";
+  // $curl = curl_init();
+  //     curl_setopt_array($curl, array(
+  //     // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
+  //     CURLOPT_URL => $url,
+  //
+  //     CURLOPT_RETURNTRANSFER => true,
+  //     CURLOPT_ENCODING => "",
+  //     CURLOPT_MAXREDIRS => 10,
+  //     CURLOPT_TIMEOUT => 30,
+  //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  //     CURLOPT_CUSTOMREQUEST => "GET",
+  //     CURLOPT_SSL_VERIFYHOST => 0,
+  //     CURLOPT_SSL_VERIFYPEER => 0,
+  //   ));
+  //
+  //   $response = curl_exec($curl);
+  //   $err = curl_error($curl);
+  //
+  //   curl_close($curl);
+  //
+  //   if ($err) {
+  //     echo "cURL Error #:" . $err;
+  //   } else {
+  //
+  //   }
 
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_SSL_VERIFYHOST => 0,
-      CURLOPT_SSL_VERIFYPEER => 0,
-    ));
+  //Your authentication key
+      $authKey = "308533AMShxOBgKSt75df73187";
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+      //Multiple mobiles numbers separated by comma
+      $mobileNumber = "$to_phone";
 
-    curl_close($curl);
+      //Sender ID,While using route4 sender id should be 6 characters long.
+      $senderId = "SKILEX";
 
-    if ($err) {
-      echo "cURL Error #:" . $err;
-    } else {
-      // echo $response;
-    }
+      //Your message to send, Add URL encoding here.
+      $message = urlencode($smsContent);
+
+      //Define route
+      $route = "transactional";
+
+      //Prepare you post parameters
+      $postData = array(
+          'authkey'=> $authKey,
+          'mobiles'=> $phone,
+          'message'=> $msg,
+          'sender'=> $senderId,
+          'route'=> $route
+      );
+
+      //API URL
+      $url="https://control.msg91.com/api/sendhttp.php";
+
+      // init the resource
+      $ch = curl_init();
+      curl_setopt_array($ch, array(
+          CURLOPT_URL => $url,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_POST => true,
+          CURLOPT_POSTFIELDS => $postData
+          //,CURLOPT_FOLLOWLOCATION => true
+      ));
+
+
+
+      //Ignore SSL certificate verification
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+      //get response
+      $output = curl_exec($ch);
+
+      //Print error if any
+      if(curl_errno($ch))
+      {
+          echo 'error:' . curl_error($ch);
+      }
+
+      curl_close($ch);
 
 
 

@@ -54,7 +54,7 @@ Class Smsmodel extends CI_Model
       $senderId = "SKILEX";
 
       //Your message to send, Add URL encoding here.
-      $message = urlencode($msg);
+      $message = urlencode($notes);
 
       //Define route
       $route = "transactional";

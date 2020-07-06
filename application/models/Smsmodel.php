@@ -48,7 +48,7 @@ Class Smsmodel extends CI_Model
       $authKey = "308533AMShxOBgKSt75df73187";
 
       //Multiple mobiles numbers separated by comma
-      $mobileNumber = "$to_phone";
+      $mobileNumber = "$phone";
 
       //Sender ID,While using route4 sender id should be 6 characters long.
       $senderId = "SKILEX";
@@ -62,7 +62,7 @@ Class Smsmodel extends CI_Model
       //Prepare you post parameters
       $postData = array(
           'authkey'=> $authKey,
-          'mobiles'=> $phone,
+          'mobiles'=> $mobileNumber,
           'message'=> $msg,
           'sender'=> $senderId,
           'route'=> $route

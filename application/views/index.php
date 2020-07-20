@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/responsive.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr-2-8-3-min.js"></script>
-
+<!-- Global site tag (gtag.js) - Google Ads: 627435499 --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-627435499"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-627435499'); </script>
 </head>
 
 <body data-spy="scroll" data-target=".mainmenu-area" data-offset="50">

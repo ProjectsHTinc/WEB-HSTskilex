@@ -33,6 +33,12 @@
 th{
   text-transform: capitalize;
 }
+@media only screen
+and (min-width : 1824px) {
+ .navbar.horizontal-layout .nav-bottom .page-navigation > .nav-item:not(.mega-menu) .submenu ul{
+      top:0px;
+  }
+}
 </style>
 
 </head>
@@ -45,9 +51,7 @@ th{
       <div class="container d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top">
           <a class="navbar-brand brand-logo" href="<?php echo base_url(); ?>dashboard"><img src="<?php echo base_url(); ?>assets/logo.png" alt="logo" style="width:100%;"/></a>
-
         </div>
-
       </div>
       <div class="nav-bottom">
         <div class="container">
@@ -102,11 +106,11 @@ th{
                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Commando list </a></li>
                        </ul>
                      </div>
-					<div class="col-group col-md-2">
+					                <div class="col-group col-md-2">
                        <p class="category-heading">Extras</p>
                        <ul class="submenu-item">
                          <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/send_sms">Send SMS </a></li>
-						 <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/distance_rates">Distance Rates </a></li>
+						             <li class="nav-item"><a class="nav-link" href="<?php echo base_url();  ?>masters/distance_rates">Distance Rates </a></li>
                        </ul>
                      </div>
                 </div>
@@ -156,8 +160,8 @@ th{
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_and_to_date_transactions">From & To date </a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/provider_based_transaction">Commando transactions</a></li>
                   <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/online_payment_history">Online Payment History</a></li>
-				  <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_to_date_tax">Date wise Tax Details</a></li>
-                </li>
+				          <li class="nav-item"><a class="nav-link" href="<?php echo base_url(); ?>transaction/from_date_to_date_tax">Date wise Tax Details</a></li>
+
 
 
                 </ul>

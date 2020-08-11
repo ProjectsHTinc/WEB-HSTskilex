@@ -14,35 +14,70 @@ Class Smsmodel extends CI_Model
  function send_sms($phone,$notes)
  {
 
-  $uni_code=utf8_encode($notes);
+
+ $uni_code=utf8_encode($notes);
   $msg=urlencode($uni_code);
-  $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
-  // $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=$phone&text=$msg&route=05";
-  $curl = curl_init();
-      curl_setopt_array($curl, array(
-      // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
-      CURLOPT_URL => $url,
+  // $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
+  //$url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=$phone&text=$msg&route=05";
+ $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=05";
 
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_SSL_VERIFYHOST => 0,
-      CURLOPT_SSL_VERIFYPEER => 0,
-    ));
+ $curl = curl_init();
+     curl_setopt_array($curl, array(
+     // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
+     CURLOPT_URL => $url,
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+     CURLOPT_RETURNTRANSFER => true,
+     CURLOPT_ENCODING => "",
+     CURLOPT_MAXREDIRS => 10,
+     CURLOPT_TIMEOUT => 30,
+     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+     CURLOPT_CUSTOMREQUEST => "GET",
+     CURLOPT_SSL_VERIFYHOST => 0,
+     CURLOPT_SSL_VERIFYPEER => 0,
+   ));
 
-    curl_close($curl);
+   $response = curl_exec($curl);
+   $err = curl_error($curl);
 
-    if ($err) {
-      echo "cURL Error #:" . $err;
-    } else {
+   curl_close($curl);
 
-    }
+   if ($err) {
+     echo "cURL Error #:" . $err;
+   } else {
+     // echo $response;
+   }
+
+
+
+  // $uni_code=utf8_encode($notes);
+  // $msg=urlencode($uni_code);
+  // $url="https://sms.zestwings.com/smpp.sms?username=Virtual01&password=371675&to=91$phone&from=Update&text=$msg";
+  // // $url="http://www.vstcbe.com/api/mt/SendSMS?user=skilex&password=skilex123&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=$phone&text=$msg&route=05";
+  // $curl = curl_init();
+  //     curl_setopt_array($curl, array(
+  //     // CURLOPT_URL => "https://api.msg91.com/api/sendhttp.php?mobiles=$phone&authkey=301243AX0Pp4EOQCn5db82c4f&route=4&sender=SKILEX&message=$notes&country=91",
+  //     CURLOPT_URL => $url,
+  //
+  //     CURLOPT_RETURNTRANSFER => true,
+  //     CURLOPT_ENCODING => "",
+  //     CURLOPT_MAXREDIRS => 10,
+  //     CURLOPT_TIMEOUT => 30,
+  //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  //     CURLOPT_CUSTOMREQUEST => "GET",
+  //     CURLOPT_SSL_VERIFYHOST => 0,
+  //     CURLOPT_SSL_VERIFYPEER => 0,
+  //   ));
+  //
+  //   $response = curl_exec($curl);
+  //   $err = curl_error($curl);
+  //
+  //   curl_close($curl);
+  //
+  //   if ($err) {
+  //     echo "cURL Error #:" . $err;
+  //   } else {
+  //
+  //   }
 
   //Your authentication key
       // $authKey = "308533AMShxOBgKSt75df73187";

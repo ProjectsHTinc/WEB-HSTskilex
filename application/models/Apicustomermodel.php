@@ -3334,17 +3334,28 @@ function proceed_for_payment($user_master_id,$service_order_id){
                       $insert_service_history="INSERT INTO service_order_history (serv_prov_id,service_order_id,status,created_at) VALUES('$first_provider','$service_order_id','Requested',NOW())";
                       $exc=$this->db->query($insert_service_history);
 
-                      $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$first_provider'";
+                      // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$first_provider'";
+                      $sQuery      = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$first_provider'";
+
                          $user_result = $this->db->query($sQuery);
                          if ($user_result->num_rows() > 0) {
                              foreach ($user_result->result() as $rows) {
                                $gcm_key=$rows->mobile_key;
                                $mobile_type=$rows->mobile_type;
+                               $preferred_lang_id=$rows->preferred_lang_id;
                                $head='Skilex';
-                               $message="You have received order from customer.";
+                               if($preferred_lang_id=='1'){
+                                 $message="You have received order from customer.";
+                                }else{
+                                 $message="You have received order from customer.";
+                               }
+
                                $user_type='3';
                                $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                              }
+                             $notes=$message;
+                             $phone=$rows->phone_no;
+                             $this->smsmodel->send_sms($phone,$notes);
                          }
 
                    }else{
@@ -3393,17 +3404,27 @@ function proceed_for_payment($user_master_id,$service_order_id){
                    $insert_service_history="INSERT INTO service_order_history (serv_prov_id,service_order_id,status,created_at) VALUES('$selected_provider','$service_order_id','Requested',NOW())";
                    $exc=$this->db->query($insert_service_history);
 
-                 $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                 // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                      $sQuery      = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$selected_provider'";
                     $user_result = $this->db->query($sQuery);
                     if ($user_result->num_rows() > 0) {
                         foreach ($user_result->result() as $rows) {
                           $gcm_key=$rows->mobile_key;
                           $mobile_type=$rows->mobile_type;
+                          $preferred_lang_id=$rows->preferred_lang_id;
                           $head='Skilex';
-                          $message="You have received order from customer.";
+                          if($preferred_lang_id=='1'){
+                            $message="You have received order from customer.";
+                           }else{
+                            $message="You have received order from customer.";
+                          }
                           $user_type='3';
                           $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                         }
+                        $notes=$message;
+                        $phone=$rows->phone_no;
+                        $this->smsmodel->send_sms($phone,$notes);
+
                     }
 
                  }else{
@@ -3438,6 +3459,13 @@ function proceed_for_payment($user_master_id,$service_order_id){
       }
     }
 
+
+     function check_sms(){
+
+      $notes="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+      $phone='9789108819';
+      $this->smsmodel->send_sms($phone,$notes);
+    }
 
 
     function db_data_updating(){

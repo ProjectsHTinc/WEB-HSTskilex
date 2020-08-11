@@ -33,6 +33,9 @@
 th{
   text-transform: capitalize;
 }
+.navbar.horizontal-layout .nav-bottom .page-navigation > .nav-item:not(.mega-menu) .submenu ul{
+     top:0px;
+ }
 @media only screen
 and (min-width : 1824px) {
  .navbar.horizontal-layout .nav-bottom .page-navigation > .nav-item:not(.mega-menu) .submenu ul{

@@ -2046,6 +2046,15 @@ class Apicustomer extends CI_Controller {
 
 	}
 
+	public function check_sms()
+	{
+		$data=$this->apicustomermodel->check_sms();
+
+	}
+
+
+	
+
 //-----------------------------------------------//
 
 

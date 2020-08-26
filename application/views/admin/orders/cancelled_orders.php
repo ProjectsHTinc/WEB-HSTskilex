@@ -37,7 +37,7 @@ th{
               <th>Contact Person / Number</th>
               <th>Order date / Timeslot</th>
               <th>Service Amount</th>
-              <th>Advance Amount/ status</th>
+              <!-- <th>Advance Amount/ status</th> -->
               <th>Status</th>
               <th>Actions</th>
           </tr>
@@ -56,7 +56,7 @@ th{
                   <?php  echo date("g:i ", strtotime($rows->from_time)); ?> - <?php    echo date("g:i", strtotime($rows->to_time));?>
                  </td>
                   <td class="amt"><?php echo $rows->service_rate_card; ?></td>
-                  <td class="amt"><?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo $rows->advance_amount_paid;echo "<br>"; echo " Unpaid"; }else{ echo $rows->advance_amount_paid;echo "<br>"; echo " Paid";} ?>   </td>
+                  <!-- <td class="amt"><?php if($rows->advance_payment_status=='NA'){ echo "Not Available";}else if($rows->advance_payment_status=='N'){ echo $rows->advance_amount_paid;echo "<br>"; echo " Unpaid"; }else{ echo $rows->advance_amount_paid;echo "<br>"; echo " Paid";} ?>   </td> -->
           <td>
                   <?php if($rows->status=='Ongoing'){
                     $btn_color="btn-info";

@@ -3456,7 +3456,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
         $excute=$this->db->query($insert);
           // $this->automatic_provider_allocation();
-      }
+      // }
     }
 
 

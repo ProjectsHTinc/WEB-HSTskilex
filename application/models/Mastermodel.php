@@ -312,8 +312,13 @@ Class Mastermodel extends CI_Model
       // if($result->num_rows()==0){
       $get_cat_postion="SELECT * FROM sub_category where main_cat_id='$main_cat_id' order by id desc limit 1";
       $result_cat_postion=$this->db->query($get_cat_postion);
-      foreach($result_cat_postion->result() as $rows_cat_position){}
-      $sub_cat_postion=$rows_cat_position->sub_cat_position+1;
+      if(empty($result_cat_postion->result())){
+        $sub_cat_postion=1;
+      }else{
+        foreach($result_cat_postion->result() as $rows_cat_position){}
+        $sub_cat_postion=$rows_cat_position->sub_cat_position+1;
+      }
+
 
 
               $insert="INSERT INTO sub_category(main_cat_id,sub_cat_name,sub_cat_ta_name,status,sub_cat_position,sub_cat_pic,created_at,created_by) VALUES('$main_cat_id','$sub_cat_name','$sub_cat_ta_name','$status','$sub_cat_postion','$cat_pic',NOW(),'$user_id')";

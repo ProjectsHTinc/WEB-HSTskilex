@@ -9,7 +9,7 @@
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category </a></li>
-              <li class="breadcrumb-item"><a href="javascript:window.history.go(-1);">Sub Category</a></li>
+              <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Services</span></li>
             </ol>
           </nav>

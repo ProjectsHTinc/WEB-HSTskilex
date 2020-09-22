@@ -8,7 +8,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="#">Category</a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Sub Category</span></li>
             </ol>
           </nav>

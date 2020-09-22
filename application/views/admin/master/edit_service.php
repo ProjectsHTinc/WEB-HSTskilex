@@ -7,7 +7,7 @@
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category </a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_sub_category/<?php echo $this->uri->segment(4); ?>">Sub category </a></li>
+              <li class="breadcrumb-item"><a href="#">Sub category </a></li>
               <li class="breadcrumb-item active" aria-current="page"><span>Update Service</span></li>
             </ol>
           </nav>

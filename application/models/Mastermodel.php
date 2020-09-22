@@ -432,7 +432,7 @@ Class Mastermodel extends CI_Model
           $get_cat_postion="SELECT * FROM services  where sub_cat_id='$sub_cat_id' order by id desc limit 1";
 
           $result_cat_postion=$this->db->query($get_cat_postion);
-          if(empty($result_cat_postion)){
+          if(empty($result_cat_postion->result())){
             $service_postion=1;
           }else{
             foreach($result_cat_postion->result() as $rows_cat_position){}

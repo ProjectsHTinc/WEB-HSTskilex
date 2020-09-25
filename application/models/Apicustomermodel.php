@@ -1173,7 +1173,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
     $result_no=$res->num_rows();
 
     // Single Service Select
-
+    
     if($result_no==1){
       $result=$res->result();
       foreach($result as $rows){}

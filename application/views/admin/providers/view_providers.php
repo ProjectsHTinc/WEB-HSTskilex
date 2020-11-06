@@ -84,7 +84,7 @@
 
 
             <tr>
-                  <td><?php echo $i; ?> - &nbsp; <?php  echo $rows->id; ?></td>
+                  <td><?php  echo $rows->id; ?></td>
                 <td><?php echo $rows->owner_full_name; ?></td>
                 <td><?php if($rows->online_status=='Online'){ ?>
                   <button type="button" class="badge badge-success ">Online</button>

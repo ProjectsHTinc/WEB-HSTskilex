@@ -23,6 +23,7 @@
                             </div>
                           </div>
                           <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+						  <?php if (count($res) > 0) { ?>
                             <div class="table-responsive">
                                 <table class="table-bordered" style="font-size:13px;" >
                                   <thead>
@@ -63,11 +64,16 @@
                                   </tbody>
                                 </table>
                               </div>
+							  <?php } else { ?>
+							  Sorry!.. No datas found!..
+							   <?php } ?>
                           </div>
                       </div>
-                      <div class="" style="    margin-top: -50px;    margin-bottom: 20px;    color: #fff;">
+					  <?php if (count($res) > 0) { ?>
+                      <div class="" style="margin-top: -50px;    margin-bottom: 20px;    color: #fff;">
                         <a target="_blank" onclick="printDiv('printableArea')" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>Print</a>
                       </div>
+					  <?php } ?>
                   </div>
               </div>
           </div>
@@ -81,11 +87,8 @@
 function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
-
      document.body.innerHTML = printContents;
-
      window.print();
-
      document.body.innerHTML = originalContents;
 }
 </script>

@@ -320,17 +320,18 @@ Class Loginmodel extends CI_Model
        }
 
        function get_all_provider_search_list($category_id,$type){
-        // $string = implode(', ',$category_id);
-        $string = $category_id;
+       $string = implode(', ',$category_id);
+
+       // $string = $category_id;
         if($type=='All'){
-          $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
+           $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
            from login_users as lu
            left join service_provider_details as spd on spd.user_master_id=lu.id
            left join vendor_status as vs on vs.serv_pro_id=lu.id
            left join serv_prov_pers_skills as spps on spps.user_master_id=lu.id
            where lu.user_type=3 and spd.serv_prov_verify_status='Approved' and spps.main_cat_id IN ($string) GROUP BY lu.id  ORDER BY lu.id DESC";
         }else{
-          $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
+           $query="SELECT lu.id,lu.status,spd.owner_full_name,vs.online_status,spd.company_status,lu.updated_at
            from login_users as lu
            left join service_provider_details as spd on spd.user_master_id=lu.id
            left join vendor_status as vs on vs.serv_pro_id=lu.id

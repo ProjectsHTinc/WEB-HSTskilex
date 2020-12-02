@@ -13,7 +13,8 @@
   display: none;
 }
 </style>
-
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendors/css/vendor.bundle.addons.css">
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
 
@@ -29,17 +30,24 @@
               <h4 class="card-title">View Commandos list</h4>
               <div class="row">
                   <div class="col-md-12">
-                <form action="<?php echo base_url(); ?>home/search_provider" method="post" class="form-inline">
+				  <form action="<?php echo base_url();  ?>home/search_provider" method="post" id="trans_form" name="trans_form" class="form-inline" onsubmit = "return srh_frm();">
+				  
+					
                     <div class="col-md-4">
                         <label class="formlabel">Category list</label>
-
-                        <select id="lstFruits" class="form-control" name="category_id" required>
+						<select class="js-example-basic-multiple select2-hidden-accessible" multiple="" id='category_id' name="category_id[]" style="width:100%" tabindex="-1" aria-hidden="true">
+                           <?php foreach($res_category as $rows_cat){ ?>
+                            <option value="<?php echo $rows_cat->id; ?>"><?php echo $rows_cat->main_cat_name; ?></option>
+                          <?php } ?>
+                        </select>
+						<script>$('#category_id').val('<?php echo $category_id; ?>');</script>
+                        <!--<select id="lstFruits" class="form-control" name="category_id" required>
                           <option value="">--Select--</option>
                           <?php foreach($res_category as $rows_cat){ ?>
                             <option value="<?php echo $rows_cat->id; ?>"><?php echo $rows_cat->main_cat_name; ?></option>
                           <?php } ?>
                         </select>
-                        <script>$('#lstFruits').val('<?php echo $category_id; ?>');</script>
+                        <script>$('#lstFruits').val('<?php echo $category_id; ?>');</script>-->
 
                     </div>
                     <div class="col-md-2">
@@ -53,7 +61,8 @@
                     </div>
                     <div class="col-md-2">
                         <label class="formlabel"></label><br>
-                        <input type="submit" class="btn btn-primary" value="Search">
+						<input type = "submit" value = "Search" class="btn btn-primary" />
+                       
                     </div>
 
                     <div class="col-md-2">
@@ -63,13 +72,13 @@
                 </form>
               </div>
               </div>
+			  <hr>
               <div class="row">
                   <div class="col-md-12">
                 <table id="example" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>S.no <br>
-                User ID</th>
+                <th>User ID</th>
                 <th>Name</th>
                 <th>Online status</th>
                 <th>Login status</th>
@@ -123,9 +132,20 @@
       </div>
 
     </div>
-    <script type="text/javascript">
+	
+	<script src="<?php echo base_url(); ?>assets/admin/vendors/js/vendor.bundle.base.js"></script>
+	<script src="<?php echo base_url(); ?>assets/admin//vendors/js/vendor.bundle.addons.js"></script>
+	<script src="<?php echo base_url(); ?>assets/admin/js/select2.js"></script>
 
 
-
-
-    </script>
+<script>
+function srh_frm() {
+         if( document.trans_form.category_id.value == "" ) {
+            alert( "Please Select Category!" );
+            document.trans_form.category_id.focus() ;
+            return false;
+         }
+         
+         return true;
+      }
+</script>

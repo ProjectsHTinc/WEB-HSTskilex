@@ -2027,7 +2027,6 @@ class Apicustomer extends CI_Controller {
 	//
 	public function get_distance_rate()
 	{
-
 		$_POST = json_decode(file_get_contents("php://input"), TRUE);
 		$service_order_id  = $this->input->post("service_order_id");
 		$data['result']=$this->apicustomermodel->get_distance_rate($service_order_id);
@@ -2051,9 +2050,110 @@ class Apicustomer extends CI_Controller {
 		$data=$this->apicustomermodel->check_sms();
 
 	}
+//-----------------------------------------------//
 
 
-	
+
+//-----------------------------------------------//
+
+ 	public function customer_address_add()
+	{
+ 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+ 		{
+ 			return FALSE;
+ 		}
+
+ 		if($_POST == FALSE)
+ 		{
+			$res = array();
+			$res["opn"] = "Input";
+ 			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+ 			echo json_encode($res);
+			return;
+ 		}
+
+ 		$cust_id  = $this->input->post("cust_id");
+		$contact_name  = $this->input->post("contact_name");
+		$contact_no  = $this->input->post("contact_no");
+		$serv_lat_lon  = $this->input->post("serv_lat_lon");
+		$serv_loc  = $this->input->post("serv_loc");
+		$serv_address  = $this->input->post("serv_address");
+
+ 		$data['result']=$this->apicustomermodel->customer_address_add($cust_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
+ 		$response = $data['result'];
+ 		echo json_encode($response);
+ 	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+ 	public function customer_address_list()
+	{
+ 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+ 		{
+ 			return FALSE;
+ 		}
+
+ 		if($_POST == FALSE)
+ 		{
+			$res = array();
+			$res["opn"] = "Input";
+ 			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+ 			echo json_encode($res);
+			return;
+ 		}
+
+ 		$cust_id  = $this->input->post("cust_id");
+
+ 		$data['result']=$this->apicustomermodel->customer_address_list($cust_id);
+ 		$response = $data['result'];
+ 		echo json_encode($response);
+ 	}
+
+//-----------------------------------------------//
+
+//-----------------------------------------------//
+
+ 	public function customer_address_edit()
+	{
+ 	   $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+		if(!$this->checkMethod())
+ 		{
+ 			return FALSE;
+ 		}
+
+ 		if($_POST == FALSE)
+ 		{
+			$res = array();
+			$res["opn"] = "Input";
+ 			$res["scode"] = 204;
+			$res["message"] = "Input error";
+
+ 			echo json_encode($res);
+			return;
+ 		}
+
+ 		$address_id  = $this->input->post("address_id");
+		$contact_name  = $this->input->post("contact_name");
+		$contact_no  = $this->input->post("contact_no");
+		$serv_lat_lon  = $this->input->post("serv_lat_lon");
+		$serv_loc  = $this->input->post("serv_loc");
+		$serv_address  = $this->input->post("serv_address");
+
+ 		$data['result']=$this->apicustomermodel->customer_address_edit($address_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
+ 		$response = $data['result'];
+ 		echo json_encode($response);
+ 	}
 
 //-----------------------------------------------//
 

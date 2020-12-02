@@ -3444,6 +3444,53 @@ function proceed_for_payment($user_master_id,$service_order_id){
     //   $excute=$this->db->query($update);
     // }
     // }
+	
+	
+############### Customer address add ###############
+  function customer_address_add($cust_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address){
+	
+	$sql = "SELECT * FROM customer_address WHERE customer_id ='".$cust_id."'";
+	$address_result = $this->db->query($sql);
+	if($address_result->num_rows()<2) {
+		$insert_sql = "INSERT INTO customer_address (customer_id, contact_name, contact_no, serv_lat_lon, serv_loc, serv_address, created_at) VALUES 
+		('".$cust_id."','".$contact_name."','".$contact_no."','".$serv_lat_lon."','".$serv_loc."','".$serv_address."',NOW())";
+		$insert_result = $this->db->query($insert_sql);
+		
+		$response=array("status"=>"success","msg_en"=>"Address Added successfully","msg_ta"=>"Address Added successfully");
+    }else{
+		$response = array("status" => "error","msg_en"=>"Already added!","msg_ta"=>"Already added");
+    }
+      return $response;
+  }
+############### Customer address end ###############
+
+
+############### Customer address list ###############
+  function customer_address_list($cust_id){
+	
+	$sql = "SELECT * FROM customer_address WHERE customer_id ='".$cust_id."'";
+	$address_result = $this->db->query($sql);
+	$ress = $address_result->result();
+	if($address_result->num_rows()>0) {
+		$response=array("status"=>"success","address_list"=>$ress);
+    }else{
+		$response = array("status" => "error","msg_en"=>"Address Not found!","msg_ta"=>"Address Not found!");
+    }
+      return $response;
+  }
+############### Customer address end ###############
+
+
+############### Customer address edit ###############
+  function customer_address_edit($address_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address){
+	
+	$update="UPDATE customer_address SET contact_name='$contact_name',contact_no='$contact_no',serv_lat_lon='$serv_lat_lon',serv_loc='$serv_loc',serv_address='$serv_address', updated_at=NOW() WHERE id='$address_id'";
+	$excute=$this->db->query($update);
+
+	$response=array("status"=>"success","msg_en"=>"Address Updated successfully","msg_ta"=>"Address Updated successfully");
+    return $response;
+  }
+############### Customer address end ###############
 
 }
 

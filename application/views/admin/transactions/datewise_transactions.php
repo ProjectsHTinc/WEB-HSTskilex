@@ -32,24 +32,25 @@ table.dataTable thead th, table.dataTable thead td{
                   <?php } ?>
                       <div class="card-body"  >
                           <h4 class="card-title">Date between Transactions</h4>
-                          <form action="<?php echo base_url();  ?>transaction/from_date_to_date" method="post" id="">
+                          <form action="<?php echo base_url();  ?>transaction/from_date_to_date" method="post" id="trans_form" name="trans_form" onsubmit = "return isDateCompare();">
                             <div class="col-md-12">
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">From date :</label>
                                 <div class="col-sm-3">
-                                      <input type="text" name="from_date" class="form-control selector" value="" id="datepicker" autocomplete="off">
+                                      <input type="text" name="from_date" class="form-control selector" value="" id="from_date" autocomplete="off">
 
                                   </div>
                                   <label class="col-sm-2 col-form-label">To date  :</label>
                                   <div class="col-sm-3">
-                                        <input type="text" name="to_date" class="form-control" value="" id="datepicker_1" autocomplete="off">
+                                        <input type="text" name="to_date" class="form-control" value="" id="to_date" autocomplete="off">
 
                                     </div>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="col-md-6 text-center">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+								<input type = "submit" value = "Submit" class="btn btn-primary" />
+                               
                               </div>
 
                             </div>
@@ -71,69 +72,48 @@ table.dataTable thead th, table.dataTable thead td{
       </div>
     </div>
 
-
-
-    <style>
-
-    </style>
     <script>
     $(function() {
-      // $("#datepicker").datepicker({maxDate: '0'});
-      // $( "#datepicker_1" ).datepicker({maxDate: '0'});
-
-      $( "#datepicker" ).datepicker({
-        format: 'dd-mm-yyyy',
-          endDate: '-0d',
-          autoclose: true
-
-         });
-         $( "#datepicker_1" ).datepicker({
-           format: 'dd-mm-yyyy',
-             endDate: '-0d',
-             autoclose: true
-
-            });
+		$( "#from_date" ).datepicker({
+			format: 'dd-mm-yyyy',
+			endDate: '-0d',
+			autoclose: true
+		});
+		$( "#to_date" ).datepicker({
+			format: 'dd-mm-yyyy',
+			endDate: '-0d',
+			autoclose: true
+		});
     });
 
+    function isDateCompare() {
+         if( document.trans_form.from_date.value == "" ) {
+            alert( "Please Select From date!" );
+            document.trans_form.from_date.focus() ;
+            return false;
+         }
+         if( document.trans_form.to_date.value == "" ) {
+            alert( "Please Select To date!" );
+            document.trans_form.to_date.focus() ;
+            return false;
+         }
+		 
+		var leadDate = document.trans_form.from_date.value;
+		var closeDate = document.trans_form.to_date.value;
 
+		var date1 = new Date();
+		date1.setFullYear(leadDate.substr(6,4),(leadDate.substr(3,2)-1),leadDate.substr(0,2));
 
+		var date2 = new Date();
+		date2.setFullYear(closeDate.substr(6,4),(closeDate.substr(3,2)-1),closeDate.substr(0,2));
 
-
-$('#doc_status_form').validate({
-rules: {
-
-      transaction_notes :{
-        required: true
+		if (date1> date2)
+		{
+			alert("To date cannot be less than Start date.");
+			document.trans_form.to_date.focus() ;
+			return false;
+		}
+         return true;
       }
-},
-messages: {
 
-    transaction_notes: {
-      required:"Please Enter Some notes"
-    }
-
-},
-submitHandler: function(form) {
-$.ajax({
-           url: "<?php echo base_url(); ?>transaction/update_trans_status",
-           type: 'POST',
-           data: $('#doc_status_form').serialize(),
-           dataType: "json",
-           success: function(response) {
-              var stats=response.status;
-               if (stats=="success") {
-              swal('Status Updated')
-               window.setTimeout(function(){location.reload()},1000)
-
-
-             }else{
-
-                   swal(stats)
-                 }
-           }
-       });
-     }
-});
-
-
-    </script>
+</script>

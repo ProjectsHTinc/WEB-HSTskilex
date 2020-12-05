@@ -65,13 +65,13 @@
                                 </table>
                               </div>
 							  <?php } else { ?>
-							  Sorry!.. No datas found!..
+									Sorry!.. No datas found!..
 							   <?php } ?>
                           </div>
                       </div>
 					  <?php if (count($res) > 0) { ?>
                       <div class="" style="margin-top: -50px;    margin-bottom: 20px;    color: #fff;">
-                        <a target="_blank" onclick="printDiv('printableArea')" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>Print</a>
+                        <a href="<?php echo base_url(); ?>export/generateXls/<?php echo $from_date; ?>/<?php echo $to_date; ?>" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-file-excel mr-1"></i>Export Data</a>
                       </div>
 					  <?php } ?>
                   </div>

@@ -6,8 +6,7 @@ class Transaction extends CI_Controller {
 			 parent::__construct();
 			    $this->load->helper('url');
 			    $this->load->library('session');
-				  $this->load->model('transactionmodel');
-
+				$this->load->model('transactionmodel');
 	 }
 
 
@@ -168,8 +167,6 @@ class Transaction extends CI_Controller {
 			 $data['res']=$this->transactionmodel->from_date_to_date_tax_details($from_date,$to_date);
 			 $data['from_date']=$from_date;
 			 $data['to_date']=$to_date;
-			 //print_r ($data);
-			// exit;
 			 $this->load->view('admin/admin_header');
 			 $this->load->view('admin/transactions/tax_invoice_list',$data);
 			 $this->load->view('admin/admin_footer');
@@ -177,6 +174,7 @@ class Transaction extends CI_Controller {
 				redirect('/login');
 		 }
 	  }
+
 
 	   public function from_date_to_date_tax_list(){
 		 $data=$this->session->userdata();
@@ -197,7 +195,5 @@ class Transaction extends CI_Controller {
 				redirect('/login');
 		 }
 	  }
-
-
 
 }

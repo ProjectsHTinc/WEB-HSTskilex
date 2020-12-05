@@ -39,7 +39,8 @@ class Export extends CI_Controller {
         // set Row
         $rowCount = 2;
 		$i = 1;
-        foreach ($listInfo as $list) {
+        
+		foreach ($listInfo as $list) {
 			$sdate = date('d-m-Y', strtotime($list->order_date));
             $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $i);
             $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $sdate);
@@ -57,6 +58,7 @@ class Export extends CI_Controller {
             $rowCount++;
 			$i++;
         }
+		
         $filename = "report_". date("Y-m-d-H-i-s").".xlsx";
         header('Content-Type: application/vnd.ms-excel'); 
         header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -64,7 +66,6 @@ class Export extends CI_Controller {
         //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');  
 		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output'); 
- 
     }
      
 }

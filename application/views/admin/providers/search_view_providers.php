@@ -53,10 +53,13 @@
                     <div class="col-md-2">
                         <label class="formlabel">Type</label>
                         <select name="type" id="type" class="form-control">
-                          <option value="All">All</option>
+                            <option value="All">All</option>
                             <option value="Company">Company</option>
                             <option value="Individual">Individual</option>
                         </select>
+						<?php if ($type!=""){ ?>
+							<script>$('#type').val('<?php echo $type; ?>');</script>
+						<?php } ?>
                     </div>
                     <div class="col-md-2">
                         <label class="formlabel"></label><br>

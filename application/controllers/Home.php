@@ -245,7 +245,7 @@ class Home extends CI_Controller {
 				$data['type']=$type;
 				$data['category_id']=$category_id;
 				$this->load->view('admin/admin_header');
-				$this->load->view('admin/providers/view_providers',$data);
+				$this->load->view('admin/providers/search_view_providers',$data);
 				$this->load->view('admin/admin_footer');
 			}else{
 				redirect('/');

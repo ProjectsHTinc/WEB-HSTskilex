@@ -445,26 +445,25 @@ function user_info($user_master_id){
 
      $query="SELECT * FROM feedback_response WHERE service_order_id='$service_order_id' and query_id='$feedback_id' and user_master_id='$user_master_id'";
      $res=$this->db->query($query);
-     if($res->num_rows()==0){
+     
+	 if($res->num_rows()==0){
        $insert="INSERT INTO feedback_response  (user_master_id,service_order_id,query_id,answer_text,status,created_at,created_by) VALUES ('$user_master_id','$service_order_id','$feedback_id','$feedback_text','Active',NOW(),'$user_master_id')";
        $result=$this->db->query($insert);
        if($result){
-         $response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
+			$response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
        }else{
-           $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
+			$response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
        }
      }else{
-       $update="UPDATE feedback_response SET answer_text='$feedback_text',created_at=NOW() WHERE service_order_id='$service_order_id' and query_id='$feedback_id' and and user_master_id='$user_master_id'";
+       $update="UPDATE feedback_response SET answer_text='$feedback_text',created_at=NOW() WHERE service_order_id='$service_order_id' and query_id='$feedback_id' and user_master_id='$user_master_id'";
        $result=$this->db->query($update);
        if($result){
-         $response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
+			$response=array("status"=>"success","msg"=>"Feedback added successfully","msg_en"=>"","msg_ta"=>"");
        }else{
            $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
        }
-           // $response = array("status" => "error", "msg" => "Something went wrong","msg_en"=>"Oops! Something went wrong!","msg_ta"=>"எதோ தவறு நடந்துள்ளது!");
      }
      return $response;
-
    }
    ############ Customer feedback answer ####################
 

@@ -288,7 +288,7 @@ Class Smsmodel extends CI_Model
         
         
          $passphrase = 'hs123';
-         $loction ='assets/notification/skilEx.pem';
+         $loction ='assets/notification/skilex.pem';
          $payload = '{
                "aps": {
                  "alert": {

@@ -174,8 +174,156 @@ From people who are capable</h2>
                     </div>
                 </div>
             </div>
-            <div class="row">
+			<div class="row">                
+                
+				<div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="0.3s" >
+                        <div class="box-icon">
+                            <img src="<?php echo base_url(); ?>assets/images/service_1.png">
+                        </div>
+                        <h3 class="title">Electrician</h3>
+                      <p class="ser_desc">Electrician near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+				<div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="0.5s" >
+                        <div class="box-icon">
+                          <img src="<?php echo base_url(); ?>assets/images/service_2.png">
+                        </div>
+                        <h3 class="title">Plumber</h3>
+                      <p class="ser_desc">Plumber near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_13.png">
+                        </div>
+                        <h3 class="title">Appliance Repair</h3>
+                      <p class="ser_desc">Appliance Service near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+				<div class="col-xs-12 col-md-3">
+                  <div class="service-box wow fadeInRight" data-wow-delay="0.3s" >
+                      <div class="box-icon">
+                          <img src="<?php echo base_url(); ?>assets/images/service_16.png">
+                      </div>
+                      <h3 class="title">Computer Service</h3>
+                   <p class="ser_desc">Computer Service near me for both Desktop and Laptop for Repairs/Installation/Services</p>
+                  </div>
+              </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_7.png">
+                        </div>
+                        <h3 class="title">AC Service</h3>
+                      <p class="ser_desc">AC service near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+				<div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_6.png">
+                        </div>
+                        <h3 class="title">Home Cleaning</h3>
+                      <p class="ser_desc">Home Cleaning Service near me for Basic Cleaning/Bathroom Cleaning/Deep Cleaning/Window Cleaning</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_22.png">
+                        </div>
+                        <h3 class="title">Commercial Cleaning</h3>
+                      <p class="ser_desc">Commercial Cleaning Service near me for Office Basic Cleaning/Bathroom Cleaning/Deep Cleaning/Window Cleaning</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_14.png">
+                        </div>
+                        <h3 class="title">Pest Control</h3>
+                      <p class="ser_desc">Pest Control Service near me – From Insects to Rodents</p>
+                    </div>
+                </div>
+                 <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_11.png">
+                        </div>
+                          <h3 class="title">UPS Service</h3>
+                      <p class="ser_desc">UPS Service near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_12.png">
+                        </div>
+                          <h3 class="title">Salon at Home</h3>
+                      <p class="ser_desc">Beauty Service near me from basic clean-up, facial, Bridal make up, Pedicure, manicure</p>
+                    </div>
+                </div>
+                 <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_20.png">
+                        </div>
+                        <h3 class="title">Personalised Fitness Tutor</h3>
+                      <p class="ser_desc">Online Yoga training near me / Home Yoga Training/ Fitness Training</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="0.7s" >
+                        <div class="box-icon">
+                            <img src="<?php echo base_url(); ?>assets/images/service_3.png">
+                        </div>
+                        <h3 class="title">Carpenter</h3>
+                      <p class="ser_desc">Carpenters near me for Repairs/Installation/Services</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_15.png">
+                        </div>
+                      <h3 class="title">Painter</h3>
+                      <p class="ser_desc">Painters near me for Interior and Exterior Painting Services</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                            <img src="<?php echo base_url(); ?>assets/images/service_8.png">
+                        </div>
+                        <h3 class="title">Gardener</h3>
+                      <p class="ser_desc">Gardening Service near me for Garden Maintenance</p>
+                    </div>
+                </div>
 
+                <div class="col-xs-12 col-md-3">
+                    <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                        <div class="box-icon">
+                              <img src="<?php echo base_url(); ?>assets/images/service_17.png">
+                        </div>
+                        <h3 class="title">Home Tutor</h3>
+                      <p class="ser_desc">Private Home Tutors near me for Classes 1 to 12 all Board /Engineering Mathematics</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                      <div class="service-box wow fadeInRight" data-wow-delay="1.3s" >
+                          <div class="box-icon">
+                                <img src="<?php echo base_url(); ?>assets/images/service_18.png">
+                          </div>
+                            <h3 class="title">Physiotherapy</h3>
+                        <p class="ser_desc">Physiotherapist near me for Sports injuries to Surgical Rehabilitation</p>
+                      </div>
+                  </div>
+                
+            </div>
+            <!--<div class="row">
               <div class="col-xs-12 col-md-3">
                   <div class="service-box wow fadeInRight" data-wow-delay="0.3s" >
                       <div class="box-icon">
@@ -358,7 +506,7 @@ From people who are capable</h2>
                       <p class="ser_desc">Interior, exterior, puncture services,and maintenance</p>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </section>
     <!-- Service-area / -->

@@ -22,8 +22,10 @@
   <script src="<?php echo base_url(); ?>assets/admin/js/jquery.validate.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/additional-methods.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/swal.js"></script>
+
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/admin/css/datatable.css"/>
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/datatable.js"></script>
+  
   <script src="<?php echo base_url(); ?>assets/admin/js/bootstrap-min.js"></script>
   <script src="<?php echo base_url(); ?>assets/admin/js/tether.js"></script>
 

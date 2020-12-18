@@ -127,8 +127,7 @@
                 <div class="col-xs-12 col-md-7 col-lg-8">
                     <!-- Header-Text -->
                     <div class="text-box white-box  service_content">
-                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Services that are affordable <br>
-From people who are capable</h2>
+                        <h2 class="title wow fadeInUp" data-wow-delay="0.3s">Our Technician Your Solution</h2>
 
 
                     </div>
@@ -522,9 +521,8 @@ From people who are capable</h2>
                 <div class="col-xs-12 col-md-6 col-lg-6 wow fadeInRight">
                     <div class="title-box left">
                         <h2 class="title">About SkilEx</h2>
-                        <p class="title">Skilex is an online platform to avail various skill based service <br>  at your door step </p>
-                        <p class="desc" style="text-align:justify;">SkilEx is an online platform to get the best professionals to sort all your home needs. With the help of SkilEx App, you can book various household services at time and place of your own choice, we simplify your everyday living with a variety of at home-services like Electrical, Plumbing, house cleaning, maintenance, home repair, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible.
-                      </p>
+                        <p class="title">Complete service solution for your Home and Office.</p>
+                        <p class="desc" style="text-align:justify;">SkilEx is an online platform for Home service providers and Home service customers.It’s a leading Home Service provider in diverse market segments. SkilEx is a Company which offers its service through its mobile app. All the Services available on this platform are for Home and office. Our aim is to Simplify your everyday living, and several other great service options are given by the professionals who are qualified to do a job in an accurate way possible. Book a service. Sit back and relax.</p>
 
                     </div>
                     <div class="space-30"></div>
@@ -554,9 +552,10 @@ From people who are capable</h2>
 
                         <h3 class="title">1.Why SkilEx?</h3>
                         <p><ul>
-                          <li>One stop solution for all your Home Service requirements.</li>
-                          <li>Top quality service will be provided.</li>
-                          <li>Efficient feedback and complaint redressal system.</li>
+							<li>One stop solution for all your Home Service requirements.</li>
+							<li>We are committed to deliver best Customer experience.</li>
+							<li>We provide full and specific solutions for our every Customers.</li>
+							<li>Delivering better living to Coimbatore households, SkilEx is a great Home and office management.</li>
                         </ul></p>
                     </div>
                 </div>
@@ -564,7 +563,7 @@ From people who are capable</h2>
                     <div class="feature-box">
 
                         <h3 class="title">2.What are the Services You Provide?</h3>
-                        <p>We provide all services related to maintenance of your home and upkeep of your premises so that you can focus on your business. Services include plumbing, electrical, carpentry, cleaning, pest control, painting, appliance repair and maintenance and much more.</p>
+                        <p>We provide all services related to maintenance of your home and upkeep of your premises so that you can focus on your business. Service Professionals like plumber, electrician, appliance repair, air conditioning, painting, house cleaning and maintenance provide you with the results you need at the best value.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-12 wow fadeInUp" data-wow-delay="0.4s" >

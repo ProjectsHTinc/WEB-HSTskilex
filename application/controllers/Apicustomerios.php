@@ -2088,9 +2088,9 @@ class Apicustomerios extends CI_Controller {
 
 	public function notification_check()
 	{
-		$deviceToken = '8845ba7c41e95e12caea6381ea6f01b5cd7b59a52feb9005e0727a65a4105dc2a0';
+		$deviceToken = 'c96f1a7257335a23e776b091a93f406f451f4ef1e5a8e1d20d9f4f33dbf426fb';
 		$passphrase = 'hs123';
-		$message = 'Your message';
+		$message = 'Testing from Maran';
 		$loction ='assets/notification/skilex.pem';
 
 		$ctx = stream_context_create();

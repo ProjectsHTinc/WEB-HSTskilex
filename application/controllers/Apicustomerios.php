@@ -2085,5 +2085,50 @@ class Apicustomerios extends CI_Controller {
  	}
 
 //-----------------------------------------------//
+
+	public function notification_check()
+	{
+		$deviceToken = '8845ba7c41e95e12caea6381ea6f01b5cd7b59a52feb9005e0727a65a4105dc2a0';
+		$passphrase = 'hs123';
+		$message = 'Your message';
+		$loction ='assets/notification/skilex.pem';
+
+		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+		// Open a connection to the APNS server
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+		if (!$fp)
+			exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+		echo 'Connected to APNS' . PHP_EOL;
+
+
+		$body['aps'] = array(
+			'alert' => array(
+				'body' => $message,
+				'action-loc-key' => 'Bango App',
+			),
+			'badge' => 2,
+			'sound' => 'oven.caf',
+			);
+
+		$payload = json_encode($body);
+
+		// Build the binary notification
+		$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+
+		$result = fwrite($fp, $msg, strlen($msg));
+
+		if (!$result)
+			echo 'Message not delivered' . PHP_EOL;
+		else
+			echo 'Message successfully delivered' . PHP_EOL;
+
+		fclose($fp);
+	}
 }
 ?>

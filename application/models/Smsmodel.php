@@ -279,48 +279,10 @@ Class Smsmodel extends CI_Model
 
       if($mobile_type=='2'){
 		
-		$location ='assets/notification/skilex.pem';
-		$passphrase = 'hs123';
 		
-		$ctx = stream_context_create();
-		stream_context_set_option($ctx, 'ssl', 'local_cert', $location);
-		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-		// Open a connection to the APNS server
-		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-
-		if (!$fp)
-			exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-		echo 'Connected to APNS' . PHP_EOL;
-
-
-		$body['aps'] = array(
-			'alert' => array(
-				'body' => $message,
-				'action-loc-key' => 'SkilEx App',
-			),
-			'badge' => 2,
-			'sound' => 'oven.caf',
-			);
-
-		$payload = json_encode($body);
-
-		// Build the binary notification
-		$msg = chr(0) . pack('n', 32) . pack('H*', $gcm_key) . pack('n', strlen($payload)) . $payload;
 		
-		$result = fwrite($fp, $msg, strlen($msg));
-		fclose($fp);
-		
-         /* include_once 'assets/notification/Push.php';
-         $push = null;
-         $push = new Push(
-             $head,
-             $message,
-              null
-           );
-         
-        
+        include_once 'assets/notification/Push.php';
+
          $passphrase = 'hs123';
          $loction ='assets/notification/skilex.pem';
          $payload = '{
@@ -331,12 +293,10 @@ Class Smsmodel extends CI_Model
                  }
                }
              }';
-              $ctx = stream_context_create();
+             $ctx = stream_context_create();
             stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
             stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-            $ctx = stream_context_create();
-            stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+           
         
             // Open a connection to the APNS server
             $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
@@ -352,7 +312,7 @@ Class Smsmodel extends CI_Model
 		else
 			echo 'Message successfully delivered' . PHP_EOL; 
 
-		fclose($fp); */
+		fclose($fp);
 			
 
       }else{

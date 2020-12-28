@@ -2088,13 +2088,13 @@ class Apicustomerios extends CI_Controller {
 
 	public function notification_check()
 	{
-		$deviceToken = 'c96f1a7257335a23e776b091a93f406f451f4ef1e5a8e1d20d9f4f33dbf426fb';
+		$deviceToken = '7f2a7aa3740b38a82e756497d271ee79868f993bf9ffd7ef2bec6cf4ae87df05';
 		$passphrase = 'hs123';
 		$message = 'Testing from Maran';
-		$loction ='assets/notification/skilex.pem';
+		$location ='assets/notification/skilex.pem';
 
 		$ctx = stream_context_create();
-		stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+		stream_context_set_option($ctx, 'ssl', 'local_cert', $location);
 		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 		// Open a connection to the APNS server
@@ -2109,7 +2109,7 @@ class Apicustomerios extends CI_Controller {
 		$body['aps'] = array(
 			'alert' => array(
 				'body' => $message,
-				'action-loc-key' => 'Bango App',
+				'action-loc-key' => 'SkilEx App',
 			),
 			'badge' => 2,
 			'sound' => 'oven.caf',

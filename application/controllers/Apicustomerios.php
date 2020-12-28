@@ -2110,17 +2110,13 @@ class Apicustomerios extends CI_Controller {
 			'alert' => array(
 				'body' => $message,
 				'action-loc-key' => 'SkilEx App',
-			),
-			'badge' => 2,
-			'sound' => 'oven.caf',
+				)
 			);
 
 		$payload = json_encode($body);
 
 		// Build the binary notification
 		$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-
-
 		$result = fwrite($fp, $msg, strlen($msg));
 
 		if (!$result)

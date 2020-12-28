@@ -278,14 +278,14 @@ Class Smsmodel extends CI_Model
     function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type){
 
       if($mobile_type=='2'){
-         include_once 'assets/notification/Push.php';
+/*          include_once 'assets/notification/Push.php';
          $push = null;
          $push = new Push(
              $head,
              $message,
               null
            );
-        
+         */
         
          $passphrase = 'hs123';
          $loction ='assets/notification/skilex.pem';
@@ -311,8 +311,15 @@ Class Smsmodel extends CI_Model
             exit("Failed to connect: $err $errstr" . PHP_EOL);
         
             $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
-             $result = fwrite($fp, $msg, strlen($msg));
-            fclose($fp);
+            $result = fwrite($fp, $msg, strlen($msg));
+            
+			if (!$result)
+			echo 'Message not delivered' . PHP_EOL;
+		else
+			echo 'Message successfully delivered' . PHP_EOL;
+
+		fclose($fp);
+			
 
       }else{
         $url = 'https://fcm.googleapis.com/fcm/send';

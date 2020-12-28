@@ -278,7 +278,41 @@ Class Smsmodel extends CI_Model
     function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type){
 
       if($mobile_type=='2'){
-          include_once 'assets/notification/Push.php';
+		
+		$location ='assets/notification/skilex.pem';
+		$passphrase = 'hs123';
+		
+		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', $location);
+		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+		// Open a connection to the APNS server
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+		if (!$fp)
+			exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+		echo 'Connected to APNS' . PHP_EOL;
+
+
+		$body['aps'] = array(
+			'alert' => array(
+				'body' => $message,
+				'action-loc-key' => 'SkilEx App',
+			),
+			'badge' => 2,
+			'sound' => 'oven.caf',
+			);
+
+		$payload = json_encode($body);
+
+		// Build the binary notification
+		$msg = chr(0) . pack('n', 32) . pack('H*', $gcm_key) . pack('n', strlen($payload)) . $payload;
+		
+		$result = fwrite($fp, $msg, strlen($msg));
+		fclose($fp);
+		
+         /* include_once 'assets/notification/Push.php';
          $push = null;
          $push = new Push(
              $head,
@@ -311,14 +345,14 @@ Class Smsmodel extends CI_Model
             exit("Failed to connect: $err $errstr" . PHP_EOL);
         
             $msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
-            echo $result = fwrite($fp, $msg, strlen($msg));
+            $result = fwrite($fp, $msg, strlen($msg));
             
-			/* if (!$result)
+		if (!$result)
 			echo 'Message not delivered' . PHP_EOL;
 		else
-			echo 'Message successfully delivered' . PHP_EOL; */
+			echo 'Message successfully delivered' . PHP_EOL; 
 
-		fclose($fp);
+		fclose($fp); */
 			
 
       }else{

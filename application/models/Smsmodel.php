@@ -280,15 +280,25 @@ Class Smsmodel extends CI_Model
       if($mobile_type=='2'){
 		
          $passphrase = 'HS123';
-         $loction ='assets/notification/29DEC3.p12';
-         $payload = '{
+         $loction ='assets/notification/skilex.pem';
+		 
+		 $body['aps'] = array(
+			'alert' => array(
+				'body' => $message,
+				'action-loc-key' => $head
+				)
+			);
+		$payload = json_encode($body);
+		
+		
+        /*  $payload = '{
                "aps": {
                  "alert": {
                    "body": "'.$message.'",
                    "title": "'.$head.'"
                  }
                }
-             }';
+             }'; */
             
 			$ctx = stream_context_create();
             stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);

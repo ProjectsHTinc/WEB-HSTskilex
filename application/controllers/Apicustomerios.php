@@ -2091,7 +2091,7 @@ class Apicustomerios extends CI_Controller {
 		$deviceToken = '5352eefa98e3d96b0b77bd0cb35ac455f9fc62ad8fda3ddc10542efcc67b8ce4';
 		$passphrase = 'hs123';
 		$message = 'Testing from Maran';
-		$location ='assets/notification/29Dec2.p12';
+		$location ='assets/notification/29DEC3.p12';
 
 		$ctx = stream_context_create();
 		stream_context_set_option($ctx, 'ssl', 'local_cert', $location);

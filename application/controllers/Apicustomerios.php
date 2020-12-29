@@ -2089,7 +2089,7 @@ class Apicustomerios extends CI_Controller {
 	public function notification_check()
 	{
 		$deviceToken = '5352eefa98e3d96b0b77bd0cb35ac455f9fc62ad8fda3ddc10542efcc67b8ce4';
-		$passphrase = 'hs123';
+		$passphrase = 'HS123';
 		$message = 'Testing from Maran';
 		$location ='assets/notification/29DEC3.p12';
 

@@ -279,8 +279,8 @@ Class Smsmodel extends CI_Model
 
       if($mobile_type=='2'){
 		
-         $passphrase = 'hs123';
-         $loction ='assets/notification/skilex.pem';
+         $passphrase = 'HS123';
+         $loction ='assets/notification/29DEC3.p12';
          $payload = '{
                "aps": {
                  "alert": {

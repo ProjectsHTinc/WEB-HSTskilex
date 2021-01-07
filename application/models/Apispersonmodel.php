@@ -107,11 +107,11 @@ class Apispersonmodel extends CI_Model {
 
 
 function version_check($version_code){
-if($version_code==2){
-  $response = array("status" => "success");
-}else{
-  $response = array("status" => "error");
-}
+	if($version_code==2){
+	  $response = array("status" => "success");
+	}else{
+	  $response = array("status" => "error");
+	}
   return $response;
 }
 
@@ -161,7 +161,8 @@ if($version_code==2){
 
 			$update_sql = "UPDATE login_users SET otp = '".$OTP."', updated_at=NOW() WHERE id ='".$user_master_id."'";
 			$update_result = $this->db->query($update_sql);
-      if($preferred_lang_id=='1'){
+      
+	  if($preferred_lang_id=='1'){
         $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
       }else{
         $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
@@ -973,9 +974,7 @@ function user_info($user_master_id){
         $ins_query = $this->db->query($sQuery);
       }
 
-
-
-			 $message_details = "Your OTP :".$OTP;
+	   $message_details = "Your OTP :".$OTP;
        $notes=$message_details;
        $phone=$contact_person_number;
        $this->smsmodel->send_sms($phone,$notes);
@@ -1035,7 +1034,7 @@ function user_info($user_master_id){
             $preferred_lang_id=$rows->preferred_lang_id;
             $head='Skilex';
             if($preferred_lang_id=='1'){
-            	$message="ஸஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை தொடர்ந்து செல்கிறது.";
+            	$message="ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை தொடர்ந்து செல்கிறது.";
             }else{
             	$message="Service request is Ongoing.";
             }
@@ -1566,7 +1565,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       $Phoneno=$row_res->phone_no;
       $preferred_lang_id=$row_res->preferred_lang_id;
       if($preferred_lang_id=='1'){
-      	$message="ஸஸ்கைலெக்ஸ்-சேவை நிறுத்தி வைக்கப்பட்டுள்ளது";
+      	$message="ஸ்கிலெக்ஸ்-சேவை நிறுத்தி வைக்கப்பட்டுள்ளது";
       }else{
       	  $notes="Skilex-Service is On hold";
       }
@@ -1738,7 +1737,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $preferred_lang_id=$rows->preferred_lang_id;
          $head='Skilex';
           if($preferred_lang_id=='1'){
-          	$message="ஸ்கைலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது";
+          	$message="ஸ்கிலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது";
           }else{
           	$message="Skilex-Your service request has been cancelled";
           }
@@ -1760,7 +1759,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $preferred_lang_id=$rows->preferred_lang_id;
          $head='Skilex';
           if($preferred_lang_id=='1'){
-          	$message="ஸ்கைலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது. இதனால் ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம். மற்றொரு சேவை நபர் விரைவில் நியமிக்கப்படுவார்.";
+          	$message="ஸ்கிலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது. இதனால் ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம். மற்றொரு சேவை நபர் விரைவில் நியமிக்கப்படுவார்.";
           }else{
           	$message="Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
           }
@@ -2006,7 +2005,7 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $preferred_lang_id=$rows->preferred_lang_id;
           $head='Skilex';
           if($preferred_lang_id=='1'){
-            $message="ஸ்கிலெக்ஸ் சேவை கோரிக்கை முடிந்தது. பில் உருவாக்கப்பட்டது ஸ்கைலெக்ஸ் ஆப் மூலம் கட்டணத்தை செலுத்துங்கள்.";
+            $message="ஸ்கிலெக்ஸ் சேவை கோரிக்கை முடிந்தது. பில் உருவாக்கப்பட்டது ஸ்கிலெக்ஸ் ஆப் மூலம் கட்டணத்தை செலுத்துங்கள்.";
           }else{
             $message="SKILEX - Service Request Completed. Bill Generated. Kindly pay the bill through Skilex App.";
           }

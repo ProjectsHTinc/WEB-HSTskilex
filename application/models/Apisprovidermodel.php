@@ -1683,7 +1683,7 @@ return $response;
                $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-              $message="ஸஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்  ";
+              $message="ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்  ";
               }else{
               $message=" Skilex- Your Services has been accepted.";
               }
@@ -1768,7 +1768,7 @@ return $response;
               $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-              $message="ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  ஒதுக்கப்பட்டது.மேலும் அறிய ஆப்பை  பார்க்கவும்.";
+              $message="ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  ஒதுக்கப்பட்டது.மேலும் அறிய ஆப்பை  பார்க்கவும்.";
               }else{
                 $message="Service request assigned.";
               }
@@ -1790,7 +1790,7 @@ return $response;
                 $preferred_lang_id=$rows->preferred_lang_id;
                 $head='Skilex';
                 if($preferred_lang_id=='1'){
-                $message="ஸஸ்கிலெக்ஸ் தங்களது கோரிக்கையைக்கான சர்வீஸ் நபர் ஒதுக்கப்பட்டுள்ளது.";
+                $message="ஸ்கிலெக்ஸ் தங்களது கோரிக்கையைக்கான சர்வீஸ் நபர் ஒதுக்கப்பட்டுள்ளது.";
                 }else{
                 $message='Service expert assigned to your order.';
                 }

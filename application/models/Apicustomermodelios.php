@@ -9,7 +9,6 @@ class Apicustomermodelios extends CI_Model {
         $this->load->model('apicustomermodel');
     }
 
-
 //-------------------- Email -------------------//
 
 	 function sendMail($email,$subject,$email_message)
@@ -1200,7 +1199,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $preferred_lang_id=$rows->preferred_lang_id;
                     $head='Skilex';
                     if($preferred_lang_id=='1'){
-                      $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                      $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
                     }else{
                         $message='Greetings from Skilex!.Your Order has been booked.';
                     }
@@ -1289,7 +1288,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                        $preferred_lang_id=$rows->preferred_lang_id;
                        $head='Skilex';
                        if($preferred_lang_id=='1'){
-                         $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                         $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
                        }else{
                            $message='Greetings from Skilex!.Your Order has been booked.';
                        }

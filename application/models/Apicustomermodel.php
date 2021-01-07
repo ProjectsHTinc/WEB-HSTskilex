@@ -1200,7 +1200,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $preferred_lang_id=$rows->preferred_lang_id;
                     $head='Skilex';
                     if($preferred_lang_id=='1'){
-                      $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                      $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
                     }else{
                         $message='Greetings from Skilex!.Your Order has been booked.';
                     }
@@ -1293,7 +1293,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                        $preferred_lang_id=$rows->preferred_lang_id;
                        $head='Skilex';
                        if($preferred_lang_id=='1'){
-                         $message='ஸ்கிலெக்ஸ்-லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                         $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
                        }else{
                            $message='Greetings from Skilex!.Your Order has been booked.';
                        }
@@ -3448,7 +3448,21 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
 
     function hour_cron_job_checking(){
-      $date = date_default_timezone_set('Asia/Kolkata');
+		$date = date_default_timezone_set('Asia/Kolkata');
+
+		$current_time = date("h:i a");
+		$start_time = "9:00 am";
+		$end_time = "7:00 pm";
+		$current = DateTime::createFromFormat('h:i a', $current_time);
+		$start = DateTime::createFromFormat('h:i a', $start_time);
+		$end = DateTime::createFromFormat('h:i a', $end_time);
+		
+		if ($current > $start && $current < $end)
+		{
+		   $this->automatic_provider_allocation();
+		} 
+	  
+	  /* $date = date_default_timezone_set('Asia/Kolkata');
       $today = date("g:i");
       $ten_am='09:00';
       $end_time='7:00';
@@ -3456,7 +3470,8 @@ function proceed_for_payment($user_master_id,$service_order_id){
         // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
         // $excute=$this->db->query($insert);
           $this->automatic_provider_allocation();
-      }
+      } */
+	  
     }
 
 

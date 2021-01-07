@@ -66,10 +66,11 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 		$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
 		$result = fwrite($fp, $msg, strlen($msg));
 		
- 		if (!$result)
+ 		if (!$result){
 			//echo 'Message not delivered' . PHP_EOL;
-		else
-			//echo 'Message successfully delivered' . PHP_EOL;  
+		}else{
+			//echo 'Message successfully delivered' . PHP_EOL; 
+		}
 		fclose($fp);
 
       }else{
@@ -112,9 +113,6 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
         curl_close ( $ch );
       }
 }
-
-
-
 
 
 

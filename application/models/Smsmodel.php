@@ -5,13 +5,13 @@ Class Smsmodel extends CI_Model
  public function __construct()
   {
       parent::__construct();
-
   }
 
  function send_sms($phone,$notes)
  {
 	  $uni_code=utf8_encode($notes);
 	  $msg=urlencode($uni_code);
+	  //$url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Ski@123-&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=05";
 	  $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=03&Dltsenderid=1701159135772474512";
 	  
 	  $curl = curl_init();
@@ -33,7 +33,7 @@ Class Smsmodel extends CI_Model
 		curl_close($curl);
 
 		if ($err) {
-		  echo "cURL Error #:" . $err;
+		  //echo "cURL Error #:" . $err;
 		} else {
 		  // echo $response;
 		}
@@ -66,22 +66,22 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 		$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
 		$result = fwrite($fp, $msg, strlen($msg));
 		
-/* 		if (!$result)
-			echo 'Message not delivered' . PHP_EOL;
+ 		if (!$result)
+			//echo 'Message not delivered' . PHP_EOL;
 		else
-			echo 'Message successfully delivered' . PHP_EOL;  */
+			//echo 'Message successfully delivered' . PHP_EOL;  
 		fclose($fp);
 
       }else{
-		  
+
         $url = 'https://fcm.googleapis.com/fcm/send';
         $fields = array (
                 'to' => $gcm_key,
                 'priority' => 'high',
                 'notification' => array (
-                        "body" => $message,
-                        "title" => "Skilex",
-                        "icon" => "myicon"
+					"body" => $message,
+					"title" => "Skilex",
+					"icon" => "myicon"
                 )
         );
         $fields = json_encode ( $fields );
@@ -112,6 +112,12 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
         curl_close ( $ch );
       }
 }
+
+
+
+
+
+
 
  /* function send_notification($head,$message,$gcm_key,$mobile_type,$user_type){
 
@@ -330,7 +336,6 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 
     }
   } */
-
 
 }
 ?>

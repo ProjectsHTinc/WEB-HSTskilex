@@ -13,8 +13,7 @@ foreach($fields as $key=>$value)
         $sep='&';
 }
 
-
-$path=cacert.pem;
+$path="cacert.pem";
 
 $ch = curl_init();
 

@@ -13,7 +13,7 @@ class Import extends CI_Controller {
 
     public function check_customers()
 	{
-	    $chkConst = "SELECT * FROM customer_details";
+	    echo $chkConst = "SELECT * FROM customer_details";
 		$result = $this->db->query($chkConst);
 		if($result->num_rows()>0){
 			 foreach($result->result() as $row){
@@ -21,7 +21,7 @@ class Import extends CI_Controller {
                  echo $user_master_id;
                  echo "<br>";
 				 
-					 $chkConst_1 = "SELECT * FROM login_users WHERE id = '$user_master_id' AND user_type = '5'";
+					 echo $chkConst_1 = "SELECT * FROM login_users WHERE id = '$user_master_id' AND user_type = '5'";
 					 $result_1 = $this->db->query($chkConst_1);
 					 if($result->num_rows()>0){
 					 } else {

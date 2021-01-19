@@ -1683,16 +1683,16 @@ return $response;
                $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-              $message="ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்  ";
+              $message="ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்";
               }else{
               $message=" Skilex- Your Services has been accepted.";
               }
                $user_type='5';
-               $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes = $message;
             $phone=$contact_person_number;
-            $this->smsmodel->send_sms($phone,$notes);
+           $this->smsmodel->send_sms($phone,$notes);
         }
 
 
@@ -1796,7 +1796,7 @@ return $response;
                 }
 
                 $user_type='5';
-                $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes=$message;
             $phone=$contact_person_number;

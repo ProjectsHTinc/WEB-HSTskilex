@@ -42,7 +42,7 @@ Class Smsmodel extends CI_Model
 function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 {
       if($mobile_type=='2'){
-        $passphrase = 'HS123';
+        /*$passphrase = 'HS123';
         $loction ='assets/notification/skilex.pem';
 		 
 		 $body['aps'] = array(
@@ -69,9 +69,9 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
  		if (!$result){
 			//echo 'Message not delivered' . PHP_EOL;
 		}else{
-			//echo 'Message successfully delivered' . PHP_EOL; 
+			//echo 'Message successfully delivered' . PHP_EOL;  
 		}
-		fclose($fp);
+		fclose($fp);*/
 
       }else{
 
@@ -117,7 +117,10 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 
 
 
- /* function send_notification($head,$message,$gcm_key,$mobile_type,$user_type){
+
+
+
+ function send_notification($head,$message,$gcm_key,$mobile_type,$user_type){
 
 
    if($user_type=='5'){
@@ -181,7 +184,7 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
             //   fclose($fp);
 
             }
- } */
+ } 
 
 
  /* function push_notification_android($head,$message,$gcm_key,$mobile_type,$user_type){

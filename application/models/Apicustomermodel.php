@@ -1564,7 +1564,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                            $head='Skilex';
                            $message='Thank you for booking service ';
                            $user_type='5';
-                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                          }
                      }
 
@@ -1633,7 +1633,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                           $head='Skilex';
                           $message='Thank you for booking service ';
                           $user_type='5';
-                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                         }
                     }
                  }else if($display_minute==2){
@@ -1880,7 +1880,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                            $head='Skilex';
                            $message='Thank you for booking service ';
                            $user_type='5';
-                          $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+                          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
                          }
                      }
 
@@ -2203,7 +2203,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
       //        $head='Skilex';
       //        $message='Ongoing checking';
       //        $user_type='5';
-      //        $this->smsmodel->send_notification($head,$message,$gcm_key,$mobile_type,$user_type);
+      //        $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
       //      }
       //  }
        $service_query="SELECT so.status as order_status,so.resume_date,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,TIME_FORMAT(st.from_time,'%r') as from_time,TIME_FORMAT(st.to_time,'%r') as to_time,

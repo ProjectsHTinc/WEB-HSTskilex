@@ -43,7 +43,7 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 {
       if($mobile_type=='2'){
         
-		$passphrase = 'HS123';
+		/* $passphrase = 'HS123';
         $loction ='assets/notification/skilex.pem';
 		 
 		 $body['aps'] = array(
@@ -72,7 +72,7 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 		}else{
 			//echo 'Message successfully delivered' . PHP_EOL;  
 		}
-		fclose($fp);
+		fclose($fp); */
 
       }else{
 

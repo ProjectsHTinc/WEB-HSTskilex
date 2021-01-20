@@ -42,7 +42,8 @@ Class Smsmodel extends CI_Model
 function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 {
       if($mobile_type=='2'){
-        /*$passphrase = 'HS123';
+        
+		$passphrase = 'HS123';
         $loction ='assets/notification/skilex.pem';
 		 
 		 $body['aps'] = array(
@@ -71,7 +72,7 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 		}else{
 			//echo 'Message successfully delivered' . PHP_EOL;  
 		}
-		fclose($fp);*/
+		fclose($fp);
 
       }else{
 
@@ -136,7 +137,7 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
 
    }
 
-     $push = null;
+    /*  $push = null;
      $push = new Push(
          $head,
          $message,
@@ -144,8 +145,8 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
        );
 
 
-     $passphrase = 'hs123';
-     $loction ='assets/notification/skilex.pem';
+     $passphrase = 'HS123';
+        $loction ='assets/notification/skilex.pem';
      $payload = '{
            "aps": {
              "alert": {
@@ -156,8 +157,10 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
          }';
           $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-          if ($mobile_type =='1')
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase); */
+		
+		
+			if ($mobile_type =='1')
             {
               //getting the push from push object
               $mPushNotification = $push->getPush();
@@ -167,8 +170,42 @@ function send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type)
               $firebase->send(array($gcm_key),$mPushNotification,$user_type);
 
             }
+			
+			
             if ($mobile_type =='2')
             {
+				
+				$passphrase = 'HS123';
+				$loction ='assets/notification/skilex.pem';
+		 
+		 $body['aps'] = array(
+			'alert' => array(
+				'body' => $message,
+				'action-loc-key' => $head
+				)
+			);
+		$payload = json_encode($body);
+		
+		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+	   
+		// Open a connection to the APNS server
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+	
+		if (!$fp)
+		exit("Failed to connect: $err $errstr" . PHP_EOL);
+		
+		$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $gcm_key)) . pack("n", strlen($payload)) . $payload;
+		$result = fwrite($fp, $msg, strlen($msg));
+		
+ 		if (!$result){
+			//echo 'Message not delivered' . PHP_EOL;
+		}else{
+			//echo 'Message successfully delivered' . PHP_EOL;  
+		}
+		fclose($fp);
+		
             //   $ctx = stream_context_create();
             //   stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
             //   stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);

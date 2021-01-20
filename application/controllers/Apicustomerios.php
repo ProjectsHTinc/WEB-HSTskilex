@@ -2088,7 +2088,7 @@ class Apicustomerios extends CI_Controller {
 
 	public function notification_check()
 	{
-		$deviceToken = 'edd1cf1b3b77fc7a08b511eb9cd00a5438e7b09301a18db97717250263de5879';
+		$deviceToken = '5352eefa98e3d96b0b77bd0cb35ac455f9fc62ad8fda3ddc10542efcc67b8ce4';
 		$passphrase = 'HS123';
 		$message = 'Testing from Maran';
 		$location ='assets/notification/skilex.pem';
@@ -2098,7 +2098,7 @@ class Apicustomerios extends CI_Controller {
 		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 		// Open a connection to the APNS server
-		$fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 		if (!$fp)
 			exit("Failed to connect: $err $errstr" . PHP_EOL);

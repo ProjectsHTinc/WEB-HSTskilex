@@ -24,6 +24,39 @@ class Apicustomermodel extends CI_Model {
 
 //-------------------- Email End -------------------//
 
+//-------------------- SMS -------------------//
+function send_sms($phone,$notes,$templateid)
+ {
+	  $uni_code=utf8_encode($notes);
+	  $msg=urlencode($uni_code);
+	  
+	  $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=03&dltsenderid=1701159135772474512&dlttemplateid=$templateid";
+
+	  $curl = curl_init();
+		  curl_setopt_array($curl, array(
+		  CURLOPT_URL => $url,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_SSL_VERIFYHOST => 0,
+		  CURLOPT_SSL_VERIFYPEER => 0,
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		  //echo "cURL Error #:" . $err;
+		} else {
+		  // echo $response;
+		}
+ }
+//-------------------- SMS END -------------------//
 
 
 //-------------------- Notification -------------------//
@@ -176,8 +209,10 @@ class Apicustomermodel extends CI_Model {
     }
 
     $phone=$phone_no;
-    $this->smsmodel->send_sms($phone,$notes);
-		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
+	$templateid = '1707161432164819940';
+    $this->send_sms($phone,$notes,$templateid);
+	
+	$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 		return $response;
 	}
 
@@ -2848,8 +2883,10 @@ function proceed_for_payment($user_master_id,$service_order_id){
       $result = explode(",", $rows_lat->service_latlon);
       $lat1=$result[0];
       $lon1= $result[1];
-
-      $get_person="SELECT * FROM service_person_details where user_master_id='$rows_lat->serv_pers_id'";
+	  
+/*
+      //$get_person="SELECT * FROM service_person_details where user_master_id='$rows_lat->serv_pers_id'";
+	  $get_person="SELECT * FROM vendor_status WHERE serv_pro_id='$rows_lat->serv_prov_id'";
       $res_person=$this->db->query($get_person);
       foreach($res_person->result() as $rows_person){}
       if(empty($rows_person->person_lat)){
@@ -2863,6 +2900,7 @@ function proceed_for_payment($user_master_id,$service_order_id){
         $lon2=$rows_person->person_long;
       }
 
+
       $rad = M_PI / 180;
       $km=acos(sin($lat2*$rad) * sin($lat1*$rad) + cos($lat2*$rad) * cos($lat1*$rad) * cos($lon2*$rad - $lon1*$rad)) * 6371;
       $dis= round($km,2);
@@ -2874,6 +2912,8 @@ function proceed_for_payment($user_master_id,$service_order_id){
         foreach($res_rate->result() as $rows_rate){}
           $rate=$rows_rate->surge_price;
       }
+*/
+	  $rate='0';
       return $rate;
 }
 

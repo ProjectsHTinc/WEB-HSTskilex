@@ -12,7 +12,6 @@
 	$dataSize = sizeof($decryptValues);
 
 
-
 for($i = 0; $i < $dataSize; $i++)
 	{
 		$information=explode('=',$decryptValues[$i]);
@@ -60,44 +59,32 @@ for($i = 0; $i < $dataSize; $i++)
 		if($i==41)  $bin_country=$information[1];
 	}
 
-
-    	 $string = $orderid;
+    	$string = $orderid;
         $result = explode("-", $string);
         $order_id=$result[0];
         $user_id= $result[1];
 
-
-       $sQuery = "INSERT INTO online_payment_history (order_id,user_id,track_id,bank_ref_no,order_status,failure_message,payment_mode,card_name,status_code,status_message,currency,amount,billing_name,billing_address, billing_city,billing_state,billing_zip,billing_country,billing_tel,billing_email,delievery_name,delievery_address,delievery_city,delievery_state,delievery_zip,delievery_country,delievery_tel,merch_param1,merch_param2,merch_param3,merch_param4,merch_param5,vault,offer_type,offer_code,discount_value, mer_amt,eci_value,retry,response_code,billing_notes,trans_date,bin_country) VALUES ('$orderid','$user_id','$track_id','$bank_ref_no','$order_status','$failure_message','$payment_mode','$card_name','$status_code','$status_message','$currency','$amount','$billing_name','$billing_address','$billing_city','$billing_state','$billing_zip','$billing_country','$billing_tel','$billing_email','$delievery_name','$delievery_address','$delievery_city','$delievery_state','$delievery_zip','$delievery_country','$delievery_tel','$merch_param1','$merch_param2','$merch_param3','$merch_param4','$merch_param5','$vault','$offer_type','$offer_code','$discount_value','$mer_amt','$eci_value','$retry','$response_code','$billing_notes','$transdate','$bin_country')";
-          mysqli_query($link, $sQuery);
-
+		$sQuery = "INSERT INTO ccavenue_status (order_id,user_id,track_id,bank_ref_no,order_status,failure_message,payment_mode,card_name,status_code,status_message,currency,amount,billing_name,billing_address, billing_city,billing_state,billing_zip,billing_country,billing_tel,billing_email,delievery_name,delievery_address,delievery_city,delievery_state,delievery_zip,delievery_country,delievery_tel,merch_param1,merch_param2,merch_param3,merch_param4,merch_param5,vault,offer_type,offer_code,discount_value, mer_amt,eci_value,retry,response_code,billing_notes,trans_date,bin_country) VALUES ('$orderid','$user_id','$track_id','$bank_ref_no','$order_status','$failure_message','$payment_mode','$card_name','$status_code','$status_message','$currency','$amount','$billing_name','$billing_address','$billing_city','$billing_state','$billing_zip','$billing_country','$billing_tel','$billing_email','$delievery_name','$delievery_address','$delievery_city','$delievery_state','$delievery_zip','$delievery_country','$delievery_tel','$merch_param1','$merch_param2','$merch_param3','$merch_param4','$merch_param5','$vault','$offer_type','$offer_code','$discount_value','$mer_amt','$eci_value','$retry','$response_code','$billing_notes','$transdate','$bin_country')";
+        mysqli_query($link, $sQuery);
 
     	if($order_status=="Success")
     	{
+			$insert_sp = "INSERT INTO customer_wallet_history (customer_id,order_id,transaction_amt,notes,status,created_at,created_by) VALUES ('$user_id','$amount','Added money to wallet','Credited',NOW(),'$user_id')";
+			mysqli_query($link, $insert_sp);
 
-
-         $insert_sp="INSERT INTO wallet_history (user_master_id,transaction_amt,status,notes,created_at,created_by) VALUES ('$user_id','$amount','Credited','Added money to wallet',NOW(),'$user_id')";
-        // $objRs  = mysql_query($insert_sp) or die("Could not select Query ");
-          mysqli_query($link, $insert_sp);
-
-
-
-        $insert_sph="SELECT * FROM user_wallet WHERE user_master_id='$user_id'";
-        $result= mysqli_query($link, $insert_sph);
-         if (mysqli_num_rows($result) == 0) {
-           $wallet_query="INSERT INTO user_wallet (user_master_id,amt_in_wallet,total_amt_in_wallet,status,updated_at,updated_by) VALUES ('$user_id','$amount','$amount','Active',NOW(),'$user_id')";
-         }else{
-            $wallet_query="UPDATE user_wallet SET amt_in_wallet=amt_in_wallet+'$amount',total_amt_in_wallet=total_amt_in_wallet+'$amount' WHERE user_master_id='$user_id'";
-
-
-         }
-          mysqli_query($link, $wallet_query);
-          $response["status"] = "Success";
-
+			$insert_sph = "SELECT * FROM customer_wallet WHERE customer_id='$user_id'";
+			$result= mysqli_query($link, $insert_sph);
+			if (mysqli_num_rows($result) == '0') {
+				$wallet_query="INSERT INTO customer_wallet (customer_id,amt_in_wallet,total_amt_in_wallet,status,updated_at,updated_by) VALUES ('$user_id','$amount','$amount','Active',NOW(),'$user_id')";
+			}else{
+				$wallet_query="UPDATE customer_wallet SET amt_in_wallet=amt_in_wallet+'$amount',total_amt_in_wallet=total_amt_in_wallet+'$amount' WHERE customer_id='$user_id'";
+			}
+			mysqli_query($link, $wallet_query);
+			$response["status"] = "Success";
 
     	}else{
-          $response["status"] = $order_status;
-      }
-
+			$response["status"] = $order_status;
+		}
 
       echo json_encode($response);
 ?>

@@ -1,12 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apicustomermodelios extends CI_Model {
-
+class Apicustomermodelios extends CI_Model 
+{
     function __construct()
     {
         parent::__construct();
         $this->load->model('smsmodel');
-        $this->load->model('apicustomermodel');
     }
 
 //-------------------- Email -------------------//
@@ -17,85 +16,26 @@ class Apicustomermodelios extends CI_Model {
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		// Additional headers
-		$headers .= 'From: Webmaster<hello@happysanz.com>' . "\r\n";
+		$headers .= 'From: Webmaster<info@skilex.in>' . "\r\n";
 		mail($email,$subject,$email_message,$headers);
 	}
 
 //-------------------- Email End -------------------//
 
+//-------------------- Version check -------------------//
 
+    function version_check($version_code){
+      if($version_code >= 3){
+          $response = array("status" => "success","version_code"=>$version_code);
+      }else{
+        $response = array("status" => "error","version_code"=>$version_code);
+      }
+    	return $response;
+    }
 
-//-------------------- Notification -------------------//
-
-	 function sendNotification($gcm_key,$title,$Message,$mobiletype)
-	{
-
-		if ($mobiletype =='1'){
-
-		    require_once 'assets/notification/Firebase.php';
-            require_once 'assets/notification/Push.php';
-
-            $device_token = explode(",", $gcm_key);
-            $push = null;
-
-        //first check if the push has an image with it
-		    $push = new Push(
-					$title,
-					$Message,
-					null
-				);
-
-
-
-    		//getting the push from push object
-    		$mPushNotification = $push->getPush();
-
-    		//creating firebase class object
-    		$firebase = new Firebase();
-
-    	foreach($device_token as $token) {
-    		 $firebase->send(array($token),$mPushNotification);
-    	}
-
-		} else {
-
-			$device_token = explode(",", $gcm_key);
-			$passphrase = 'hs123';
-		    $loction ='assets/pushcert.pem';
-
-			$ctx = stream_context_create();
-			stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-			stream_context_set_option($ctx, 'ssl', 'hs123', $passphrase);
-
-			// Open a connection to the APNS server
-			$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-
-			if (!$fp)
-				exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-			$body['aps'] = array(
-				'alert' => array(
-					'body' => $Message,
-					'action-loc-key' => 'Skilex',
-				),
-				'badge' => 2,
-				'sound' => 'assets/notification/oven.caf',
-				);
-			$payload = json_encode($body);
-
-			foreach($device_token as $token) {
-
-				// Build the binary notification
-    			$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $token)) . pack("n", strlen($payload)) . $payload;
-        		$result = fwrite($fp, $msg, strlen($msg));
-			}
-
-				fclose($fp);
-		}
-
-	}
-
-//-------------------- Notification End -------------------//
+//-------------------- Version check -------------------//
+  
+  
 
     function get_all_tax_commission(){
       $select="SELECT * FROM tax_commission WHERE id='1'";
@@ -109,23 +49,6 @@ class Apicustomermodelios extends CI_Model {
 
       }
     }
-
-
-
-    //-------------------- Version check -------------------//
-
-
-    function version_check($version_code){
-      if($version_code >= 3){
-          $response = array("status" => "success","version_code"=>$version_code);
-      }else{
-        $response = array("status" => "error","version_code"=>$version_code);
-      }
-    	return $response;
-    }
-
-  //-------------------- Version check -------------------//
-
 
 
   //-------------------- Mobile Check -------------------//
@@ -177,19 +100,22 @@ class Apicustomermodelios extends CI_Model {
 		}
     if($preferred_lang_id=='1'){
         $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+		$templateid = '1707161432164819940';
     }else{
         $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+		$templateid = '1707161432164819940';
     }
 
     $phone=$phone_no;
-    $this->smsmodel->send_sms($phone,$notes);
+	$this->smsmodel->send_sms($phone,$notes,$templateid);
+   // $this->smsmodel->send_sms($phone,$notes);
 		$response = array("status" => "success", "msg" => "Mobile OTP","msg_en"=>"","msg_ta"=>"","user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 		return $response;
 	}
 
 //-------------------- Mobile Check End -------------------//
 
-  //-------------------- guest login -------------------//
+//-------------------- guest login -------------------//
 
 
   function guest_login($unique_number,$device_token,$mobiletype,$user_stat){
@@ -204,10 +130,7 @@ class Apicustomermodelios extends CI_Model {
 
 
   }
-
-
-
-    //-------------------- guest login -------------------//
+//-------------------- guest login -------------------//
 
 
 //-------------------- Login -------------------//
@@ -1207,8 +1130,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $head='Skilex';
                     if($preferred_lang_id=='1'){
                       $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+					  $templateid = '1707161433648312974';
                     }else{
                         $message='Greetings from Skilex!.Your Order has been booked.';
+						$templateid = '1707161432205671252';
                     }
                     $user_type='5';
                     $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
@@ -1216,7 +1141,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 
                   $notes=$message;
                   $phone=$phone;
-                  $this->smsmodel->send_sms($phone,$notes);
+				  $this->smsmodel->send_sms($phone,$notes,$templateid);
+                  //$this->smsmodel->send_sms($phone,$notes);
               }
         }else{
           $adva_status='N';
@@ -1296,8 +1222,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                        $head='Skilex';
                        if($preferred_lang_id=='1'){
                          $message='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+						 $templateid = '1707161433648312974';
                        }else{
                            $message='Greetings from Skilex!.Your Order has been booked.';
+						    $templateid = '1707161432205671252';
                        }
                        $user_type='5';
                        $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
@@ -1305,7 +1233,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 
                      $notes=$message;
                      $phone=$phone;
-                     $this->smsmodel->send_sms($phone,$notes);
+					  $this->smsmodel->send_sms($phone,$notes,$templateid);
+                     //$this->smsmodel->send_sms($phone,$notes);
                  }
            }else{
              $adva_status='N';
@@ -1552,9 +1481,12 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $mobiletype=$rows_id_next->mobile_type;
                     // $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $notes="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+					$templateid = '1707161432827883995';
                     $phone=$Phoneno;
-                    $this->smsmodel->send_sms($phone,$notes);
+					$this->smsmodel->send_sms($phone,$notes,$templateid);
+                    //$this->smsmodel->send_sms($phone,$notes);
                     ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+					
                     $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
                      $res_gcm= $this->db->query($get_gcm);
                      if($res_gcm->num_rows()==0){
@@ -1868,8 +1800,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $mobiletype=$rows_id_next->mobile_type;
                     // $notes="Hi $full_name You Received order from Customer $contact_person_name";
                     $notes="Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+					$templateid = '1707161432164819940';
                     $phone=$Phoneno;
-                    $this->smsmodel->send_sms($phone,$notes);
+					$this->smsmodel->send_sms($phone,$notes,$templateid);                   
+				   //$this->smsmodel->send_sms($phone,$notes);
                     $this->sendNotification($gcm_key,$title,$Message,$mobiletype);
                     $get_gcm="SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
                      $res_gcm= $this->db->query($get_gcm);
@@ -2539,8 +2473,10 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
               $head='Skilex';
               if($preferred_lang_id=='1'){
                $message="நன்றி உங்கள் ஆர்டர் ரத்து செய்யப்பட்டது";
+			   $templateid = '1707161518659574142';
               }else{
                 $message="Thank you.Your order has been Cancelled";
+				$templateid = '1707161518664219488';
               }
 
               $user_type='5';
@@ -2549,7 +2485,8 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
             $notes=$message;
             $phone=$contact_person_number;
-            $this->smsmodel->send_sms($phone,$notes);
+			 $this->smsmodel->send_sms($phone,$notes,$templateid);
+           // $this->smsmodel->send_sms($phone,$notes);
         }
 
          $select="SELECT s.id,s.serv_prov_id,s.serv_pers_id,s.customer_id,s.status,lu.phone_no FROM  service_orders as s LEFT JOIN  login_users as lu on lu.id=s.customer_id WHERE s.id='$service_order_id' AND s.customer_id='$user_master_id'";
@@ -2563,7 +2500,9 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                $serv_prov_id=$rows_service->serv_pers_id;
               $Phoneno=$rows_service->phone_no;
               $notes="Thank you.Your order has been Cancelled";
+			  $templateid = '1707161518664219488';
               $phone=$Phoneno;
+			  $this->smsmodel->send_sms($phone,$notes,$templateid);
               //$this->smsmodel->send_sms($phone,$notes);
               if($serv_prov_id=='0'){
 
@@ -3126,8 +3065,10 @@ function proceed_for_payment($user_master_id,$service_order_id){
                 $head='Skilex';
               if($preferred_lang_id=='1'){
                 $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+				$templateid = '1707161433610720117';
               }else{
                 $message="Service payment success.";
+				$templateid = '1707161432883119360';
               }
               $user_type='3';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
@@ -3135,7 +3076,8 @@ function proceed_for_payment($user_master_id,$service_order_id){
 
             $notes=$message;
             $phone=$rows->phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
         }
 
 
@@ -3151,8 +3093,10 @@ function proceed_for_payment($user_master_id,$service_order_id){
               $head='Skilex';
               if($preferred_lang_id=='1'){
                 $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது.எங்கள் சேவையை மதிப்பிடுங்கள்.";
+				$templateid = '1707161433610720117';
               }else{
                 $message=" Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
+				$templateid = '1707161432883119360';
               }
 
               $user_type='5';
@@ -3160,7 +3104,8 @@ function proceed_for_payment($user_master_id,$service_order_id){
             }
             $notes=$message;
             $phone=$rows->phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
         }
         $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
@@ -3175,15 +3120,18 @@ function proceed_for_payment($user_master_id,$service_order_id){
               $head='Skilex';
               if($preferred_lang_id=='1'){
                 $message="ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+				$templateid = '1707161433610720117';
               }else{
                 $message=" Service Payment Success";
+				$templateid = '1707161432883119360';
               }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes=$message;
             $phone=$rows->phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
         }
   }
   //-------------------- Service Payment success -------------------//

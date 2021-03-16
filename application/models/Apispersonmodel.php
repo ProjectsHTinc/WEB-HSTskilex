@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Apispersonmodel extends CI_Model {
-
+class Apispersonmodel extends CI_Model 
+{
     function __construct()
     {
         parent::__construct();
@@ -17,94 +17,13 @@ class Apispersonmodel extends CI_Model {
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		// Additional headers
-		$headers .= 'From: Webmaster<hello@happysanz.com>' . "\r\n";
+		$headers .= 'From: Webmaster<info@skilex.in>' . "\r\n";
 		mail($email,$subject,$email_message,$headers);
 	}
 
 //#################### Email End ####################//
 
-
-
-
-//#################### Notification ####################//
-
-	public function sendNotification($gcm_key,$title,$message,$mobiletype)
-	{
-
-		if ($mobiletype =='1'){
-
-		    require_once 'assets/notification/Firebase.php';
-            require_once 'assets/notification/Push.php';
-
-            $device_token = explode(",", $gcm_key);
-            $push = null;
-
-        //first check if the push has an image with it
-		    $push = new Push(
-					$title,
-					$message,
-					null
-				);
-
-// 			//if the push don't have an image give null in place of image
-// 			 $push = new Push(
-// 			 		'HEYLA',
-// 		     		'Hi Testing from maran',
-// 			 		'http://heylaapp.com/assets/notification/images/event.png'
-// 			 	);
-
-    		//getting the push from push object
-    		$mPushNotification = $push->getPush();
-
-    		//creating firebase class object
-    		$firebase = new Firebase();
-
-    	foreach($device_token as $token) {
-    		 $firebase->send(array($token),$mPushNotification);
-    	}
-
-		} else {
-
-			$device_token = explode(",", $gcm_key);
-			$passphrase = 'hs123';
-		    $loction ='assets/notification/happysanz.pem';
-
-			$ctx = stream_context_create();
-			stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-			stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-			// Open a connection to the APNS server
-			$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-
-			if (!$fp)
-				exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-			$body['aps'] = array(
-				'alert' => array(
-					'body' => $message,
-					'action-loc-key' => 'EDU App',
-				),
-				'badge' => 2,
-				'sound' => 'assets/notification/oven.caf',
-				);
-			$payload = json_encode($body);
-
-			foreach($device_token as $token) {
-
-				// Build the binary notification
-    			$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $token)) . pack("n", strlen($payload)) . $payload;
-        		$result = fwrite($fp, $msg, strlen($msg));
-			}
-
-				fclose($fp);
-		}
-
-	}
-
-//#################### Notification End ####################//
-
 //-------------------- Version check -------------------//
-
 
 function version_check($version_code){
 	if($version_code>=2){
@@ -116,6 +35,7 @@ function version_check($version_code){
 }
 
 //-------------------- Version check -------------------//
+
 //#################### Dashboard ####################//
 
 	public function Dashboard($user_master_id)
@@ -164,13 +84,16 @@ function version_check($version_code){
       
 	  if($preferred_lang_id=='1'){
         $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+		$templateid = '1707161432164819940';
       }else{
         $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+		$templateid = '1707161432164819940';
       }
 
       $notes=$msg;
       $phone=$phone_no;
-      $this->smsmodel->send_sms($phone,$notes);
+	  $this->smsmodel->send_sms($phone,$notes,$templateid);
+      //$this->smsmodel->send_sms($phone,$notes);
 			$response = array("status" => "success", "msg" => "Mobile OTP", "user_master_id"=>$user_master_id, "phone_no"=>$phone_no, "otp"=>$OTP);
 
 		} else {
@@ -599,9 +522,12 @@ function user_info($user_master_id){
               $preferred_lang_id=$rows->preferred_lang_id;
               $head='Skilex';
               if($preferred_lang_id=='1'){
-              	$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+					$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+					$templateid = '1707161433329355562';
               }else{
-              	  $message="Service Expert has initiated";
+					$message="Service Expert has initiated";
+					$templateid = '1707161518690954551';
+				  
               }
 
               $user_type='3';
@@ -609,7 +535,8 @@ function user_info($user_master_id){
     				}
             $notes=$message;
             $phone=$rows->phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
     		}
 
@@ -625,15 +552,18 @@ function user_info($user_master_id){
               $head='Skilex';
               if($preferred_lang_id=='1'){
               	$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+				$templateid = '1707161527200011504';
               }else{
               	  $message="Service Expert has initiated";
+				  $templateid = '1707161518690954551';
               }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes=$message;
             $phone=$rows->phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
         }
 
@@ -652,15 +582,18 @@ function user_info($user_master_id){
               $head='Skilex';
               if($preferred_lang_id=='1'){
               	$message="ஸ்கிலெக்ஸ  சேவை கோரிக்கை தொடங்கப்பட்டது. சேவை நிபுணரைக் கண்காணிப்பதற்கான ஆப்பில் பார்க்கவும்";
+				$templateid = '1707161433314072224';
               }else{
               	$message = "SKILEX - Service request initiated. Please look into the app for tracking the Service expert.";
+				$templateid = '1707161518668055531';
               }
               $user_type='5';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes=$message;
             $phone=$contact_person_number;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
         }
 
 		//$title = "Service Request Initiated";
@@ -717,8 +650,10 @@ function user_info($user_master_id){
           $head='Skilex';
           if($preferred_lang_id=='1'){
           	$message="ஸ்கிலெக்ஸ் சேவை மீண்டும் தொடங்கப்பட்டுள்ளது.";
+			$templateid = '1707161433591835313';
           }else{
           	$message="Skilex-Service is has restarted.";
+			$templateid = '1707161518674086035';
           }
 
           $user_type='3';
@@ -726,7 +661,8 @@ function user_info($user_master_id){
         }
         $notes=$message;
         $phone=$rows->phone_no;
-        $this->smsmodel->send_sms($phone,$notes);
+		$this->smsmodel->send_sms($phone,$notes,$templateid);
+        //$this->smsmodel->send_sms($phone,$notes);
     }
 
 
@@ -743,8 +679,10 @@ function user_info($user_master_id){
           $head='Skilex';
           if($preferred_lang_id=='1'){
           	$message="ஸ்கிலெக்ஸ் சேவை மீண்டும் தொடங்கப்பட்டுள்ளது.";
+			$templateid = '1707161433591835313';
           }else{
           	$message="Skilex-Service is has restarted.";
+			$templateid = '1707161518674086035';
           }
 
           $user_type='4';
@@ -752,7 +690,8 @@ function user_info($user_master_id){
         }
         $notes=$message;
         $phone=$rows->phone_no;
-        $this->smsmodel->send_sms($phone,$notes);
+		$this->smsmodel->send_sms($phone,$notes,$templateid);
+        //$this->smsmodel->send_sms($phone,$notes);
     }
 
 
@@ -770,15 +709,18 @@ function user_info($user_master_id){
           $head='Skilex';
           if($preferred_lang_id=='1'){
           	$message="ஸ்கிலெக்ஸ் சேவை மீண்டும் தொடங்கப்பட்டுள்ளது.";
+			$templateid = '1707161433591835313';
           }else{
           	$message="Skilex-Service is has restarted.";
+			$templateid = '1707161518674086035';
           }
           $user_type='5';
           $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
         }
         $notes=$message;
         $phone=$contact_person_number;
-        $this->smsmodel->send_sms($phone,$notes);
+		$this->smsmodel->send_sms($phone,$notes,$templateid);
+        //$this->smsmodel->send_sms($phone,$notes);
 
     }
 
@@ -975,11 +917,13 @@ function user_info($user_master_id){
       }
 
 	   $message_details = "Your OTP :".$OTP;
+	   $templateid = '1707161518693063489';
+	   
        $notes=$message_details;
        $phone=$contact_person_number;
-       $this->smsmodel->send_sms($phone,$notes);
-
-
+	   $this->smsmodel->send_sms($phone,$notes,$templateid);
+       //$this->smsmodel->send_sms($phone,$notes);
+	   
 			$response = array("status" => "success", "msg" => "OTP send");
 		} else {
 			$response = array("status" => "error", "msg" => "Something Wrong");
@@ -1035,15 +979,19 @@ function user_info($user_master_id){
             $head='Skilex';
             if($preferred_lang_id=='1'){
             	$message="ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை தொடர்ந்து செல்கிறது.";
+				$templateid = '1707161433591835313';
             }else{
             	$message="Service request is Ongoing.";
+				$templateid = '1707161518674086035';
             }
             $user_type='3';
             $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
           }
           $notes=$message;
           $phone=$rows->phone_no;
-          $this->smsmodel->send_sms($phone,$notes);
+		  
+		  $this->smsmodel->send_sms($phone,$notes,$templateid);
+          //$this->smsmodel->send_sms($phone,$notes);
       }
 
       $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
@@ -1058,8 +1006,10 @@ function user_info($user_master_id){
             $head='Skilex';
             if($preferred_lang_id=='1'){
             	$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+				$templateid = '1707161433314072224';
             }else{
               $message="Service has initiated";
+			  $templateid = '1707161518668055531';
             }
 
             $user_type='4';
@@ -1067,7 +1017,8 @@ function user_info($user_master_id){
           }
           $notes=$message;
           $phone=$rows->phone_no;
-          $this->smsmodel->send_sms($phone,$notes);
+		  $this->smsmodel->send_sms($phone,$notes,$templateid);
+          //$this->smsmodel->send_sms($phone,$notes);
 
       }
 
@@ -1083,9 +1034,11 @@ function user_info($user_master_id){
             $preferred_lang_id=$rows->preferred_lang_id;
             $head='Skilex';
             if($preferred_lang_id=='1'){
-            	$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+					$message="ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+					$templateid = '1707161433329355562';
             }else{
-              $message="Service has initiated";
+					$message="Service has initiated";
+					$templateid = '1707161518666252098';
             }
 
             $user_type='5';
@@ -1094,12 +1047,10 @@ function user_info($user_master_id){
 
           $notes=$message;
           $phone=$contact_person_number;
-          $this->smsmodel->send_sms($phone,$notes);
+		  $this->smsmodel->send_sms($phone,$notes,$templateid);
+          //$this->smsmodel->send_sms($phone,$notes);
       }
 
-
-
-			//$this->sendNotification($customer_mobile_key,$title,$message_details,$customer_mobile_type)
 
 			$response = array("status" => "success", "msg" => "Service Started");
 		} else {
@@ -1565,13 +1516,16 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
       $Phoneno=$row_res->phone_no;
       $preferred_lang_id=$row_res->preferred_lang_id;
       if($preferred_lang_id=='1'){
-      	$message="ஸ்கிலெக்ஸ்-சேவை நிறுத்தி வைக்கப்பட்டுள்ளது";
+			$notes="ஸ்கிலெக்ஸ்-சேவை நிறுத்தி வைக்கப்பட்டுள்ளது";
+			$templateid = '1707161433640095471';
       }else{
       	  $notes="Skilex-Service is On hold";
+		  $templateid = '1707161518684046346';
       }
 
       $phone=$Phoneno;
-      $this->smsmodel->send_sms($phone,$notes);
+	  $this->smsmodel->send_sms($phone,$notes,$templateid);
+      //$this->smsmodel->send_sms($phone,$notes);
 
 
       $select="SELECT * FROM service_orders where id='$service_order_id'";
@@ -1596,8 +1550,10 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
            $head='Skilex';
            if($preferred_lang_id=='1'){
            	$message="ஸ்கிலெக்ஸ் சேவை இப்போது நிறுத்தப்பட்டுள்ளது $resume மீண்டும் தொடங்கும்";
+			$templateid = '1707161433578925667';
            }else{
            	 $message="Service is hold now will resume on ".$resume;
+			 $templateid = '1707161518688384162';
            }
 
 
@@ -1606,7 +1562,8 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          }
          $notes=$message;
          $phone=$rows->phone_no;
-         $this->smsmodel->send_sms($phone,$notes);
+		 $this->smsmodel->send_sms($phone,$notes,$templateid);
+         //$this->smsmodel->send_sms($phone,$notes);
      }
 
        $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
@@ -1619,8 +1576,10 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
             $head='Skilex';
             if($preferred_lang_id=='1'){
             	$message="ஸ்கிலெக்ஸ் உங்கள் சேவை இப்போது நிறுத்தப்பட்டுள்ளது.$resume.மீண்டும் தொடங்கும";
+				$templateid = '1707161433578925667';
             }else{
               $message="Your Service is hold now will resume on ".$resume;
+			  $templateid = '1707161518688384162';
             }
 
            $user_type='5';
@@ -1628,7 +1587,8 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          }
          $notes=$message;
          $phone=$rows->phone_no;
-         $this->smsmodel->send_sms($phone,$notes);
+		 $this->smsmodel->send_sms($phone,$notes,$templateid);
+         //$this->smsmodel->send_sms($phone,$notes);
 
      }
 
@@ -1738,8 +1698,10 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $head='Skilex';
           if($preferred_lang_id=='1'){
           	$message="ஸ்கிலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது";
+			$templateid = '1707161518659574142';
           }else{
           	$message="Skilex-Your service request has been cancelled";
+			$templateid = '1707161518664219488';
           }
 
          $user_type='3';
@@ -1747,7 +1709,8 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
        }
        $notes=$message;
        $phone=$rows->phone_no;
-       $this->smsmodel->send_sms($phone,$notes);
+	   $this->smsmodel->send_sms($phone,$notes,$templateid);
+       //$this->smsmodel->send_sms($phone,$notes);
    }
 
    $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$customer_id'";
@@ -1760,15 +1723,18 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
          $head='Skilex';
           if($preferred_lang_id=='1'){
           	$message="ஸ்கிலெக்ஸ்-உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது. இதனால் ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம். மற்றொரு சேவை நபர் விரைவில் நியமிக்கப்படுவார்.";
+			$templateid = '1707161518650286082';
           }else{
           	$message="Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
+			$templateid = '1707161518677936626';
           }
          $user_type='5';
          $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
        }
        $notes=$message;
        $phone=$rows->phone_no;
-       $this->smsmodel->send_sms($phone,$notes);
+	   $this->smsmodel->send_sms($phone,$notes,$templateid);
+       //$this->smsmodel->send_sms($phone,$notes);
 
    }
 
@@ -1984,8 +1950,10 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
           $head='Skilex';
           if($preferred_lang_id=='1'){
             $message="ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  நிறைவடைந்தது.";
+			$templateid = '1707161433338125655';
           }else{
           $message="Skilex- Service Request Completed";
+		  $templateid = '1707161518675860544';
           }
 
          $user_type='3';
@@ -1993,7 +1961,9 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
        }
         $notes=$message;
         $phone=$rows->phone_no;
-        $this->smsmodel->send_sms($phone,$notes);
+		$this->smsmodel->send_sms($phone,$notes,$templateid);
+        //$this->smsmodel->send_sms($phone,$notes);
+		
    }
    $sQuery="SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$customer_id'";
 
@@ -2006,8 +1976,10 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
           $head='Skilex';
           if($preferred_lang_id=='1'){
             $message="ஸ்கிலெக்ஸ் சேவை கோரிக்கை முடிந்தது. பில் உருவாக்கப்பட்டது ஸ்கிலெக்ஸ் ஆப் மூலம் கட்டணத்தை செலுத்துங்கள்.";
+			 $templateid = '1707161433582953263';
           }else{
             $message="SKILEX - Service Request Completed. Bill Generated. Kindly pay the bill through Skilex App.";
+			 $templateid = '1707161432984923904';
           }
 
          $user_type='5';
@@ -2015,7 +1987,8 @@ function remove_addtional_services($user_master_id,$service_order_id,$service_id
        }
        $notes = $message;
        $phone=$contact_person_number;
-       $this->smsmodel->send_sms($phone,$notes);
+	   $this->smsmodel->send_sms($phone,$notes,$templateid);
+       //$this->smsmodel->send_sms($phone,$notes);
 
    }
 

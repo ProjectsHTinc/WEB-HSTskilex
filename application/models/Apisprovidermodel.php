@@ -1,111 +1,15 @@
-<?php
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Apisprovidermodel extends CI_Model
 {
-
     function __construct()
     {
         parent::__construct();
         $this->load->model('mailmodel');
-          $this->load->model('smsmodel');
+        $this->load->model('smsmodel');
     }
 
-
-    //#################### Email ####################//
-
-    public function sendMail($email, $subject, $email_message)
-    {
-        // Set content-type header for sending HTML email
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        // Additional headers
-        $headers .= 'From: Webmaster<admin@skilex.in>' . "\r\n";
-        mail($email, $subject, $email_message, $headers);
-    }
-
-    //#################### Email End ####################//
-
-
-
-
-    //#################### Notification ####################//
-
-    public function sendNotification($gcm_key, $title, $message, $mobiletype)
-    {
-
-        if ($mobiletype == '1') {
-
-            require_once 'assets/notification/Firebase.php';
-            require_once 'assets/notification/Push.php';
-
-            $device_token = explode(",", $gcm_key);
-            $push         = null;
-
-            //first check if the push has an image with it
-            $push = new Push($title, $message, null);
-
-            // 			//if the push don't have an image give null in place of image
-            // 			 $push = new Push(
-            // 			 		'HEYLA',
-            // 		     		'Hi Testing from maran',
-            // 			 		'http://heylaapp.com/assets/notification/images/event.png'
-            // 			 	);
-
-            //getting the push from push object
-            $mPushNotification = $push->getPush();
-
-            //creating firebase class object
-            $firebase = new Firebase();
-
-            foreach ($device_token as $token) {
-                $firebase->send(array(
-                    $token
-                ), $mPushNotification);
-            }
-
-        } else {
-
-            $device_token = explode(",", $gcm_key);
-            $passphrase   = 'hs123';
-            $loction      = 'assets/notification/happysanz.pem';
-
-            $ctx = stream_context_create();
-            stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
-            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-            // Open a connection to the APNS server
-            $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
-
-            if (!$fp)
-                exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-            $body['aps'] = array(
-                'alert' => array(
-                    'body' => $message,
-                    'action-loc-key' => 'EDU App'
-                ),
-                'badge' => 2,
-                'sound' => 'assets/notification/oven.caf'
-            );
-            $payload     = json_encode($body);
-
-            foreach ($device_token as $token) {
-
-                // Build the binary notification
-                $msg    = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $token)) . pack("n", strlen($payload)) . $payload;
-                $result = fwrite($fp, $msg, strlen($msg));
-            }
-
-            fclose($fp);
-        }
-
-    }
-
-    //#################### Notification End ####################//
-    //-------------------- Version check -------------------//
-
+ //-------------------- Version check -------------------//
 
   function version_check($version_code){
     if($version_code>=3){
@@ -207,9 +111,11 @@ class Apisprovidermodel extends CI_Model
 
             // $notes = "OTP :" . $OTP;
             $msg = "Your SkilEx Verification code is: ".$OTP."  0gQ4RsI6iX4";
+			$templateid = '1707161432164819940';
             $notes=$msg;
             $phone=$mobile;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
             $subject = "SKILEX - New User Registered";
             $notes = '<p>Name:<span>'.$name.'</span></p><p>Email ID:<span>'.$email.'</span></p><p>Phone:<span>'.$mobile.'</span></p>';
@@ -252,9 +158,11 @@ class Apisprovidermodel extends CI_Model
             $update_result = $this->db->query($update_sql);
 
             $msg = "Your SkilEx Verification code is: ".$OTP."  Y3XZqSQzX9V";
+			$templateid = '1707161432164819940';
             $notes=$msg;
             $phone=$phone_no;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
             $response        = array(
                 "status" => "success",
@@ -1288,13 +1196,11 @@ return $response;
             $insert_result = $this->db->query($insert_query);
 
             $notes = "SKILEX - Service Person Created";
+			$templateid = '1707161433083037008';
+			
             $phone=$mobile;
-            $this->smsmodel->send_sms($phone,$notes);
-
-
-            //$subject = "SKILEX - Verification Email";
-            //$email_message = 'Please Click the Verification link. <a href="'. base_url().'/apisprovider/email_verfication/'.$enc_user_master_id.'" target="_blank" style="background-color: #478ECC; font-size:15px; font-weight: bold; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">Verify Your Email</a><br><br><br>';
-            //$this->sendMail($email,$subject,$email_message);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+           // $this->smsmodel->send_sms($phone,$notes);
 
             $subject = "SKILEX - New Expert Created";
             $notes = '<p>Name:<span>'.$name.'</span></p><p>Email ID:<span>'.$email.'</span></p><p>Phone:<span>'.$mobile.'</span></p>';
@@ -1683,15 +1589,19 @@ return $response;
               $head='Skilex';
               if($preferred_lang_id=='1'){
               $message="ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்";
+			  $templateid = '1707161527170769665';
               }else{
               $message=" Skilex- Your Services has been accepted.";
+			  $templateid = '1707161518662058671';
               }
                $user_type='5';
                $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $notes = $message;
             $phone=$contact_person_number;
-           $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
+		   
         }
 
 
@@ -1768,15 +1678,18 @@ return $response;
               $head='Skilex';
               if($preferred_lang_id=='1'){
               $message="ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  ஒதுக்கப்பட்டது.மேலும் அறிய ஆப்பை  பார்க்கவும்.";
+			  $templateid = '1707161433655197439';
               }else{
                 $message="Service request assigned.";
+				$templateid = '1707161432827883995';
               }
               $user_type='4';
               $this->smsmodel->send_push_notification($head,$message,$gcm_key,$mobile_type,$user_type);
             }
             $phone=$sperson_mobile;
             $notes=$message;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
         }
 
 
@@ -1790,8 +1703,10 @@ return $response;
                 $head='Skilex';
                 if($preferred_lang_id=='1'){
                 $message="ஸ்கிலெக்ஸ் தங்களது கோரிக்கையைக்கான சர்வீஸ் நபர் ஒதுக்கப்பட்டுள்ளது.";
+				$templateid = '1707161527181073930';
                 }else{
                 $message='Service expert assigned to your order.';
+				$templateid = '1707161518695124556';
                 }
 
                 $user_type='5';
@@ -1799,7 +1714,8 @@ return $response;
             }
             $notes=$message;
             $phone=$contact_person_number;
-            $this->smsmodel->send_sms($phone,$notes);
+			$this->smsmodel->send_sms($phone,$notes,$templateid);
+            //$this->smsmodel->send_sms($phone,$notes);
 
         }
 
@@ -2330,8 +2246,10 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
              $head='Skilex';
              if($preferred_lang_id=='1'){
                $message="ஸ்கிலெக்ஸ் உங்கள் சேவை கோரிக்கை ரத்து செய்யப்பட்டது. இதனால் ஏற்பட்ட சிரமத்திற்கு வருந்துகிறோம். மற்றொரு சேவை நபர் விரைவில் நியமிக்கப்படுவார்.";
+			   $templateid = '1707161518650286082';
              }else{
                  $message = "Skilex-Your service request has been cancelled. We regret for the inconvenience caused. Another service person will be assigned shortly.";
+				 $templateid = '1707161518677936626';
              }
 
              $user_type='5';
@@ -2339,7 +2257,8 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
            }
            $notes=$message;
            $phone=$contact_person_number;
-           $this->smsmodel->send_sms($phone,$notes);
+		   $this->smsmodel->send_sms($phone,$notes,$templateid);
+           //$this->smsmodel->send_sms($phone,$notes);
 
        }
 

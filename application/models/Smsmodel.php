@@ -13,7 +13,7 @@ Class Smsmodel extends CI_Model
 	  $msg=urlencode($uni_code);
 	  //$url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=03&Dltsenderid=1701159135772474512";
 	  
-	    $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=03&dltsenderid=1701159135772474512&dlttemplateid=$templateid";
+	   $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=8&flashsms=0&number=91$phone&text=$msg&route=03&dltsenderid=1701159135772474512&dlttemplateid=$templateid";
 	  
 	  $curl = curl_init();
 		  curl_setopt_array($curl, array(

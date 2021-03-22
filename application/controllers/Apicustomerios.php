@@ -2012,7 +2012,7 @@ class Apicustomerios extends CI_Controller {
 		$serv_loc  = $this->input->post("serv_loc");
 		$serv_address  = $this->input->post("serv_address");
 
- 		$data['result']=$this->apicustomermodel->customer_address_add($cust_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
+ 		$data['result']=$this->apicustomermodelios->customer_address_add($cust_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
  		$response = $data['result'];
  		echo json_encode($response);
  	}
@@ -2043,7 +2043,7 @@ class Apicustomerios extends CI_Controller {
 
  		$cust_id  = $this->input->post("cust_id");
 
- 		$data['result']=$this->apicustomermodel->customer_address_list($cust_id);
+ 		$data['result']=$this->apicustomermodelios->customer_address_list($cust_id);
  		$response = $data['result'];
  		echo json_encode($response);
  	}
@@ -2079,7 +2079,7 @@ class Apicustomerios extends CI_Controller {
 		$serv_loc  = $this->input->post("serv_loc");
 		$serv_address  = $this->input->post("serv_address");
 
- 		$data['result']=$this->apicustomermodel->customer_address_edit($address_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
+ 		$data['result']=$this->apicustomermodelios->customer_address_edit($address_id,$contact_name,$contact_no,$serv_lat_lon,$serv_loc,$serv_address);
  		$response = $data['result'];
  		echo json_encode($response);
  	}

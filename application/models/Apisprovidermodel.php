@@ -16,7 +16,7 @@ class Apisprovidermodel extends CI_Model
     //-------------------- Version check -------------------//
     function version_check($version_code)
     {
-        if ($version_code >= 3)
+        if ($version_code >= 4)
         {
             $response = array(
                 "status" => "success"

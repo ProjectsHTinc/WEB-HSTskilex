@@ -25,7 +25,7 @@ class Apicustomermodel extends CI_Model
     //-------------------- Version check -------------------//
     function version_check($version_code)
     {
-        if ($version_code >= 3)
+        if ($version_code >= 7)
         {
             $response = array(
                 "status" => "success",

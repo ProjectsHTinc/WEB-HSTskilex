@@ -7,14 +7,14 @@ Class Smsmodel extends CI_Model
       parent::__construct();
   }
 
- function send_sms($phone,$notes)
+ function send_sms($phone,$notes,$templateid)
  {
-	  $uni_code=utf8_encode($notes);
-	  $msg=urlencode($uni_code);
-	  //$url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Ski@123-&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=05";
-	  $url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=0&flashsms=0&number=91$phone&text=$msg&route=03&Dltsenderid=1701159135772474512";
+		//$uni_code=utf8_encode($notes);
+		$msg=urlencode($notes);
+
+		$url="http://sms.vstcbe.com/api/mt/SendSMS?user=skilex&password=Skilcbe@1234&senderid=SKILEX&channel=Trans&DCS=8&flashsms=0&number=91$phone&text=$msg&route=03&dltsenderid=1701159135772474512&dlttemplateid=$templateid";
 	  
-	  $curl = curl_init();
+		$curl = curl_init();
 		  curl_setopt_array($curl, array(
 		  CURLOPT_URL => $url,
 		  CURLOPT_RETURNTRANSFER => true,

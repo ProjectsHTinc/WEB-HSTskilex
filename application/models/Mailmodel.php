@@ -25,7 +25,7 @@ Class Mailmodel extends CI_Model
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		// Additional headers
-		$headers .= 'From: skilex<info@skilex.in>' . "\r\n";
+		$headers .= 'From: skilex<info@skilex.com>' . "\r\n";
 		mail($to,$subject,$htmlContent,$headers);
 	}
 
@@ -33,7 +33,7 @@ Class Mailmodel extends CI_Model
 	function send_mail_to_skilex($subject,$notes)
 	{
 
-		$to ='kamal.happysanz@gmail.com';
+		$to ='info@skilex.in';
 		$subject=$subject;
 		$htmlContent = '
 		<html>
@@ -47,7 +47,7 @@ Class Mailmodel extends CI_Model
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		// Additional headers
-		$headers .= 'From: skilex<info@skilex.in>' . "\r\n";
+		$headers .= 'From: skilex<info@skilex.com>' . "\r\n";
 		mail($to,$subject,$htmlContent,$headers);
 	}
 

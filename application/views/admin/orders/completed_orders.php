@@ -32,7 +32,7 @@ th{
       <thead >
           <tr>
               <th>S.no</th>
-              <th>Customer Phone <br>Service Name</th>
+              <th>Customer Phone <br> Service Name ()</th>
               <th>Contact Person / Number</th>
               <th>Order date / Timeslot</th>
               <th>Service Amount</th>
@@ -47,11 +47,7 @@ th{
 
           <tr>
                 <td><?php echo $i; ?></td>
-              <td><?php echo $rows->phone_no; ?>
-              <br>
-            <?php echo $rows->service_name; ?> (<?php echo $rows->number_of_orders; ?>)
-          </td>
-                <!-- <td></td> -->
+              <td><?php echo $rows->phone_no; ?> <br><br> <?php echo $rows->service_name; ?> (<?php echo $rows->number_of_orders; ?>)</td>
                   <td><?php echo $rows->contact_person_name; ?> <br><br><?php echo $rows->contact_person_number; ?>
                   </td>
                   <td><?php echo  date('d-m-Y',strtotime($rows->order_date)) ?><br><br>

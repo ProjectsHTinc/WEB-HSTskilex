@@ -20,8 +20,6 @@ input[type="search"]:after{
 }
 </style>
 
-
-	
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/template.js"></script> -->
 <!-- <script src="<?php echo base_url(); ?>assets/admin/js/data-table.js"></script> -->
 <script>

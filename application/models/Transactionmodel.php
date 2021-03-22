@@ -119,7 +119,12 @@ Class Transactionmodel extends CI_Model
 
 
   function update_trans_status($status,$id,$transaction_notes,$user_id){
-   $update="UPDATE daily_payment_transaction SET skilex_closing_status='Paid',serv_prov_closing_status='Received',transaction_notes='$transaction_notes',updated_at=NOW(),updated_by='$user_id' WHERE id='$id'";
+	  
+	  if ($status == 'skilex'){
+			$update="UPDATE daily_payment_transaction SET skilex_closing_status='Paid',serv_prov_closing_status='Received',transaction_notes='$transaction_notes',updated_at=NOW(),updated_by='$user_id' WHERE id='$id'";
+	  } else {
+		  $update="UPDATE daily_payment_transaction SET skilex_closing_status='Received',serv_prov_closing_status='Paid',transaction_notes='$transaction_notes',updated_at=NOW(),updated_by='$user_id' WHERE id='$id'";
+	  }
     $result=$this->db->query($update);
     if($result){
         $data = array("status" => "success");

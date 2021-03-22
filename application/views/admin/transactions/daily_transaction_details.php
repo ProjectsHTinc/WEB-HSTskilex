@@ -83,12 +83,13 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $rows->taxable_amount; ?></td> -->
                 <td class="amt"><?php echo $rows->pay_to_serv_prov; ?></td>
                 <td class=""><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
-                  <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
-                  <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex','<?php echo $rows->id; ?>')" data-toggle="modal" data-target="#exampleModal-5"
-                    >Need to Pay </a>
+                <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
+					<a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex','<?php echo $rows->id; ?>')" data-toggle="modal" data-target="#exampleModal-5">Need to Pay </a>
                 <?php }else{
                     if($rows->serv_prov_closing_status=='Unpaid'){
-                      echo "Commando Need to Pay";
+				?>
+					<a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('provider','<?php echo $rows->id; ?>')" data-toggle="modal" data-target="#exampleModal-5">Commando Need to Pay </a>
+                 <?php
                     }else if($rows->serv_prov_closing_status=='Paid'){
                       echo "Commando Paid";
                     }else{
@@ -394,8 +395,6 @@ $.ajax({
                if (stats=="success") {
               swal('Status Updated')
                window.setTimeout(function(){location.reload()},1000)
-
-
              }else{
 
                    swal(stats)

@@ -81,7 +81,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $rows->online_serv_prov_commission; ?></td>
                 <td><?php echo $rows->offline_serv_prov_commission; ?></td>
                 <td><?php echo $rows->taxable_amount; ?></td> -->
-                <td class="amt"><?php echo abs($rows->pay_to_serv_prov); ?></td>
+                <td class="amt"><?php echo number_format(abs($rows->pay_to_serv_prov),2); ?></td>
                 <td class=""><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
                 <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
 					<a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex','<?php echo $rows->id; ?>')" data-toggle="modal" data-target="#exampleModal-5">Need to Pay </a>
@@ -140,7 +140,7 @@ table.dataTable thead th, table.dataTable thead td{
                   data-online_serv_prov_commission="<?php echo $rows->online_serv_prov_commission; ?>"
                   data-offline_serv_prov_commission="<?php echo $rows->offline_serv_prov_commission; ?>"
                   data-taxable_amount="<?php echo $rows->taxable_amount; ?>"
-                  data-pay_to_serv_prov="<?php echo abs($rows->pay_to_serv_prov); ?>"
+                  data-pay_to_serv_prov="<?php echo number_format(abs($rows->pay_to_serv_prov),2); ?>"
                   data-skilex_closing_status="<?php echo $rows->skilex_closing_status; ?>"
                   data-serv_prov_closing_status="<?php echo $rows->serv_prov_closing_status; ?>"
                   data-transaction_notes="<?php echo $rows->transaction_notes; ?>"

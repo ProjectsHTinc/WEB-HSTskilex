@@ -7,10 +7,7 @@ Class service_order_model extends CI_Model
   {
       parent::__construct();
       $this->load->model('smsmodel');
-
-
   }
-
 
 
   function get_pending_orders(){
@@ -209,11 +206,10 @@ Class service_order_model extends CI_Model
       $result=$this->db->query($select);
       $res=$result->result();
       foreach($res as $rows){}
-        $phone_no=$rows->phone_no;
-        $notes="You Received order from Customer.Please look into app for more details";
-        $this->smsmodel->send_sms($phone_no,$notes);
-
-
+        $phone=$rows->phone_no;
+		$notes = "You have received order from customer.";
+        $templateid = '1707161432827883995';
+        $this->smsmodel->send_sms($phone,$notes,$templateid);
 
         $update="UPDATE service_order_history SET status='Expired',created_at=NOW()  WHERE service_order_id='$service_order_id' AND (status='Requested' or status='Ongoing' or status='Accepted' or status='Initiated' or status='Assigned')";
         $res_update=$this->db->query($update);

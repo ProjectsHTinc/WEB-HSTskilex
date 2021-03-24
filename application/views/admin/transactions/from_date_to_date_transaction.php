@@ -51,7 +51,7 @@ table.dataTable thead th, table.dataTable thead td{
               <th>Offline Skilex Provider Amt</th>
               <th>Taxable Amount</th> -->
               <th>Balance</th>
-                <th>Closing status</th>
+              <th>Closing status</th>
 
               <!-- <th>Skilex Closing </th>
               <th>Associate Closing </th> -->
@@ -81,7 +81,7 @@ table.dataTable thead th, table.dataTable thead td{
                 <td><?php echo $rows->online_serv_prov_commission; ?></td>
                 <td><?php echo $rows->offline_serv_prov_commission; ?></td>
                 <td><?php echo $rows->taxable_amount; ?></td> -->
-                <td><?php echo $rows->pay_to_serv_prov; ?></td>
+                <td><?php echo number_format(abs($rows->pay_to_serv_prov),2); ?><?php //echo $rows->pay_to_serv_prov; ?></td>
                 <td class=""><?php if($rows->skilex_closing_status=='Unpaid'){ ?>
                   <input type="hidden" id="daily_id" value="<?php echo $rows->id; ?>">
                   <a class="unpaid_text" class="open-AddBookDialog_1 btn" onclick="update_status('skilex')" data-toggle="modal" data-target="#exampleModal-5"
@@ -130,14 +130,12 @@ table.dataTable thead th, table.dataTable thead td{
                   data-online_serv_prov_commission="<?php echo $rows->online_serv_prov_commission; ?>"
                   data-offline_serv_prov_commission="<?php echo $rows->offline_serv_prov_commission; ?>"
                   data-taxable_amount="<?php echo $rows->taxable_amount; ?>"
-                  data-pay_to_serv_prov="<?php echo $rows->pay_to_serv_prov; ?>"
+                  data-pay_to_serv_prov="<?php echo number_format(abs($rows->pay_to_serv_prov),2); ?>"
                   data-skilex_closing_status="<?php echo $rows->skilex_closing_status; ?>"
                   data-serv_prov_closing_status="<?php echo $rows->serv_prov_closing_status; ?>"
                   data-transaction_notes="<?php echo $rows->transaction_notes; ?>"
                   data-order_id="<?php echo $rows->order_id; ?>"
                   data-ccavenue_track_id="<?php echo $rows->ccavenue_track_id; ?>"
-
-
                   >View</a></td>
 
 

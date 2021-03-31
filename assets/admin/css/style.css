@@ -22722,7 +22722,8 @@ div.tagsinput {
       float: left;
       position: relative;
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+	  margin-top: 10px;
       z-index: 99;
       background: #f9f9fc;
       -webkit-transition-duration: 0.2s;

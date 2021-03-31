@@ -1,12 +1,19 @@
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
+		<nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom">
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
+			  <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>home/get_all_staff">Staff list</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Update Staff</span></li>
+            </ol>
+          </nav>
           <div class="row">
 
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Update Profile info </h4>
+                  <h4 class="card-title">Update Staff Details</h4>
                   <form class="forms-sample" id="staff_profile_update" method="post" action="<?php echo base_url(); ?>home/update_staff_profile" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-6">

@@ -5,13 +5,13 @@
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
-          <!-- <nav aria-label="breadcrumb">
+          <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Service Provider list </a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Commando verify list </a></li>
               <li class="breadcrumb-item active" aria-current="page"><span>Service Provider Document list</span></li>
             </ol>
-          </nav> -->
+          </nav>
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Skills  list  <a href="javascript:window.history.go(-1);" class="btn go_back_btn pull-right">Back</a></h4>

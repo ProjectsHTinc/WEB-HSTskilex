@@ -1,6 +1,12 @@
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
+		          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom">
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Staff list</span></li>
+            </ol>
+          </nav>
           <div class="card">
             <?php if($this->session->flashdata('msg')) {
             $message = $this->session->flashdata('msg');?>
@@ -20,9 +26,7 @@
                 <th>Username</th>
                 <th>Email <br>Phone </th>
                 <th>Permission</th>
-
                 <th>Profile Picture</th>
-
                 <th>Status</th>
                 <th>Actions</th>
             </tr>

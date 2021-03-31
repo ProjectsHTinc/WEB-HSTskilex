@@ -5,7 +5,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list">Pending orders </a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>service_orders/pending_orders">Pending orders </a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Service orders details</span></li>
             </ol>
           </nav>

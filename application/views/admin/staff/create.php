@@ -1,6 +1,12 @@
 <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
+		          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom">
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><span>Create Staff</span></li>
+            </ol>
+          </nav>
           <form class="forms-sample" id="create_staff" method="post" action="<?php echo base_url(); ?>home/get_register_staff" enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">

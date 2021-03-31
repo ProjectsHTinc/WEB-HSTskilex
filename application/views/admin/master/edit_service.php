@@ -6,8 +6,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>masters/create_category">Category </a></li>
-              <li class="breadcrumb-item"><a href="#">Sub category </a></li>
+              <li class="breadcrumb-item"><a href="javascript:window.history.go(-1);">List of Service</a></li>
               <li class="breadcrumb-item active" aria-current="page"><span>Update Service</span></li>
             </ol>
           </nav>
@@ -200,9 +199,9 @@
                       </div>
                     </div>
 
-
-
-                    <?php if($role=='7'){ ?>
+					<div class="row">
+                      <div class="col-md-6">
+                        <?php if($role=='7'){ ?>
                         <input type="hidden" class="form-control" id="status" name="status" value="<?php echo $rows->status; ?>">
                     <?php  }else{ ?>
                       <div class="form-group">
@@ -215,26 +214,25 @@
                         <script>$('#status').val('<?php echo $rows->status; ?>');</script>
                       </div>
                     <?php  } ?>
+                      </div>
+                      <div class="col-md-6">
+							<button type="submit" class="btn btn-primary mr-2" style="margin-top:20px;">Update Service</button>
+                      </div>
+                    </div>
+					
 
 
-                    <button type="submit" class="btn btn-primary mr-2">Update Service</button>
+                    
+
+
+                   
 
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
-
-            <div class="col-md-6">
-              <div class="category_img" style="margin-top:200px;">
-                <p>Old Image</p>
-
-              </div>
-            </div>
-
-
-          </div>
+          
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>verifyprocess/get_vendor_verify_list"> orders </a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>service_orders/cancelled_orders">Service Orders </a></li>
               <li class="breadcrumb-item active" aria-current="page"><span> Cancelled or Rejected orders details</span></li>
             </ol>
           </nav>

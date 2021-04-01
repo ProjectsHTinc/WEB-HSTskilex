@@ -3650,7 +3650,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
     public function Sp_verify_status($user_master_id,$status)
     {
 		if ($status == 'Approved'){
-				echo $sQuery = "SELECT
+				$sQuery = "SELECT
 							lu.id AS user_master_id,
 							spd.full_name,
 							spd.serv_pers_verify_status,
@@ -3665,7 +3665,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
 						ORDER BY
 							spd.id DESC";
 		} else {
-			echo $sQuery = "SELECT
+			$sQuery = "SELECT
 						lu.id AS user_master_id,
 						spd.full_name,
 						spd.serv_pers_verify_status,

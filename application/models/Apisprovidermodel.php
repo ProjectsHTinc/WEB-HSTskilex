@@ -3211,7 +3211,7 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
                 $gcm_key = $rows->mobile_key;
                 $mobile_type = $rows->mobile_type;
                 $head = 'Skilex';
-                $message = "Provider  notification inside app check.";
+                $message = "Provider notification inside app check.";
                 $user_type = '3';
                 $this
                     ->smsmodel
@@ -3266,7 +3266,501 @@ sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact
     //   }
     //
     // }
+	
+	
+	//#################### Service Person List Assigned services ####################//
+    public function Sp_list_assigned_services($serv_pers_id)
+    {
+        $sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
+					A.status,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time,
+					F.full_name AS service_person
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.serv_pers_id = '" . $serv_pers_id . "' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "list_services_order" => $service_result
+            );
+        }
+        else
+        {
+
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### List Aassigned services End ####################//
+
+    //#################### Service Person Assigned detailed services ####################//
+    public function Sp_detail_assigned_services($serv_pers_id, $service_order_id)
+    {
+        $sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time,
+					F.full_name AS service_person
+
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.id = '" . $service_order_id . "' AND A.serv_pers_id  = '" . $serv_pers_id . "' AND A.status = 'Assigned' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id
+           AND A.serv_pers_id = F.user_master_id";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "detail_services_order" => $service_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Aassigned detailed services End ####################//
     
+	//#################### List Ongoing services ####################//
+    public function Sp_list_ongoing_services($serv_pers_id)
+    {       
+        $sQuery = "SELECT
+					A.id,
+					A.service_location,
+					DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
+					A.status,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time,
+					F.full_name AS service_person
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.serv_pers_id = '$serv_pers_id' AND (A.status = 'Initiated' OR A.status = 'Started' OR A.status = 'Ongoing' OR A.status = 'Hold') AND A.main_cat_id = B.id AND A.sub_cat_id = C.id
+           AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id order by A.id desc";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "list_services_order" => $service_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### List Ongoing services End ####################//
+
+    //#################### Initiated detailed services ####################//
+    public function Sp_detail_initiated_services($serv_pers_id, $service_order_id)
+    {
+        $sQuery = "SELECT
+					A.id,
+					A.service_latlon as service_location,
+					DATE_FORMAT(A.order_date, '%e-%m-%Y') as order_date,
+					A.contact_person_name,
+					A.contact_person_number,
+					A.service_rate_card,
+					A.serv_pers_id,
+					F.full_name AS service_person,
+					B.main_cat_name,
+					B.main_cat_ta_name,
+					C.sub_cat_name,
+					C.sub_cat_ta_name,
+					D.service_name,
+					D.service_ta_name,
+					E.from_time,
+					E.to_time,
+					A.status
+				FROM
+					service_orders A,
+					main_category B,
+					sub_category C,
+					services D,
+					service_timeslot E,
+					service_person_details F
+				WHERE
+					 A.id = '" . $service_order_id . "' AND A.serv_pers_id = '" . $serv_pers_id . "'
+           AND A.status = 'Initiated' AND A.main_cat_id = B.id AND A.sub_cat_id = C.id AND A.service_id = D.id AND A.order_timeslot = E.id AND A.serv_pers_id = F.user_master_id";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "detail_services_order" => $service_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Initiated detailed services End ####################//
+
+    //#################### Ongoing detailed services ####################//
+    public function Sp_detail_ongoing_services($serv_pers_id, $service_order_id)
+    {
+
+        $sQuery = "SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') as order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') as resume_date,
+        so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,so.start_datetime,so.material_notes,so.serv_prov_id,spd.full_name as service_person,IFNULL(rs.from_time, '') as r_fr_time,IFNULL(rs.to_time, '') as r_to_time
+        from service_orders as so
+        LEFT JOIN services AS s ON s.id=so.service_id
+        LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+        LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+        LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+        LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+        LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+        where so.serv_pers_id ='$serv_pers_id' and so.id='$service_order_id' and (so.status='Hold' or so.status='Ongoing' Or so.status='Started')";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        $addtional_serv = "SELECT * FROM service_order_additional WHERE service_order_id = '" . $service_order_id . "' AND status = 'Active'";
+        $addtional_serv_res = $this
+            ->db
+            ->query($addtional_serv);
+        $addtional_serv_count = $addtional_serv_res->num_rows();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "detail_services_order" => $service_result,
+                "addtional_services_count" => $addtional_serv_count
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Ongoing detailed services End ####################//
+	
+	
+	//#################### List completed or cancelled services ####################//
+    public function Sp_list_services_history($serv_pers_id)
+    {
+        $sQuery = "SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') AS resume_date,sppd.owner_full_name AS service_provider,
+sp.status AS Payment_status,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,so.start_datetime,so.material_notes,so.serv_prov_id,spd.full_name AS service_person,IFNULL(rs.from_time, '') AS r_fr_time,IFNULL(rs.to_time, '') AS r_to_time
+    FROM service_orders AS so
+    LEFT JOIN services AS s ON s.id=so.service_id
+    LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+    LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+    LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+    LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+    LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+    LEFT JOIN service_provider_details AS sppd ON so.serv_prov_id=sppd.user_master_id
+    LEFT JOIN service_payments AS sp ON sp.service_order_id=so.id
+    WHERE so.serv_pers_id ='$serv_pers_id'  AND (so.status='Completed' OR so.status='Paid' OR OR so.status='Cancelled') order by so.id desc";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "list_services_order" => $service_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### List completed or cancelled services End ####################//
+
+    //#################### Detail completed or cancelled services ####################//
+    public function Sp_detail_services_history($serv_pers_id, $service_order_id)
+    {
+        $sQuery = "SELECT so.id,so.service_location,DATE_FORMAT(so.order_date, '%e-%m-%Y') AS order_date,DATE_FORMAT(so.resume_date, '%e-%m-%Y') AS resume_date,sppd.owner_full_name AS service_provider,
+sp.status AS Payment_status,so.finish_datetime,so.contact_person_name,so.contact_person_number,so.service_rate_card,mc.main_cat_name,mc.main_cat_ta_name,sc.sub_cat_ta_name,sc.sub_cat_name,s.service_name,s.service_ta_name,st.from_time,st.to_time,so.status,so.start_datetime,so.material_notes,so.serv_prov_id,spd.full_name AS service_person,IFNULL(rs.from_time, '') AS r_fr_time,IFNULL(rs.to_time, '') AS r_to_time
+    FROM service_orders AS so
+    LEFT JOIN services AS s ON s.id=so.service_id
+    LEFT JOIN main_category AS mc ON so.main_cat_id=mc.id
+    LEFT JOIN sub_category AS sc ON so.sub_cat_id=sc.id
+    LEFT JOIN service_timeslot AS st ON st.id=so.order_timeslot
+    LEFT JOIN service_timeslot AS rs ON rs.id=so.resume_timeslot
+    LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
+    LEFT JOIN service_provider_details AS sppd ON so.serv_prov_id=sppd.user_master_id
+    LEFT JOIN service_payments AS sp ON sp.service_order_id=so.id
+    WHERE so.serv_pers_id='$serv_pers_id' AND so.id='$service_order_id' AND (so.status='Completed' OR so.status='Paid' OR so.status='Cancelled')";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        $addtional_serv = "SELECT * FROM service_order_additional WHERE service_order_id = '" . $service_order_id . "'";
+        $addtional_serv_res = $this
+            ->db
+            ->query($addtional_serv);
+        $addtional_serv_count = $addtional_serv_res->num_rows();
+
+        $trans_query = "SELECT * FROM service_payments WHERE service_order_id = '$service_order_id'";
+        $trans_res = $this
+            ->db
+            ->query($trans_query);
+        $trans_result = $trans_res->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order List",
+                "detail_services_order" => $service_result,
+                "addtional_services_count" => $addtional_serv_count,
+                "transaction_details" => $trans_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order List Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Detail completed or cancelled services End ####################//
+	
+	
+	//#################### Track Order ####################//
+    public function Sp_track_order($service_order_id)
+    {
+        $sQuery = "SELECT contact_person_name, contact_person_number,service_latlon,service_location,service_address FROM service_orders WHERE id= '$service_order_id'";
+        $serv_result = $this
+            ->db
+            ->query($sQuery);
+        $service_result = $serv_result->result();
+
+        if ($serv_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Order Details",
+                "detail_services_order" => $service_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Order Details Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Track Order End ####################//
+	
+	//#################### Track Order ####################//
+    public function Sp_verify_status($user_master_id,$status)
+    {
+		if ($status == 'Approved'){
+				$sQuery = "SELECT
+							lu.id AS user_master_id,
+							spd.full_name,
+							spd.serv_pers_verify_status,
+							lu.phone_no
+						FROM
+							login_users AS lu
+						LEFT JOIN service_person_details AS spd
+						ON
+							spd.user_master_id = lu.id
+						WHERE
+							lu.user_type = '4' AND spd.service_provider_id = '$user_master_id' AND spd.serv_pers_verify_status = 'Approved'
+						ORDER BY
+							spd.id DESC";
+		} else {
+			$sQuery = "SELECT
+						lu.id AS user_master_id,
+						spd.full_name,
+						spd.serv_pers_verify_status,
+						lu.phone_no
+					FROM
+						login_users AS lu
+					LEFT JOIN service_person_details AS spd
+					ON
+						spd.user_master_id = lu.id
+					WHERE
+						lu.user_type = '4' AND spd.service_provider_id = '$user_master_id' AND spd.serv_pers_verify_status != 'Approved'
+					ORDER BY
+						spd.id DESC";
+		}
+        $person_result = $this
+            ->db
+            ->query($sQuery);
+        $per_result = $person_result->result();
+
+        if ($person_result->num_rows() > 0)
+        {
+            $response = array(
+                "status" => "success",
+                "msg" => "Service Person Details",
+                "person_list" => $per_result
+            );
+        }
+        else
+        {
+            $response = array(
+                "status" => "error",
+                "msg" => "Service Person Details Not found"
+            );
+        }
+        return $response;
+    }
+    //#################### Track Order End ####################//
+	
+	
+	//####################  Organization details ####################//
+    public function Organization_details($user_master_id)
+    {
+		$sQuery = "SELECT * FROM service_provider_company_details WHERE user_master_id ='" . $user_master_id . "'";
+		$comp_result = $this
+			->db
+			->query($sQuery);
+
+		if ($comp_result->num_rows() != 0)
+		{
+			$response = array(
+				"status" => "success",
+				"msg" => "Company data found",
+				"company_data" => $comp_result->result()
+			);
+		}
+		else
+		{
+
+			$response = array(
+				"status" => "error",
+				"msg" => "No Company data found"
+			);
+		}
+       return $response;
+    }
+    //#################### Organization details End ####################//
+	
+	
+	//####################  Organization details ####################//
+    public function Bank_details($user_master_id)
+    {
+		$sQuery = "SELECT bank_name,bank_branch_name,bank_acc_no,bank_ifsc_code FROM service_provider_details WHERE user_master_id ='" . $user_master_id . "'";
+		$bank_result = $this
+			->db
+			->query($sQuery);
+
+		if ($bank_result->num_rows() != 0)
+		{
+			$response = array(
+				"status" => "success",
+				"msg" => "Bank Details",
+				"company_data" => $bank_result->result()
+			);
+		}
+		else
+		{
+
+			$response = array(
+				"status" => "error",
+				"msg" => "No Records Found"
+			);
+		}
+       return $response;
+    }
+    //#################### Organization details End ####################//
 }
 
 ?>

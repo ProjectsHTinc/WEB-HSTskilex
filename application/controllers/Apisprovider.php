@@ -2062,11 +2062,345 @@ class Apisprovider extends CI_Controller
     //-----------------------------------------------//
 
 
+	//-----------------------------------------------//
 
-    // public function add_skills_auto(){
-    //   	$data=$this->apisprovidermodel->add_skills_auto();
-    // }
+    public function sp_list_assigned_services()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
 
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
 
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List assigned services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id = '';
+
+        $serv_pers_id = $this->input->post("serv_pers_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_list_assigned_services($serv_pers_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+    //-----------------------------------------------//
+
+    public function sp_detail_assigned_services()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List assigned services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id   = '';
+        $service_order_id = '';
+
+        $serv_pers_id   = $this->input->post("serv_pers_id");
+        $service_order_id = $this->input->post("service_order_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_detail_assigned_services($serv_pers_id, $service_order_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	 //-----------------------------------------------//
+
+    public function sp_list_ongoing_services()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List ongoing services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id = '';
+
+        $serv_pers_id = $this->input->post("serv_pers_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_list_ongoing_services($serv_pers_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+    //-----------------------------------------------//
+
+    public function sp_detail_initiated_services()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List assigned services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id   = '';
+        $service_order_id = '';
+
+        $serv_pers_id   = $this->input->post("serv_pers_id");
+        $service_order_id = $this->input->post("service_order_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_detail_initiated_services($serv_pers_id, $service_order_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+    //-----------------------------------------------//
+
+    public function sp_detail_ongoing_services()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List assigned services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id   = '';
+        $service_order_id = '';
+
+        $serv_pers_id   = $this->input->post("serv_pers_id");
+        $service_order_id = $this->input->post("service_order_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_detail_ongoing_services($serv_pers_id, $service_order_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	//-----------------------------------------------//
+
+    public function sp_list_services_history()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "List Completed or Cancelled services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id = '';
+
+        $serv_pers_id = $this->input->post("serv_pers_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_list_services_history($serv_pers_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+
+    //-----------------------------------------------//
+
+    public function sp_detail_services_history()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Detail Completed or Cancelled services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        $serv_pers_id   = '';
+        $service_order_id = '';
+
+        $serv_pers_id   = $this->input->post("serv_pers_id");
+        $service_order_id = $this->input->post("service_order_id");
+
+        $data['result'] = $this->apisprovidermodel->Sp_detail_services_history($serv_pers_id, $service_order_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	
+	//-----------------------------------------------//
+
+    public function sp_track_order()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Detail Completed or Cancelled services";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        
+        $service_order_id = '';
+        $service_order_id   = $this->input->post("service_order_id");
+        
+        $data['result'] = $this->apisprovidermodel->Sp_track_order($service_order_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	//-----------------------------------------------//
+
+    public function sp_verify_status()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Application Status";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        
+        $user_master_id = '';
+		$status = '';
+        $user_master_id   = $this->input->post("user_master_id");
+		$status   = $this->input->post("status");
+        
+        $data['result'] = $this->apisprovidermodel->Sp_verify_status($user_master_id,$status);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	//-----------------------------------------------//
+
+    public function organization_details()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Organization Details";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        
+        $user_master_id = '';
+        $user_master_id   = $this->input->post("user_master_id");
+        
+        $data['result'] = $this->apisprovidermodel->Organization_details($user_master_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
+	
+	//-----------------------------------------------//
+
+    public function bank_details()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), TRUE);
+
+        if (!$this->checkMethod()) {
+            return FALSE;
+        }
+
+        if ($_POST == FALSE) {
+            $res            = array();
+            $res["opn"]     = "Bank Details";
+            $res["scode"]   = 204;
+            $res["message"] = "Input error";
+
+            echo json_encode($res);
+            return;
+        }
+        
+        $user_master_id = '';
+        $user_master_id   = $this->input->post("user_master_id");
+        
+        $data['result'] = $this->apisprovidermodel->Bank_details($user_master_id);
+        $response       = $data['result'];
+        echo json_encode($response);
+    }
+
+    //-----------------------------------------------//
 }
 ?>

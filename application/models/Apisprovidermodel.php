@@ -147,7 +147,7 @@ class Apisprovidermodel extends CI_Model
             $enc_user_master_id = base64_encode($user_master_id);
 
             // $notes = "OTP :" . $OTP;
-            $msg = "Your SkilEx Verification code is: " . $OTP . "  0gQ4RsI6iX4";
+            $msg = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
             $notes = $msg;
             $phone = $mobile;
@@ -199,7 +199,7 @@ class Apisprovidermodel extends CI_Model
                 ->db
                 ->query($update_sql);
 
-            $msg = "Your SkilEx Verification code is: " . $OTP . "  Y3XZqSQzX9V";
+            $msg = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
             $notes = $msg;
             $phone = $phone_no;
@@ -1894,7 +1894,7 @@ class Apisprovidermodel extends CI_Model
                     $head = 'Skilex';
                     if ($preferred_lang_id == '1')
                     {
-                        $message = "ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்றுகொண்டோம்";
+                        $message = "ஸ்கிலெக்ஸ் தங்கள் சர்வீஸ் கோரிக்கையை ஏற்று கொண்டோம்";
                         $templateid = '1707161527170769665';
                     }
                     else
@@ -2006,13 +2006,13 @@ class Apisprovidermodel extends CI_Model
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை  ஒதுக்கப்பட்டது.மேலும் அறிய ஆப்பை  பார்க்கவும்.";
+                    $message = "ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை ஒதுக்கப்பட்டது. மேலும் அறிய ஆப்பை பார்க்கவும்.";
                     $templateid = '1707161433655197439';
                 }
                 else
                 {
-                    $message = "Service request assigned.";
-                    $templateid = '1707161432827883995';
+                    $message = "Skilex - Service request assigned.";
+                    $templateid = '1707161518698883763';
                 }
                 $user_type = '4';
                 $this
@@ -2047,7 +2047,7 @@ class Apisprovidermodel extends CI_Model
                 }
                 else
                 {
-                    $message = 'Service expert assigned to your order.';
+                    $message = 'Skilex - Service expert assigned to your order.';
                     $templateid = '1707161518695124556';
                 }
 

@@ -118,12 +118,12 @@ class Apicustomermodel extends CI_Model
         }
         if ($preferred_lang_id == '1')
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "  GHTaEcbz16c";
+            $notes = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
         }
         else
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "  GHTaEcbz16c";
+            $notes = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
         }
 
@@ -1723,12 +1723,12 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $head = 'Skilex';
                         if ($preferred_lang_id == '1')
                         {
-                            $message = 'ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                            $message ='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது ஆர்டர் பதிவு செய்யப்பட்டது.';
                             $templateid = '1707161433648312974';
                         }
                         else
                         {
-                            $message = 'Greetings from Skilex!. Your Order has been booked.';
+                            $message = 'Greetings from Skilex!.Your order has been booked.';
                             $templateid = '1707161432205671252';
                         }
                         $user_type = '5';
@@ -1760,11 +1760,13 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $head = 'Skilex';
                         if ($preferred_lang_id == '1')
                         {
-                            $message = 'உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                            $message = 'உங்கள் முன்பதிவு கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+							$templateid = '1707161623929537989';
                         }
                         else
                         {
-                            $message = 'Skilex!. Once the advance payment has been received your order will booked.';
+                            $message = 'Skilex! Once the advance payment has been received your order will be booked.';
+							$templateid = '1707161623936026087';
                         }
                         $user_type = '5';
                         $this
@@ -1776,7 +1778,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $phone = $phone;
                     $this
                         ->smsmodel
-                        ->send_sms($phone, $notes);
+                        ->send_sms($phone, $notes, $templateid);
                 }
 
             }
@@ -1841,7 +1843,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $advance_amount = $rows->advance_amount;
 
                     $phone = $contact_person_number;
-                    $notes = 'Greetings from Skilex!. Your Order has been Booked.';
+                    $notes = 'Greetings from Skilex!.Your order has been booked.';
                     $templateid = '1707161432205671252';
                     $this
                         ->smsmodel
@@ -1871,7 +1873,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 }
                                 else
                                 {
-                                    $message = 'Greetings from Skilex!.Your Order has been booked.';
+                                    $message = 'Greetings from Skilex!.Your order has been booked.';
                                     $templateid = '1707161432205671252';
                                 }
                                 $user_type = '5';
@@ -1906,11 +1908,13 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $head = 'Skilex';
                                 if ($preferred_lang_id == '1')
                                 {
-                                    $message = 'உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                                    $message = 'உங்கள் முன்பதிவு கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+									$templateid = '1707161623929537989';
                                 }
                                 else
                                 {
-                                    $message = 'Skilex!. Once the advance payment has been received your order will booked.';
+                                    $message = 'Skilex! Once the advance payment has been received your order will be booked.';
+									$templateid = '1707161623936026087';
                                 }
                                 $user_type = '5';
                                 $this
@@ -1922,7 +1926,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                             $phone = $phone;
                             $this
                                 ->smsmodel
-                                ->send_sms($phone, $notes);
+                                ->send_sms($phone, $notes, $templateid);
                         }
 
                     }
@@ -2270,9 +2274,9 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $title = "Order";
                                 $gcm_key = $rows_id_next->mobile_key;
                                 $mobiletype = $rows_id_next->mobile_type;
-                                // $notes="Hi $full_name You Received order from Customer $contact_person_name";
-                                $notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
-                                $templateid = '1707161432827883995';
+                                $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                                //$notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+                                $templateid = '1707161623901851300';
                                 $phone = $Phoneno;
                                 //$this->smsmodel->send_sms($phone,$notes);
                                 $this
@@ -2535,7 +2539,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $mobiletype = $rows_id_next->mobile_type;
                                 $notes = "Hi $full_name You Received order from Customer $contact_person_name";
                                 $phone = $Phoneno;
-
+								$templateid = '1707161623901851300';
+								
                                 $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
                                 $user_result = $this
                                     ->db
@@ -2558,7 +2563,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 
                                 $this
                                     ->smsmodel
-                                    ->send_sms($phone, $notes);
+                                    ->send_sms($phone, $notes,$templateid);
 
                                 $update_exper = "UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                                 $res_expried = $this
@@ -2740,11 +2745,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $title = "Order";
                         $gcm_key = $rows_id_next->mobile_key;
                         $mobiletype = $rows_id_next->mobile_type;
-                        // $notes="Hi $full_name You Received order from Customer $contact_person_name";
-                        $notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+                         $notes= "Hi $full_name You Received order from Customer $contact_person_name";
+                        //$notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                         $phone = $Phoneno;
-                        $templateid = '1707161432164819940';
-
+                        $templateid = '1707161623901851300';
                         $this
                             ->smsmodel
                             ->send_sms($phone, $notes, $templateid);
@@ -2978,7 +2982,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $mobiletype = $rows_id_next->mobile_type;
                         $notes = "Hi $full_name You Received order from Customer $contact_person_name";
                         $phone = $Phoneno;
-
+						$templateid = '1707161623901851300';
+						
                         $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
                         $user_result = $this
                             ->db
@@ -2999,7 +3004,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         }
                         $this
                             ->smsmodel
-                            ->send_sms($phone, $notes);
+                            ->send_sms($phone, $notes,$templateid);
                         $update_exper = "UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                         $res_expried = $this
                             ->db
@@ -3630,7 +3635,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 }
                 else
                 {
-                    $message = "Thank you.Your order has been Cancelled";
+                    $message = "Skilex - Thank you. Your order has been Cancelled";
                     $templateid = '1707161518664219488';
                 }
 
@@ -3671,7 +3676,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             $id = $rows_service->id;
             $serv_prov_id = $rows_service->serv_pers_id;
             $Phoneno = $rows_service->phone_no;
-            $notes = "Thank you.Your order has been Cancelled";
+            $notes = "Skilex - Thank you. Your order has been Cancelled";
             $templateid = '1707161518664219488';
             $phone = $Phoneno;
             $this
@@ -4572,12 +4577,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது. தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது. எங்கள் சேவையை மதிப்பிடுங்கள்..";
                     $templateid = '1707161433610720117';
                 }
                 else
                 {
-                    $message = "Service payment success.";
+                    $message = "Service Payment Success Thanks for being a part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
                 $user_type = '3';
@@ -4614,7 +4619,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 }
                 else
                 {
-                    $message = " Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
+                    $message = "Service Payment Success Thanks for being a part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
 
@@ -4645,12 +4650,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது. தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது. எங்கள் சேவையை மதிப்பிடுங்கள்.";
                     $templateid = '1707161433610720117';
                 }
                 else
                 {
-                    $message = " Service Payment Success";
+                    $message = "Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
                 $user_type = '4';
@@ -4919,12 +4924,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                             $head = 'Skilex';
                                             if ($preferred_lang_id == '1')
                                             {
-                                                $message = "You have received order from customer.";
-                                                $templateid = '1707161432827883995';
+                                                $message = "ஸ்கிலெக்ஸிலிருந்து வாழ்த்துக்கள்! வாடிக்கையாளரிடமிருந்து நீங்கள் ஒரு ஆர்டரைப் பெற்றீர்கள். மேலும் விவரங்களுக்கு பயன்பாட்டைப் பாருங்கள்.";
+                                                $templateid = '1707161623918068477';
                                             }
                                             else
                                             {
-                                                $message = "You have received order from customer.";
+                                                $message = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                                                 $templateid = '1707161432827883995';
                                             }
 
@@ -5019,12 +5024,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                             $head = 'Skilex';
                                             if ($preferred_lang_id == '1')
                                             {
-                                                $message = "You have received order from customer.";
-                                                $templateid = '1707161432827883995';
+                                                $message = "ஸ்கிலெக்ஸிலிருந்து வாழ்த்துக்கள்! வாடிக்கையாளரிடமிருந்து நீங்கள் ஒரு ஆர்டரைப் பெற்றீர்கள். மேலும் விவரங்களுக்கு பயன்பாட்டைப் பாருங்கள்.";
+                                                $templateid = '1707161623918068477';
                                             }
                                             else
                                             {
-                                                $message = "You have received order from customer.";
+                                                $message = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                                                 $templateid = '1707161432827883995';
                                             }
                                             $user_type = '3';

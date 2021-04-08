@@ -59,7 +59,7 @@ class Apicustomermodelios extends CI_Model
 
         }
     }
-    
+
     //-------------------- Mobile Check -------------------//
     function Mobile_check($phone_no)
     {
@@ -70,15 +70,7 @@ class Apicustomermodelios extends CI_Model
         $ress = $user_result->result();
 
         $digits = 4;
-
-        if ($phone_no == '9500923685')
-        {
-            $OTP = '4444';
-        }
-        else
-        {
-            $OTP = str_pad(rand(0, pow(10, $digits) - 1) , $digits, '0', STR_PAD_LEFT);
-        }
+        $OTP = str_pad(rand(0, pow(10, $digits) - 1) , $digits, '0', STR_PAD_LEFT);
 
         if ($user_result->num_rows() > 0)
         {
@@ -87,7 +79,6 @@ class Apicustomermodelios extends CI_Model
                 $user_master_id = $rows->id;
                 $preferred_lang_id = $rows->preferred_lang_id;
             }
-
             $text = 'SKILEXC0';
             $update_sql = "UPDATE login_users SET otp = '" . $OTP . "', updated_at=NOW(),referral_code='$text$user_master_id' WHERE id ='" . $user_master_id . "'";
             $update_result = $this
@@ -113,7 +104,6 @@ class Apicustomermodelios extends CI_Model
             $result_pre = $this
                 ->db
                 ->query($get_prefer);
-
             foreach ($result_pre->result() as $row_preferred)
             {
             }
@@ -128,12 +118,12 @@ class Apicustomermodelios extends CI_Model
         }
         if ($preferred_lang_id == '1')
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "  GHTaEcbz16c";
+            $notes = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
         }
         else
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "  GHTaEcbz16c";
+            $notes = "Your SkilEx Verification code is: " . $OTP . "";
             $templateid = '1707161432164819940';
         }
 
@@ -141,7 +131,7 @@ class Apicustomermodelios extends CI_Model
         $this
             ->smsmodel
             ->send_sms($phone, $notes, $templateid);
-        // $this->smsmodel->send_sms($phone,$notes);
+
         $response = array(
             "status" => "success",
             "msg" => "Mobile OTP",
@@ -289,7 +279,7 @@ class Apicustomermodelios extends CI_Model
         }
     }
     //-------------------- Main Login End -------------------//
-
+    
     ############### Adding referral Code ##################################
     function add_referral_code($user_master_id, $referral_code)
     {
@@ -913,6 +903,7 @@ class Apicustomermodelios extends CI_Model
     ############### Top Trending services ###############
     function top_trending_services($user_master_id)
     {
+
         $get_count = "SELECT * FROM tax_commission where id='1'";
         $res_count = $this
             ->db
@@ -967,7 +958,7 @@ FROM service_orders as so
         else
         {
             $response = array(
-                "status" => "error",
+                "status" => "noService",
                 "msg" => "Services not found",
                 "msg_en" => "Services not found!",
                 "msg_ta" => "சேவைகள் கிடைக்கவில்லை!"
@@ -1732,12 +1723,12 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $head = 'Skilex';
                         if ($preferred_lang_id == '1')
                         {
-                            $message = 'ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது  ஆர்டர் பதிவு செய்யப்பட்டது.';
+                            $message ='ஸ்கிலெக்ஸ்லிருந்து வாழ்த்துக்கள்! தங்களது ஆர்டர் பதிவு செய்யப்பட்டது.';
                             $templateid = '1707161433648312974';
                         }
                         else
                         {
-                            $message = 'Greetings from Skilex!.Your Order has been booked.';
+                            $message = 'Greetings from Skilex!.Your order has been booked.';
                             $templateid = '1707161432205671252';
                         }
                         $user_type = '5';
@@ -1745,14 +1736,11 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                             ->smsmodel
                             ->send_push_notification($head, $message, $gcm_key, $mobile_type, $user_type);
                     }
-
                     $notes = $message;
                     $phone = $phone;
                     $this
                         ->smsmodel
                         ->send_sms($phone, $notes, $templateid);
-                    //$this->smsmodel->send_sms($phone,$notes);
-                    
                 }
             }
             else
@@ -1772,11 +1760,13 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $head = 'Skilex';
                         if ($preferred_lang_id == '1')
                         {
-                            $message = 'உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                            $message = 'உங்கள் முன்பதிவு கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+							$templateid = '1707161623929537989';
                         }
                         else
                         {
-                            $message = 'Skilex!.Once the advance payment has been received your order will booked.';
+                            $message = 'Skilex! Once the advance payment has been received your order will be booked.';
+							$templateid = '1707161623936026087';
                         }
                         $user_type = '5';
                         $this
@@ -1788,7 +1778,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $phone = $phone;
                     $this
                         ->smsmodel
-                        ->send_sms($phone, $notes);
+                        ->send_sms($phone, $notes, $templateid);
                 }
 
             }
@@ -1853,6 +1843,14 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                     $advance_amount = $rows->advance_amount;
 
                     $phone = $contact_person_number;
+                    $notes = 'Greetings from Skilex!.Your order has been booked.';
+                    $templateid = '1707161432205671252';
+                    $this
+                        ->smsmodel
+                        ->send_sms($phone, $notes, $templateid);
+                    //$this->smsmodel->send_sms($phone,$notes);
+                    
+
                     if ($advance_amount == '0.00')
                     {
                         $adva_status = 'NA';
@@ -1875,7 +1873,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 }
                                 else
                                 {
-                                    $message = 'Greetings from Skilex!.Your Order has been booked.';
+                                    $message = 'Greetings from Skilex!.Your order has been booked.';
                                     $templateid = '1707161432205671252';
                                 }
                                 $user_type = '5';
@@ -1910,11 +1908,13 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $head = 'Skilex';
                                 if ($preferred_lang_id == '1')
                                 {
-                                    $message = 'உங்கள் முன்பதிவு  கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+                                    $message = 'உங்கள் முன்பதிவு கட்டணம் கிடைத்ததும் உங்கள் ஆர்டர் முன்பதிவு செய்யப்படும்.';
+									$templateid = '1707161623929537989';
                                 }
                                 else
                                 {
-                                    $message = 'Skilex!.Once the advance payment has been received your order will booked.';
+                                    $message = 'Skilex! Once the advance payment has been received your order will be booked.';
+									$templateid = '1707161623936026087';
                                 }
                                 $user_type = '5';
                                 $this
@@ -1926,7 +1926,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                             $phone = $phone;
                             $this
                                 ->smsmodel
-                                ->send_sms($phone, $notes);
+                                ->send_sms($phone, $notes, $templateid);
                         }
 
                     }
@@ -2274,15 +2274,15 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $title = "Order";
                                 $gcm_key = $rows_id_next->mobile_key;
                                 $mobiletype = $rows_id_next->mobile_type;
-                                // $notes="Hi $full_name You Received order from Customer $contact_person_name";
-                                $notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
-                                $templateid = '1707161432827883995';
+                                $notes="Hi $full_name You Received order from Customer $contact_person_name";
+                                //$notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+                                $templateid = '1707161623901851300';
                                 $phone = $Phoneno;
+                                //$this->smsmodel->send_sms($phone,$notes);
                                 $this
                                     ->smsmodel
                                     ->send_sms($phone, $notes, $templateid);
-                                //$this->smsmodel->send_sms($phone,$notes);
-                                ///$this->sendNotification($gcm_key,$title,$Message,$mobiletype);
+
                                 $get_gcm = "SELECT * FROM notification_master WHERE user_master_id='$user_master_id' order by id desc";
                                 $res_gcm = $this
                                     ->db
@@ -2539,7 +2539,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                 $mobiletype = $rows_id_next->mobile_type;
                                 $notes = "Hi $full_name You Received order from Customer $contact_person_name";
                                 $phone = $Phoneno;
-
+								$templateid = '1707161623901851300';
+								
                                 $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
                                 $user_result = $this
                                     ->db
@@ -2553,14 +2554,17 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                                         $head = 'Skilex';
                                         $message = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                                         $user_type = '3';
+
                                         $this
                                             ->smsmodel
                                             ->send_push_notification($head, $message, $gcm_key, $mobile_type, $user_type);
                                     }
                                 }
+
                                 $this
                                     ->smsmodel
-                                    ->send_sms($phone, $notes);
+                                    ->send_sms($phone, $notes,$templateid);
+
                                 $update_exper = "UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                                 $res_expried = $this
                                     ->db
@@ -2649,7 +2653,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
 
     }
     //-------------------- Service Provider allocation -------------------//
-
+//Need this?
     //-------------------- Service Provider allocation -------------------//
     function service_provider_allocation_ios($user_master_id, $service_id, $display_minute)
     {
@@ -2741,10 +2745,10 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $title = "Order";
                         $gcm_key = $rows_id_next->mobile_key;
                         $mobiletype = $rows_id_next->mobile_type;
-                        // $notes="Hi $full_name You Received order from Customer $contact_person_name";
-                        $notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
-                        $templateid = '1707161432164819940';
+                         $notes= "Hi $full_name You Received order from Customer $contact_person_name";
+                        //$notes = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
                         $phone = $Phoneno;
+                        $templateid = '1707161623901851300';
                         $this
                             ->smsmodel
                             ->send_sms($phone, $notes, $templateid);
@@ -2950,8 +2954,6 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         // WHERE spps.main_cat_id='$selected_main_cat_id' AND spps.status='Active' AND vs.online_status='Online' AND lu.status='Active'
                         // AND spd.user_master_id<$last_sp_id GROUP BY spps.user_master_id ASC) s_union";
                         
-
-                        
                     }
                     $ex_next_id = $this
                         ->db
@@ -2980,7 +2982,8 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         $mobiletype = $rows_id_next->mobile_type;
                         $notes = "Hi $full_name You Received order from Customer $contact_person_name";
                         $phone = $Phoneno;
-
+						$templateid = '1707161623901851300';
+						
                         $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$sp_user_master_id'";
                         $user_result = $this
                             ->db
@@ -3001,7 +3004,7 @@ left join customer_details as cd on cd.user_master_id=sr.customer_id WHERE so.se
                         }
                         $this
                             ->smsmodel
-                            ->send_sms($phone, $notes);
+                            ->send_sms($phone, $notes,$templateid);
                         $update_exper = "UPDATE service_order_history SET status='Expired' WHERE status='Requested' AND service_order_id='$service_id' ORDER BY created_at desc LIMIT 1";
                         $res_expried = $this
                             ->db
@@ -3612,6 +3615,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
     //-------------------- Cancel  Service order    -------------------//
     function cancel_service_order($user_master_id, $service_order_id, $cancel_id, $comments)
     {
+
         $sQuery = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$user_master_id'";
         $user_result = $this
             ->db
@@ -3631,7 +3635,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 }
                 else
                 {
-                    $message = "Thank you. Your order has been Cancelled";
+                    $message = "Skilex - Thank you. Your order has been Cancelled";
                     $templateid = '1707161518664219488';
                 }
 
@@ -3646,7 +3650,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             $this
                 ->smsmodel
                 ->send_sms($phone, $notes, $templateid);
-            // $this->smsmodel->send_sms($phone,$notes);
+            //$this->smsmodel->send_sms($phone,$notes);
             
         }
 
@@ -3672,13 +3676,13 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             $id = $rows_service->id;
             $serv_prov_id = $rows_service->serv_pers_id;
             $Phoneno = $rows_service->phone_no;
-            $notes = "Thank you.Your order has been Cancelled";
+            $notes = "Skilex - Thank you. Your order has been Cancelled";
             $templateid = '1707161518664219488';
             $phone = $Phoneno;
             $this
                 ->smsmodel
                 ->send_sms($phone, $notes, $templateid);
-            //$this->smsmodel->send_sms($phone,$notes);
+            // $this->smsmodel->send_sms($phone,$notes);
             if ($serv_prov_id == '0')
             {
 
@@ -4119,7 +4123,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
     }
     //--------------------  Payment  to Service Order  -------------------//
 
-    ############### Distance calculation  ###############################
+    ############### Distance calculation  ###############################3
     function get_distance_rate($service_order_id)
     {
         $get_lat = "SELECT * FROM service_orders where id='$service_order_id'";
@@ -4133,49 +4137,36 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         $lat1 = $result[0];
         $lon1 = $result[1];
 
-        $get_person = "SELECT * FROM service_person_details where user_master_id='$rows_lat->serv_pers_id'";
-        $res_person = $this
-            ->db
-            ->query($get_person);
-        foreach ($res_person->result() as $rows_person)
-        {
+        /*
+        //$get_person="SELECT * FROM service_person_details where user_master_id='$rows_lat->serv_pers_id'";
+        $get_person="SELECT * FROM vendor_status WHERE serv_pro_id='$rows_lat->serv_prov_id'";
+        $res_person=$this->db->query($get_person);
+        foreach($res_person->result() as $rows_person){}
+        if(empty($rows_person->person_lat)){
+        $get_vendor_status="SELECT * FROM vendor_status WHERE serv_pro_id='$rows_lat->serv_pers_id'";
+        $res_vendor=$this->db->query($get_vendor_status);
+        foreach($res_vendor->result() as $rows_vendor){}
+          $lat2=$rows_vendor->serv_lat;
+          $lon2=$rows_vendor->serv_lon;
+        }else{
+        $lat2=$rows_person->person_lat;
+        $lon2=$rows_person->person_long;
         }
-        if (empty($rows_person->person_lat))
-        {
-            $get_vendor_status = "SELECT * FROM vendor_status WHERE serv_pro_id='$rows_lat->serv_pers_id'";
-            $res_vendor = $this
-                ->db
-                ->query($get_vendor_status);
-            foreach ($res_vendor->result() as $rows_vendor)
-            {
-            }
-            $lat2 = $rows_vendor->serv_lat;
-            $lon2 = $rows_vendor->serv_lon;
-        }
-        else
-        {
-            $lat2 = $rows_person->person_lat;
-            $lon2 = $rows_person->person_long;
-        }
-
+        
+        
         $rad = M_PI / 180;
-        $km = acos(sin($lat2 * $rad) * sin($lat1 * $rad) + cos($lat2 * $rad) * cos($lat1 * $rad) * cos($lon2 * $rad - $lon1 * $rad)) * 6371;
-        $dis = round($km, 2);
-        $get_rate = "SELECT * FROM surge_master where surge_distance>='$dis' order by surge_distance asc LIMIT 1";
-        $res_rate = $this
-            ->db
-            ->query($get_rate);
-        if ($res_rate->num_rows() == 0)
-        {
-            $rate = '0';
+        $km=acos(sin($lat2*$rad) * sin($lat1*$rad) + cos($lat2*$rad) * cos($lat1*$rad) * cos($lon2*$rad - $lon1*$rad)) * 6371;
+        $dis= round($km,2);
+        $get_rate="SELECT * FROM surge_master where surge_distance>='$dis' order by surge_distance asc LIMIT 1";
+        $res_rate=$this->db->query($get_rate);
+        if($res_rate->num_rows()==0){
+        $rate='0';
+        }else{
+        foreach($res_rate->result() as $rows_rate){}
+          $rate=$rows_rate->surge_price;
         }
-        else
-        {
-            foreach ($res_rate->result() as $rows_rate)
-            {
-            }
-            $rate = $rows_rate->surge_price;
-        }
+        */
+        $rate = '0';
         return $rate;
     }
     ############### Distance calculation  ###############################
@@ -4586,12 +4577,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது. தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது. எங்கள் சேவையை மதிப்பிடுங்கள்..";
                     $templateid = '1707161433610720117';
                 }
                 else
                 {
-                    $message = "Service payment success.";
+                    $message = "Service Payment Success Thanks for being a part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
                 $user_type = '3';
@@ -4628,7 +4619,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 }
                 else
                 {
-                    $message = " Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
+                    $message = "Service Payment Success Thanks for being a part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
 
@@ -4642,7 +4633,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
             $this
                 ->smsmodel
                 ->send_sms($phone, $notes, $templateid);
-            //$this->smsmodel->send_sms($phone,$notes);
+            // $this->smsmodel->send_sms($phone,$notes);
             
         }
         $sQuery = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$serv_pers_id'";
@@ -4659,12 +4650,12 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை   நிறைவடைந்தது.";
+                    $message = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது. தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது. எங்கள் சேவையை மதிப்பிடுங்கள்.";
                     $templateid = '1707161433610720117';
                 }
                 else
                 {
-                    $message = " Service Payment Success";
+                    $message = "Service Payment Success Thanks for being the part of Skilex. Kindly rate our Service";
                     $templateid = '1707161432883119360';
                 }
                 $user_type = '4';
@@ -4802,7 +4793,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
     function automatic_provider_allocation()
     {
 
-        $select = "SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) = CURDATE()) and status='Pending' and (advance_payment_status='N' OR advance_payment_status='NA')";
+        $select = "SELECT * FROM service_orders WHERE (DATE(order_date) = CURDATE() - 1 or DATE(order_date) >= CURDATE()) and status='Pending' and (advance_payment_status='N' OR advance_payment_status='NA')";
         $excute = $this
             ->db
             ->query($select);
@@ -4917,7 +4908,9 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                         ->db
                                         ->query($insert_service_history);
 
-                                    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$first_provider'";
+                                    // $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$first_provider'";
+                                    $sQuery = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$first_provider'";
+
                                     $user_result = $this
                                         ->db
                                         ->query($sQuery);
@@ -4927,13 +4920,31 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                         {
                                             $gcm_key = $rows->mobile_key;
                                             $mobile_type = $rows->mobile_type;
+                                            $preferred_lang_id = $rows->preferred_lang_id;
                                             $head = 'Skilex';
-                                            $message = "You have received order from customer.";
+                                            if ($preferred_lang_id == '1')
+                                            {
+                                                $message = "ஸ்கிலெக்ஸிலிருந்து வாழ்த்துக்கள்! வாடிக்கையாளரிடமிருந்து நீங்கள் ஒரு ஆர்டரைப் பெற்றீர்கள். மேலும் விவரங்களுக்கு பயன்பாட்டைப் பாருங்கள்.";
+                                                $templateid = '1707161623918068477';
+                                            }
+                                            else
+                                            {
+                                                $message = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+                                                $templateid = '1707161432827883995';
+                                            }
+
                                             $user_type = '3';
                                             $this
                                                 ->smsmodel
                                                 ->send_push_notification($head, $message, $gcm_key, $mobile_type, $user_type);
                                         }
+                                        $notes = $message;
+                                        $phone = $rows->phone_no;
+                                        $this
+                                            ->smsmodel
+                                            ->send_sms($phone, $notes, $templateid);
+                                        //$this->smsmodel->send_sms($phone,$notes);
+                                        
                                     }
 
                                 }
@@ -4998,7 +5009,8 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                         ->db
                                         ->query($insert_service_history);
 
-                                    $sQuery = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                                    // $sQuery      = "SELECT * FROM notification_master WHERE user_master_id ='$selected_provider'";
+                                    $sQuery = "SELECT nm.*,lu.phone_no,lu.preferred_lang_id FROM notification_master as nm left join login_users as lu on lu.id=nm.user_master_id WHERE nm.user_master_id ='$selected_provider'";
                                     $user_result = $this
                                         ->db
                                         ->query($sQuery);
@@ -5008,13 +5020,30 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
                                         {
                                             $gcm_key = $rows->mobile_key;
                                             $mobile_type = $rows->mobile_type;
+                                            $preferred_lang_id = $rows->preferred_lang_id;
                                             $head = 'Skilex';
-                                            $message = "You have received order from customer.";
+                                            if ($preferred_lang_id == '1')
+                                            {
+                                                $message = "ஸ்கிலெக்ஸிலிருந்து வாழ்த்துக்கள்! வாடிக்கையாளரிடமிருந்து நீங்கள் ஒரு ஆர்டரைப் பெற்றீர்கள். மேலும் விவரங்களுக்கு பயன்பாட்டைப் பாருங்கள்.";
+                                                $templateid = '1707161623918068477';
+                                            }
+                                            else
+                                            {
+                                                $message = "Greetings from Skilex! You received an order from the Customer. Please look into the app for more details.";
+                                                $templateid = '1707161432827883995';
+                                            }
                                             $user_type = '3';
                                             $this
                                                 ->smsmodel
                                                 ->send_push_notification($head, $message, $gcm_key, $mobile_type, $user_type);
                                         }
+                                        $notes = $message;
+                                        $phone = $rows->phone_no;
+                                        $this
+                                            ->smsmodel
+                                            ->send_sms($phone, $notes, $templateid);
+                                        //$this->smsmodel->send_sms($phone,$notes);
+                                        
                                     }
 
                                 }
@@ -5033,28 +5062,62 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
 
     }
 
-    // function hour_cron_job_checking(){
-    //   $date = date_default_timezone_set('Asia/Kolkata');
-    //   $today = date("g:i");
-    //   $ten_am='09:00';
-    //   $end_time='7:00';
-    //   if($today >= $ten_am && $today <= $end_time) {
-    //     // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
-    //     // $excute=$this->db->query($insert);
-    //       $this->automatic_provider_allocation();
-    //   }
-    // }
-    
+    function hour_cron_job_checking()
+    {
+        $date = date_default_timezone_set('Asia/Kolkata');
 
-    // function db_data_updating(){
-    // $text='SKILEXC0';
-    // $select="SELECT * FROM login_users where user_type='5'";
-    // $result=$this->db->query($select);
-    // foreach($result->result() as $rows){
-    //   $update="UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
-    //   $excute=$this->db->query($update);
-    // }
-    // }
+        $current_time = date("h:i a");
+        $start_time = "9:00 am";
+        $end_time = "7:00 pm";
+        $current = DateTime::createFromFormat('h:i a', $current_time);
+        $start = DateTime::createFromFormat('h:i a', $start_time);
+        $end = DateTime::createFromFormat('h:i a', $end_time);
+
+        if ($current > $start && $current < $end)
+        {
+            $this->automatic_provider_allocation();
+        }
+
+        /* $date = date_default_timezone_set('Asia/Kolkata');
+        $today = date("g:i");
+        $ten_am='09:00';
+        $end_time='7:00';
+        if($today >= $ten_am && $today <= $end_time) {
+        // $insert="INSERT INTO serv_pers_tracking(created_at) VALUES (NOW())";
+        // $excute=$this->db->query($insert);
+          $this->automatic_provider_allocation();
+        } */
+
+    }
+
+    function check_sms()
+    {
+
+        $notes = "ஸ்கிலெக்ஸ் ரசீதுக்கு பணம் பெறப்பட்டது.தங்களது சர்வீஸ் கோரிக்கை நிறைவடைந்தது.";
+        $templateid = '1707161433610720117';
+        $phone = '9789108819';
+        $this
+            ->smsmodel
+            ->send_sms($phone, $notes, $templateid);
+        //$this->smsmodel->send_sms($phone,$notes);
+        
+    }
+
+    function db_data_updating()
+    {
+        $text = 'SKILEXC0';
+        $select = "SELECT * FROM login_users where user_type='5'";
+        $result = $this
+            ->db
+            ->query($select);
+        foreach ($result->result() as $rows)
+        {
+            $update = "UPDATE login_users SET referral_code='$text$rows->id' WHERE id='$rows->id' and  user_type='5'";
+            $excute = $this
+                ->db
+                ->query($update);
+        }
+    }
 
     ############### Customer address add ###############
     function customer_address_add($cust_id, $contact_name, $contact_no, $serv_lat_lon, $serv_loc, $serv_address)
@@ -5135,6 +5198,7 @@ LEFT JOIN login_users AS lu ON lu.id=so.serv_pers_id
         return $response;
     }
     ############### Customer address end ###############
+    
 }
 
 ?>

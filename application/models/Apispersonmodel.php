@@ -96,12 +96,12 @@ class Apispersonmodel extends CI_Model
 
             if ($preferred_lang_id == '1')
             {
-                $msg = "Your SkilEx Verification code is: " . $OTP . "  OSFrgSQC1Mb";
+                $msg = "Your SkilEx Verification code is: " . $OTP . "";
                 $templateid = '1707161432164819940';
             }
             else
             {
-                $msg = "Your SkilEx Verification code is: " . $OTP . "  OSFrgSQC1Mb";
+                $msg = "Your SkilEx Verification code is: " . $OTP . "";
                 $templateid = '1707161432164819940';
             }
 
@@ -713,12 +713,12 @@ class Apispersonmodel extends CI_Model
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+                    $message = "ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை ஆரம்பிக்கப்பட்டது..";
                     $templateid = '1707161433329355562';
                 }
                 else
                 {
-                    $message = "Service Expert has initiated";
+                    $message = "Skilex - Service Expert initiated";
                     $templateid = '1707161518690954551';
 
                 }
@@ -750,13 +750,13 @@ class Apispersonmodel extends CI_Model
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+                    $message = "ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை ஆரம்பிக்கப்பட்டது.";
                     $templateid = '1707161433329355562';
                 }
                 else
                 {
-                    $message = "Service Expert has initiated";
-                    $templateid = '1707161518690954551';
+                    $message = "Skilex - Service Expert initiated";
+                    $templateid = '1707161518686209153';
                 }
                 $user_type = '4';
                 $this
@@ -788,7 +788,7 @@ class Apispersonmodel extends CI_Model
                 $head = 'Skilex';
                 if ($preferred_lang_id == '1')
                 {
-                    $message = "ஸ்கிலெக்ஸ்  சேவை கோரிக்கை தொடங்கப்பட்டது. சேவை நிபுணரைக் கண்காணிப்பதற்கான ஆப்பில் பார்க்கவும்";
+                    $message = "ஸ்கிலெக்ஸ் சேவை கோரிக்கை தொடங்கப்பட்டது. சேவை நிபுணரைக் கண்காணிப்பதற்கான ஆப்பில்பார்க்கவும்";
                     $templateid = '1707161433314072224';
                 }
                 else
@@ -1202,7 +1202,7 @@ class Apispersonmodel extends CI_Model
                     ->query($sQuery);
             }
 
-            $message_details = "Your OTP :" . $OTP;
+            $message_details = "Skilex - OTP : " . $OTP;
             $templateid = '1707161518693063489';
 
             $notes = $message_details;
@@ -1289,7 +1289,7 @@ class Apispersonmodel extends CI_Model
                     }
                     else
                     {
-                        $message = "Service request is Ongoing.";
+                        $message = "Skilex - The service request is Ongoing.";
                         $templateid = '1707161518674086035';
                     }
                     $user_type = '3';
@@ -1321,13 +1321,13 @@ class Apispersonmodel extends CI_Model
                     $head = 'Skilex';
                     if ($preferred_lang_id == '1')
                     {
-                        $message = "ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
-                        $templateid = '1707161433314072224';
+                        $message = "ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை ஆரம்பிக்கப்பட்டது";
+                        $templateid = '1707161433329355562';
                     }
                     else
                     {
-                        $message = "Service has initiated";
-                        $templateid = '1707161518668055531';
+                        $message = "Skilex - Service request started.";
+                        $templateid = '1707161518666252098';
                     }
 
                     $user_type = '4';
@@ -1358,12 +1358,12 @@ class Apispersonmodel extends CI_Model
                     $head = 'Skilex';
                     if ($preferred_lang_id == '1')
                     {
-                        $message = "ஸ்கிலெக்ஸ் சர்வீஸ்  கோரிக்கை  ஆரம்பிக்கப்பட்டது.";
+                        $message = "ஸ்கிலெக்ஸ் சர்வீஸ் கோரிக்கை ஆரம்பிக்கப்பட்டது.";
                         $templateid = '1707161433329355562';
                     }
                     else
                     {
-                        $message = "Service has initiated";
+                        $message = "Skilex - Service request started.";
                         $templateid = '1707161518666252098';
                     }
 

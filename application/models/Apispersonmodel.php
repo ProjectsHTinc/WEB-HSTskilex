@@ -96,13 +96,13 @@ class Apispersonmodel extends CI_Model
 
             if ($preferred_lang_id == '1')
             {
-                $msg = "Your SkilEx Verification code is: " . $OTP . "";
-                $templateid = '1707161432164819940';
+                $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+                $templateid = '1707161725077245705';
             }
             else
             {
-                $msg = "Your SkilEx Verification code is: " . $OTP . "";
-                $templateid = '1707161432164819940';
+                $msg = "Your SkilEx Verification code is: ".$OTP."  OSFrgSQC1Mb";
+                $templateid = '1707161725077245705';
             }
 
             $notes = $msg;
@@ -1201,9 +1201,8 @@ class Apispersonmodel extends CI_Model
                     ->db
                     ->query($sQuery);
             }
-
-            $message_details = "Skilex - OTP : " . $OTP;
-            $templateid = '1707161518693063489';
+            $message_details = "Your SkilEx Verification code is :". $OTP.".";
+            $templateid = '1707161432164819940';
 
             $notes = $message_details;
             $phone = $contact_person_number;

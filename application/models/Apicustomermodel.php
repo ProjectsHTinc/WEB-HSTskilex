@@ -118,13 +118,13 @@ class Apicustomermodel extends CI_Model
         }
         if ($preferred_lang_id == '1')
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "";
-            $templateid = '1707161432164819940';
+            $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+            $templateid = '1707161725069150805';
         }
         else
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "";
-            $templateid = '1707161432164819940';
+            $notes = "Your SkilEx Verification code is: ".$OTP."  GHTaEcbz16c";
+            $templateid = '1707161725069150805';
         }
 
         $phone = $phone_no;

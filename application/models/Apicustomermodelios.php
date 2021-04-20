@@ -118,12 +118,12 @@ class Apicustomermodelios extends CI_Model
         }
         if ($preferred_lang_id == '1')
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "";
+            $notes = "Your SkilEx Verification code is: ".$OTP."";
             $templateid = '1707161432164819940';
         }
         else
         {
-            $notes = "Your SkilEx Verification code is: " . $OTP . "";
+            $notes = "Your SkilEx Verification code is: ".$OTP."";
             $templateid = '1707161432164819940';
         }
 

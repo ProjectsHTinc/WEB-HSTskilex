@@ -147,8 +147,8 @@ class Apisprovidermodel extends CI_Model
             $enc_user_master_id = base64_encode($user_master_id);
 
             // $notes = "OTP :" . $OTP;
-            $msg = "Your SkilEx Verification code is: " . $OTP . "";
-            $templateid = '1707161432164819940';
+            $msg = "Your SkilEx Verification code is: ".$OTP."  0gQ4RsI6iX4";
+            $templateid = '1707161725680654184';
             $notes = $msg;
             $phone = $mobile;
             $this
@@ -199,8 +199,8 @@ class Apisprovidermodel extends CI_Model
                 ->db
                 ->query($update_sql);
 
-            $msg = "Your SkilEx Verification code is: " . $OTP . "";
-            $templateid = '1707161432164819940';
+            $msg = "Your SkilEx Verification code is: ".$OTP."  Y3XZqSQzX9V";
+            $templateid = '1707161725687642349';
             $notes = $msg;
             $phone = $phone_no;
             $this
@@ -3539,7 +3539,7 @@ sp.status AS Payment_status,so.contact_person_name,so.contact_person_number,so.s
     LEFT JOIN service_person_details AS spd ON spd.user_master_id=so.serv_pers_id
     LEFT JOIN service_provider_details AS sppd ON so.serv_prov_id=sppd.user_master_id
     LEFT JOIN service_payments AS sp ON sp.service_order_id=so.id
-    WHERE so.serv_pers_id ='$serv_pers_id'  AND (so.status='Completed' OR so.status='Paid' OR OR so.status='Cancelled') order by so.id desc";
+    WHERE so.serv_pers_id ='$serv_pers_id'  AND (so.status='Completed' OR so.status='Paid' OR so.status='Cancelled') order by so.id desc";
         $serv_result = $this
             ->db
             ->query($sQuery);
